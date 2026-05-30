@@ -16,6 +16,23 @@ Effort key: **S** ≈ hours · **M** ≈ a focused build · **H** ≈ multi-step
   comprehension lever and the foundation is built.
 
 ## High value
+- [ ] **AI "explain-it-back" tutor** (North Star) — _M–H_
+  Learner types an explanation of a concept; an LLM grades it against the lesson and asks
+  2–3 follow-ups. The only feature that **measures** fluency. _Architecture:_ a server-side
+  `/api/tutor` route (OpenAI-compatible), key stays on Railway like `CLERK_SECRET_KEY`,
+  provider-agnostic via `MODEL` / `BASE_URL` / `API_KEY` env vars. **Use an open model on a
+  free/cheap tier (Groq / OpenRouter / Cloudflare); prototype prompts locally with `ollama`
+  (installed), then swap the URL for prod.** Frontier model only if a rubric eval shows gaps.
+  _Why:_ serves "hold the room", and teaches AI by using AI.
+- [ ] **"Ask about this lesson" AI Q&A** — _M_
+  Scoped LLM Q&A on the current lesson for follow-ups. Reuses the `/api/tutor` infra + model.
+- [ ] **Full-text search / command palette (⌘K)** — _M_
+  Search all 150 lessons by title, term, or content. _Why:_ navigation at this scale.
+- [ ] **Onboarding goal → guided pathway** — _M_
+  "I want to be an AI-fluent PM" → a curated cross-track path instead of "start anywhere".
+  _Why:_ kills the cold-start.
+- [ ] **"Where am I weak" view** — _M (needs analytics)_
+  Comprehension heatmap from quiz scores; surfaces what to review.
 - [ ] **Analytics & instrumentation** (PostHog or similar) — _M_
   We currently can't answer "where do learners drop off / which lesson loses them." A
   learning product with no measurement is flying blind. Lightweight, privacy-respecting.
@@ -39,6 +56,12 @@ Effort key: **S** ≈ hours · **M** ≈ a focused build · **H** ≈ multi-step
 - [ ] **Mobile / responsive pass** — _S–M_
   Check the sticky sidebar, diagrams, and lesson layout at phone widths. _Why:_ people learn
   on phones; currently only desktop-verified.
+
+## Habit, credential & access
+- [ ] **Streaks + daily goal + reminders** — _M_ — the retention loop (currently missing).
+- [ ] **Shareable certificates / badges** — _S–M_ — completion proof for LinkedIn; "land the role".
+- [ ] **Audio / text-to-speech mode** — _M_ — commute learning + accessibility.
+- [ ] **Per-module cheat-sheet / PDF export** — _S–M_ — a one-page revision sheet.
 
 ## Nice to have
 - [ ] **Animated "Atlas" map dashboard** — _M_
