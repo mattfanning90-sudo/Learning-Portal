@@ -1,0 +1,1468 @@
+{
+  "summary": "Research global best-practice AI engineering + the Silicon Valley Product Model, then synthesize a two-track module/lesson curriculum for the Atlas learning portal",
+  "agentCount": 12,
+  "logs": [
+    "Researching 9 domains across both tracks...",
+    "[stall] agent \"research:prod-aipm\" stalled (no progress) after 650s — retrying (1/5)",
+    "[stall] agent \"research:prod-aipm\" stalled (no progress) after 233s — retrying (2/5)",
+    "Research done: 5 engineering maps, 4 product maps. Synthesizing curricula..."
+  ],
+  "result": {
+    "engineering": {
+      "track": "AI Engineering",
+      "tagline": "From \"how does this thing actually work?\" to \"I can design, ship, and govern AI products that real people trust.\"",
+      "promise": "After finishing this track you can explain in plain English what an LLM truly is and isn't, design a reliable AI feature (grounding it in real data, giving it tools, getting clean machine-readable output), measure whether it actually works, delegate real work to coding agents and review it safely, control its cost and security, and build the data feedback loop that turns an AI feature into a durable business. You will be able to hold your own in any room with senior AI engineers AND make the product calls of a Silicon-Valley Product Owner.",
+      "modules": [
+        {
+          "title": "Module 1 — What an LLM Actually Is (The Mental Model Everything Else Rests On)",
+          "goal": "Build a rock-solid, jargon-free mental model of how a large language model works under the hood, so every later capability and failure makes intuitive sense. By the end you can explain to a stranger why these systems are fluent, why they invent facts, why they cost what they cost, and why 'it sounds confident' tells you nothing about whether it's right.",
+          "lessons": [
+            {
+              "title": "The Improv Actor: Next-Token Prediction and the 'Lossy Compression of the Internet'",
+              "summary": "An LLM is not a thinking machine or a database of facts; it is a statistical engine that predicts the most likely next chunk of text, one piece at a time, over and over. Almost every strength (fluency) and every flaw (making things up, giving different answers to the same question) follows from this single mechanism.",
+              "metaphor_seed": "An immensely well-read improv actor who has speed-read most of the internet and now plays an endless game of 'finish my sentence' — it never looks anything up mid-sentence, it just produces the most plausible next few letters based on the rhythm of everything it has ever read. It's spectacular at sounding right because sounding right is literally the only thing it was trained to do.",
+              "case_study_seed": "ChatGPT's November 2022 launch: a model whose ONLY training objective was 'predict the next token' reached 100 million users in two months — the fastest-growing consumer app in history at the time — proving next-token prediction at scale produces something that feels like it understands language.",
+              "pm_angle": "If you don't internalize that the model is a plausibility engine, not a truth engine, you will over-promise to customers and stakeholders. The single most common AI-product failure is treating fluent output as if it were verified output. Your whole roadmap of trust features (citations, review steps, guardrails) exists because of this one fact.",
+              "deep_sections": [
+                "The math without the math: probability distributions and 'rolling weighted dice'",
+                "Temperature and sampling: why the same prompt gives different answers",
+                "Why scale creates the magic: trillions of tokens, billions of parameters, emergent fluency"
+              ],
+              "sources": [
+                "https://lawwu.github.io/posts/2025-02-24-karpathy-deep-dive-llms/index.html",
+                "https://www.youtube.com/@AndrejKarpathy",
+                "https://www.wwwinsights.com/ai/llm-next-token-prediction/",
+                "https://arxiv.org/abs/2408.13442"
+              ]
+            },
+            {
+              "title": "LEGO Bricks and the Desk: Tokens and the Context Window",
+              "summary": "The model doesn't read letters or words — it reads 'tokens', sub-word chunks. Tokens are the unit of cost, speed, and what fits in one request. The context window is the model's working memory: everything it can 'see' at once. Misunderstanding this is the #1 source of broken AI products and surprise bills.",
+              "metaphor_seed": "Tokens are LEGO bricks of language — words are snapped together from standard sub-word pieces, which is why the model can count bricks but not the studs on each brick (letters). The context window is the model's desk: it can only work with papers physically spread on it right now. A bigger desk (2 million tokens ≈ 15 novels) costs more to scan, and papers in the middle of a huge pile get glanced over.",
+              "case_study_seed": "Google's Gemini 1.5/2.5 long-context demos fed the model a 2-million-token context and found a single specific sentence hidden inside the 700,000-word text of 'Les Misérables' (the 'needle in a haystack' test) — while researchers documented the 'lost in the middle' effect where mid-document facts are recalled less reliably.",
+              "pm_angle": "Token economics IS the unit economics of an AI feature — you pay per token, forever, on every request. People assume the model 'remembers' past chats (it doesn't, unless you resend them) and expect perfect recall of a 500-page document. Knowing the limits of the desk lets you scope features that are actually buildable and affordable.",
+              "deep_sections": [
+                "Why models miscount the letters in 'DEEPSEEK': tokens vs characters",
+                "From 4K to 2M: the context-window arms race and what it cost",
+                "Quadratic attention and 'lost in the middle': why bigger isn't free or perfect"
+              ],
+              "sources": [
+                "https://www.ibm.com/think/topics/context-window",
+                "https://en.wikipedia.org/wiki/Context_window",
+                "https://codingscape.com/blog/llms-with-largest-context-windows",
+                "https://introl.com/blog/long-context-llm-infrastructure-million-token-windows-guide"
+              ]
+            },
+            {
+              "title": "A City Where Ideas Have Addresses: Embeddings and Meaning-as-Coordinates",
+              "summary": "Embeddings are how machines turn meaning into numbers — a list of coordinates that place a word, sentence, or document as a point in a 'meaning space' where similar things sit close together. This one trick powers search, recommendations, deduplication, and the retrieval inside every modern AI assistant.",
+              "metaphor_seed": "A vast city where every idea has a street address based purely on meaning. 'King' and 'queen' live on the same block; 'banana' is across town. To find things related to your question you don't read every building — you walk to your question's address and knock on the nearest doors. 'Similar = nearby' is the whole trick.",
+              "case_study_seed": "Spotify's use of embeddings for Discover Weekly: songs, artists, and listening sessions become vectors, so 'tracks near this one in meaning-space' become recommendations — the same nearest-neighbor principle that now powers enterprise search and AI customer support over company knowledge bases.",
+              "pm_angle": "When a vendor says 'our AI understands what you mean, not just keywords,' they mean embeddings. Semantic search, 'find similar', and the retrieval step of every RAG product all reduce to this. Understanding it lets you tell a real semantic-search feature from marketing fluff and reason about why it sometimes returns surprising matches.",
+              "deep_sections": [
+                "Vectors, cosine similarity, and 'nearest neighbor' in plain English",
+                "Vector databases (Pinecone, Weaviate, pgvector): the address book of meaning",
+                "Beyond text: embeddings for images, audio, and mixed media"
+              ],
+              "sources": [
+                "https://www.iguazio.com/glossary/llm-embeddings/",
+                "https://cloudthrill.ca/llm_embedding-explained",
+                "https://www.dremio.com/blog/how-llms-work-tokens-embeddings-and-transformers/",
+                "https://datasciencedojo.com/blog/embeddings-and-llm/"
+              ]
+            },
+            {
+              "title": "Culinary School vs Cooking to Order: Training vs Inference",
+              "summary": "Building a model (training) and using it (inference) are two completely different worlds with different costs, timelines, and skills. Training is expensive, slow, and occasional; inference is the per-request cost you pay forever. The model's knowledge is frozen at a cutoff date — it does NOT learn from your chats in real time. A three-stage pipeline (pretrain → fine-tune → align) explains why a raw model and the polished assistant behave so differently.",
+              "metaphor_seed": "Training is the years a chef spends in culinary school absorbing thousands of recipes — slow, expensive, done before the restaurant opens. Inference is that chef cooking your dish to order: fast, repeated all night, limited to what they already learned. They can't taste a new ingredient tonight and permanently 'know' it tomorrow — that needs going back to school (retraining). Pretraining is general school; fine-tuning and RLHF are the finishing course in house style and manners.",
+              "case_study_seed": "OpenAI's InstructGPT (2022) established the now-standard three-stage recipe — pretrain, then supervised fine-tuning, then RLHF — and showed a 1.3B-parameter aligned model was preferred by humans over the raw 175B GPT-3, proving that post-training 'manners', not just raw size, is what makes a model feel helpful. This is the lineage behind every modern chat assistant.",
+              "pm_angle": "Confusing training and inference leads to disastrous product economics and the most common misconception of all: that the product is 'learning from users' automatically (it isn't — memory is engineered, not auto-magical). Knowing the difference tells you which costs are one-time vs recurring, and frames the central build decision you'll make in Module 6: prompt vs RAG vs fine-tune.",
+              "deep_sections": [
+                "The three stages: pretraining, supervised fine-tuning (SFT), and RLHF/RLAIF",
+                "Knowledge cutoff: why the model doesn't know about last week",
+                "'SFT imitates, RL optimizes': how manners are taught"
+              ],
+              "sources": [
+                "https://pytorch.org/blog/a-primer-on-llm-post-training/",
+                "https://magazine.sebastianraschka.com/p/state-of-llms-2025",
+                "https://home.mlops.community/public/blogs/pretraining-breaking-down-the-modern-llm-training-pipeline",
+                "https://arxiv.org/abs/2203.02155"
+              ]
+            },
+            {
+              "title": "The Student Who Never Leaves a Blank: Why Models Hallucinate",
+              "summary": "Hallucination — fluent, confident, plausible falsehood — is the biggest barrier to deploying LLMs in high-stakes work. The key 2025 insight is that it isn't a mysterious bug: it's the predictable result of how we train and grade models, rewarding confident guessing and punishing honest 'I don't know.' Sounding right and being right are different things.",
+              "metaphor_seed": "A brilliant student told the exam never penalizes wrong answers — only blanks. The rational move is to fill in a confident guess for every question. LLMs are trained and graded under exactly that incentive, so they learn to always produce a smooth, assured answer rather than ever writing 'I'm not sure.' The fluency is real; the certainty is theater.",
+              "case_study_seed": "Mata v. Avianca (2023): two New York lawyers used ChatGPT for legal research and filed a brief citing six entirely fabricated court cases — complete with fake quotes and citation numbers the model invented because they 'looked right.' A federal judge sanctioned them. The canonical real-world demonstration that hallucinations are confident, plausible, and dangerous — reinforced by OpenAI's 2025 'Why Language Models Hallucinate' paper.",
+              "pm_angle": "You must design UX and trust boundaries around the certainty that the model will sometimes be confidently wrong. This is where you decide what needs a human in the loop, where you show citations, and where the cost of a confident error is too high to ship without grounding (Module 2). A great AI PM treats hallucination as a designed-for constant, not a bug to wait out.",
+              "deep_sections": [
+                "OpenAI's exam-taking analogy: why guessing beats abstaining",
+                "The calibration paradox: well-calibrated and still confidently wrong",
+                "The mitigation toolkit preview: RAG, citations, tools, confidence thresholds, human review"
+              ],
+              "sources": [
+                "https://openai.com/index/why-language-models-hallucinate/",
+                "https://arxiv.org/html/2509.04664v1",
+                "https://www.lakera.ai/blog/guide-to-hallucinations-in-large-language-models",
+                "https://arize.com/blog/openais-santosh-vempala-explains-why-language-models-hallucinate/"
+              ]
+            },
+            {
+              "title": "Stepping to the Whiteboard: Reasoning Models and Test-Time Compute",
+              "summary": "The biggest capability shift of 2024–2026 is the move from instant-answer models to 'reasoning' models that spend extra compute thinking step-by-step before responding. This dramatically improves math, coding, and planning — but costs more, takes longer, and isn't always worth it. Knowing when to reach for a slow reasoning model vs a fast one is a core engineering and product judgment call.",
+              "metaphor_seed": "A standard LLM is a quiz-show contestant blurting the first answer that comes to mind. A reasoning model is the same contestant allowed to step to a whiteboard, scribble the working, cross out dead ends, and only then give a final answer. The whiteboard time isn't free — seconds and dollars — but for hard problems it's the difference between a lucky guess and a worked-out solution.",
+              "case_study_seed": "DeepSeek-R1 (January 2025): an open-weight reasoning model that rivaled OpenAI's o1 on math and coding, trained largely via reinforcement learning rather than massive human-labeled reasoning data, showing its full chain-of-thought. Its release rattled markets (Nvidia's stock dropped sharply) and proved high-end reasoning could be far cheaper than assumed.",
+              "pm_angle": "Reasoning models directly trade latency and cost for quality. 'Should this feature use the slow expensive thinker or the fast cheap one?' is a product decision you'll make constantly — it shapes user experience and your bill. Overthinking simple tasks wastes money; underthinking hard ones ships wrong answers.",
+              "deep_sections": [
+                "Chain-of-thought: showing your work",
+                "System 1 vs System 2: fast intuition vs slow deliberation",
+                "Visible vs hidden reasoning, and the 'don't overthink it' tradeoff"
+              ],
+              "sources": [
+                "https://en.wikipedia.org/wiki/Reasoning_model",
+                "https://huggingface.co/blog/Kseniase/testtimecompute",
+                "https://labs.adaline.ai/p/inside-reasoning-models-openai-o3",
+                "https://magazine.sebastianraschka.com/p/state-of-llms-2025"
+              ]
+            },
+            {
+              "title": "The Jet-Lagged Consultant: Capabilities, Limits, and the Map You Must Draw",
+              "summary": "Shipping good AI products is fundamentally about matching the tool to tasks it's genuinely good at and engineering around its real limits. LLMs are superhuman at fluent language, summarizing, drafting, translating, and coding — but they have a frozen knowledge cutoff, can't reliably do exact math, struggle with truly novel problems, and don't know your private data. A great AI PM is a capability-and-limits cartographer.",
+              "metaphor_seed": "A charismatic, jet-lagged expert consultant who has read everything up to last year but just landed with no phone and no files. Ask for fluent advice or a first draft and they're brilliant. Ask for today's stock price, your company's internal policy, or an exact 12-digit multiplication and they'll confidently improvise — unless you hand them the relevant folder (RAG) or a calculator and a phone (tools). The skill is knowing which questions need the folder.",
+              "case_study_seed": "Harvey (legal AI used by firms like Allen & Overy and PwC) and Thomson Reuters' CoCounsel both wrap LLMs in retrieval over verified legal databases plus citations, precisely because a raw model hallucinates case law (as in Mata v. Avianca). The canonical 2025 example of grounding turning an unreliable raw model into a deployable, auditable enterprise product — and the bridge into Module 2.",
+              "pm_angle": "This lesson is the whole job of an AI PM in miniature: draw the map of what the tool can and can't do, then route real features accordingly. It sets up every technique in the rest of the track (RAG, tools, evals) as a deliberate answer to a specific known limit — not a pile of buzzwords.",
+              "deep_sections": [
+                "Strengths and limits, side by side",
+                "Emergent abilities: real capability jump or measurement artifact?",
+                "Why benchmarks can be gamed (a teaser for Module 4's 'benchmark trap')"
+              ],
+              "sources": [
+                "https://medium.com/@hrk84ya/rag-in-2025-from-quick-fix-to-core-architecture-9a9eb0a42493",
+                "https://www.min.io/learn/retrieval-augmented-generation",
+                "https://www.lxt.ai/blog/llm-benchmarks/",
+                "https://arxiv.org/html/2503.05788v2"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 2 — The Craft of Building Reliable AI Features",
+          "goal": "Turn the mental model into a builder's toolkit. Learn the five core techniques that turn a flaky demo into a dependable product: feeding the model the right context, grounding it in real data (RAG), giving it tools to act, getting clean machine-readable output, and giving it memory. This is the craft layer every AI engineer and PM must share.",
+          "lessons": [
+            {
+              "title": "The Chief of Staff: Prompt Engineering and Context Engineering",
+              "summary": "Most agent failures in 2025–2026 aren't model failures — they're context failures: the model was given the wrong information, too much, or in the wrong order. Prompt engineering is writing one good instruction; context engineering is curating EVERYTHING the model sees at each step. Anthropic now calls it 'effectively the #1 job of engineers building AI agents.'",
+              "metaphor_seed": "The model is a brilliant new consultant with total amnesia who starts every meeting with a blank mind. Prompt engineering is writing them one clear instruction. Context engineering is preparing their entire briefing folder before the meeting: which three documents, in what order, what notes from last time, what tools on the desk. A genius handed a messy 500-page folder performs worse than one handed a tight two-pager. Your job is the great chief-of-staff who prepares that folder.",
+              "case_study_seed": "Anthropic's October 2025 engineering essay 'Effective context engineering for AI agents' codified this industry-wide shift, drawing on how Claude Code and internal agents are built (just-in-time retrieval, compaction, NOTES.md note-taking, sub-agents). It became the reference text practitioners cite for why context engineering replaced prompt engineering as the central skill.",
+              "pm_angle": "This is the single biggest lever on whether a feature feels reliable or flaky — and it costs real money: every wasted token is latency and dollars. When a feature is 'almost good but inconsistent,' the fix is almost always better context, not a smarter model. Knowing that saves you from expensive model-upgrade goose chases.",
+              "deep_sections": [
+                "'The smallest set of high-signal tokens': the core maxim",
+                "Context rot and 'lost in the middle': why more context can hurt",
+                "System-prompt 'altitude' and structuring with sections/tags"
+              ],
+              "sources": [
+                "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+                "https://neo4j.com/blog/agentic-ai/context-engineering-vs-prompt-engineering/",
+                "https://mem0.ai/blog/context-engineering-ai-agents-guide",
+                "https://www.deepset.ai/blog/context-engineering-the-next-frontier-beyond-prompt-engineering"
+              ]
+            },
+            {
+              "title": "The Open-Book Exam: Retrieval-Augmented Generation (RAG)",
+              "summary": "LLMs only 'know' what they saw in training and will confidently invent facts about your company's documents, prices, or policies. RAG fetches the relevant, current documents at question time and hands them to the model so answers are grounded in real, citable sources. It is the workhorse pattern behind almost every enterprise AI assistant — and retrieval quality usually decides whether it's trustworthy or a liability.",
+              "metaphor_seed": "RAG is an open-book exam instead of a closed-book one. A closed-book LLM answers from fuzzy memory and bluffs when unsure. RAG lets it walk in, look up the exact relevant pages, and answer with the book open, quoting the page. The catch: the answer is only as good as the librarian who fetched the pages. Grab the wrong book and the student confidently gives a wrong answer from the wrong page — which is why retrieval quality and reranking matter so much.",
+              "case_study_seed": "A widely-cited 2025 security finding showed the dark side of poor retrieval hygiene: just FIVE carefully crafted poisoned documents inserted into a knowledge base could manipulate a RAG system's answers about 90% of the time ('RAG poisoning'). A vivid demonstration that WHAT you retrieve is as important as the model you use.",
+              "pm_angle": "RAG is how you ship an AI feature over private or fast-changing data without it making things up — and it's the answer to most 'can the AI know about our stuff?' requests. But a demo RAG and a production RAG are worlds apart; the gap lives in unglamorous details (chunking, reranking, 'no evidence, no answer'). Budget for that gap or your launch becomes a liability.",
+              "deep_sections": [
+                "Chunking, embeddings, and vector search: how documents get found",
+                "Hybrid search and rerankers: getting the BEST evidence on top",
+                "Groundedness, citations, and the 'no evidence, no answer' rule",
+                "Knowledge freshness and Corrective RAG (CRAG)"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2501.07391",
+                "https://www.edenai.co/post/the-2025-guide-to-retrieval-augmented-generation-rag",
+                "https://medium.com/@meeran03/building-production-ready-rag-systems-best-practices-and-latest-tools-581cae9518e7",
+                "https://www.mdpi.com/2078-2489/17/1/54"
+              ]
+            },
+            {
+              "title": "The Phone and the Buttons: Tool Use, Function Calling, and MCP",
+              "summary": "A pure LLM can only produce text — it can't check the weather, query your database, send an email, or book a flight. Tool use (function calling) lets the model decide to call real software and use the results, turning a text generator into something that takes action. MCP, an open standard from Anthropic now under the Linux Foundation, standardizes how models discover and use tools so you build an integration once, not N×M times.",
+              "metaphor_seed": "The LLM is a smart but housebound office worker who can only write notes. Function calling gives them a phone and labeled buttons: 'call the warehouse', 'look up a customer', 'send the email'. They read the situation, press the right button, read the answer, and continue. MCP is the standard wall socket and plug shape: instead of every tool needing a custom adapter for every model, everyone agrees on one plug — exactly why power outlets (and now MCP) let an ecosystem flourish.",
+              "case_study_seed": "Anthropic launched MCP in November 2024; through 2025 it was adopted by OpenAI and Google, grew to 10,000+ public servers, and at the end of 2025 was donated to the new Agentic AI Foundation under the Linux Foundation (co-founded with Block and OpenAI, backed by AWS, Google, Microsoft, Cloudflare, Bloomberg) — a rare case of fierce competitors standardizing on one protocol, like USB or HTTP.",
+              "pm_angle": "Tools are what turn 'a chatbot' into 'a product that does real work', and they're the foundation of every AI agent in Module 5. The flip side: every tool you grant is a new permission and a new risk surface (Module 7). Tool design — small, distinct, unambiguous tools — is a product decision with direct reliability consequences.",
+              "deep_sections": [
+                "Function calling: how the model asks your code to run something",
+                "MCP and the N×M integration problem",
+                "Good tool design: small, distinct, token-efficient, always-loaded vs discovered"
+              ],
+              "sources": [
+                "https://blog.bytebytego.com/p/connecting-llms-to-the-real-world",
+                "https://www.descope.com/learn/post/mcp",
+                "https://datasciencedojo.com/blog/guide-to-model-context-protocol/",
+                "https://obot.ai/resources/learning-center/mcp-vs-function-calling/"
+              ]
+            },
+            {
+              "title": "The Form With Guide Rails: Structured Output",
+              "summary": "If an LLM's answer feeds into other software (a database, an API, a UI), you need it in a strict, predictable format like JSON — not a chatty paragraph. Naively asking for JSON fails 5–20% of the time with missing fields or extra text, silently breaking downstream code. Reliable structured output is what makes LLMs safe to wire into real systems — but valid format is NOT correct content.",
+              "metaphor_seed": "Imagine hiring someone to fill out a tax form. 'Just write me the answer' gets a rambling letter you can't file. A blank form with labeled boxes (JSON schema) is much better. Constrained decoding is a form with a physical guide rail that won't let the pen leave the box or skip a field — they literally can't fill it out wrong. But the trap: a perfectly completed form can still have the WRONG numbers in the boxes. Correct format does not mean true content.",
+              "case_study_seed": "OpenAI shipped Structured Outputs with strict JSON Schema mode in 2024–2025; a production write-up reported cutting post-processing errors from 32% down to 0.4% after switching to constrained JSON decoding. Gartner predicts 95% of enterprise LLM deployments will use constrained decoding by 2027.",
+              "pm_angle": "Structured output is the 'default contract' between the AI and the rest of your app — it's what lets an AI feature plug into existing systems instead of living in a chat box. The load-bearing lesson for a PM: 'the JSON was valid' is not 'the answer was right', so you still need evals (Module 4) on the content, not just the shape.",
+              "deep_sections": [
+                "Four generations of reliability: asking nicely → function calling → native schema → constrained decoding",
+                "Constrained decoding: making invalid output literally impossible",
+                "Schema design and the syntactic-vs-semantic trap"
+              ],
+              "sources": [
+                "https://tianpan.co/blog/2025-10-29-structured-outputs-llm-production",
+                "https://g360technologies.com/structured-outputs-are-becoming-the-default-contract-for-llm-integrations/",
+                "https://arxiv.org/pdf/2501.10868",
+                "https://rotascale.com/blog/structured-output-isnt-reliable-output/"
+              ]
+            },
+            {
+              "title": "The Desk and the Filing Cabinet: Memory Across Turns and Sessions",
+              "summary": "LLMs are stateless — by default they forget everything when a conversation ends, and within a long conversation they run out of room. To build products that feel personal and handle long, multi-step work, you must engineer memory: what to keep, what to summarize, what to store for next time, and what to forget. This separates a goldfish chatbot from an assistant that remembers you.",
+              "metaphor_seed": "The context window is a small desk. Everything you're actively working on must fit; once it's full, papers fall off the edge and are lost. Short-term memory is what's on the desk now. Long-term memory is the filing cabinet behind you — you can't see it directly, so you (or the agent) must deliberately file important things away and pull the right folder back onto the desk when needed. A good assistant keeps a running handover note so even if the desk gets cleared, it rebuilds context in seconds.",
+              "case_study_seed": "Amazon launched Bedrock AgentCore Memory in 2025 as managed infrastructure splitting short-term (in-session) and long-term (cross-session preferences and insights) memory for production agents — a concrete sign that 'memory' graduated from research idea to commercial platform. Startups like Mem0 built their whole product around being the memory layer for AI agents.",
+              "pm_angle": "Customers expect the product to 'remember' them, but memory is engineered, not free — and what you store has privacy, cost, and accuracy consequences. Deciding what to remember, summarize, and forget is a product decision that shapes both the experience and the bill, and it directly enables the long-running agents of Module 5.",
+              "deep_sections": [
+                "Short-term vs long-term memory",
+                "Compaction, structured note-taking (NOTES.md), and just-in-time retrieval",
+                "Forgetting policies and memory-as-tools"
+              ],
+              "sources": [
+                "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-memory-building-context-aware-agents/",
+                "https://arxiv.org/abs/2601.01885",
+                "https://weaviate.io/blog/context-engineering",
+                "https://mem0.ai/blog/context-engineering-ai-agents-guide"
+              ]
+            },
+            {
+              "title": "Assembly Line vs Handyman: Multi-Step Chains and Workflows",
+              "summary": "Real tasks rarely finish in one model call — they need multiple steps: plan, retrieve, call a tool, check, revise, repeat. Chaining these steps, and deciding when to follow a fixed script versus let the model loop freely, is how you tackle complex work. But every extra step compounds error and cost, so choosing the simplest architecture that works is one of the most important design calls of 2025–2026.",
+              "metaphor_seed": "A single LLM call is one swing of a hammer. A chain is a fixed recipe — step 1, 2, 3 — like an assembly line: reliable but rigid. An agent is a handyman you send into a house with a toolbox and a goal ('fix the leak'), trusting them to figure out the steps — powerful, but they might wander. The design question is: when do you actually need the flexible handyman versus the predictable assembly line?",
+              "case_study_seed": "June 2025's public clash: Cognition (makers of Devin) published 'Don't Build Multi-Agents', warning that splitting work across agents fractures context, while Anthropic published 'How we built our multi-agent research system' explaining when parallel sub-agents DO win. The lesson is that both essays largely agreed underneath the opposing headlines: architecture is a tradeoff, not a religion.",
+              "pm_angle": "More steps and more agents mean more cost, more latency, and more ways to fail — but also more capability. Knowing that a fixed pipeline is cheaper and more debuggable than a free-roaming agent helps you push back on over-engineering and scope features to the simplest thing that works. This is the conceptual on-ramp to the full agents module.",
+              "deep_sections": [
+                "Chains/pipelines vs agents vs sub-agents",
+                "Error compounding and the cost of every extra step",
+                "The single-vs-multi-agent debate without the ideology"
+              ],
+              "sources": [
+                "https://news.smol.ai/issues/25-06-13-cognition-vs-anthropic",
+                "https://www.philschmid.de/single-vs-multi-agents",
+                "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+                "https://arxiv.org/pdf/2604.02460"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 3 — Agents and Agentic Software Engineering",
+          "goal": "Understand the defining shift of 2026: AI that doesn't just answer but acts — using tools in a loop to pursue a goal with limited supervision. Learn what an agent really is, why tool design (not model IQ) is the biggest lever, the real coding-agent products you'll use, the autonomy dial, and the new Agentic SDLC that reshapes how software gets built. This module anchors most of the reading list.",
+          "lessons": [
+            {
+              "title": "The Chef Who Cooks, Not Recites: What an Agent Is and the Agent Loop",
+              "summary": "An AI agent is simply a model that thinks, acts with a tool, observes the result, and repeats until done. Understand this one loop and every agent product and failure mode becomes reasonable instead of magic. Conflating 'agent' with 'chatbot' is the single biggest source of misplaced expectations.",
+              "metaphor_seed": "An agent is a chef working from a goal ('make dinner') instead of a fixed recipe. They look in the fridge (observe), decide to chop an onion (act with a tool), taste the result (observe again), and adjust — repeating until the dish is done. A chatbot just tells you a recipe; an agent actually cooks, burns things, and tries again.",
+              "case_study_seed": "The original ReAct paper (Princeton + Google, 2022) showed that an LLM answering questions while interleaving reasoning with live Wikipedia lookups beat models that only reasoned OR only acted — the empirical birth of the modern agent loop now used by Claude Code, Devin, and every coding agent. Pair with 'A Survey on Code Generation with LLM-based Agents' (arXiv 2508.00083) for the full taxonomy of autonomy, environment interaction, and collaboration.",
+              "pm_angle": "'Agent' is the most overloaded word in your stakeholders' vocabulary. Being able to say precisely 'it's a model in a Reason-Act-Observe loop with these tools and this stopping condition' lets you scope what's actually buildable, set honest expectations, and cut through vendor hype.",
+              "deep_sections": [
+                "The ReAct loop: Reason → Act → Observe → repeat",
+                "Plan-and-Execute vs reason-as-you-go",
+                "Agents vs workflows, and the 'done' signal",
+                "The agent taxonomy: autonomy, environment, collaboration"
+              ],
+              "sources": [
+                "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+                "https://www.mindstudio.ai/blog/what-is-react-loop-ai-agent-reasoning",
+                "https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems",
+                "https://arxiv.org/abs/2508.00083"
+              ]
+            },
+            {
+              "title": "Same Chef, Different Kitchen: The Agent-Computer Interface (ACI)",
+              "summary": "A surprising 2024 finding still dominates 2026 practice: the same model performs dramatically better or worse depending on how its tools are designed — not how smart the model is. The Agent-Computer Interface is to agents what UX is to humans, and it's the highest-leverage, lowest-cost skill in the field.",
+              "metaphor_seed": "Two people with identical cooking skill: one in a chaotic kitchen where knives are hidden and the oven has no labels, one in a clean kitchen with everything within reach and clearly marked. Same chef, wildly different dinners. The ACI is the kitchen layout you build for the AI — and a guardrail (you physically can't turn the oven past 250°C) prevents whole categories of disaster.",
+              "case_study_seed": "Princeton's SWE-agent (arXiv 2405.15793, NeurIPS 2024) coined 'ACI' and proved it: by wrapping a normal Linux shell in agent-friendly commands — a paged file viewer, a syntax-checking editor, concise search — researchers lifted the model from near-zero to 12.5% on SWE-bench with NO change to the model. The foundational 'tooling beats model tweaks' result.",
+              "pm_angle": "This maps directly onto a PM's instinct for good UX — except the 'user' is the AI. When an agent underperforms, the cheapest fix is usually better tools and clearer feedback, not a bigger model. Recognizing that reframes your improvement budget away from expensive model swaps toward high-leverage interface design.",
+              "deep_sections": [
+                "ACI as the AI's UX: simplicity, efficiency, error-prevention",
+                "Poka-yoke: making mistakes impossible by design",
+                "Worked example: a 100-line file viewer that beats raw 'cat'"
+              ],
+              "sources": [
+                "https://swe-agent.com/0.7/background/aci/",
+                "https://arxiv.org/abs/2405.15793",
+                "https://agentpatterns.ai/tool-engineering/agent-computer-interface/",
+                "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+              ]
+            },
+            {
+              "title": "The Whiteboard That Fills Up: Context Engineering for Long-Running Agents",
+              "summary": "Agents fail less from 'being dumb' and more from drowning in their own history — 'context rot', where a model gets worse as its window fills. Context engineering (the 2026 successor to prompt engineering) is what lets agents run for hours or across whole codebases. It also reveals a profound insight: as codebases scale, READING code, not writing it, becomes the dominant bottleneck.",
+              "metaphor_seed": "An agent's context window is a single small whiteboard. Early on it's clear and useful; as it fills with scribbles the agent can't find what matters and starts making mistakes. Context engineering is the discipline of wiping the board down to essentials (compaction), keeping a tidy notebook beside it (memory), and only writing down what you need right now (just-in-time retrieval).",
+              "case_study_seed": "Anthropic's 'Claude plays Pokemon' agent stayed coherent across thousands of game steps and multiple context resets only because it kept self-generated notes (a map, goals, what it had tried) OUTSIDE the context window — a vivid demonstration that memory, not raw intelligence, unlocks long-horizon tasks. Pair with SWE-AGI/MoonBit (arXiv 2602.09447), whose spec-driven from-scratch construction shows code comprehension overtaking code generation as the real ceiling.",
+              "pm_angle": "Long-running agents are only as good as their memory discipline — the limiting factor on 'can this agent finish a big multi-hour task?' is rarely model IQ and usually context management. And the comprehension-bottleneck insight reframes where your engineering effort and review time should go as systems grow.",
+              "deep_sections": [
+                "Context rot and the finite attention budget",
+                "Compaction, external memory, and just-in-time retrieval",
+                "Why code READING is the dominant bottleneck at scale (SWE-AGI/MoonBit)",
+                "Anthropic's Memory for Managed Agents (April 2026): persistent, auditable, shareable"
+              ],
+              "sources": [
+                "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+                "https://arxiv.org/abs/2602.09447",
+                "https://usewire.io/blog/anthropic-managed-agents-memory-context-engineering/",
+                "https://arxiv.org/pdf/2510.12635"
+              ]
+            },
+            {
+              "title": "Hiring Help for Your House: Coding Agents in the Wild",
+              "summary": "Claude Code, Devin, Codex, Jules, and SWE-agent are the products you'll actually use, buy, or build against. The key distinction is architectural: synchronous 'co-pilot in your terminal' agents you steer in real time, versus asynchronous 'cloud worker that returns a pull request'. Picking the wrong tool for your workflow costs more than picking a slightly weaker model.",
+              "metaphor_seed": "Hiring help for your house. A synchronous agent like Claude Code is a contractor working beside you — you watch, redirect, and approve as they go. An asynchronous agent like Jules is a contractor you text a job to; they go to their workshop, do it, and come back with finished work to inspect. Same skill set, totally different management style — you pick based on how much you want to be in the room.",
+              "case_study_seed": "Cognition's Devin launch (March 2024) defined the autonomous-coding-agent market; by Q2 2026 the field matured into a benchmark matrix where Claude Code leads interactive SWE-bench Verified (~80.8%) while Codex leads autonomous Terminal-Bench — concrete proof that 'best agent' depends entirely on the job. Anchor with 'Toward Agentic SE Beyond Code' (arXiv 2510.19692), which surveys Jules, Codex, Devin, SWE-agent, AutoCodeRover, and Claude Code and frames the shift to 'programming with trust'.",
+              "pm_angle": "Tool selection is a real product and operations decision: synchronous vs asynchronous changes your team's workflow, review load, and where humans sit. Teams typically run two tools in parallel (interactive + long-running). Knowing the landscape lets you both choose tools and position your own product against them.",
+              "deep_sections": [
+                "Synchronous (autonomy OVER the process) vs asynchronous (autonomy FROM it)",
+                "The product landscape: Devin, SWE-agent, Claude Code, Codex, Jules",
+                "Why scaffolding/orchestration beats raw model score",
+                "'Programming with trust': vision, values, vocabulary"
+              ],
+              "sources": [
+                "https://www.digitalapplied.com/blog/claude-code-vs-codex-vs-jules-q2-2026-matrix",
+                "https://arxiv.org/abs/2510.19692",
+                "https://www.developersdigest.tech/blog/codex-vs-claude-code-april-2026",
+                "https://artificialanalysis.ai/agents/coding"
+              ]
+            },
+            {
+              "title": "Self-Driving Levels for Code: The Autonomy Dial",
+              "summary": "Autonomy isn't binary — it's a dial, like self-driving car levels, that gives teams a shared vocabulary for how much rope to give an agent and where the human sits. The counterintuitive 2026 lesson: higher autonomy is NOT always better. Level 3 (conditional autonomy) is the recommended production default; pushing to L4/L5 without strong testing and isolation invites silent drift and human skill atrophy.",
+              "metaphor_seed": "Self-driving car levels for code. Level 1 is cruise control (you steer everything); Level 3 is a car that drives the highway while you stay alert and ready to grab the wheel; Level 5 is no steering wheel at all. Just as Level 5 cars aren't safe everywhere yet, Level 5 coding agents aren't safe on messy real codebases — putting 'a middle-schooler in the CEO chair' is a disaster.",
+              "case_study_seed": "Uber deployed FlakyGuard, a Level-4-style agent that autonomously identifies and fixes flaky tests off a backlog with no human assignment — bounded high autonomy that works precisely because the task is narrow and verifiable — contrasted with Cursor's million-line 'FastRender' multi-agent push at the L5 frontier.",
+              "pm_angle": "The autonomy level you choose IS a product decision: it sets where humans review, how fast you ship, and how much risk you carry. Higher isn't better — match autonomy to how clearly the task is defined, not to how capable the model is. This is the dial you'll tune for every agentic feature.",
+              "deep_sections": [
+                "L1 Assistive → L2 Pair → L3 Task Agent → L4 Teammate → L5 'avalanche'",
+                "The human role shift: Driver → Reviewer → Change Owner → Auditor → Consumer",
+                "Why L3 is the sensible default and the risks of over-autonomy"
+              ],
+              "sources": [
+                "https://www.swarmia.com/blog/five-levels-ai-agent-autonomy/",
+                "https://asdlc.io/concepts/levels-of-autonomy/",
+                "https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy",
+                "https://www.mindstudio.ai/blog/agentic-coding-levels-explained"
+              ]
+            },
+            {
+              "title": "From Hand-Drawn to CGI: The Agentic SDLC (A-SDLC)",
+              "summary": "The big-picture, organizational shift a Product Owner must own: the software lifecycle is being rebuilt around autonomous task execution between human checkpoints. Agents now participate in planning, coding, review, shipping, and operating — and the bottleneck moves from writing code to reviewing it. This is the bridge between the AI-engineering and product-leadership worlds.",
+              "metaphor_seed": "A film studio moving from hand-drawn animation to a CGI pipeline. The work doesn't disappear — it relocates. Fewer people draw each frame (write each line); more people become directors and reviewers who set intent, check the output, and catch the scene that 'renders correctly but tells the wrong story.' The bottleneck moves from production to review.",
+              "case_study_seed": "The 2026 arXiv survey 'Agentic Software Engineering: A Six-Layer Reference Architecture' (arXiv 2604.26275) documents the field-wide jump on SWE-bench Verified from 1.96% (Oct 2023) to 78.4% (Apr 2026), names the six-layer A-SDLC architecture, and identifies the 'economics of attention': as agents get cheaper, expert human REVIEW time becomes the binding constraint on shipping.",
+              "pm_angle": "This is the theme a PM must own end-to-end. It changes team structure, review economics, and what 'engineering work' even means — the Reviewer/Change-Owner becomes the new core role. If review is now your scarce resource, you plan capacity, tooling, and process around it, not around lines of code written.",
+              "deep_sections": [
+                "The six-layer reference architecture for agentic SE",
+                "From 'code generation' to 'delegated execution under supervision'",
+                "The 'economics of attention': review as the scarce resource",
+                "Five open problems: evaluation, governance, technical debt, skill redistribution, economics"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2604.26275",
+                "https://www.coderabbit.ai/guides/agentic-sdlc",
+                "https://www.augmentcode.com/guides/agentic-sdlc",
+                "https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html"
+              ]
+            },
+            {
+              "title": "The Newsroom on a Breaking Story: Multi-Agent Systems",
+              "summary": "When single agents hit context and complexity limits, the next move is to split work across multiple specialized agents — an orchestrator that plans and delegates to workers, each with its own clean context. The upside is parallelism and separation of concerns; the brutal trade-off is roughly 15x the token cost. Knowing when it's worth it is the whole skill.",
+              "metaphor_seed": "A newsroom on a breaking story. The editor (orchestrator) doesn't chase every lead personally — they send three reporters (sub-agents) to different sources at once, each filling their own notebook, then weave the returned summaries into one article. Faster and deeper than one journalist doing it all, but you're now paying three salaries instead of one.",
+              "case_study_seed": "Anthropic's Research feature (April 2025) uses a lead agent that spawns parallel sub-agents, each with its own context window chasing one thread; it outperformed single-agent Claude Opus 4 by ~90.2% on internal evals — at roughly 15x the token cost. The canonical real example of the multi-agent power/price trade-off.",
+              "pm_angle": "Multi-agent is the most expensive architecture in your toolkit and the most over-applied. Understanding the 15x cost and the cases where it actually wins (broad, parallelizable research) lets you say no to it for simple or tightly-coupled tasks — and yes when the depth genuinely justifies the bill.",
+              "deep_sections": [
+                "Orchestrator-worker: lead plans, workers filter and condense",
+                "Why each sub-agent needs its own clean context",
+                "The ~15x cost and when NOT to use multi-agent"
+              ],
+              "sources": [
+                "https://www.anthropic.com/engineering/multi-agent-research-system",
+                "https://blog.bytebytego.com/p/how-anthropic-built-a-multi-agent",
+                "https://theaiengineer.substack.com/p/how-anthropic-built-multi-agent-deep",
+                "https://www.zenml.io/llmops-database/building-a-multi-agent-research-system-for-complex-information-tasks"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 4 — Proving It Works: Evaluation, Benchmarks, and Observability",
+          "goal": "Learn the discipline that separates shipped products from demos. Because AI is non-deterministic, you can't prove it works by inspection — you measure it. Master evals (the new unit tests), error analysis, the difference between offline and online testing, using AI to grade AI, reading benchmarks honestly, and instrumenting production so you can debug a black box. This is the most important practical skill for both an engineer and a PM.",
+          "lessons": [
+            {
+              "title": "The Tasting Routine: Evals Are the New Unit Tests",
+              "summary": "Traditional software is deterministic — a test passes or fails forever. LLMs are probabilistic and their quality is subjective, so you can't prove correctness by inspection. Evals are the systematic, repeatable way to measure whether an AI feature is good enough, catch regressions before users do, and decide whether a change actually helped. Without them, teams play whack-a-mole where fixing one failure silently creates another.",
+              "metaphor_seed": "Evals are a restaurant's tasting routine before service. A normal recipe always tastes the same, so you check it once. But a head chef working with fresh, variable ingredients (an LLM) must taste every dish against a written standard before it leaves the kitchen. Error analysis is the chef tasting a week of returned plates, noticing 'the soup is too salty 40% of the time', and adding a permanent salt-check to the line.",
+              "case_study_seed": "Rechat's 'Lucy' real-estate assistant and Nurture Boss (property-management AI), documented by Hamel Husain: prompt-tweaking alone hit a wall of whack-a-mole regressions until systematic error analysis and tiered evals (cheap code assertions → human/LLM-judge review → live A/B tests) let them see and fix the dominant failure modes and iterate far faster.",
+              "pm_angle": "Error analysis is the most PM-friendly, data-driven practice in all of AI: read real outputs, label failures, group them, fix the most common and costly ones. Binary pass/fail evals force a clear definition of 'good', and an eval suite in CI/CD becomes your regression gate — the thing that lets you change a prompt or upgrade a model without crossing your fingers.",
+              "deep_sections": [
+                "The three levels: code assertions, human/LLM-judge review, live A/B",
+                "Error analysis: read, label, group, target",
+                "Golden datasets and the eval-data flywheel",
+                "Why binary beats arbitrary 1-5 scores"
+              ],
+              "sources": [
+                "https://hamel.dev/blog/posts/evals/",
+                "https://hamel.dev/blog/posts/evals-faq/",
+                "https://www.lennysnewsletter.com/p/evals-error-analysis-and-better-prompts",
+                "https://newsletter.pragmaticengineer.com/p/evals"
+              ]
+            },
+            {
+              "title": "The Leaked Answer Key: Benchmarks vs Reality (SWE-bench vs SWE-Bench Pro)",
+              "summary": "Public leaderboards drive billions in valuation and shape buying decisions, but a high benchmark score can be dangerously misleading. Benchmarks leak into training data (contamination), so models memorize answers rather than solve problems, and clever 'scaffolding' can inflate scores without improving the model. A learner who understands this can cut through marketing claims.",
+              "metaphor_seed": "Benchmarks are like a driving test where the examiner uses the same route every year. Eventually students memorize 'turn left at the bakery' and ace the test without learning to drive (contamination). SWE-Bench Pro is the examiner who switches to fresh, unseen routes and adds highway merging and parallel parking, so scores suddenly drop — revealing who can actually drive in the real world.",
+              "case_study_seed": "SWE-Bench Pro (arXiv 2509.16941, Scale AI, 2025): 1,865 enterprise problems across private, held-out repos built to resist contamination. Frontier models that score 70%+ on the old SWE-bench Verified fall to under 45% Pass@1 (and ~23% on the public Pro set) — the honest benchmark that exposes how inflated the familiar headline number is. Connect to Module 1's 'benchmarks can be gamed' teaser and Module 3's SWE-bench progress story.",
+              "pm_angle": "Stakeholders quote benchmark numbers as if they were product guarantees. Understanding contamination, saturation, and Goodhart's Law ('when a benchmark becomes a target it stops being a good measure') lets you set honest expectations and insist on YOUR domain evals — because a generic leaderboard rarely predicts performance on your specific use case.",
+              "deep_sections": [
+                "Contamination: when the test is in the training data",
+                "Saturation and Goodhart's Law",
+                "The scaffolding effect: harness vs raw model skill",
+                "Why you must build your own domain evals"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2509.16941",
+                "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+                "https://www.codesota.com/news/swe-bench-contamination-debate",
+                "https://llm-stats.com/benchmarks/swe-bench-pro"
+              ]
+            },
+            {
+              "title": "Flight Simulator vs Live Cockpit: Offline vs Online Evaluation",
+              "summary": "An AI feature can pass every pre-launch test and still fail in the wild, because real users do unexpected things and the world changes. Offline evals (fixed datasets, before launch) catch known failures cheaply; online evals (scoring live traffic, after launch) catch the surprises. Combining them, plus safe rollout patterns like shadow mode and canaries, lets you ship fast without betting the business.",
+              "metaphor_seed": "Offline eval is a flight simulator: you rehearse known emergencies safely on the ground before takeoff. Online eval is the cockpit instruments and a new co-pilot flying 'shadow' on real flights, calling out what they would do while the veteran captain still controls the plane. Only once the trainee's shadow decisions consistently match the captain's do you hand over the controls (canary, then full rollout).",
+              "case_study_seed": "Ramp (corporate-spend fintech) runs its transaction-handling agents in shadow mode on real financial transactions: the agent predicts the action, an LLM judge compares it to what the human actually did, and live actions are enabled only once shadow accuracy crosses a threshold — testing guardrails on real money without risking a dollar.",
+              "pm_angle": "Launch readiness is a core PM call, and these are the tools to make it safely: shadow mode and canary releases let you de-risk a launch with real traffic before full exposure. Knowing offline answers 'is it correct on what we anticipated?' and online answers 'is it working for real users now?' tells you exactly which evidence you need before you flip the switch.",
+              "deep_sections": [
+                "Offline vs online: what each catches",
+                "Shadow mode: testing at 0% exposure",
+                "Canary and A/B: proving real-world improvement, not just eval-score wins"
+              ],
+              "sources": [
+                "https://rhesis.ai/post/offline-vs-online-evaluation-llm-applications",
+                "https://www.statsig.com/perspectives/offline-vs-online-evals",
+                "https://labelstud.io/learningcenter/offline-evaluation-vs-online-evaluation-when-to-use-each/",
+                "https://arxiv.org/html/2411.13768v3"
+              ]
+            },
+            {
+              "title": "The Fast, Cheap, Quirky Grader: LLM-as-Judge",
+              "summary": "Human review is the gold standard but is slow and expensive — you can't have humans grade millions of outputs. LLM-as-judge uses a strong model to score outputs automatically, making large-scale and continuous evaluation affordable. But judges have systematic, well-documented biases, so you must know both how powerful and how dangerous this technique is, and how to keep the judge honest.",
+              "metaphor_seed": "LLM-as-judge is a very fast, very cheap exam grader who can mark a million papers overnight but has quirky habits: they give higher marks to the first essay in the pile and to longer essays regardless of quality. You still use them at scale, but only after spot-checking their marking against a senior examiner's grades and correcting for known habits (shuffle the pile, hide the length).",
+              "case_study_seed": "The 'Judging the Judges' position-bias study (arXiv 2406.07791) systematically showed LLM evaluators favor answers by position regardless of content, and the 2025 LLM-as-a-Judge survey (arXiv 2411.15594) catalogued the bias taxonomy now used to design debiased eval pipelines across industry.",
+              "pm_angle": "LLM-as-judge is the workhorse that makes continuous, large-scale evals affordable — but if you trust an un-calibrated judge, you're flying on a broken instrument. The discipline of anchoring the judge to a human-labeled set before trusting it is a quality gate you should insist on, because every online-monitoring number downstream depends on it.",
+              "deep_sections": [
+                "Pairwise vs pointwise judging with rubrics",
+                "The bias zoo: position, verbosity, self-preference, bandwagon",
+                "Debiasing and aligning the judge to human labels"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2411.15594",
+                "https://arxiv.org/abs/2406.07791",
+                "https://galileo.ai/blog/llm-as-a-judge-vs-human-evaluation",
+                "https://www.emergentmind.com/topics/llm-as-a-judge-evaluations"
+              ]
+            },
+            {
+              "title": "The Flight Data Recorder: Observability and Production Monitoring",
+              "summary": "When an AI app misbehaves, the cause is hidden inside a chain of model calls, tool calls, retrievals, and retries — without instrumentation, debugging is pure guesswork. Observability gives you the X-ray: every step, its latency, its token cost, its inputs and outputs. In 2026 this standardized around OpenTelemetry GenAI conventions, and Gartner projects observability will be ~50% of GenAI deployment investment by 2028.",
+              "metaphor_seed": "Observability is the flight data recorder plus a glass-bottom view of the kitchen. When a customer complains the meal was slow, you don't guess: you replay the exact order and see the salad took 8 seconds but the agent re-fired the grill three times (a retry loop) and waited 40 seconds on a slow supplier (a tool call). OpenTelemetry is the industry agreeing on one wiring diagram so any inspector's equipment can read any kitchen's recorder.",
+              "case_study_seed": "OpenTelemetry's 2026 GenAI observability release standardized LLM tracing, demonstrated with VS Code Copilot exporting telemetry (operation duration and token usage) so developers can compare latency and cost across models on the same dashboards — vendor-neutral instrumentation you set up once.",
+              "pm_angle": "Observability is your source of truth on cost, latency, and quality in production — the dashboard that tells you why a response succeeded or failed and where the money is going. There's no stack trace when an agent goes wrong after 180 steps; tracing is the only way to see what happened. It's also what feeds your online evals their live traffic.",
+              "deep_sections": [
+                "Traces and spans: one request, its steps",
+                "OpenTelemetry GenAI conventions and vendor-neutral instrumentation",
+                "Token, cost, latency, and drift monitoring; PII-safe logging"
+              ],
+              "sources": [
+                "https://opentelemetry.io/blog/2026/genai-observability/",
+                "https://www.langchain.com/langsmith/observability",
+                "https://www.confident-ai.com/knowledge-base/compare/top-7-llm-observability-tools",
+                "https://www.firecrawl.dev/blog/best-llm-observability-tools"
+              ]
+            },
+            {
+              "title": "Watching the Whole Operation: Evaluating Agents and Reliability",
+              "summary": "A chatbot that gives a slightly wrong answer is annoying; an agent that books the wrong flight or violates a refund policy causes real harm. Evaluating agents means checking the whole trajectory and the final state — not just the last message — and accounting for variance: the same task can succeed once and fail on retry. The gap between a flashy benchmark number and real reliability is the central trust problem of 2026.",
+              "metaphor_seed": "Evaluating an agent is like assessing a new surgeon — not by a single multiple-choice exam, but by watching entire operations end to end. Did they reach a healthy patient (final state), and follow every safety protocol along the way (policy adherence)? And you don't trust them after one good surgery: you check whether they succeed on four out of four similar operations, because a 'usually great' surgeon who fails one time in four isn't someone you let operate unsupervised.",
+              "case_study_seed": "Sierra's τ²-bench (tau-squared-bench), updated in 2026 with voice and knowledge-retrieval domains and ~38 model entries, measures policy adherence and reports the pass^k metric — exposing that agents scoring ~90% pass^1 can drop to ~70% reliability when the same task is retried. The variance enterprises actually feel in production. Connect to 'Beyond Resolution Rates' (arXiv 2604.02547), which analyzes 33,000+ agent PRs for the behavioral drivers of success and failure.",
+              "pm_angle": "Reliability, not peak capability, is what determines whether you can let an agent run unsupervised. The pass^k insight — that a 90% benchmark can mean ~70% real reliability — reshapes how you set SLAs, decide what needs human approval, and communicate honest expectations. Policy adherence failing while the task 'succeeds' is exactly the trap that ends up in headlines.",
+              "deep_sections": [
+                "State-based evaluation: score the final world, not just the trajectory",
+                "Policy adherence: completing the task but breaking the rules still fails",
+                "pass^k and the reliability gap",
+                "Behavioral drivers of success/failure across 33,000+ PRs"
+              ],
+              "sources": [
+                "https://arxiv.org/pdf/2604.02547",
+                "https://decodethefuture.org/en/ai-agent-benchmarks-2026/",
+                "https://arxiv.org/pdf/2510.04550",
+                "https://www.domo.com/blog/ai-evaluations-101-testing-llms-agents-and-everything-in-between"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 5 — Safety, Security, and Governance",
+          "goal": "Learn to ship AI that won't make headlines for the wrong reasons. As AI moves from chatbots to agents that take real actions — send money, run code, email customers — security and governance go from nice-to-have to mandatory. Master prompt injection (the #1 threat), defense-in-depth guardrails, red-teaming, and the governance gap most companies got wrong in 2026: monitoring without containment.",
+          "lessons": [
+            {
+              "title": "The Eager Intern Who Can't Tell Whose Voice Is Whose: Prompt Injection",
+              "summary": "Prompt injection — malicious instructions hidden in the data a model reads — is OWASP's #1 LLM threat and has no foolproof fix, because it exploits the very way models follow instructions. It's especially dangerous for agents that take actions: a clever text trick becomes real-world damage. NIST called indirect prompt injection 'generative AI's greatest security flaw.'",
+              "metaphor_seed": "An LLM is an extremely literal, eager-to-please intern who can't tell the difference between their boss's instructions and a note slipped into the paperwork they were asked to read. Indirect prompt injection is a con artist mailing the intern a letter saying 'your boss says wire me the funds', and the intern, unable to tell whose voice is whose, just does it. The fix isn't a smarter intern; it's not giving the intern the keys to the safe.",
+              "case_study_seed": "EchoLeak (CVE-2025-32711), disclosed by Aim Security in June 2025, was the first real-world zero-click prompt-injection exploit in production: a single crafted email could make Microsoft 365 Copilot silently exfiltrate confidential data with NO user click. Alongside Perplexity's Comet browser being tricked into leaking emails and banking credentials via web-page injection — the canonical examples of why this threat is non-negotiable.",
+              "pm_angle": "The moment your AI feature reads any untrusted content (emails, web pages, documents) or takes any real action, prompt injection is your top risk — and there's no patch that makes it disappear. As a PM you must treat all external input as hostile and design the feature so a successful injection can't reach the safe. This reframes 'what can the agent touch?' as the central scoping question.",
+              "deep_sections": [
+                "Direct vs indirect injection",
+                "Why it can't be fully solved (it's how models work)",
+                "'Excessive agency': the link between permissions and blast radius"
+              ],
+              "sources": [
+                "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+                "https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-v2025.pdf",
+                "https://atlan.com/know/prompt-injection-attacks-ai-agents/",
+                "https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025"
+              ]
+            },
+            {
+              "title": "Airport Security as Layers: Guardrails and Defense in Depth",
+              "summary": "A raw model will, asked the right way, leak secrets, follow malicious instructions, or take actions it shouldn't. Guardrails are the safety layers wrapped around the model — checking inputs and outputs and constraining what the system can do. No single layer is perfect, so you stack them. The OWASP LLM Top 10 is the shared vocabulary every AI engineer and PM needs.",
+              "metaphor_seed": "Guardrails are airport security as a layered system, not a single gate. A passport check at the door (input scanner for jailbreaks/PII), an X-ray of the bags (content classifier like Llama Guard), rules about which doors you may walk through (dialog-flow guardrails), and a final check before boarding (output validation). No single layer is perfect, so you stack them — and 'excessive agency' is simply not handing every passenger the keys to the cockpit.",
+              "case_study_seed": "Meta's LlamaFirewall (open-sourced 2025, arXiv 2505.03574) is a layered guardrail system combining a jailbreak-detection model, a prompt-injection alignment checker, and code-safety scanning — built specifically to secure autonomous agents against the OWASP-cataloged prompt-injection and excessive-agency risks.",
+              "pm_angle": "Guardrails are the difference between shipping confidently and shipping a headline. Understanding input vs output guardrails, and the principle that you layer them rather than trust any one, lets you define safety requirements for a feature and evaluate vendor claims. The most powerful pattern — self-correction loops where a bad output is caught and revised — is also a product-quality feature, not just a safety one.",
+              "deep_sections": [
+                "Input scanners vs output scanners",
+                "The OWASP LLM Top 10 in plain English",
+                "Self-correction loops as the strongest post-output safety pattern"
+              ],
+              "sources": [
+                "https://arxiv.org/pdf/2505.03574",
+                "https://aisecurityandsafety.org/en/guides/llm-guardrails/",
+                "https://aiworkflowlab.dev/article/llm-guardrails-production-defense-in-depth-safety-systems-nemo-guardrails-ai-openai",
+                "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+              ]
+            },
+            {
+              "title": "Hiring Bank Robbers Before Opening Day: Red-Teaming",
+              "summary": "You can't trust a defense you haven't attacked. Red-teaming is deliberately trying to break your own AI — jailbreak it, extract dangerous capabilities, make it misbehave — before real adversaries or accidents do. A hard truth has emerged: under sustained automated attack, every frontier model eventually breaks. The question is how much pressure it withstands, not whether it's 'unbreakable.'",
+              "metaphor_seed": "Red-teaming is hiring professional bank robbers to break into your own vault before opening day. They don't try the front door once and leave; they probe for weeks, tunnel, bribe, and pick locks 200 times. The finding is never 'the vault is unbreakable' — it's 'it withstood X hours of expert attack', and that honest stress number is what tells you whether to open and what the published 'system card' reports to regulators and the public.",
+              "case_study_seed": "Anthropic's ~15-person frontier red team stress-tests Claude (bio, cyber, autonomous-systems misuse) with multi-attempt reinforcement-learning attack campaigns, documented in the 153-page Claude Opus 4.5 system card — contrasted with OpenAI's 55-page GPT-5 card, revealing two distinct measurement philosophies (multi-attempt campaigns vs single-attempt jailbreak resistance) for enterprise trust.",
+              "pm_angle": "System cards are how vendors disclose safety, and reading them critically is a procurement and trust skill. Knowing that 'it withstood sustained attack' is the honest claim — not 'it's safe' — helps you set realistic risk expectations, compare vendors' methodologies, and decide what your own feature needs before launch. Attack-success-rate over many attempts is the number that actually matters.",
+              "deep_sections": [
+                "Single-attempt vs multi-attempt attacks and attack-success-rate",
+                "System cards as public evidence (and how to read them)",
+                "Why persistent automated attacks beat static defenses"
+              ],
+              "sources": [
+                "https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety",
+                "https://venturebeat.com/security/anthropic-vs-openai-red-teaming-methods-reveal-different-security-priorities",
+                "https://fortune.com/2025/09/04/anthropic-red-team-pushes-ai-models-into-the-danger-zone-and-burnishes-companys-reputation-for-safety/",
+                "https://www.techbuddies.io/2025/12/27/red-teaming-llms-why-persistent-attacks-are-winning-the-ai-security-arms-race/"
+              ]
+            },
+            {
+              "title": "Cameras Without Locks: Governance and Trust Boundaries for Agents",
+              "summary": "An agent that can edit files, run code, and call APIs can also be tricked or cause real damage at machine speed. Governance is the non-negotiable counterpart to autonomy — and the area most companies got wrong in 2026: they installed monitoring but forgot containment. The fix is least privilege, sandboxing, and human-in-the-loop approval for high-impact actions.",
+              "metaphor_seed": "Giving a new intern a key card. You don't hand them the master key on day one — you give them access to one floor (least privilege), put cameras up (monitoring), AND lock the server room so a mistake can't take everything down (containment). Many companies in 2026 installed the cameras but forgot to lock the doors — 'policies enforced by code, not vibes.'",
+              "case_study_seed": "The OWASP Agentic AI Top 10 and Microsoft's Agent Governance Toolkit (2026) codify four mandatory sandbox layers (network egress, filesystem boundaries, secrets scoping, config-file protection) after a wave of prompt-injection incidents. Fountain City's enterprise survey found ~88% of companies had a containment gap — monitoring agents without the ability to actually stop them — the canonical 'awareness without protection' illustration.",
+              "pm_angle": "Governance is where you decide blast radius: what an agent is allowed to touch and where a human must sign off (deploy, send money, modify production data). Human approval on high-impact actions breaks the automated attack chain — it's both a safety control and a product trust feature. The 88% containment gap is the mistake your roadmap must not repeat.",
+              "deep_sections": [
+                "Least privilege and allowlisting",
+                "The four sandbox layers",
+                "Human-in-the-loop approval as the chain-breaker",
+                "The monitoring-vs-containment gap"
+              ],
+              "sources": [
+                "https://fountaincity.tech/resources/blog/ai-agent-security-enterprise-guide/",
+                "https://iain.so/security-for-production-ai-agents-in-2026",
+                "https://www.mintmcp.com/blog/ai-agent-security",
+                "https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 6 — Production AI & LLMOps: Shipping, Cost, and Scale",
+          "goal": "Turn a working prototype into a reliable, affordable, durable product. Learn the most consequential architecture decision (prompt vs RAG vs fine-tune), how to route requests to the cheapest model that works, the alien unit economics of AI (you pay per use, forever), production-grade RAG, and how to debug agents that fail without a stack trace. This is where AI engineering and product economics fuse.",
+          "lessons": [
+            {
+              "title": "Sticky Note, Filing Cabinet, or Retraining: Prompt vs RAG vs Fine-Tuning",
+              "summary": "The single most consequential architecture decision in any AI product. Picking wrong wastes tens of thousands of dollars and weeks of time. The 2026 consensus: these aren't rivals but a stack — prompting to instruct, RAG to supply fresh facts, fine-tuning to bake in stable behavior and tone. Volatile knowledge goes in retrieval; stable behavior goes in fine-tuning; orchestration goes in the prompt.",
+              "metaphor_seed": "Hiring a new employee. Prompting is the sticky note you hand them for today's task. RAG is access to the company filing cabinet so they can look things up before answering. Fine-tuning is the months of on-the-job training that change how they instinctively think and speak. You wouldn't retrain an employee to tell them today's meeting time, and you wouldn't rely on a sticky note to teach them the company's entire way of working.",
+              "case_study_seed": "The widely-cited 2026 case of a startup that burned ~$20,000 fine-tuning a model for a task a better prompt solved for almost nothing (the 'AI Research to Reality' decision-framework essay) — a clean cautionary tale that fine-tuning is the expensive last resort, not the first move.",
+              "pm_angle": "This is the decision that determines an AI feature's cost, timeline, and maintainability — and it's a PM-level call, not just an engineering one. Knowing prompting takes hours, RAG takes days-to-weeks, and fine-tuning takes weeks plus thousands of dollars (and only pays off for stable behavior) lets you scope features realistically and avoid the $20k mistake.",
+              "deep_sections": [
+                "The 2026 rule: volatile→retrieval, stable→fine-tune, orchestration→prompt",
+                "Fine-tuning, LoRA, and parameter-efficient methods in plain English",
+                "Cost/time tradeoffs and when compliance forces RAG"
+              ],
+              "sources": [
+                "https://medium.com/ai-research-to-reality/i-watched-a-startup-burn-20k-on-fine-tuning-a-simple-prompt-fixed-it-6070afcbf341",
+                "https://www.news.aakashg.com/p/rag-vs-fine-tuning-vs-prompt-engineering",
+                "https://umesh-malik.com/blog/rag-vs-fine-tuning-llms-2026"
+              ]
+            },
+            {
+              "title": "The Triage Nurse: Model Selection and Routing",
+              "summary": "The biggest single lever on cost and latency in 2026 isn't squeezing one model — it's routing different requests to different models. Frontier models are overkill (and overpriced) for the bulk of real traffic, which is simple and repetitive. Route simple high-volume queries to small/cheap models, reserve frontier models for hard reasoning, and savings can exceed $150k/year at 100k queries/day.",
+              "metaphor_seed": "A hospital triage desk. You don't send every patient to the brain surgeon. A nurse handles the paper cuts, a GP handles common cases, and only genuinely hard cases reach the expensive specialist. Routing is the triage nurse for your AI traffic, and the surgeon's time (the frontier model) is your most expensive resource.",
+              "case_study_seed": "OpenAI's GPT-5 launch (2025) shipped with an automatic real-time router that decides per-message whether to use a fast cheap model or a slower deep-reasoning model — taking model routing out of the user's hands and validating routing as the default mass-market architecture, not a niche optimization.",
+              "pm_angle": "Model choice per request is a margin lever you control directly. Understanding the model mesh, distillation (a small student mimics a big teacher), and semantic caching (serve repeat questions for near-zero cost) lets you design features that stay profitable at scale — and lets you reason about the closed-vs-open-weight trade-off of capability versus control and data residency.",
+              "deep_sections": [
+                "The model-mesh pattern: classify, then route to the cheapest that works",
+                "Frontier vs small language models vs open-weight; distillation",
+                "Semantic caching for near-zero-cost repeats"
+              ],
+              "sources": [
+                "https://lucas8.com/small-language-models-vs-llms/",
+                "https://redis.io/blog/model-distillation-llm-guide/",
+                "https://www.silicondata.com/blog/llm-cost-per-token",
+                "https://www.aimagicx.com/blog/llm-api-pricing-comparison-2026"
+              ]
+            },
+            {
+              "title": "Toll Bridge vs Taxi Meter: The Economics of Building with AI",
+              "summary": "Every AI feature has a per-use cost that scales with usage — alien to traditional software where serving one more user is nearly free. A product owner must understand gross margins, cost-per-task, and the relentless price war driving token costs down 100–1000x in a few years. Underpricing a usage-scaling feature can bankrupt a product; over-engineering against a cost that'll halve next quarter wastes effort.",
+              "metaphor_seed": "Traditional software is a toll bridge: huge cost to build, then almost free for each extra car. AI products are more like a taxi company: every single trip burns fuel (tokens). And the price of fuel is dropping fast and unpredictably, so you must price your rides to stay profitable today while betting that fuel gets cheaper tomorrow.",
+              "case_study_seed": "GitHub Copilot reportedly operated at a per-user loss in its early period — some power users cost far more in compute than the ~$10/month subscription — illustrating the unit-economics trap of usage-based costs under a flat fee, and why the industry moved toward usage-based and tiered pricing.",
+              "pm_angle": "This is the most directly PM-owned lesson in the track: variable cost-of-goods, gross margin, and pricing model (per-seat vs usage-based) must reconcile with usage-driven costs, or the product loses money on its best customers. The collapsing cost curve also means some optimizations aren't worth doing — a strategic judgment only a PM who understands the economics can make.",
+              "deep_sections": [
+                "Tokens as the unit of cost; time-to-first-token as the latency metric",
+                "Variable COGS, gross margin, and the price war",
+                "Batching, caching, and build-vs-buy / lock-in trade-offs"
+              ],
+              "sources": [
+                "https://www.tldl.io/resources/llm-api-pricing-2026",
+                "https://www.silicondata.com/blog/llm-cost-per-token",
+                "https://www.aimagicx.com/blog/llm-api-pricing-comparison-2026"
+              ]
+            },
+            {
+              "title": "The Open-Book Exam at Scale: RAG Done Right in Production",
+              "summary": "RAG is the workhorse of enterprise AI, but a naive pipeline still hallucinates and quietly degrades over time. The enormous maturity gap between a demo RAG and a production RAG lives in unglamorous details: how you split documents, how you measure retrieval quality, and whether the system knows when to say 'I don't know.' This is where most enterprise AI projects actually succeed or fail.",
+              "metaphor_seed": "RAG is an open-book exam. The model is a smart student who hasn't memorized your textbook. Chunking is how you tear the textbook into index cards; retrieval is how fast and accurately the student finds the right card; grounding is the rule that they may only write down what's on a card they found. A bad open-book exam is one where the cards are shuffled nonsense, so the student confidently invents answers anyway.",
+              "case_study_seed": "Air Canada's chatbot (2024) invented a bereavement-refund policy that didn't exist, and a tribunal held the airline liable for the bot's made-up answer — the canonical real-world example of an ungrounded assistant hallucinating and creating legal and brand liability, exactly the failure that grounding and 'no evidence, no answer' rules are designed to prevent.",
+              "pm_angle": "RAG quality is usually the difference between a trustworthy enterprise product and a legal liability — and the failure modes are invisible in a demo. Budgeting for golden-query test sets, retrieval-quality measurement, re-embedding pipelines, and 'no evidence, no answer' is a roadmap decision. Air Canada is the cautionary tale you cite when someone wants to skip grounding to ship faster.",
+              "deep_sections": [
+                "Chunking strategies and why semantic chunking helps",
+                "Golden-query test sets and reranking",
+                "The 'no evidence, no answer' clause",
+                "Retrieval drift and index hygiene"
+              ],
+              "sources": [
+                "https://weaviate.io/blog/chunking-strategies-for-rag",
+                "https://www.elysiate.com/blog/rag-systems-production-guide-chunking-retrieval-2025",
+                "https://unstructured.io/insights/rag-pipeline-challenges-from-data-ingestion-to-retrieval"
+              ]
+            },
+            {
+              "title": "The Body-Cam on a 30-Step Errand: Agent Reliability and Observability in Production",
+              "summary": "As products evolve from single prompts into multi-step agents, failure modes change entirely. There's no stack trace when an agent breaks after two minutes and 180 steps — not a single line failed; the reasoning went wrong. By 2026 observability is table stakes (~89% adoption, ~94% among production teams), and latency has become the #2 barrier as agents go customer-facing. You can't operate what you can't see.",
+              "metaphor_seed": "An AI agent is a new junior employee sent to complete a 30-step errand across town alone. If they come back empty-handed, 'I failed' tells you nothing. Observability is the body-cam and GPS log that lets you replay exactly where they got confused, took a wrong turn, or asked the wrong shop — so you can fix that one step instead of guessing.",
+              "case_study_seed": "Cursor's AI coding agent (2024–2025) became a flagship example of reliable agentic product engineering, instrumenting every accept/reject of a code suggestion both to debug agent behavior AND to feed its improvement loop — production-grade observability as a competitive necessity, not a nice-to-have. This also seeds the data flywheel of Module 7.",
+              "pm_angle": "Latency and reliability are now top barriers to shipping customer-facing agents, and both are PM-owned product qualities. Distinguishing a semantic failure (a confident HTTP-200 that's wrong) from a system failure, and tracking cost/latency at the feature level, tells you where the product is actually breaking and where the budget is draining — turning 'it sometimes fails' into a fixable, measured problem.",
+              "deep_sections": [
+                "Tracing every step, tool call, and intermediate reasoning",
+                "Semantic vs system failures: the confident HTTP-200",
+                "Latency, time-to-first-token, and feature-level cost tracking",
+                "Closing the loop: production trace → regression dataset"
+              ],
+              "sources": [
+                "https://www.langchain.com/state-of-agent-engineering",
+                "https://www.braintrust.dev/articles/agent-observability-complete-guide-2026",
+                "https://www.arthur.ai/column/agentic-ai-observability-playbook-2026"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 7 — The Product Owner's Edge: Moats, Strategy, and the Human-AI Team",
+          "goal": "Step back from building and think like a Silicon Valley Product Owner. When everyone rents the same models, what's the durable advantage? Learn the only AI moat that compounds (the data flywheel), how human-AI teams actually collaborate on real work, and how to synthesize everything into product strategy. This module fuses the engineering track with product leadership.",
+          "lessons": [
+            {
+              "title": "The Snowball Rolling Downhill: Data Flywheels, the Only Moat That Compounds",
+              "summary": "When everyone can rent the same frontier models, the model itself isn't a moat. The durable advantage is the proprietary feedback loop: usage generates unique data, which improves the product, which attracts more usage. The central strategic question of AI products is: how do we design it so every interaction makes us harder to compete with?",
+              "metaphor_seed": "A snowball rolling downhill. The first push (your initial product) is hard and the snowball is tiny. But every rotation picks up more snow (user data), which makes it bigger and heavier, which lets it pick up even more snow faster. A competitor starting later is pushing a tiny snowball up the same hill you're barreling down. The model is the hill everyone shares; the snowball is yours alone.",
+              "case_study_seed": "Tesla's self-driving data flywheel: millions of customer-owned cars (4+ billion miles driven by Q1 2025) continuously feed real-world driving data back to train its models, pushed out via over-the-air updates, generating still more data — the textbook closed-loop, domain-specific, action-layer flywheel that rivals without a comparable fleet can't replicate.",
+              "pm_angle": "This is THE strategic question of AI product management. Most founders build flywheels wrong — collecting data that never actually feeds back into product improvement. Knowing the three ingredients (closed feedback loop, domain-specific signals, an action layer that uses the data) lets you design defensibility into the product from day one, and tell a real data moat from generic data any competitor could also get.",
+              "deep_sections": [
+                "The flywheel loop and why it's a moat (data network effects)",
+                "The three ingredients of a real flywheel",
+                "Implicit vs explicit feedback; why most flywheels are built wrong"
+              ],
+              "sources": [
+                "https://mrmaheshrajput.medium.com/the-data-flywheel-why-ai-products-live-or-die-by-user-feedback-4ae7aab32d4d",
+                "https://www.rohitprabhakar.com/blog/market-of-one-data-flywheel-competitive-moat/",
+                "https://www.mckinsey.com/capabilities/quantumblack/our-insights/from-ai-table-stakes-to-ai-advantage-building-competitive-moats"
+              ]
+            },
+            {
+              "title": "The New Teammate: How Humans and AI Actually Collaborate",
+              "summary": "AI teammates are now real co-workers on software projects, not just autocomplete. The data shows a nuanced reality: AI brings massive speed but its contributions have lower acceptance rates and tend to be simpler, with humans repositioned as reviewers and change-owners. Understanding how this collaboration really works — its wins and its frictions — is essential for leading a hybrid team.",
+              "metaphor_seed": "A fast, tireless junior teammate who fires off ten times more first drafts than anyone else — but whose drafts get sent back for revision more often and tend to be the simpler tasks. The senior humans shift from writing to directing and reviewing, and the team's throughput depends on getting that hand-off right, not on the junior simply doing more.",
+              "case_study_seed": "The AIDev dataset / 'The Rise of AI Teammates' (arXiv 2507.15003) studied real human-AI pull-request collaboration at scale and found AI teammates deliver dramatic speed but lower acceptance rates and simpler PRs than human contributors — the honest empirical picture of where AI helps and where humans still carry the load.",
+              "pm_angle": "If you're managing a team where AI does real work, you must plan around its real profile: great for volume and simple tasks, weaker on acceptance and complexity, with human review as the bottleneck (the 'economics of attention' from Module 3). This shapes how you assign work, set velocity expectations, and structure review — and protects you from over-claiming AI productivity to leadership.",
+              "deep_sections": [
+                "What the AIDev data actually shows: speed up, acceptance down, complexity down",
+                "The human-as-reviewer/change-owner role",
+                "Designing healthy human-AI hand-offs"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2507.15003",
+                "https://arxiv.org/abs/2604.26275",
+                "https://www.langchain.com/state-of-agent-engineering",
+                "https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html"
+              ]
+            },
+            {
+              "title": "Programming With Trust: Synthesizing the Track Into Product Strategy",
+              "summary": "The capstone. The frontier of agentic software engineering is no longer about code — it's about 'programming with trust': aligning an AI team around shared vision, values, and vocabulary, and repositioning humans as reviewers, change-owners, and auditors. This lesson weaves every module into a single coherent way of thinking about building and owning AI products.",
+              "metaphor_seed": "Going from being the best typist in the building to being the editor-in-chief: you no longer write every word, you set the vision and standards, decide what's good enough to publish, and own the result. Trust — earned through evals, guardrails, governance, and a good feedback loop — is the currency that lets you delegate more and review smarter.",
+              "case_study_seed": "'Toward Agentic Software Engineering Beyond Code' (arXiv 2510.19692) frames the field's next phase as 'programming with trust' — vision, values, vocabulary — surveying Jules, Codex, Devin, SWE-agent, AutoCodeRover, and Claude Code, and connecting back to the A-SDLC six-layer architecture (arXiv 2604.26275) and its five open problems: evaluation, governance, technical debt, skill redistribution, and the economics of attention.",
+              "pm_angle": "This is the integrative PM lesson: how the mental model (M1), the build craft (M2), agents (M3), evals (M4), safety (M5), economics (M6), and moats (M7) combine into a strategy for shipping AI products people trust. The job of the AI Product Owner is to engineer trust deliberately, so the organization can safely delegate more work to AI over time.",
+              "deep_sections": [
+                "Vision, values, vocabulary: aligning a human-AI team",
+                "The five open problems of the A-SDLC",
+                "A decision framework: tying every module to a real product call",
+                "The Product Owner as trust engineer"
+              ],
+              "sources": [
+                "https://arxiv.org/abs/2510.19692",
+                "https://arxiv.org/abs/2604.26275",
+                "https://www.coderabbit.ai/guides/agentic-sdlc",
+                "https://www.mckinsey.com/capabilities/quantumblack/our-insights/from-ai-table-stakes-to-ai-advantage-building-competitive-moats"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "product": {
+      "track": "Product Leadership",
+      "tagline": "Think like a Silicon Valley product leader — and speak engineering fluently enough to lead the people who build.",
+      "promise": "After finishing this track you can walk into any modern tech company, diagnose whether it runs as a real product organization or a feature factory, set an insight-driven vision and strategy, run continuous discovery to kill bad ideas cheaply, lead an empowered trio of designers and engineers without being their boss, and manage the distinct demands of AI products — from evals to pricing to trust and safety. You will hold yourself to the bar of a real empowered Product Manager, not a backlog administrator.",
+      "modules": [
+        {
+          "title": "Module 1 — How Great Product Companies Actually Work",
+          "goal": "Understand the operating system of the best tech companies: why they organize around problems-to-solve instead of features-to-build, and learn to spot which model an organization is really running. This is the foundation everything else sits on.",
+          "lessons": [
+            {
+              "title": "The Product Operating Model vs. the Feature Factory",
+              "summary": "The best tech companies don't tell teams what to build — they give small teams hard problems and the freedom to find the best solution, holding them to business results rather than shipped features. Most companies instead run as 'feature factories' where executives dictate solutions, and this single difference explains most of why companies win or lose.",
+              "metaphor_seed": "A restaurant where head office mails each kitchen a fixed menu to execute exactly, versus one that tells each kitchen the goal ('delight these diners, hit these margins') and trusts the chefs who actually talk to diners every night to invent the menu themselves.",
+              "case_study_seed": "Trainline (UK rail/travel app): moved from marketing writing specs for outsourced engineers to empowered cross-functional squads with outcome-based roadmaps, became the UK's #1 travel app, and IPO'd on the London Stock Exchange in June 2019. A headline transformation case in Cagan's TRANSFORMED.",
+              "pm_angle": "Technical-literacy angle: understand why an organization that treats engineering as an order-taking 'IT cost center' structurally underuses its most expensive talent. As a PM you need to grasp that engineers are a source of solution ideas, not just a build function — and that the operating model determines whether you ever get access to that value.",
+              "deep_sections": [
+                "The three elements: principles, team practices, leadership responsibilities",
+                "The three questions the model answers: which problems, how to solve, how to build and deliver",
+                "Why AI makes 'knowing what to build' the real bottleneck"
+              ],
+              "sources": [
+                "https://www.svpg.com/the-product-operating-model-an-introduction/",
+                "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan",
+                "https://theproductvenn.substack.com/p/how-trainline-transformed-to-the",
+                "https://roadmap.one/blog/posts/blog39-product-operating-model/"
+              ]
+            },
+            {
+              "title": "Three Kinds of 'Product Team' (and Only One Is Real)",
+              "summary": "The same job title can mean three completely different things: a delivery team that just builds a backlog, a feature team handed a roadmap to execute, or an empowered team given problems to solve and trusted to find the answer. Knowing which kind you're on determines whether you do strategic work or just take orders.",
+              "metaphor_seed": "Getting from London to Edinburgh: a taxi driver who only follows your shouted turn-by-turn directions (delivery), a chauffeur given a fixed printed route they can't deviate from (feature team), or an expert local driver you simply tell 'get me there by 6pm, safely and cheaply' and trust to pick the route and dodge traffic (empowered).",
+              "case_study_seed": "Netflix's operating principle 'Lead with context, not control' — leaders give teams the problem, strategy, and context rather than telling them what to build. Cagan cites Netflix, Amazon, and Apple as proof that breakthrough products come from empowered missionary teams, not big budgets.",
+              "pm_angle": "Technical-literacy angle: the litmus test of empowerment is whether the team gets to decide HOW to solve the problem — which is an engineering decision as much as a product one. To lead an empowered team you must be technically literate enough to participate credibly in solution debates, not just translate requirements.",
+              "deep_sections": [
+                "Missionaries vs. mercenaries (John Doerr's phrase via Cagan)",
+                "Why empowered teams are small, stable, and own a problem space",
+                "Where accountability for value and viability actually sits in each model"
+              ],
+              "sources": [
+                "https://www.svpg.com/product-vs-feature-teams/",
+                "https://www.svpg.com/empowered-product-teams/",
+                "https://www.svpg.com/missionaries-vs-mercenaries/",
+                "https://wind4change.com/product-team-feature-team-difference-marty-cagan-inspired-empowered/"
+              ]
+            },
+            {
+              "title": "Outcomes Over Output: The One Idea That Changes Everything",
+              "summary": "You don't exist to ship features — you exist to solve customer and business problems. Output is features shipped on time; outcome is a measurable change in behavior or business results. Internalizing only this one idea already makes you think differently from 90% of the industry.",
+              "metaphor_seed": "A personal trainer isn't paid for the number of push-ups they make you do (output) — they're paid because you actually get fitter, lose the weight, or run the marathon (outcome). 200 push-ups that leave you no healthier is pure output and zero outcome.",
+              "case_study_seed": "Amazon's 'Working Backwards' PR/FAQ process: teams write the customer-facing press release and FAQ before building anything, forcing them to define the outcome first and only build if it's compelling. Contrast with the 'feature factory' anti-pattern of celebrating launches regardless of whether any metric moved.",
+              "pm_angle": "Technical-literacy angle: outcomes are measured through instrumentation — the analytics and event-tracking that engineers build into the product. To own outcomes you need to understand how usage data is captured, what's technically feasible to measure, and why 'we shipped it' is only a bet until the metric moves.",
+              "deep_sections": [
+                "Why 'outcomes are hard' — and the cargo-cult trap of renaming a roadmap",
+                "How a shipped feature is a bet, not a result",
+                "The bridge from outcomes to OKRs"
+              ],
+              "sources": [
+                "https://www.svpg.com/outcomes-are-hard/",
+                "https://www.svpg.com/podcasts/outcomes-over-output-the-future-of-product-management/",
+                "https://www.svpg.com/team-objectives-overview/",
+                "https://workingbackwards.com/concepts/working-backwards-pr-faq-process/"
+              ]
+            },
+            {
+              "title": "The Product Trio: PM, Designer, and Engineers as One Unit",
+              "summary": "Great products come from three perspectives working together continuously, not from an assembly line of handoffs. The PM owns value and viability, the designer owns usability, and engineers own feasibility — and crucially, engineers belong in the room inventing solutions, not just receiving specs.",
+              "metaphor_seed": "Making a film: the director (PM) owns the vision and whether the story moves audiences and makes money; the cinematographer (designer) owns whether it looks right and is easy to follow; the effects and technical crew (engineers) own whether the ambitious shots are buildable. They must argue and invent together from day one, not receive a finished shot-list 'over the wall.'",
+              "case_study_seed": "Apple's iPhone: engineering's multi-touch feasibility breakthrough, Jony Ive's usability and industrial design, and Jobs's product/business vision were inseparable — hardware, software, and experience were co-discovered, not handed off. SVPG's archetype of tight trio collaboration.",
+              "pm_angle": "Technical-literacy angle: Cagan's line 'if you're just using your engineers to code, you're only getting about half their value.' To pull that other half out you must be able to discuss feasibility, trade-offs, and architecture well enough that engineers want you in their discovery conversations.",
+              "deep_sections": [
+                "Who owns which of the four risks",
+                "Why 'over the wall' handoffs produce expensive flops",
+                "How Teresa Torres popularized the 'trio' term Cagan described in INSPIRED"
+              ],
+              "sources": [
+                "https://www.producttalk.org/product-trio/",
+                "https://www.productcompass.pm/p/product-trio",
+                "https://www.producttalk.org/2018/12/engineers-and-discovery/",
+                "https://www.thegatedsignal.com/understanding-marty-cagans-product-model-empowering-teams-for-better-outcomes/"
+              ]
+            },
+            {
+              "title": "Real PM vs. Product Management Theater",
+              "summary": "Most people with 'product owner' or even 'product manager' titles are administering a backlog and writing tickets — going through the motions Cagan calls 'product management theater.' A real PM has deep knowledge of the customer, the data, and the business, and owns the hardest risks: value and viability.",
+              "metaphor_seed": "A head chef versus a waiter: the real PM is the chef who tastes the food, knows the diners' palates, watches costs and suppliers, and decides what's worth cooking. The backlog administrator is a waiter relaying shouted orders to the kitchen — necessary motion, no judgment about whether the menu is any good. Theater is a waiter in a chef's hat who never touches the stove.",
+              "case_study_seed": "Almosafer (Saudi travel company): built genuine product-manager muscle from 2018 — continuous customer interviews, data analysis, rapid prototyping for regional needs — reaching 70%+ regional market share and a billion-dollar airline business, outcompeting global giants. Cagan's 'Product Management Theater' essay is the canonical critique of the fake version.",
+              "pm_angle": "Technical-literacy angle: 'deep knowledge of the data' means being able to query, read dashboards, and reason about what the numbers actually say — a quantitative, semi-technical skill. As AI automates ticket-writing busywork, this analytical judgment is exactly what separates a real PM from a theater PM.",
+              "deep_sections": [
+                "The three deep competencies: customer, data, business/industry",
+                "Why 'Product Owner' (a Scrum role) is not a Product Manager",
+                "Why the PM is not the boss of the trio"
+              ],
+              "sources": [
+                "https://www.svpg.com/product-management-theater/",
+                "https://www.svpg.com/product-manager-vs-product-owner/",
+                "https://www.cubthinktank.com/posts/video-lenny-pm-theatre",
+                "https://theproductvenn.substack.com/p/how-almosafers-product-transformation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 2 — Product Discovery: Figuring Out What's Worth Building",
+          "goal": "Master the core craft of de-risking ideas cheaply and fast before spending expensive engineering time. Learn the four big risks, build the habit of continuous customer contact, and use the visual tools that connect everything you build back to an outcome.",
+          "lessons": [
+            {
+              "title": "Discovery vs. Delivery: Two Tracks, One Team",
+              "summary": "Deciding whether to build something at all (discovery) is a completely different activity from building it well (delivery), and the best teams run both continuously and in parallel — with the same people. Most product failures come not from building badly but from building the wrong thing well.",
+              "metaphor_seed": "Opening a restaurant: delivery is the kitchen running smoothly every night (reliable, repeatable, high quality); discovery is the chef quietly testing tomorrow's specials on a few regulars. The smart restaurant does both at once with the same crew — one that only runs the kitchen serves a stale menu, one that only experiments never feeds anyone.",
+              "case_study_seed": "Spotify's published 'Thoughtful Execution Framework,' which runs discovery (qualitative tests and instrumentation analysis of the sign-up flow) in parallel with delivery rather than guessing at features and shipping blindly.",
+              "pm_angle": "Technical-literacy angle: 'dual-track' does NOT mean a discovery team handing a spec to a delivery team — the lead engineer is in discovery so feasibility is considered from day one. You need enough technical fluency to keep that engineer engaged in the 'should we?' conversation, not just the 'how?'.",
+              "deep_sections": [
+                "What dual-track agile is — and the handoff trap Cagan warns about",
+                "How validated discovery feeds delivery, and usage data feeds back into discovery",
+                "Avoiding both 'ship junk fast' and 'analysis paralysis'"
+              ],
+              "sources": [
+                "https://www.svpg.com/dual-track-agile/",
+                "https://www.productplan.com/glossary/dual-track-agile",
+                "https://spotify.design/article/from-gut-to-plan-the-thoughtful-execution-framework",
+                "https://productschool.com/blog/skills/dual-track-agile"
+              ]
+            },
+            {
+              "title": "The Four Big Risks: How Every Idea Can Fail",
+              "summary": "Cagan's four big risks are the canonical checklist for what discovery must address before building: will customers buy/use it (value), can they figure it out (usability), can we build it (feasibility), and does it work for the business (viability). Naming them gives a team a shared language for 'what could make this fail, and have we tested it?'",
+              "metaphor_seed": "Before greenlighting a $200M blockbuster, a studio asks: will anyone buy a ticket (value), will the audience follow the plot (usability), can we film these stunts on budget (feasibility), and does the whole thing make money and fit our brand after marketing and theater cuts (viability). Skipping any one is how studios produce expensive flops.",
+              "case_study_seed": "CB Insights' widely-cited finding that 42% of startups fail from 'no market need' — value risk made concrete. Contrast with the SVPG-style coaching example of an HR-tech team that built AI candidate-ranking for six months before discovering HR managers distrusted the black-box output (a value-and-viability failure).",
+              "pm_angle": "Technical-literacy angle: feasibility risk is tested through engineering spikes and technical prototypes, and the most common imbalance is teams over-indexing on feasibility (engineers love technical spikes) while neglecting value and viability. You need to recognize that pattern and rebalance the team's attention.",
+              "deep_sections": [
+                "Which teammate owns which risk",
+                "Why teams over-test the easy risks (usability) and under-test the dangerous ones (value, viability)",
+                "Matching the test type to the risk"
+              ],
+              "sources": [
+                "https://www.svpg.com/four-big-risks/",
+                "https://roadmap.one/blog/posts/blog6-6-svpg-product-risks/",
+                "https://www.news.aakashg.com/p/how-to-identify-and-validate-product",
+                "https://internetgardener.substack.com/p/the-four-big-product-risks"
+              ]
+            },
+            {
+              "title": "Continuous Discovery: A Weekly Habit, Not a Phase",
+              "summary": "Discovery is a weekly rhythm of customer contact, not a one-time project kickoff. Teresa Torres's definition: weekly touchpoints with customers, by the team building the product, running small research activities in pursuit of a desired outcome. This habit separates evidence-driven leaders from opinion-driven ones.",
+              "metaphor_seed": "The difference between cramming for one annual medical check-up versus wearing a fitness tracker every day. The annual physical is out of date the moment you leave the clinic; the daily tracker catches small changes early, builds a trend line, and lets you adjust this week — not next year.",
+              "case_study_seed": "Stack Overflow's platform team documented (July 2025) adopting continuous discovery — a steady weekly cadence of customer conversations to shape their platform roadmap — as a deliberate change from sporadic, ad-hoc research.",
+              "pm_angle": "Technical-literacy angle: the weekly loop pairs qualitative interviews with quantitative signal from product instrumentation. Knowing what your analytics can and can't tell you — and how to triangulate a customer story against the usage data — is a semi-technical skill that makes your interviews far sharper.",
+              "deep_sections": [
+                "Story-based interviewing: 'tell me about the last time you...' instead of opinions",
+                "The interview snapshot so learning accumulates instead of being lost",
+                "Research questions vs. the single interview question you actually ask"
+              ],
+              "sources": [
+                "https://www.producttalk.org/story-based-customer-interviews/",
+                "https://www.producttalk.org/interview-snapshot/",
+                "https://stackoverflow.blog/2025/07/23/building-better-platforms-with-continuous-discovery/",
+                "https://productschool.com/blog/product-fundamentals/continuous-discovery"
+              ]
+            },
+            {
+              "title": "The Opportunity Solution Tree: Mapping Outcomes to Ideas",
+              "summary": "The opportunity solution tree is Torres's signature visual: a single measurable outcome at the root, customer problems (opportunities) branching beneath it, multiple candidate solutions under each, and small assumption tests under those. It forces you to explore many problems and many solutions before committing — directly countering the PM's habit of falling for the first idea.",
+              "metaphor_seed": "A family tree, but for ideas: at the top sits your one true goal ('more people finish signing up'); branching beneath are the frustrations blocking it ('I don't trust giving my card,' 'the form is too long'); beneath each hang several possible fixes. You don't marry the first idea you meet — you survey the whole family and pick the most promising lineage.",
+              "case_study_seed": "Spotify uses OST-style discovery to drive 'improve user retention and engagement,' branching into opportunities like 'personalize the listening experience' and comparing multiple solutions (better discovery, personalized playlists) rather than shipping one feature on a hunch.",
+              "pm_angle": "Technical-literacy angle: the root of every tree is a metric your team can actually influence and instrument. Choosing a measurable, attributable outcome (vs. a vanity number) requires understanding how the product is instrumented and what counts as a clean signal — and in 2026, AI can help draft and maintain trees, but you must own which opportunities matter.",
+              "deep_sections": [
+                "The four layers: outcome, opportunities, solutions, assumption tests",
+                "Picking which branch to pursue (importance, size, fit to the outcome)",
+                "Keeping the tree a living map, not a one-time deliverable"
+              ],
+              "sources": [
+                "https://www.producttalk.org/opportunity-solution-trees/",
+                "https://amplitude.com/blog/opportunity-solution-tree",
+                "https://blog.logrocket.com/product-management/opportunity-solution-trees-definition-examples-how-to/",
+                "https://www.shortform.com/blog/teresa-torres-opportunity-solution-tree/"
+              ]
+            },
+            {
+              "title": "Assumption Mapping: Find the One Belief That Could Sink You",
+              "summary": "Every idea rests on hidden beliefs that must be true for it to work. Assumption mapping drags those beliefs into the open and ranks them by importance versus evidence, so you test the one 'leap of faith' that would sink everything — rather than wasting time validating safe, obvious things.",
+              "metaphor_seed": "Before crossing a frozen lake you don't randomly tap the ice everywhere — you find the one spot in the middle where, if the ice is thin, you definitely fall through, and you tap that first. The 2x2 grid asks which beliefs are both load-bearing (you'll fall if wrong) and untested (you haven't tapped them yet).",
+              "case_study_seed": "Airbnb's founders' riskiest assumption was 'strangers will pay to sleep in another stranger's home.' Rather than build a full platform, they tested exactly that belief with a hacked-together site and air mattresses at a 2007 San Francisco design conference, and got three paying guests — validating the one leap of faith everything else depended on.",
+              "pm_angle": "Technical-literacy angle: assumptions span five categories including feasibility ('can we actually build this with our data and tech?') and ethical risk. You need enough technical judgment to spot which feasibility assumptions are genuine leaps of faith versus routine, and to know when an engineering spike is the right test.",
+              "deep_sections": [
+                "The five assumption categories: desirability, viability, feasibility, usability, ethical",
+                "The 2x2 map: importance vs. evidence, and the top-right 'leap of faith' zone",
+                "Riskiest Assumption Test (RAT) vs. MVP"
+              ],
+              "sources": [
+                "https://www.shortform.com/blog/product-discovery-process/",
+                "https://www.productcompass.pm/p/assumption-prioritization-canvas",
+                "https://maven.com/precoil/assumptions-mapping",
+                "https://clutch.co/resources/riskiest-assumption-test-vs-mvp-whats-the-difference"
+              ]
+            },
+            {
+              "title": "Cheap Tests: Prototypes, Fake Doors, and Wizard of Oz",
+              "summary": "Once you know your riskiest assumption, the art is finding the cheapest, fastest way to test it without building the real thing. A menu of techniques — fake doors for demand, Wizard of Oz to fake automation with a human, concierge to deliver by hand — lets you generate evidence in days instead of betting months of engineering on a hunch.",
+              "metaphor_seed": "A movie trailer is a fake-door test (release it, watch if audiences get excited before committing to the full push). A chef-run tasting menu is a concierge test (hand-made, high-touch, to learn what diners love). A carnival fortune-teller machine secretly operated by a person is a Wizard of Oz — the customer thinks it's a magic box, but it's a human, proving demand before anyone builds the machine.",
+              "case_study_seed": "Dropbox's 2007-08 explainer-video test: instead of building the hard file-sync engineering first, they posted a short demo to test 'do people even feel this pain?' — the beta waitlist jumped from 5,000 to 75,000 overnight. (Alt: Zappos's Nick Swinmurn photographed shoes in local stores and only bought them after a customer ordered, testing 'will people buy shoes online?' before building any inventory system.)",
+              "pm_angle": "Technical-literacy angle: most of these tests need zero production code, which is exactly where a non-technical PM can be enormously effective. But you must understand the fidelity ladder — from clickable mockup to a real working slice — and which rung answers your specific question without over-investing engineering.",
+              "deep_sections": [
+                "Fake door, Wizard of Oz, concierge, smoke/landing-page tests",
+                "The prototype fidelity ladder",
+                "Matching test type to the specific risk and keeping the cost of being wrong low"
+              ],
+              "sources": [
+                "https://learningloop.io/plays/fake-door-testing",
+                "https://learningloop.io/plays/wizard-of-oz",
+                "https://kromatic.com/blog/concierge-vs-wizard-of-oz-test/",
+                "https://medium.com/@LoganTjm/how-uber-airbnb-dropbox-released-mvps-to-achieve-rapid-growth-d823ac6eaed5"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 3 — Vision, Strategy, and the Discipline of Saying No",
+          "goal": "Step up from running one team to setting direction. Learn to craft an inspiring vision, derive a focused strategy from real insights, and make the ruthless trade-offs that let a few bets win — the bridge from individual-contributor PM to product leader.",
+          "lessons": [
+            {
+              "title": "Product Vision: The Inspiring Future You're Creating",
+              "summary": "A vision is a 5-10 year picture of how customers' lives get better, and it's the single most powerful alignment tool a leader has. Without it, every team optimizes locally and the company ships a pile of disconnected features. Vision inspires and recruits; strategy and management execute.",
+              "metaphor_seed": "A product vision is the architect's finished painting of a cathedral pinned up on the construction site. No concrete is poured yet, but every stonemason, electrician, and glazier can look up, see the same spires, and decide for themselves how their piece fits — without the architect standing over each one giving orders.",
+              "case_study_seed": "Amazon's 'Working Backwards': before building Kindle, AWS, and Alexa, teams wrote a fictional press release and FAQ describing the finished product from the customer's point of view, then engineered backward — documented by ex-Amazon execs Colin Bryar and Bill Carr in 'Working Backwards.'",
+              "pm_angle": "Technical-literacy angle: a credible vision is anchored to what enabling technology is about to make possible. To paint a future engineers find believable rather than fantastical, you need a working sense of the tech trajectory — what's near-term feasible versus science fiction.",
+              "deep_sections": [
+                "Vision vs. mission vs. strategy",
+                "Customer-improvement framing vs. company-benefit framing",
+                "Vision as a recruiting and alignment magnet"
+              ],
+              "sources": [
+                "https://www.svpg.com/vision-vs-strategy/",
+                "https://www.svpg.com/product-vision-vs-mission/",
+                "https://www.mindtheproduct.com/product-vision-and-strategy-marty-cagan-on-the-product-experience-part-1-of-2/",
+                "https://workingbackwards.com/concepts/working-backwards-pr-faq-process/"
+              ]
+            },
+            {
+              "title": "Insight-Driven Strategy: Choosing Which Problems to Solve",
+              "summary": "Strategy is where most companies fail. Its output is not a feature list but a short, prioritized set of the most critical problems to solve to advance the vision — chosen from genuine insights mined from data, customers, enabling technology, and industry change. Insight is what separates great companies from busy ones.",
+              "metaphor_seed": "Strategy is a doctor's diagnosis, not the pharmacy receipt. A weak team hands you a bag of ten medications and hopes something works; a great team runs the tests, finds the one root cause that explains your symptoms (the insight), and treats that — leaving the other nine bottles on the shelf on purpose.",
+              "case_study_seed": "Netflix's data-driven strategy: viewing-completion data drove the decision to greenlight 'House of Cards,' and algorithmic per-member artwork selection was validated through hundreds of randomized A/B tests measuring lifts in click-through and play-starts — insight turned directly into strategic bets.",
+              "pm_angle": "Technical-literacy angle: two of the four insight sources are quantitative data and enabling technology. Mining a real insight from data means understanding A/B testing, statistical confidence, and what your event data actually supports — and spotting which new technical capability has just unlocked a problem worth solving.",
+              "deep_sections": [
+                "The four sources of insight",
+                "Strategy as the link from vision to quarterly team objectives",
+                "10x thinking vs. 10% incremental thinking"
+              ],
+              "sources": [
+                "https://www.svpg.com/product-strategy-insights/",
+                "https://www.svpg.com/changing-how-you-decide-which-problems-to-solve/",
+                "https://blog.surveyheart.com/2025/09/23/netflixs-data-driven-content-strategy-a-case-study-in-customer-centric-innovation/",
+                "https://www.uladshauchenka.com/p/case-study-datadriven-product-strategy"
+              ]
+            },
+            {
+              "title": "Ruthless Focus: The Power of Saying No",
+              "summary": "Strategy is mostly about what you choose NOT to do. A roadmap stuffed with good ideas guarantees mediocrity everywhere; the highest-leverage act of leadership is deciding what to cut and defending those cuts against disappointed stakeholders. Focus is what lets a few bets get the attention needed to win.",
+              "metaphor_seed": "Focus is a gardener pruning a fruit tree. Cutting off perfectly healthy, blossoming branches feels brutal — but leave them all and the tree spreads its energy thin into hundreds of tiny, sour fruit. Prune to a few branches and you get a smaller number of large, sweet apples. The pruning is the point.",
+              "case_study_seed": "Steve Jobs returning to a near-bankrupt Apple in 1997: he drew a 2x2 grid (Consumer/Pro x Desktop/Portable), killed roughly 70% of the bloated product line, and committed to four products. 'Innovation is saying no to 1,000 things.' That focus underpinned Apple's recovery.",
+              "pm_angle": "Technical-literacy angle: saying no credibly means understanding the engineering opportunity cost — every 'yes' consumes finite team capacity and adds long-term maintenance and complexity (technical debt). Knowing what a feature truly costs to build and keep alive lets you defend cuts with substance, not just instinct.",
+              "deep_sections": [
+                "Why priority is singular by nature — you can't have five top priorities",
+                "Killing projects and sunsetting features as a leadership skill",
+                "Opportunity cost: every yes is a hidden no"
+              ],
+              "sources": [
+                "https://airfocus.com/blog/celebrate-no-and-prioritize-ruthlessly/",
+                "https://www.cnbc.com/2018/10/02/steve-jobs-heres-what-most-people-get-wrong-about-focus.html",
+                "https://fortune.com/2024/10/14/5-priorities-steve-jobs-bob-iger-success-leadership/"
+              ]
+            },
+            {
+              "title": "OKRs: Measuring Impact, Not Activity",
+              "summary": "OKRs (Objectives and Key Results) force the question 'did the metric we care about actually move?' An Objective is an inspirational qualitative 'what'; Key Results are the measurable outcomes that prove you got there. In the product model, leaders assign the objective (the problem) and teams propose the key results (the measures) — a dialogue, not a top-down dictation.",
+              "metaphor_seed": "OKRs are a fitness goal, not a gym-attendance log. 'Go to the gym 4 times a week' is an output you can hit all year while staying unhealthy. 'Lower resting heart rate to 60 bpm and run 5km without stopping' is an outcome — it doesn't care how you train, only whether your body actually changed.",
+              "case_study_seed": "John Doerr introducing OKRs to a tiny Google in 1999, carried from Intel where Andy Grove invented them and used 'Operation Crush' to out-compete Motorola. Google has used OKRs ever since to scale from a startup with no business plan — the canonical origin story from Doerr's 'Measure What Matters.'",
+              "pm_angle": "Technical-literacy angle: a good key result is only as trustworthy as the instrumentation behind it. You need to know whether a metric is a leading or lagging indicator, whether it can be cleanly measured, and how to avoid disguising a task list as key results — all of which require understanding how the data is collected.",
+              "deep_sections": [
+                "Objective (inspirational what) vs. key results (measurable how-we'll-know)",
+                "Cascading direction without cascading tasks",
+                "Common failure modes: too many OKRs, task lists in disguise, tying to compensation"
+              ],
+              "sources": [
+                "https://www.whatmatters.com/faqs/outputs-vs-outcome-okr",
+                "https://productschool.com/blog/product-strategy/product-okrs",
+                "https://www.svpg.com/team-objectives-empowerment/",
+                "https://www.betterworks.com/magazine/keys-okr-success-qa-john-doerr"
+              ]
+            },
+            {
+              "title": "Prioritization Frameworks: Defensible Trade-offs Under Constraints",
+              "summary": "Even after strategy and OKRs, you face more good ideas than capacity. Frameworks like RICE turn subjective 'I feel like we should build X' arguments into structured, comparable scores that align stakeholders. The key is matching the framework to the decision type and treating the number as an input to judgment, not a verdict.",
+              "metaphor_seed": "A prioritization framework is the nutrition label on packaged food. It won't decide dinner for you, but by forcing every option onto the same axes — calories, protein, sugar — it stops you being seduced by the prettiest box and lets you compare a steak and a candy bar honestly.",
+              "case_study_seed": "Intercom created and popularized the RICE scoring model (Reach x Impact x Confidence / Effort) internally to decide roadmap items, then published it — it's since become one of the most widely adopted prioritization methods in product management.",
+              "pm_angle": "Technical-literacy angle: the 'Effort' in RICE is an engineering estimate, and the quality of your whole prioritization depends on it being realistic. You need enough technical literacy to pressure-test effort estimates, understand why they're uncertain, and recognize when a 'small' feature hides large architectural cost.",
+              "deep_sections": [
+                "RICE, ICE, Cost of Delay / WSJF, and the Kano model",
+                "Confidence as an explicit scored variable to fight overconfidence",
+                "Why frameworks inform judgment but don't replace it (garbage in, garbage out)"
+              ],
+              "sources": [
+                "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/",
+                "https://www.productplan.com/glossary/rice-scoring-model",
+                "https://productschool.com/blog/product-fundamentals/ultimate-guide-product-prioritization",
+                "https://www.productleadership.com/blog/product-prioritization-frameworks/"
+              ]
+            },
+            {
+              "title": "Roadmaps vs. Outcomes: Planning Honestly for Uncertainty",
+              "summary": "Traditional timeline/Gantt roadmaps are treated as contracts but they're fiction — dates slip, features underperform, markets shift, and broken promises erode trust. The 2026 best practice is the outcome-based Now-Next-Later roadmap, where certainty is high for what you're building now and deliberately fuzzy further out.",
+              "metaphor_seed": "An outcome roadmap is a weather forecast, not a train timetable. Tomorrow's forecast is precise and you plan around it; next week is 'probably rain'; the 10-day outlook is just 'cooler trend.' Demanding day-1 exactness for day 10 is fooling yourself — and a roadmap should be honest about fading certainty.",
+              "case_study_seed": "Intercom popularized the Now-Next-Later roadmap (invented by Janna Bastow, ProdPad co-founder, in 2012), abandoning rigid quarterly Gantt commitments for three confidence-based horizons — now standard across modern product organizations.",
+              "pm_angle": "Technical-literacy angle: the reason far-out dates are fiction is partly that software estimates grow exponentially less reliable with distance and discovery, especially for novel or AI work where you may train a model for weeks only to find accuracy falls short. Understanding why engineering can't promise distant dates lets you set honest expectations.",
+              "deep_sections": [
+                "Now = committed solutions, Next = problems/opportunities, Later = target outcomes",
+                "Why feature/timeline roadmaps are 'false contracts' (Torres)",
+                "Managing the sales-wants-dates vs. product-needs-flexibility tension"
+              ],
+              "sources": [
+                "https://www.producttalk.org/product-roadmaps/",
+                "https://www.aakashg.com/now-next-later-roadmap/",
+                "https://www.hustlebadger.com/what-do-product-teams-do/product-roadmap-examples/"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 4 — Leading People: Empowerment, Influence, and Culture",
+          "goal": "Learn the human side of the model — the part most transformations fail on. Build the skills to lead without authority, structure and coach empowered teams, and create the culture of innovation and execution that makes empowerment actually work.",
+          "lessons": [
+            {
+              "title": "The Leadership Layer: Vision, Strategy, Topology, Objectives",
+              "summary": "Empowerment without direction is just chaos. Leaders create the conditions for teams to succeed by giving compelling direction (vision), making hard strategic choices, structuring teams to minimize dependencies (topology), and assigning problems via objectives — then trusting teams to find the solutions.",
+              "metaphor_seed": "A great expedition leader doesn't carry every climber up Everest, nor just shout 'good luck.' They paint the vision (summit and come home alive), set the strategy (which route given the season and the team's strengths), organize who's roped to whom (topology), and assign each rope-team a clear daily objective — then trust the climbers, who can see the ice, to pick each foothold.",
+              "case_study_seed": "Datasite (formerly Merrill Corporation): a 100+ year-old family-owned financial-printing business, disrupted and struggling, whose leadership set a clear vision and strategy to become a SaaS platform for the M&A community, restructured into empowered teams, and rebranded in 2020. Revenue grew 30%+ to industry leadership — a flagship leadership-driven transformation in TRANSFORMED.",
+              "pm_angle": "Technical-literacy angle: 'team topology' is largely about minimizing technical dependencies between teams — you can't structure empowered teams well without understanding how the system's architecture creates or removes coupling. Conway's Law (org structure mirrors system structure) is a technical idea every product leader needs.",
+              "deep_sections": [
+                "Team topology: structuring teams to minimize cross-team dependencies",
+                "Team objectives as a back-and-forth dialogue, not top-down dictation",
+                "Netflix's 'context not control' and leadership as the missing ingredient"
+              ],
+              "sources": [
+                "https://www.productcompass.pm/p/product-model-first-principles-transformed-cagan",
+                "https://www.svpg.com/team-objectives-overview/",
+                "https://www.svpg.com/team-objectives-empowerment/",
+                "https://theproductvenn.substack.com/p/datasite-transforming-to-the-product"
+              ]
+            },
+            {
+              "title": "Influence Without Authority: The Real PM Superpower",
+              "summary": "A PM is accountable for a product's success but commands almost no one — engineers, designers, sales, legal, finance, and execs all have their own bosses and agendas. You earn influence through credibility, data, and trust rather than positional power, because a perfect strategy that can't align stakeholders ships nothing.",
+              "metaphor_seed": "A product manager is the host of a dinner party, not the boss of the guests. You can't order anyone to enjoy themselves. You succeed by seating the right people together, serving what each actually likes, reading the room, and making everyone feel heard — so the whole table moves in the same happy direction without a single command.",
+              "case_study_seed": "The HBR-documented near-collapse of HealthCare.gov (2013): no single accountable product owner sat across 55+ contractors and agencies, stakeholder coordination broke down, and the launch failed catastrophically — later rescued by a small 'tech surge' team that established clear ownership and decision-making.",
+              "pm_angle": "Technical-literacy angle: your single most powerful currency of influence with an engineering org is technical credibility. Engineers grant influence to PMs who understand the system, respect the constraints, and can debate trade-offs — and withhold it from those who can't. Earning that credibility is a core part of building your influence.",
+              "deep_sections": [
+                "Currencies of influence: expertise, data, relationships",
+                "Power-Interest (Mendelow) grid and RACI",
+                "Disagree-and-commit; building trust over time vs. winning single arguments"
+              ],
+              "sources": [
+                "https://www.aakashg.com/how-to-influence-without-authority/",
+                "https://www.mindtheproduct.com/deep-dive-mastering-stakeholder-management-for-product-leaders/",
+                "https://csmis.org/2025/09/28/stakeholder-management-plan-with-raci-and-power-interest-grid/",
+                "https://www.productplan.com/learn/stakeholder-types-product-managers"
+              ]
+            },
+            {
+              "title": "Stakeholders and the Product Model: Collaboration, Not Conquest",
+              "summary": "Empowerment is not a license to ignore the business. Empowered teams still must collaborate with and respect stakeholders — legal, finance, sales, marketing — because viability risk lives in those constraints. The skill is partnering with stakeholders as a source of business knowledge rather than treating them as order-givers or obstacles.",
+              "metaphor_seed": "A ship's captain has full authority over how to sail, but still must respect the harbor master, the coast guard, and maritime law. Ignoring them doesn't make the captain more empowered — it runs the ship aground. Stakeholders are the harbor conditions you navigate, not enemies to defeat.",
+              "case_study_seed": "Cagan's 'Stakeholders and the Product Model' essay, contrasted with the recurring failure pattern he documents: companies that rename teams 'squads' and 'adopt OKRs' but keep handing down feature roadmaps because stakeholders never actually let go of control — vocabulary changed, behavior didn't.",
+              "pm_angle": "Technical-literacy angle: viability often turns on technical-adjacent constraints stakeholders own — data privacy and security (legal), cost-of-goods and margin (finance), integration and SLAs (sales engineering). You need enough fluency to translate these constraints into real product requirements rather than discovering them after build.",
+              "deep_sections": [
+                "Why viability risk lives in stakeholder constraints",
+                "Partnering with stakeholders as a knowledge source",
+                "Why transformations stall when stakeholders won't relinquish control"
+              ],
+              "sources": [
+                "https://www.svpg.com/stakeholders-and-the-product-model/",
+                "https://www.media.thiga.co/en/en/marty-cagan-method-successful-product-transformation",
+                "https://www.svpg.com/missionaries-vs-mercenaries/",
+                "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan"
+              ]
+            },
+            {
+              "title": "Product Culture: Innovation AND Execution",
+              "summary": "A strong product culture has two halves: a culture of innovation (discovery, experimentation, appropriate risk-taking) and a culture of execution (delivery, urgency, accountability). Great companies have both, built on psychological safety, autonomy, and missionary motivation — teams that care about the mission and will push back to protect the customer.",
+              "metaphor_seed": "A great product culture is like a championship sports team that both invents new plays in training (innovation) and executes flawlessly under pressure on game day (execution). A team that only experiments never wins; a team that only drills the same plays gets predictable and beaten. You need the lab and the field.",
+              "case_study_seed": "Gympass (corporate wellness platform, now Wellhub), featured in TRANSFORMED: moved from a sales-led to a product-led operating model, building empowered teams and a product culture to scale globally — demonstrating both halves of culture working together.",
+              "pm_angle": "Technical-literacy angle: a culture of execution depends on engineering practices that make frequent, safe releases possible — small batches, automated testing, decoupled systems, instrumentation. As a leader you can't nurture an execution culture without understanding the technical foundations (CI/CD, monitoring) that let teams ship fast without breaking things.",
+              "deep_sections": [
+                "The two halves: innovation and execution",
+                "Psychological safety, autonomy, and missionary motivation as preconditions",
+                "Missionaries vs. mercenaries as a cultural state"
+              ],
+              "sources": [
+                "https://www.svpg.com/missionaries-vs-mercenaries/",
+                "https://www.svpg.com/the-product-operating-model-an-introduction/",
+                "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan",
+                "https://www.media.thiga.co/en/en/marty-cagan-method-successful-product-transformation"
+              ]
+            },
+            {
+              "title": "Leading the Transformation: Why Most Attempts Fail",
+              "summary": "Knowing the model isn't enough — most companies that try to adopt it fail, and the hardest part is people and leadership, not process. You need stronger (not fewer) leaders who coach, and you must actively manage the resistance of middle managers and stakeholders used to giving orders.",
+              "metaphor_seed": "Transplanting the product model into a command-and-control company is like an organ transplant: the new organ (empowered teams) is healthy, but the host's immune system (managers and stakeholders used to control) will attack and reject it unless you actively manage the transition. Many transplants fail not because the organ was bad but because the body rejected it.",
+              "case_study_seed": "The recurring cautionary pattern Cagan documents in TRANSFORMED: companies that 'adopt OKRs' or rename teams 'squads' while still handing down feature roadmaps — proof that culture and leadership, not vocabulary, decide success. Contrast with the genuine transformations (Trainline, Datasite, Almosafer) that changed how work was actually defined and assigned.",
+              "pm_angle": "Technical-literacy angle: a real transformation usually requires modernizing the technical foundation too — decoupling monolithic systems so small teams can release independently. Leaders who treat transformation as purely organizational, ignoring the architecture that enforces dependencies, find the old structure reasserts itself.",
+              "deep_sections": [
+                "Why you need stronger leaders, not fewer — coaching as central",
+                "The specific failure modes: renaming roles, 'doing outcomes' without transforming",
+                "Managing middle-management resistance"
+              ],
+              "sources": [
+                "https://www.svpg.com/books/empowered-ordinary-people-extraordinary-products/",
+                "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan",
+                "https://www.media.thiga.co/en/en/marty-cagan-method-successful-product-transformation",
+                "https://userpilot.medium.com/moving-to-the-product-operating-model-by-marty-cagan-1e45b8e4f414"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 5 — Managing AI Products: A Different Animal",
+          "goal": "Build the distinct discipline of managing AI/ML products, where the engine is probabilistic, not deterministic. Learn why the old toolkit breaks, how to own measurement through evals, and how to design experiences and experiments for systems that are occasionally and unavoidably wrong.",
+          "lessons": [
+            {
+              "title": "From Deterministic to Probabilistic: Why AI Is Different",
+              "summary": "Traditional software follows if/then rules — the same input always gives the same output. AI products are probabilistic: identical inputs can produce different outputs, and being occasionally wrong is expected behavior, not a bug. This single shift breaks the PM's usual toolkit for roadmaps, success metrics, and team composition.",
+              "metaphor_seed": "Traditional software is a vending machine: press B4, you always get the same chocolate bar. An AI product is a talented but slightly unpredictable junior chef — give them the same recipe twice and you get two slightly different dishes, usually great, occasionally salty. You manage a chef by tasting the food and giving feedback, not by scripting exact muscle movements.",
+              "case_study_seed": "Gartner/industry reporting through 2024-2025 that only ~48% of AI pilots reach production and at least 30% of gen-AI projects are abandoned after proof-of-concept — most often due to weak evaluation, governance, and integration rather than weak models. The 'pilot-to-production gap' that probabilistic-product discipline exists to close.",
+              "pm_angle": "Technical-literacy angle: this entire module IS the technical-literacy core for AI PMs. You must understand the model lifecycle — training, monitoring, drift, retraining — as ongoing roadmap work, and that you cannot guarantee accuracy by a deadline. The team now includes data scientists and ML engineers whose work you must understand to lead.",
+              "deep_sections": [
+                "Deterministic vs. probabilistic systems",
+                "Why delivery timelines for AI are non-linear and uncertain",
+                "Expanded success metrics: accuracy, fairness, explainability, trust alongside adoption"
+              ],
+              "sources": [
+                "https://www.productplan.com/learn/ai-product-management",
+                "https://erdeniztunch.medium.com/ai-native-product-management-what-actually-changed-in-2026-44685f4c9afc",
+                "https://productschool.com/blog/artificial-intelligence/guide-ai-product-manager",
+                "https://www.productledalliance.com/think-like-an-ai-pm-what-ai-first-products-change-for-pms/"
+              ]
+            },
+            {
+              "title": "Evals as a PM Responsibility: Beyond the Vibe Check",
+              "summary": "Because AI output is probabilistic, the only way to know whether a change made the product better or worse is a systematic evaluation — an 'eval.' This became the defining AI-PM skill of 2025-26. It's a product-judgment task, not coding: you don't write eval code, but you own deciding what to measure, curating the test set, setting thresholds, and making the ship/no-ship call.",
+              "metaphor_seed": "An eval is the exam you write for your AI before letting it graduate into production. A vibe check is glancing at one homework answer and saying 'looks smart enough.' A real eval is a graded test bank of 100 questions with an answer key and a passing score — so when you swap in a new student (model or prompt), you can prove whether it actually got smarter or just got lucky.",
+              "case_study_seed": "The trip-planning AI agent cited by Aman Khan (Arize) in Lenny's Newsletter that booked a user flights to San Diego instead of San Francisco — a failure a proper eval set would have caught before launch. The canonical example of why PM-owned evals beat vibe checks.",
+              "pm_angle": "Technical-literacy angle: you need to understand the three eval approaches (human, code-based, LLM-as-a-judge) and their trade-offs well enough to choose. The recommended starting point — hand-label 50-100 real examples to learn what 'good' means, then automate — is a hands-on, semi-technical exercise every AI PM should be able to run.",
+              "deep_sections": [
+                "Vibe checks vs. rigorous evals",
+                "The three approaches: human, code-based, LLM-as-a-judge",
+                "The four-part LLM-judge framework (Aman Khan): role, context, goal, terminology"
+              ],
+              "sources": [
+                "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete",
+                "https://creatoreconomy.so/p/ai-skill-that-will-define-your-pm-career-aman-khan",
+                "https://www.productboard.com/blog/ai-evals-for-product-managers/",
+                "https://www.evidentlyai.com/llm-guide/llm-evaluation"
+              ]
+            },
+            {
+              "title": "Probabilistic UX: Designing for Uncertainty and Graceful Failure",
+              "summary": "Classic UX assumes a predictable response to every action; AI UX must design for outputs that vary and can be wrong. Hide the uncertainty and users either over-trust a confident wrong answer or abandon the product after one bad experience. Good AI UX surfaces confidence, explains in plain language, gives override controls, and degrades gracefully.",
+              "metaphor_seed": "A good GPS that re-routes you doesn't silently teleport you onto a new road — it says 'I'm 80% sure this faster route avoids traffic,' shows the alternative, and lets you decline. Probabilistic UX builds that GPS for every AI feature: it tells you how sure it is, shows its reasoning, and always leaves your hands on the wheel.",
+              "case_study_seed": "GitHub Copilot's inline-suggestion design: code appears as low-commitment gray 'ghost text' the user accepts with Tab, rejects with Esc, cycles alternatives, or accepts word-by-word — a widely-studied pattern for presenting uncertain AI output as an easily-dismissable suggestion rather than a forced confident action.",
+              "pm_angle": "Technical-literacy angle: surfacing 'confidence' in the UI requires understanding what confidence the model can actually report and how reliable it is, and 'agentic' experiences (where the AI takes autonomous actions) demand you grasp what the agent can do, where it can fail, and where human-in-the-loop checkpoints are technically necessary.",
+              "deep_sections": [
+                "Confidence UI and plain-language explainability (microcopy)",
+                "Graceful degradation and elegant fallback states",
+                "Agentic Experience (AX): transparency and override controls for autonomous AI"
+              ],
+              "sources": [
+                "https://think.design/blog/what-ux-for-ai-products-must-solve-in-2025/",
+                "https://cocreate.consulting/field-notes/probabilistic-ux-design-patterns",
+                "https://wearenotch.com/blog/what-is-agentic-experience/",
+                "https://docs.github.com/en/copilot/concepts/completions/code-suggestions"
+              ]
+            },
+            {
+              "title": "Build-Measure-Learn with Models: Experimentation at AI Speed",
+              "summary": "Coding agents and prototyping tools have collapsed the cost of building, so the bottleneck moved from 'can we build it?' to 'can we learn whether it's better?' The new advantage is learning speed: change ONE variable (prompt, model, or retrieval), measure with evals plus real-user A/B tests, and decide. Speed without discipline just lets you waste time faster.",
+              "metaphor_seed": "It's the scientific method, sped up. Old development was baking a cake, waiting a week for guests to eat it, and asking if they liked it. Now you can bake a hundred mini-cakes in an afternoon — but if you change the flour, sugar, and oven temperature all at once, you'll never know which change helped. Change one ingredient at a time, and keep a reliable taste-tester.",
+              "case_study_seed": "The 'Lean AI' weekly experiment cadence documented in 2025-26 practitioner playbooks, where teams use a stronger model (GPT-4-class or Claude) as an automated 'judge' to score cheaper production models — letting them iterate prompts and models in hours instead of waiting on human evaluation.",
+              "pm_angle": "Technical-literacy angle: 'change one variable' means understanding the levers — prompt, model, retrieval strategy — and what each does, so you can attribute a result. Using an LLM-as-a-judge as your measurement engine, calibrated against human review, is a technical workflow you should be able to reason about and direct.",
+              "deep_sections": [
+                "The Build-Measure-Learn loop adapted for probabilistic systems",
+                "LLM-as-a-judge as the fast, cheap 'Measure' engine",
+                "Coupling offline evals with online A/B tests and edge-case monitoring"
+              ],
+              "sources": [
+                "https://leanpivot.ai/blog/build-measure-learn-for-ai-products-the-experiment/",
+                "https://productschool.com/blog/artificial-intelligence/ai-experimentation-how-ai-pms-test-and-learn-faster",
+                "https://userpilot.com/blog/build-measure-learn/",
+                "https://www.getmaxim.ai/articles/building-ai-products-in-2025-a-practical-blueprint-for-speed-reliability-and-scale/"
+              ]
+            },
+            {
+              "title": "AI-Accelerated Discovery: Faster Tests, Same Discipline",
+              "summary": "The defining 2026 shift is that AI has collapsed the cost of prototyping and synthesis — tools like Figma Make, Lovable, Cursor, and Claude Code let a PM 'vibe code' a working prototype from a prompt in minutes, and AI can draft interview summaries and opportunity trees in seconds. But the human disciplines — talking to real customers, judging evidence, preserving empathy — become MORE valuable, not less.",
+              "metaphor_seed": "AI is like getting a power drill after years of using a hand screwdriver. The drill makes the repetitive work astonishingly fast, but it doesn't tell you WHERE to put the holes or whether you're building the right furniture at all. The carpenter's judgment — knowing what the customer actually needs — becomes the part that matters most, precisely because everyone now has the drill.",
+              "case_study_seed": "Teresa Torres building her first AI product live (covered in 2025-26 webinars and the Aakash Gupta podcast), publicly walking through how she used AI to speed synthesis and prototyping while deliberately keeping humans in the loop — and codifying a five-step discovery discipline (context engineering, orchestration, observability, evals, maintenance) specific to AI products. She notes AI summaries can miss 20-40% of important detail.",
+              "pm_angle": "Technical-literacy angle: this is the exact intersection of being an AI engineer and a PM. 'Vibe coding' a testable prototype is now a PM skill, and discovery for AI products adds genuinely technical disciplines — context engineering, orchestration, observability, evals, and the error-analysis loop where humans tag failures and then write automated checks.",
+              "deep_sections": [
+                "Vibe coding: building testable prototypes from plain English",
+                "What to keep human (Torres): synthesis review, judging disproof, deciding what matters",
+                "Discovery for AI products: the five-step discipline and the error-analysis loop"
+              ],
+              "sources": [
+                "https://www.news.aakashg.com/p/teresa-torres-podcast",
+                "https://productside.com/the-ai-product-management-workflows-2026/",
+                "https://www.institutepm.com/knowledge-hub/vibe-coding-for-product-managers",
+                "https://airfocus.com/resources/events/behind-the-build-teresa-torres-first-ai-product/"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Module 6 — The Business and Engineering Edge of AI Products",
+          "goal": "Master the hard commercial and operational realities that decide whether an AI product survives: building a real moat, pricing against non-zero compute costs, owning trust and safety as product (and legal) risk, and leading teams where AI agents write much of the code.",
+          "lessons": [
+            {
+              "title": "Data as the Moat: Flywheels and What Actually Compounds",
+              "summary": "When any competitor can call the same foundation model and clone your feature in weeks, the feature itself is no longer defensible. What's left is what you accumulate — but a static dataset is NOT a durable moat. The real moat is a data flywheel: every user action generates signal that improves the model, which drives more usage, which generates more signal.",
+              "metaphor_seed": "A data moat is like a neighborhood coffee shop that remembers every regular's order. A new chain can copy the menu and decor overnight (the features), but can't copy ten years of knowing you take oat milk on Tuesdays and your kid likes the blueberry muffin. And crucially, the shop has to actually pay attention and remember (design the flywheel), not keep a dusty guestbook nobody reads (a static dataset).",
+              "case_study_seed": "Cursor (the AI code editor) as analyzed by NFX: as a whole team adopts it, the AI accumulates the team's codebase architecture, conventions, and project structure — switching to a rival means losing 'months of accumulated team knowledge embedded in the AI,' turning usage data plus workflow embedding into a compounding moat a feature-clone can't replicate.",
+              "pm_angle": "Technical-literacy angle: designing a flywheel is a technical product decision — you must understand how user actions are captured as training signal, how that signal feeds model improvement, and the consent and data-governance requirements. Building the loop (vs. a dead dataset) requires real fluency in how the system learns from usage.",
+              "deep_sections": [
+                "Why feature moats are dead and accumulation is the new defensibility",
+                "Static data decays vs. compounding flywheel data",
+                "NFX's six defensibilities and the motte-and-bailey strategy"
+              ],
+              "sources": [
+                "https://www.nfx.com/post/ai-defensibility",
+                "https://medium.com/@cenrunzhe/ai-killed-the-feature-moat-heres-what-actually-defends-your-saas-company-in-2026-9a5d3d20973b",
+                "https://www.rohitprabhakar.com/blog/market-of-one-data-flywheel-competitive-moat/",
+                "https://valueaddvc.com/blog/the-data-advantage-myth-why-proprietary-data-alone-wont-save-you"
+              ]
+            },
+            {
+              "title": "Pricing AI Features: The New Gross-Margin Reality",
+              "summary": "In classic SaaS, serving one more customer costs almost nothing, enabling per-seat pricing and 80-90% margins. AI breaks this: every query has a real compute cost, so AI businesses often run at 50-60% gross margins. PMs must rethink both how they charge (toward usage, workflow, and outcome-based models) and how they protect margin.",
+              "metaphor_seed": "Old SaaS pricing was a gym membership: a flat monthly fee whether you show up or not, costing the gym nothing extra when you do. AI pricing is more like a law firm — every hour the AI 'works' costs you money, so you can bill by the hour (usage), by the case-task (workflow), or only when you win the case (outcome). Each step toward 'only when you win' is more attractive to the client but riskier for the firm.",
+              "case_study_seed": "Intercom's Fin AI support agent charges $0.99 per ticket it actually resolves — per problem solved, not per message or token. The canonical outcome-based pricing example from Bessemer's playbook, alongside EvenUp (per AI-generated legal demand letter) and Leena AI (priced on tickets auto-closed).",
+              "pm_angle": "Technical-literacy angle: pricing demands you model the fully-loaded cost per unit — tokens, embeddings, vector search, orchestration, monitoring — and price above a margin floor. Understanding token economics and what drives compute cost is a quantitative, technical skill, and unmonitored token costs can quietly erode margins by 6%+ if you don't track them.",
+              "deep_sections": [
+                "Why AI margins are structurally lower: real per-query cost-of-goods",
+                "The pricing ladder: per-seat to usage to workflow to outcome",
+                "Cost-plus modeling and the abstraction problem (customers think in problems, not tokens)"
+              ],
+              "sources": [
+                "https://www.bvp.com/atlas/the-ai-pricing-and-monetization-playbook",
+                "https://www.softwareseni.com/outcomes-based-pricing-and-ai-first-saas-gross-margin-economics-explained/",
+                "https://www.getmonetizely.com/articles/how-to-price-ai-services-in-2025-models-examples-and-strategy-for-saas-leaders",
+                "https://www.drivetrain.ai/post/unit-economics-of-ai-saas-companies-cfo-guide-for-managing-token-based-costs-and-margins"
+              ]
+            },
+            {
+              "title": "Trust and Safety as a Product Concern: Hallucinations and Liability",
+              "summary": "When your product can confidently state something false (a hallucination) or produce biased output, that's a product, brand, and legal risk the PM owns — courts have already held companies liable for what their AI tells customers. Trust and safety becomes a first-class requirement, designed as guardrails at three layers: input, processing, and output.",
+              "metaphor_seed": "Guardrails are the bumpers in a bowling alley and the spell-checker on a press release. The AI is an eager intern who will happily send a customer a confident, totally made-up policy if you let them. You don't fire the intern — you put rules in place: check the facts before it goes out, never use that tone, never promise a refund we don't offer. Once that email leaves with your company's name on it, the company owns every word.",
+              "case_study_seed": "Moffatt v. Air Canada (2024, BC Civil Resolution Tribunal): Air Canada's chatbot hallucinated a bereavement-fare refund policy contradicting the airline's own website; the tribunal rejected the 'the chatbot is a separate legal entity' defense and held the airline liable for $812.02 — the landmark case establishing companies are accountable for their AI's output.",
+              "pm_angle": "Technical-literacy angle: you must understand the three guardrail layers (input filtering, processing constraints, output validation) and emerging techniques like constitutional/principle-based approaches and automated-reasoning verification well enough to specify them as requirements. Knowing where a hallucination can technically be caught lets you design defenses, not just hope.",
+              "deep_sections": [
+                "Hallucinations and the three guardrail layers",
+                "Constitutional/principle-based approaches and automated-reasoning verification",
+                "Legal liability: 'you own what your chatbot says'"
+              ],
+              "sources": [
+                "https://www.mccarthy.ca/en/insights/blogs/techlex/moffatt-v-air-canada-misrepresentation-ai-chatbot",
+                "https://aibusiness.com/nlp/air-canada-held-responsible-for-chatbot-s-hallucinations-",
+                "https://aws.amazon.com/blogs/aws/minimize-ai-hallucinations-and-deliver-up-to-99-verification-accuracy-with-automated-reasoning-checks-now-available/",
+                "https://www.wiz.io/academy/ai-security/ai-guardrails"
+              ]
+            },
+            {
+              "title": "Leading Teams That Ship with Coding Agents",
+              "summary": "By 2026, AI coding agents write a large share of the code, changing what the whole team optimizes for. Engineers move from writing code to orchestrating agents and verifying output — including 'hallucination checks' (did the agent invent a fake library or break the logic?). PMs get back time lost to alignment meetings but take on a sharper duty: making sure the team ships the RIGHT things, because velocity only becomes value if pointed at validated needs.",
+              "metaphor_seed": "Managing an AI-native team is like running a newsroom where the junior reporters are incredibly fast AI writers. They draft articles in seconds but sometimes quote sources that don't exist. Your senior staff stop typing stories themselves and become editors — they set the style guide (AGENTS.md), fact-check every draft (the hallucination check), and decide which stories are worth running at all. You judge the newsroom not by word count but by how few errors slip into print, and whether you covered the stories readers cared about.",
+              "case_study_seed": "OpenAI's 'Building an AI-Native Engineering Team' guide: Cloudwalk turns specs into working code in minutes via Codex; Sansan uses agent review to catch race conditions and database-relation bugs humans miss; Cloudflare reports its 4-week rolling average of merge requests climbing from ~5,600/week to over 8,700/week as AI tooling adoption grew.",
+              "pm_angle": "Technical-literacy angle: you need to understand new artifacts like AGENTS.md (the instruction file telling agents your conventions and standards) and new metrics like 'defect-capture rate' over 'volume of commits.' Knowing that 'AGENTS.md tells agents HOW to build, but customer evidence tells the team WHAT to build' — and owning the latter — is the crux of the AI-native PM role.",
+              "deep_sections": [
+                "Engineers as agent-orchestrators and verifiers; the hallucination check in code review",
+                "AGENTS.md and new metrics (defect-capture rate over commit volume)",
+                "Emerging org structures like the 'shipyard team'"
+              ],
+              "sources": [
+                "https://developers.openai.com/codex/guides/build-ai-native-engineering-team",
+                "https://blog.buildbetter.ai/agents-md-complete-guide-for-engineering-teams-in-2026/",
+                "https://blog.cloudflare.com/internal-ai-engineering-stack/",
+                "https://optimumpartners.com/insight/engineering-management-2026-how-to-structure-an-ai-native-team/"
+              ]
+            },
+            {
+              "title": "Capstone: The AI Product Leader's Operating Loop",
+              "summary": "This final lesson integrates the whole track into one continuous operating loop for an empowered AI product leader: set an insight-driven vision and strategy, run continuous discovery with the four risks, build with agents and validate with evals, design for probabilistic UX, price for real margins, guard against safety risk, and measure outcomes — then feed the learning back in. It's the full job, end to end.",
+              "metaphor_seed": "Conducting an orchestra where some musicians are human virtuosos (your trio and stakeholders) and some are powerful but literal-minded AI instruments (the models and agents). The conductor doesn't play every note — they hold the score (vision and strategy), cue each section at the right moment (discovery, build, evals, launch), listen for when something's off-key (outcomes and safety), and keep the whole thing moving as one piece of music rather than a pile of solos.",
+              "case_study_seed": "Synthesis across the track's flagship transformations and AI cases — Trainline and Datasite (operating model), Airbnb and Dropbox (discovery), Netflix and Apple (vision and strategy), Intercom's Fin and Cursor (AI business model), Air Canada (safety) — assembled as one decision framework an aspiring leader can apply to their own product.",
+              "pm_angle": "Technical-literacy angle: the capstone ties together every technical thread — instrumentation, A/B testing, model lifecycle, evals, token economics, guardrails, and agent orchestration — into the integrated judgment that lets a non-technical-by-background leader operate credibly as both a great PM and a great AI engineer's true partner.",
+              "deep_sections": [
+                "The end-to-end operating loop, stage by stage",
+                "Where the technical and product disciplines reinforce each other",
+                "Cagan's 2025-26 provocation: as AI absorbs the narrow 'Product Owner' role, real product judgment becomes the differentiator"
+              ],
+              "sources": [
+                "https://www.svpg.com/the-product-operating-model-an-introduction/",
+                "https://www.news.aakashg.com/p/teresa-torres-podcast",
+                "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete",
+                "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "critique": {
+      "gaps": [
+        "NO ACTUAL CODING ANYWHERE. The Engineering track promises the learner can 'design, ship' AI features and 'hold your own with senior AI engineers,' but no lesson teaches programming, calling an LLM API, reading/writing JSON, HTTP requests, Python, environment setup, or even pseudocode. A smart non-technical person finishing both tracks would be deeply conceptually fluent yet unable to build a single working thing. For the 'great AI engineer' half of the promise this is the load-bearing gap. (The home CLAUDE.md shows a separate 'Python 101' course exists - the curriculum must explicitly sequence it as a prerequisite or Module 0, not silently assume it.)",
+        "No 'AI fundamentals before LLMs' grounding. The Engineering track opens at next-token prediction with zero coverage of what machine learning even is (data -> model -> prediction), supervised vs unsupervised learning, what 'training on data' means mechanically, or neural networks at a metaphor level. For a non-technical learner, jumping straight to 'parameters' and 'embeddings' skips the conceptual floor those ideas stand on.",
+        "Multimodality is barely present. In 2026 vision, audio, image-generation, speech, and video models are central to both engineering and product work. Embeddings lesson mentions images/audio in one bullet; otherwise the entire curriculum is text-LLM-centric. No lesson on multimodal inputs/outputs, OCR/document AI, voice agents, or image generation as a product surface.",
+        "Data engineering and the data layer are underbuilt for an 'AI engineer.' RAG is covered well, but there's almost nothing on data pipelines, data quality/labeling, ETL, where training/eval data comes from, synthetic data, or data versioning - the unglamorous 80% of real ML work.",
+        "Ethics, bias, fairness, and responsible AI get only glancing mention (one bullet in Product M5 success metrics; 'ethical' as one of five assumption categories). For someone becoming a product LEADER shipping AI to real people, there is no dedicated treatment of bias/fairness, disparate impact, dataset representativeness, or the reputational/discrimination risks that have produced major real-world failures.",
+        "Regulation and compliance are nearly absent. No EU AI Act, no risk tiers, no GDPR/data-residency depth, no copyright/IP-of-training-data issues, no sector rules (HIPAA/finance). This is a top-3 concern for any SV product leader shipping AI in 2026 and a real engineering constraint (what data you can use, what you must log).",
+        "No coverage of the model/vendor landscape and procurement as a strategic skill. Open vs closed weights is touched in M6, but there is no clear map of the provider ecosystem (OpenAI/Anthropic/Google/Meta/open-source), how to choose/switch providers, avoid lock-in, or run the build-vs-buy decision - a core PM-and-engineer judgment call.",
+        "Product track has no quantitative/analytics foundation despite repeatedly insisting on 'deep knowledge of the data.' Every PM lesson says metrics matter and instrumentation matters, but no lesson teaches the actual literacy: reading an A/B test, statistical significance, funnels/cohorts/retention curves, leading vs lagging indicators, or SQL/dashboard basics. The track tells the learner this skill is essential but never teaches it.",
+        "Go-to-market, growth, and the commercial side are thin in the Product track. There is strong discovery/strategy coverage but little on growth loops, acquisition/activation/retention (the AARRR funnel), positioning, sales-product collaboration beyond 'stakeholders,' or how AI products actually reach users. A 'great SV product leader' needs the growth toolkit.",
+        "Neither track teaches version control / Git, the development workflow, CI/CD beyond a passing mention, or how software actually gets shipped end to end. For someone meant to credibly partner with (or be) an engineer and lead an 'agentic SDLC,' the basic mechanics of the software lifecycle are assumed, not taught.",
+        "Latency/performance engineering and scaling/infrastructure (GPUs, serving, throughput, rate limits, caching beyond semantic cache) are mentioned as concerns but never explained at a foundational level - a gap for the 'engineer' identity."
+      ],
+      "accessibility_notes": [
+        "Engineering Module 1 front-loads a dense pileup of technical primitives - tokens, context windows, embeddings, vectors/cosine similarity, parameters, temperature/sampling, pretraining/SFT/RLHF - in the first ~5 lessons. The metaphors are excellent, but a non-technical learner will hit 'cosine similarity,' 'quadratic attention,' and 'parameter-efficient methods (LoRA)' with no math floor beneath them. Risk of early overwhelm right where confidence should be built.",
+        "Acronym density is high and many are introduced fast: RAG, RLHF, SFT, RLAIF, MCP, ACI, CRAG, SDLC/A-SDLC, COGS, WSJF, RICE, OKR, RAT, AARRR, pass^k. Each may be defined once, but the cumulative load on a non-technical reader is heavy. The curriculum needs a running glossary and a 'no unexplained jargon' enforcement pass.",
+        "Several 'deep_sections' silently assume programming/CS background the learner does not have: 'constrained decoding,' 'JSON Schema strict mode,' 'function calling: how the model asks your code to run something,' 'traces and spans,' 'OpenTelemetry conventions.' Without prior exposure to what a function, a schema, or an API call IS, these will read as opaque. They presuppose the missing coding/AI-fundamentals modules.",
+        "The Engineering track assumes the learner knows what JSON, an API, a database, a pull request, a Linux shell, and a 'stack trace' are - these appear in metaphors and case studies (SWE-agent's Linux shell, 'no stack trace,' 'returns a pull request') as if familiar. A non-technical learner will quietly lose the thread.",
+        "Product track is far more accessible than Engineering (better-grounded metaphors, less jargon) - the difficulty curve between the two tracks is steep and uneven. A learner doing Engineering M1-M3 then Product M1 will feel whiplash in required background.",
+        "Some case studies assume domain context a non-technical learner lacks: 'Nvidia's stock dropped,' 'SWE-bench Verified ~80.8%,' 'pass^k metric,' 'Conway's Law.' These are name-dropped as self-evidently meaningful. Each needs a one-line 'why this number matters' unpack to stay in plain English."
+      ],
+      "sequencing_notes": [
+        "Add a Module 0 to the Engineering track (or make Python 101 an explicit gate): basic coding literacy + 'what is machine learning' + what an API/JSON/HTTP is. Everything from Module 1 onward implicitly depends on these. As written, the very first technical lesson assumes them.",
+        "The two tracks have no defined interleaving or ordering relative to each other, yet they cross-reference the same concepts (data flywheel appears as Eng M7 L1 AND Product M6 L1; RAG/grounding/Air Canada appears in Eng M2, Eng M6, and Product M6; hallucination appears in Eng M1, Eng M2, and Product M6). The learner needs an explicit 'do these in this braided order' map so reinforcement lands instead of feeling like repetition.",
+        "Within Engineering M1, consider moving 'Capabilities, Limits, and the Map' (currently last) earlier, or splitting it: it's the most intuitive, motivating framing and would make a gentler on-ramp than opening on next-token probability distributions. The strongest motivating 'why care' lesson sits at the end of the module.",
+        "Evals (Eng M4) are introduced AFTER agents (Eng M3), but evals are the prerequisite discipline for trusting anything you build - including the simpler features in M2. Consider seeding a lightweight 'how do you even know it works?' concept before/within M2 so the learner isn't building for two modules with no notion of measurement.",
+        "In the Product track, 'Managing AI Products' (M5) and 'Business/Engineering Edge of AI' (M6) come last, after a learner has done the entire generic-PM arc. That's defensible, but the AI-specific evals lesson (Product M5) heavily duplicates Engineering M4 - the cross-track sequencing should have the learner do Engineering's eval module FIRST and treat Product M5's eval lesson as the 'PM-ownership' framing, not a re-teach.",
+        "Safety/governance (Eng M5) currently sits before Production/LLMOps (Eng M6), but several governance controls (sandboxing, least privilege, human-in-the-loop) are operational/production concerns. The split is reasonable, but flag the dependency: M5's 'excessive agency' and blast-radius ideas lean on tool-use (M2) and agents (M3), which is fine, but the governance-of-agents lesson should explicitly come after the autonomy-dial lesson it references."
+      ],
+      "redundancy": [
+        "Data flywheel / moat is taught twice as a near-duplicate capstone-level lesson: Engineering M7 L1 (snowball, Tesla) and Product M6 L1 (coffee shop, Cursor/NFX). Same concept, same 'three ingredients,' overlapping sources. Consolidate into one canonical lesson owned by the Product track, and have Engineering reference it.",
+        "RAG is covered three times with heavy overlap: Engineering M2 L2 ('open-book exam', RAG poisoning), Engineering M6 L4 ('open-book exam at scale', Air Canada), and the grounding angle reappears in Product M6 L3 (Air Canada again). The 'open-book exam' metaphor and the Air Canada case are both reused. The M2-vs-M6 split (intro vs production) is justifiable, but the metaphor and case-study reuse should be deliberate callbacks, not apparent copy-paste.",
+        "Hallucination + the certainty/UX response appears in Engineering M1 L5 (Mata v. Avianca), is previewed again across M2/M4/M5, and is re-taught in Product M6 L3 (Air Canada, 'eager intern'). The 'eager intern' metaphor is itself reused for BOTH hallucination (Product M6 L3) and prompt injection (Eng M5 L1) - two different concepts sharing one metaphor risks blurring them.",
+        "LLM-as-a-judge is taught in Engineering M4 L4 (full bias taxonomy) and again in Product M5 L2 + L4 (four-part judge framework). Acceptable as engineer-depth vs PM-ownership, but the overlap should be explicitly cross-referenced so it reads as one concept seen twice, not two introductions.",
+        "Evals broadly: Engineering M4 (whole module) and Product M5 L2 cover the same core idea (evals are the new unit tests / beyond vibe checks) with different sources. Strong reinforcement if sequenced; redundant if not flagged.",
+        "Air Canada and Mata v. Avianca are each used as the marquee case more than once. Powerful cases, but reusing the same two failures across multiple lessons can make the curriculum feel narrower in its evidence base than it is - vary the examples or make reuse an intentional 'remember this case' callback.",
+        "Token economics / per-use cost appears in Eng M1 L2, Eng M6 L3 ('toll bridge vs taxi meter'), and Product M6 L2 ('gym vs law firm'). Three good metaphors for one idea - reinforcement is fine but should be acknowledged as the same lesson deepening, not three separate discoveries."
+      ],
+      "suggested_additions": [
+        "A hands-on 'build a tiny AI feature' thread running through the Engineering track: by end of M2 the learner should have called a real model API, gotten JSON back, and wired up a trivial RAG over a few documents - even via no-code/low-code or guided 'vibe coding.' Concepts without a single build artifact won't produce a 'great AI engineer.'",
+        "A dedicated Responsible AI / Ethics / Fairness lesson (and a Regulation & Compliance lesson: EU AI Act risk tiers, GDPR/data residency, copyright of training data, sector rules). These belong in BOTH tracks - engineering for what it constrains technically, product for the risk/liability ownership.",
+        "A 'Quantitative & Analytics Literacy for PMs' lesson early in the Product track: A/B testing and significance, funnels, cohorts, retention, leading vs lagging metrics, and basic SQL/dashboard reading - so the repeated 'deep knowledge of the data' claim is actually taught, not just asserted.",
+        "A multimodal lesson: vision/document AI, speech/voice agents, and image/video generation as product surfaces and engineering inputs - given how central these are by 2026.",
+        "A growth & go-to-market lesson in the Product track: acquisition/activation/retention loops, positioning, pricing-meets-distribution, and product-led growth - the commercial muscle a great SV leader needs beyond discovery and strategy.",
+        "A 'how software actually ships' primer: version control/Git, environments, CI/CD, what a deploy/rollback is - prerequisite literacy for credibly leading an agentic SDLC and partnering with engineers.",
+        "A model/provider landscape + build-vs-buy + lock-in lesson: who the players are, open vs closed tradeoffs, switching costs, and how to make the procurement call - a shared engineer/PM judgment skill.",
+        "A glossary + spaced-recall layer across both tracks (running glossary, end-of-lesson plain-English recap of every new term) to enforce the 'no unexplained jargon' promise for a non-technical audience.",
+        "An explicit cross-track 'braided' learning path that interleaves the two tracks so shared concepts (evals, RAG, flywheel, hallucination, token economics) are taught once at depth and then deliberately reinforced from the other discipline's angle."
+      ],
+      "overall_verdict": "STRONG conceptual curriculum, INCOMPLETE for the stated dual goal. This is genuinely impressive work: modern (consistently 2025-26 dated), well-sourced, and built on an excellent repeatable pedagogy (plain-English summary + concrete metaphor + real case study + PM angle + deep sections). The Engineering track is one of the best CONCEPTUAL maps of modern applied LLM/agent work I've seen, and the Product track is a faithful, well-grounded Cagan/Torres-based PM education with a smart AI-products extension. Cross-track themes (evals, flywheel, RAG, economics, trust) are chosen well and would reinforce each other if sequenced deliberately. BUT it does not yet deliver on half its own promise. The phrase 'great AI ENGINEER' is not earned by any lesson: there is zero programming, zero API/JSON/HTTP mechanics, no ML fundamentals floor, and no single thing the learner actually builds - it produces a fluent, credible NON-builder who can hold a conversation but not ship code. For a smart non-technical learner specifically, Module 1 of the Engineering track also front-loads too much jargon (cosine similarity, quadratic attention, LoRA, constrained decoding) without the prerequisite coding/ML floor, risking early overwhelm. And several genuinely essential 2026 topics are missing or glancing: responsible AI/bias/fairness, regulation/compliance (EU AI Act, GDPR, copyright), multimodality, data engineering, PM quantitative/analytics literacy, and growth/GTM. RECOMMENDATION: (1) add a coding + ML-fundamentals Module 0 (or hard-gate the existing Python 101) plus a hands-on 'build a tiny AI feature' thread, (2) add the missing ethics/regulation, multimodal, analytics-literacy, and growth lessons, (3) consolidate the duplicated flywheel/RAG/eval/hallucination content into single canonical lessons with deliberate cross-references, and (4) define an explicit braided ordering across the two tracks with a running glossary. With those fixes it becomes genuinely comprehensive for producing both a great AI engineer AND a great SV product leader; as written, it reliably produces the second and the conceptual-but-non-building shell of the first."
+    },
+    "research_domains": [
+      {
+        "key": "eng-foundations",
+        "area": "Core AI/LLM Foundations a world-class AI engineer must understand in 2026",
+        "themeCount": 7
+      },
+      {
+        "key": "eng-building",
+        "area": "Building with LLMs in 2026: The Craft of Reliable AI Products",
+        "themeCount": 7
+      },
+      {
+        "key": "eng-agents",
+        "area": "Agents and Agentic Software Engineering in 2026",
+        "themeCount": 9
+      },
+      {
+        "key": "eng-eval",
+        "area": "Evaluation, Testing, Observability, and Guardrails for AI Systems (2026)",
+        "themeCount": 8
+      },
+      {
+        "key": "eng-production",
+        "area": "Production AI / LLMOps in 2026",
+        "themeCount": 8
+      },
+      {
+        "key": "prod-svmodel",
+        "area": "The Silicon Valley Product Model (Marty Cagan / SVPG): the product operating model, empowered teams, outcomes over output, and the product trio",
+        "themeCount": 8
+      },
+      {
+        "key": "prod-discovery",
+        "area": "Product Discovery vs Delivery in 2026",
+        "themeCount": 7
+      },
+      {
+        "key": "prod-strategy",
+        "area": "Product Strategy, Vision & Leadership",
+        "themeCount": 8
+      },
+      {
+        "key": "prod-aipm",
+        "area": "AI Product Management in 2026",
+        "themeCount": 8
+      }
+    ]
+  }
+}

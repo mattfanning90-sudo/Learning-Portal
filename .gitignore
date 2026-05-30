@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Brainstorm scratch (visual companion mockups)
+.superpowers/
+
+# Local settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
