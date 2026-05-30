@@ -97,4 +97,8 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     expect(html).toContain('Try it yourself')
     expect(html).toContain('System.out.println')
   })
+  it('formats inline code — no raw backticks leak into rendered prose', () => {
+    expect(renderAt('/lesson/py-m1-l1')).not.toContain('`')
+    expect(renderAt('/lesson/java-m1-l1')).not.toContain('`')
+  })
 })

@@ -65,6 +65,11 @@ export default function CollapsibleSection({
   )
 }
 
+/* Inline-formatted text span (`code`, **strong**, *emphasis*) for non-paragraph spots. */
+export function Inline({ text, style }) {
+  return <span style={style} dangerouslySetInnerHTML={{ __html: inlineEmphasis(text) }} />
+}
+
 /* Shared paragraph renderer for lesson body arrays. */
 export function Body({ paras }) {
   return (

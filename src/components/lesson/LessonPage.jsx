@@ -7,6 +7,7 @@ import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways,
 import KnowledgeCheck from './KnowledgeCheck.jsx'
 import NotesPanel from './NotesPanel.jsx'
 import CodeExample from '../CodeRunner.jsx'
+import { Inline } from './CollapsibleSection.jsx'
 
 export default function LessonPage() {
   const { lessonId } = useParams()
@@ -68,7 +69,7 @@ export default function LessonPage() {
         <main style={{ flex: 1, minWidth: 0, animation: 'fadeUp 0.5s ease both' }}>
           <div style={{ color: 'var(--accent)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>The core idea</div>
           <h2 className="serif" style={{ fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', lineHeight: 1.22, letterSpacing: '-0.01em', margin: '8px 0 22px' }}>
-            {lesson.coreIdea}
+            <Inline text={lesson.coreIdea} />
           </h2>
 
           <PlainEnglish paras={lesson.plainEnglish} />

@@ -1,4 +1,4 @@
-import CollapsibleSection, { Body } from './CollapsibleSection.jsx'
+import CollapsibleSection, { Body, Inline } from './CollapsibleSection.jsx'
 
 /* Thin, named wrappers over CollapsibleSection so LessonPage reads declaratively. */
 
@@ -61,7 +61,7 @@ export function CaseStudyBox({ caseStudy }) {
             The bridge back to the lesson
           </div>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-            {caseStudy.bridge}
+            <Inline text={caseStudy.bridge} />
           </p>
         </blockquote>
       )}
@@ -77,7 +77,7 @@ export function KeyTerms({ terms }) {
         {terms.map((t, i) => (
           <div key={i} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 8, lineHeight: 1.5 }}>
             <dt style={{ fontFamily: 'ui-monospace, Menlo, Consolas, monospace', fontSize: '0.85rem', color: 'var(--accent)', background: 'var(--surface-raised)', border: '1px solid var(--border)', padding: '1px 7px', borderRadius: 4, flexShrink: 0 }}>{t.term}</dt>
-            <dd style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{t.def}</dd>
+            <dd style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}><Inline text={t.def} /></dd>
           </div>
         ))}
       </dl>
@@ -98,7 +98,7 @@ export function Takeaways({ items }) {
         {items.map((t, i) => (
           <li key={i} style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.5, paddingLeft: 22, position: 'relative' }}>
             <span style={{ position: 'absolute', left: 0, color: 'var(--accent)', fontWeight: 700 }}>→</span>
-            {t}
+            <Inline text={t} />
           </li>
         ))}
       </ul>
