@@ -12,3 +12,7 @@ dist/
 
 # OS / editor
 .DS_Store
+.vscode/
+
+# Netlify
+.netlify/

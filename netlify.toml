@@ -1,0 +1,14 @@
+# Netlify build configuration for Atlas (Vite + React static SPA).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback. The app uses HashRouter (routes live after #), so this isn't
+# strictly required today, but it future-proofs any switch to clean URLs.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
