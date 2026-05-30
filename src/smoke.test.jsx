@@ -57,4 +57,14 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     const html = renderAt('/glossary')
     expect(html).toContain('Token')
   })
+  it('renders a newly-authored engineering lesson (Responsible AI addition)', () => {
+    const html = renderAt('/lesson/eng-m5-l5')
+    expect(html).toContain('The core idea')
+    expect(html).toContain('Check your understanding')
+  })
+  it('renders a newly-authored product lesson (Growth & GTM addition)', () => {
+    const html = renderAt('/lesson/prod-m6-l6')
+    expect(html).toContain('The core idea')
+    expect(html).toContain('Mark complete')
+  })
 })

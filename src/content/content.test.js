@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { lessons, tracks, braided } from './index.js'
 import { validateLesson } from '../lib/schema.js'
+import glossary from './glossary.js'
 
 describe('content registry', () => {
   it('every registered lesson passes the schema', () => {
@@ -20,5 +21,17 @@ describe('content registry', () => {
 
   it('every braided id resolves to a lesson', () => {
     expect(braided.filter((id) => !lessons[id])).toEqual([])
+  })
+
+  it('every lesson appears in the braided order exactly once', () => {
+    const ids = Object.keys(lessons).sort()
+    const braid = [...braided].sort()
+    expect(braid).toEqual(ids)
+  })
+
+  it('no unexplained jargon: every referenced glossary term is defined', () => {
+    const referenced = new Set(Object.values(lessons).flatMap((l) => l.glossaryTerms || []))
+    const undefinedTerms = [...referenced].filter((t) => !glossary[t]).sort()
+    expect(undefinedTerms).toEqual([])
   })
 })
