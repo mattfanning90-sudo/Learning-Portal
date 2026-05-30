@@ -20,5 +20,13 @@ export function validateLesson(L) {
       if (!c?.source) p.push(`codeExamples[${i}] missing source`)
     })
   }
+  // keyTerms is optional; when present each entry needs a term + def.
+  if (L?.keyTerms !== undefined) {
+    if (!Array.isArray(L.keyTerms)) p.push('keyTerms must be an array')
+    else L.keyTerms.forEach((t, i) => {
+      if (!t?.term) p.push(`keyTerms[${i}] missing term`)
+      if (!t?.def) p.push(`keyTerms[${i}] missing def`)
+    })
+  }
   return p
 }

@@ -1,32 +1,43 @@
 // Coding tracks (Python + Java). Self-contained: default-exports { tracks, lessons }
 // which index.js merges into the registry. Seeded here; the authoring workflow
 // later overwrites this file with the full curriculum.
+//
+// STYLE (the exemplar the authoring agents copy): short, one-idea sentences.
+// Introduce each new term on its own line via `keyTerms`. Use `backticks` for code.
 
 const lessons = {
   'py-m1-l1': {
     id: 'py-m1-l1', trackId: 'python', moduleId: 'py-m1', order: 1, estMinutes: 8,
     title: 'Your First Program: Making Python Speak',
-    coreIdea: 'A program is a list of instructions; print() tells the computer to say something.',
+    coreIdea: 'A program is a list of instructions. `print()` makes Python say something.',
     plainEnglish: [
-      "Code is just a set of written instructions you hand to a computer, one line at a time, top to bottom. The computer does exactly what each line says — no more, no less.",
-      "The very first instruction everyone learns is print(): it tells Python to display a piece of text. Master this one line and you've run your first real program.",
+      'Code is a list of instructions for a computer.',
+      'It runs them one line at a time, top to bottom.',
+      'The first instruction everyone learns is `print()`. It displays a piece of text. Run it, and you have written your first program.',
     ],
     metaphor: {
       title: '🧭 Think of it like…',
       body: [
-        "Writing a recipe for a very literal cook who has no common sense. If you write 'add salt', they add salt. If you forget to say 'turn off the oven', the kitchen burns. The computer is that cook: it follows your written steps exactly, in order.",
-        "print() is you telling the cook to call out the name of the dish so everyone in the kitchen hears it.",
+        'Picture a very literal cook with no common sense.',
+        'You write a recipe. They do exactly what each line says — nothing more.',
+        '`print()` is you telling that cook to call out the name of the dish so the kitchen hears it.',
       ],
     },
     deepSections: [
       {
         title: 'Why the quotation marks matter',
-        teaser: "text goes in quotes; without them Python gets confused",
+        teaser: 'quotes tell Python "this part is just text"',
         body: [
-          "The words inside the quotes are called a string — literally a string of characters. The quotes tell Python 'treat this as text to display, not as a command to run'.",
-          "Leave the quotes off and Python tries to interpret your words as instructions it doesn't recognise, and stops with an error. Quotes are how you say 'this part is just words'.",
+          'The text inside the quotes is called a string.',
+          'The quotes tell Python: treat this as text to show, not as a command to run.',
+          'Leave the quotes off, and Python tries to run your words as instructions. It does not recognise them, so it stops with an error.',
         ],
       },
+    ],
+    keyTerms: [
+      { term: 'program', def: 'A list of instructions a computer runs in order.' },
+      { term: 'print()', def: 'Tells Python to display text on the screen.' },
+      { term: 'string', def: 'A piece of text, written inside quotation marks.' },
     ],
     codeExamples: [
       {
@@ -37,15 +48,16 @@ const lessons = {
     caseStudy: {
       title: '"Hello, world!" — the line that starts every programmer',
       body: [
-        "Since a 1972 Bell Labs tutorial by Brian Kernighan, the tradition for learning any new language is to make it print the words 'Hello, world!'. It's the smallest possible complete program.",
-        "Every engineer at Google, Netflix, or OpenAI started exactly where you just did: getting a machine to say hello.",
+        'In 1972, a Bell Labs tutorial taught a new language by printing the words "Hello, world!".',
+        'It stuck. Today it is the traditional first program in almost every language.',
+        'Every engineer at Google, Netflix, or OpenAI started exactly where you just did.',
       ],
-      bridge: "You just did the same first step as every professional developer alive. The rest is building on this one idea — instructions, run in order.",
+      bridge: 'You took the same first step as every professional developer alive: an instruction, run in order.',
     },
     takeaways: [
-      'A program runs your instructions top to bottom, exactly as written.',
-      'print() displays text; the text goes inside quotes.',
-      'Forgetting the quotes is the most common first error — and it’s harmless.',
+      'A program runs your instructions top to bottom.',
+      '`print()` displays text; the text goes in quotes.',
+      'Forgetting the quotes is the most common first error — and it is harmless.',
     ],
     knowledgeCheck: [
       {
@@ -55,7 +67,7 @@ const lessons = {
           { text: 'Displays the text Hi on the screen', correct: true },
           { text: 'Saves a file called Hi', correct: false },
         ],
-        feedback: 'Right — print() displays text on screen. (The name is a leftover from when output really did go to paper.)',
+        feedback: 'Right — print() shows text on screen. (The name is a leftover from when output went to paper.)',
       },
     ],
     glossaryTerms: ['program', 'print', 'string'],
@@ -65,27 +77,37 @@ const lessons = {
   'java-m1-l1': {
     id: 'java-m1-l1', trackId: 'java', moduleId: 'java-m1', order: 1, estMinutes: 10,
     title: 'Your First Program: Hello from Java',
-    coreIdea: 'Java says things with System.out.println(), wrapped in a bit of required ceremony.',
+    coreIdea: 'Java displays text with `System.out.println()`, wrapped in a little required structure.',
     plainEnglish: [
-      "Like Python, a Java program is a list of instructions run in order. Java's way of displaying text is System.out.println() — a longer phrase that means 'print this line to the output'.",
-      "Java also requires some scaffolding around your instructions: a class and a main method. For now, treat that scaffolding as a frame you write once; your actual instruction lives inside it.",
+      'Like Python, a Java program runs instructions in order.',
+      "Java's way to display text is `System.out.println()`. It means: print this line to the output.",
+      'Java also needs some structure around your instruction: a class and a `main` method.',
+      'For now, treat that structure as a frame you write once. Your real instruction lives inside it.',
     ],
     metaphor: {
       title: '🧭 Think of it like…',
       body: [
-        "Java is the formal cousin of Python. Where Python lets you scribble a quick note, Java insists you use official letterhead: a header, your name, an opening — and only then your message.",
-        "It feels like extra fuss at first, but that structure is exactly why big companies trust Java for huge, long-lived systems: everything has its place.",
+        'Java is the formal cousin of Python.',
+        'Python lets you scribble a quick note. Java insists on official letterhead.',
+        'The fuss feels like a lot at first. But that structure is exactly why big companies trust Java for huge systems: everything has its place.',
       ],
     },
     deepSections: [
       {
-        title: 'What the scaffolding means',
-        teaser: "class, main, and the curly braces — decoded",
+        title: 'The structure, decoded',
+        teaser: 'class, main, and the curly braces — one line each',
         body: [
-          "'public class Main' names your program. The curly braces { } group everything that belongs together. 'public static void main(String[] args)' is the special starting point Java looks for — when you run the program, Java finds main and begins there.",
-          "You don't need to fully understand every word yet. Think of it as the envelope; System.out.println(...) is the letter inside.",
+          'Do not memorise this yet. Just meet the pieces.',
+          'Think of it as an envelope. The `System.out.println(...)` line is the letter inside.',
+          'Each part has one job — see the key terms below.',
         ],
       },
+    ],
+    keyTerms: [
+      { term: 'public class Main', def: 'Names your program.' },
+      { term: '{ }', def: 'Curly braces group the code that belongs together.' },
+      { term: 'main', def: 'The line Java runs first when the program starts.' },
+      { term: 'System.out.println()', def: 'Displays one line of text on the screen.' },
     ],
     codeExamples: [
       {
@@ -96,15 +118,16 @@ const lessons = {
     caseStudy: {
       title: 'Why Android and banks run on Java',
       body: [
-        "Java's 'write once, run anywhere' promise and its strict structure made it the backbone of enterprise software and the original language of Android apps — billions of devices.",
-        "That ceremony you just typed is the same ceremony underpinning systems that move money and run phones worldwide.",
+        'Java promised "write once, run anywhere".',
+        'That, plus its strict structure, made it the backbone of enterprise software.',
+        'It was also the original language of Android apps — billions of devices.',
       ],
-      bridge: "The extra structure isn't busywork — it's the discipline that lets Java scale to enormous systems. You just wrote your first piece of it.",
+      bridge: 'The extra structure is not busywork. It is the discipline that lets Java scale to enormous systems. You just wrote your first piece of it.',
     },
     takeaways: [
-      'Java displays text with System.out.println().',
-      'Your instructions live inside a class and a main method — the required frame.',
-      'The structure feels heavier than Python, and that’s the point: it scales.',
+      'Java displays text with `System.out.println()`.',
+      'Your instructions live inside a class and a `main` method.',
+      'The structure feels heavier than Python — and that is the point: it scales.',
     ],
     knowledgeCheck: [
       {
@@ -114,7 +137,7 @@ const lessons = {
           { text: 'Inside the main method', correct: true },
           { text: 'Wherever you put println', correct: false },
         ],
-        feedback: 'Correct — Java looks for main and starts there, no matter where it sits in the file.',
+        feedback: 'Correct — Java looks for main and starts there, wherever it sits in the file.',
       },
     ],
     glossaryTerms: ['class', 'main-method', 'println'],

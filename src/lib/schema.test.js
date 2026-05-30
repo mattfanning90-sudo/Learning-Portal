@@ -38,4 +38,9 @@ describe('validateLesson', () => {
     expect(problems).toContain('codeExamples[0] missing language')
     expect(problems).toContain('codeExamples[0] missing source')
   })
+
+  it('accepts valid keyTerms and flags incomplete ones', () => {
+    expect(validateLesson({ ...valid, keyTerms: [{ term: 'print', def: 'shows text' }] })).toEqual([])
+    expect(validateLesson({ ...valid, keyTerms: [{ term: 'x' }] })).toContain('keyTerms[0] missing def')
+  })
 })

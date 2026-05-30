@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { atlas } from '../../lib/atlas.js'
 import { useProgress } from '../../lib/useProgress.js'
 import CourseGuide from '../CourseGuide.jsx'
-import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways } from './Boxes.jsx'
+import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways, KeyTerms } from './Boxes.jsx'
 import KnowledgeCheck from './KnowledgeCheck.jsx'
 import NotesPanel from './NotesPanel.jsx'
 import CodeExample from '../CodeRunner.jsx'
@@ -76,6 +76,7 @@ export default function LessonPage() {
           {(lesson.deepSections || []).map((s, i) => (
             <DeepSection key={i} section={s} index={i} />
           ))}
+          {lesson.keyTerms?.length > 0 && <KeyTerms terms={lesson.keyTerms} />}
           {lesson.codeExamples?.length > 0 && (
             <div style={{ marginBottom: 14 }}>
               <div className="label" style={{ color: 'var(--accent)', margin: '8px 0 10px' }}>🧪 Try it yourself</div>

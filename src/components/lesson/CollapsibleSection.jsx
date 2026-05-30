@@ -83,10 +83,19 @@ export function Body({ paras }) {
   )
 }
 
-// Allow lightweight *emphasis* and **strong** in lesson prose, escaping HTML first.
+// Lightweight inline formatting for lesson prose: `code`, **strong**, *emphasis*.
+// Code spans are split out first so their contents are never touched by emphasis.
+const esc = (x) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 function inlineEmphasis(s) {
-  const esc = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  return esc
-    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--text-primary);font-weight:600">$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em style="color:var(--text-primary)">$1</em>')
+  return s
+    .split(/(`[^`]+`)/g)
+    .map((part) => {
+      if (part.startsWith('`') && part.endsWith('`') && part.length > 1) {
+        return `<code style="font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--surface-raised);border:1px solid var(--border);padding:1px 5px;border-radius:4px;font-size:0.88em">${esc(part.slice(1, -1))}</code>`
+      }
+      return esc(part)
+        .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--text-primary);font-weight:600">$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em style="color:var(--text-primary)">$1</em>')
+    })
+    .join('')
 }

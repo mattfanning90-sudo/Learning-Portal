@@ -69,6 +69,22 @@ export function CaseStudyBox({ caseStudy }) {
   )
 }
 
+export function KeyTerms({ terms }) {
+  return (
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '16px 20px', marginBottom: 14, boxShadow: 'var(--shadow-sm)' }}>
+      <div className="label" style={{ color: 'var(--text-muted)', marginBottom: 12 }}>🔑 Key terms</div>
+      <dl style={{ display: 'flex', flexDirection: 'column', gap: 10, margin: 0 }}>
+        {terms.map((t, i) => (
+          <div key={i} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 8, lineHeight: 1.5 }}>
+            <dt style={{ fontFamily: 'ui-monospace, Menlo, Consolas, monospace', fontSize: '0.85rem', color: 'var(--accent)', background: 'var(--surface-raised)', border: '1px solid var(--border)', padding: '1px 7px', borderRadius: 4, flexShrink: 0 }}>{t.term}</dt>
+            <dd style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{t.def}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )
+}
+
 export function Takeaways({ items }) {
   return (
     <div
