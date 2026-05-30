@@ -15,7 +15,7 @@ export default function CourseGuide({ lesson }) {
     ...(lesson.pmAngle ? [{ id: 'pm-angle', label: 'If you manage the product' }] : []),
     { id: 'case-study', label: 'Case study' },
     { id: 'takeaways', label: 'Key takeaways' },
-    { id: 'knowledge-check', label: 'Knowledge check' },
+    lesson.challenge ? { id: 'challenge', label: 'Challenge' } : { id: 'knowledge-check', label: 'Knowledge check' },
   ]
 
   const jump = (id) => {

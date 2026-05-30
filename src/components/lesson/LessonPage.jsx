@@ -5,6 +5,7 @@ import { useProgress } from '../../lib/useProgress.js'
 import CourseGuide from '../CourseGuide.jsx'
 import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways, KeyTerms } from './Boxes.jsx'
 import KnowledgeCheck from './KnowledgeCheck.jsx'
+import CodeChallenge from './CodeChallenge.jsx'
 import NotesPanel from './NotesPanel.jsx'
 import CodeExample from '../CodeRunner.jsx'
 import { Inline } from './CollapsibleSection.jsx'
@@ -30,7 +31,9 @@ export default function LessonPage() {
   const prev = atlas.prevLesson(lesson.id)
   const done = progress.isComplete(lesson.id)
   const gate = progress.getSetting('gateComplete', false)
-  const answered = progress.lessonAnswered(lesson.id, lesson.knowledgeCheck?.length || 0)
+  const answered = lesson.challenge
+    ? !!progress.getChallenge(lesson.id)?.passed
+    : progress.lessonAnswered(lesson.id, lesson.knowledgeCheck?.length || 0)
   const canComplete = done || !gate || answered
 
   const complete = () => {
@@ -87,7 +90,8 @@ export default function LessonPage() {
           {lesson.pmAngle && <PMBox pmAngle={lesson.pmAngle} trackId={lesson.trackId} />}
           <CaseStudyBox caseStudy={lesson.caseStudy} />
           <Takeaways items={lesson.takeaways} />
-          <KnowledgeCheck key={lesson.id} lessonId={lesson.id} questions={lesson.knowledgeCheck} />
+          {lesson.knowledgeCheck?.length > 0 && <KnowledgeCheck key={lesson.id} lessonId={lesson.id} questions={lesson.knowledgeCheck} />}
+          {lesson.challenge && <CodeChallenge key={`ch-${lesson.id}`} lessonId={lesson.id} challenge={lesson.challenge} />}
 
           {/* Notes + Go deeper */}
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 16 }}>

@@ -101,4 +101,10 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     expect(renderAt('/lesson/py-m1-l1')).not.toContain('`')
     expect(renderAt('/lesson/java-m1-l1')).not.toContain('`')
   })
+  it('renders the coding challenge (blank terminal + expected outcome)', () => {
+    const html = renderAt('/lesson/py-m1-l1')
+    expect(html).toContain('Challenge — build it yourself')
+    expect(html).toContain('Make your program print exactly')
+    expect(html).toContain('Hello, world!')
+  })
 })

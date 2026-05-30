@@ -47,4 +47,10 @@ describe('progress store', () => {
   it('treats a zero-question lesson as answered', () => {
     expect(store.lessonAnswered('eng-m1-l9', 0)).toBe(true)
   })
+
+  it('persists coding-challenge results', () => {
+    expect(store.getChallenge('py-m1-l1')).toBe(null)
+    store.saveChallenge('py-m1-l1', { passed: true })
+    expect(store.getChallenge('py-m1-l1')).toEqual({ passed: true })
+  })
 })

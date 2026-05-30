@@ -8,10 +8,19 @@ export function validateLesson(L) {
   if (!L?.metaphor?.body?.length) p.push('missing metaphor')
   if (!L?.caseStudy?.body?.length) p.push('missing caseStudy')
   if (!Array.isArray(L?.takeaways) || L.takeaways.length === 0) p.push('missing takeaways')
-  if (!Array.isArray(L?.knowledgeCheck) || L.knowledgeCheck.length === 0) p.push('missing knowledgeCheck')
+  // Each lesson is assessed by either a knowledge check (AI tracks) or a
+  // coding challenge (Python/Java tracks). At least one is required.
+  const hasKC = Array.isArray(L?.knowledgeCheck) && L.knowledgeCheck.length > 0
+  const hasChallenge = !!L?.challenge
+  if (!hasKC && !hasChallenge) p.push('missing knowledgeCheck or challenge')
   ;(L?.knowledgeCheck || []).forEach((q, i) => {
     if (!q.options?.some((o) => o.correct)) p.push(`knowledgeCheck[${i}] has no correct option`)
   })
+  if (hasChallenge) {
+    if (!L.challenge.language) p.push('challenge missing language')
+    if (!L.challenge.prompt) p.push('challenge missing prompt')
+    if (!L.challenge.expectedOutput) p.push('challenge missing expectedOutput')
+  }
   // codeExamples is optional; when present each entry needs a language + source.
   if (L?.codeExamples !== undefined) {
     if (!Array.isArray(L.codeExamples)) p.push('codeExamples must be an array')

@@ -43,4 +43,20 @@ describe('validateLesson', () => {
     expect(validateLesson({ ...valid, keyTerms: [{ term: 'print', def: 'shows text' }] })).toEqual([])
     expect(validateLesson({ ...valid, keyTerms: [{ term: 'x' }] })).toContain('keyTerms[0] missing def')
   })
+
+  it('accepts a coding lesson assessed by a challenge instead of a knowledge check', () => {
+    const { knowledgeCheck, ...noKC } = valid
+    const coding = { ...noKC, challenge: { language: 'python', prompt: 'Print 5', expectedOutput: '5' } }
+    expect(validateLesson(coding)).toEqual([])
+  })
+
+  it('flags a lesson with neither knowledge check nor challenge', () => {
+    const { knowledgeCheck, ...noKC } = valid
+    expect(validateLesson(noKC)).toContain('missing knowledgeCheck or challenge')
+  })
+
+  it('flags a challenge missing its expected output', () => {
+    const { knowledgeCheck, ...noKC } = valid
+    expect(validateLesson({ ...noKC, challenge: { language: 'python', prompt: 'x' } })).toContain('challenge missing expectedOutput')
+  })
 })

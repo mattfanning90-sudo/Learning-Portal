@@ -59,17 +59,14 @@ const lessons = {
       '`print()` displays text; the text goes in quotes.',
       'Forgetting the quotes is the most common first error — and it is harmless.',
     ],
-    knowledgeCheck: [
-      {
-        q: 'What does print("Hi") do?',
-        options: [
-          { text: 'Sends the text to a printer', correct: false },
-          { text: 'Displays the text Hi on the screen', correct: true },
-          { text: 'Saves a file called Hi', correct: false },
-        ],
-        feedback: 'Right — print() shows text on screen. (The name is a leftover from when output went to paper.)',
-      },
-    ],
+    challenge: {
+      language: 'python',
+      prompt: 'Your turn. Write a program that greets the world.',
+      starter: '',
+      expectedOutput: 'Hello, world!',
+      check: 'equals',
+      hint: 'Use print(), and put the text inside quotes.',
+    },
     glossaryTerms: ['program', 'print', 'string'],
     sources: [{ label: 'Python docs — print()', url: 'https://docs.python.org/3/library/functions.html#print' }],
   },
@@ -129,17 +126,14 @@ const lessons = {
       'Your instructions live inside a class and a `main` method.',
       'The structure feels heavier than Python — and that is the point: it scales.',
     ],
-    knowledgeCheck: [
-      {
-        q: 'In Java, where does the program actually start running?',
-        options: [
-          { text: 'At the first line of the file', correct: false },
-          { text: 'Inside the main method', correct: true },
-          { text: 'Wherever you put println', correct: false },
-        ],
-        feedback: 'Correct — Java looks for main and starts there, wherever it sits in the file.',
-      },
-    ],
+    challenge: {
+      language: 'java',
+      prompt: 'Finish the program so it prints the greeting. The frame is written for you — add the line inside main.',
+      starter: 'public class Main {\n    public static void main(String[] args) {\n        // write your line here\n    }\n}',
+      expectedOutput: 'Hello, Java!',
+      check: 'equals',
+      hint: 'Use System.out.println("Hello, Java!"); inside main.',
+    },
     glossaryTerms: ['class', 'main-method', 'println'],
     sources: [{ label: 'Oracle — A Closer Look at HelloWorld', url: 'https://docs.oracle.com/javase/tutorial/getStarted/application/index.html' }],
   },

@@ -48,6 +48,8 @@ export const store = {
   },
   getResume: () => read('resume', null),
   setResume(id) { write('resume', id) },
+  getChallenge: (id) => read('challenge', {})[id] || null,
+  saveChallenge(id, result) { const c = read('challenge', {}); c[id] = result; write('challenge', c) },
   getSetting: (key, fallback) => { const s = read('settings', {}); return key in s ? s[key] : fallback },
   setSetting(key, val) { const s = read('settings', {}); s[key] = val; write('settings', s) },
   // True when every question index 0..count-1 has a saved answer (count 0 = trivially answered).
@@ -60,7 +62,7 @@ export const store = {
 
 // React hook: re-renders subscribed components whenever the store changes.
 const snapshot = () =>
-  `${localStorage.getItem(K('completed')) || ''}|${localStorage.getItem(K('notes')) || ''}|${localStorage.getItem(K('quiz')) || ''}|${localStorage.getItem(K('resume')) || ''}|${localStorage.getItem(K('settings')) || ''}`
+  ['completed', 'notes', 'quiz', 'resume', 'settings', 'challenge'].map((k) => localStorage.getItem(K(k)) || '').join('|')
 
 export function useProgress() {
   useSyncExternalStore(subscribe, snapshot, snapshot)
