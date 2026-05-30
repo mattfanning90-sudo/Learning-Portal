@@ -6,6 +6,7 @@ import CourseGuide from '../CourseGuide.jsx'
 import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways } from './Boxes.jsx'
 import KnowledgeCheck from './KnowledgeCheck.jsx'
 import NotesPanel from './NotesPanel.jsx'
+import CodeExample from '../CodeRunner.jsx'
 
 export default function LessonPage() {
   const { lessonId } = useParams()
@@ -75,6 +76,12 @@ export default function LessonPage() {
           {(lesson.deepSections || []).map((s, i) => (
             <DeepSection key={i} section={s} index={i} />
           ))}
+          {lesson.codeExamples?.length > 0 && (
+            <div style={{ marginBottom: 14 }}>
+              <div className="label" style={{ color: 'var(--accent)', margin: '8px 0 10px' }}>🧪 Try it yourself</div>
+              {lesson.codeExamples.map((c, i) => <CodeExample key={i} {...c} />)}
+            </div>
+          )}
           {lesson.pmAngle && <PMBox pmAngle={lesson.pmAngle} trackId={lesson.trackId} />}
           <CaseStudyBox caseStudy={lesson.caseStudy} />
           <Takeaways items={lesson.takeaways} />

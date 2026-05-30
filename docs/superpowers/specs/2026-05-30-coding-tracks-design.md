@@ -12,11 +12,15 @@ that teach a non-technical learner to code, with **runnable code** in the browse
 
 ## Architecture
 
-**Runner (the "service"):** the public **Piston API** (`https://emkc.org/api/v2/piston/execute`)
-— free, CORS-enabled, sandboxed, supports Python and Java, no API key, no backend for us to run.
-- `src/lib/runCode.js` → `runCode(language, source)`; POSTs `{ language, version, files:[{content}] }`,
-  returns `{ ok, stdout, stderr, output }`. Maps `python`→python3, `java`→java. Timeout + friendly
-  failure handling. One swappable `PISTON_URL` constant (self-host later by changing it).
+**Runner (the "service"):** the public **Wandbox API** (`https://wandbox.org/api/compile.json`)
+— free, CORS-open (`Access-Control-Allow-Origin: *`), sandboxed, supports Python and Java, no API
+key, no backend for us to run. (We originally specced Piston, but its public API went whitelist-only
+on 2026-02-15, so Wandbox is the working equivalent.)
+- `src/lib/runCode.js` → `runCode(language, source)`; POSTs `{ compiler, code }`, returns
+  `{ ok, stdout, stderr, output }`. Maps `python`→cpython-3.12.7, `java`→openjdk-jdk-21. Java's
+  `public class` is stripped to `class` for execution only (Wandbox compiles to prog.java), leaving
+  the learner's displayed code untouched. Timeout + friendly failure handling. One swappable
+  `RUNNER_URL`/`RUNTIME` (self-host later by changing it).
 
 **UI:**
 - `CodeRunner.jsx` — editable monospace `<textarea>` seeded with `starter`, a **Run** button

@@ -1,7 +1,7 @@
 // The content registry (auto-assembled). Tracks -> modules -> lessons + braided order.
 export const tracks = [
-  { id: 'engineering', title: 'AI Engineering', tagline: "From 'how does this thing actually work?' to 'I can design, ship, and govern AI products people trust.'", accent: 'accent', modules: [] },
-  { id: 'product', title: 'Product Leadership', tagline: 'Think like a Silicon Valley product leader — and speak engineering fluently enough to lead the people who build.', accent: 'blue', modules: [] },
+  { id: 'engineering', title: 'AI Engineering', tagline: "From 'how does this thing actually work?' to 'I can design, ship, and govern AI products people trust.'", accent: 'accent', accentVar: 'var(--accent)', modules: [] },
+  { id: 'product', title: 'Product Leadership', tagline: 'Think like a Silicon Valley product leader — and speak engineering fluently enough to lead the people who build.', accent: 'blue', accentVar: 'var(--blue)', modules: [] },
 ]
 export const lessons = {}
 export const braided = []
@@ -40,3 +40,12 @@ registerModule({ trackId: 'product', id: 'prod-m5', title: "Module 5 — Managin
 registerModule({ trackId: 'product', id: 'prod-m6', title: "Module 6 — Business & Engineering Edge of AI", goal: "The commercial realities that decide survival.", lessonMap: prodM6 })
 
 braided.push('eng-m1-l1', 'eng-m1-l2', 'eng-m1-l3', 'eng-m1-l4', 'eng-m1-l5', 'eng-m1-l6', 'eng-m1-l7', 'eng-m1-l8', 'prod-m1-l1', 'prod-m1-l2', 'prod-m1-l3', 'prod-m1-l4', 'prod-m1-l5', 'prod-m1-l6', 'eng-m2-l1', 'eng-m2-l2', 'eng-m2-l3', 'eng-m2-l4', 'eng-m2-l5', 'eng-m2-l6', 'prod-m2-l1', 'prod-m2-l2', 'prod-m2-l3', 'prod-m2-l4', 'prod-m2-l5', 'prod-m2-l6', 'eng-m3-l1', 'eng-m3-l2', 'eng-m3-l3', 'eng-m3-l4', 'eng-m3-l5', 'eng-m3-l6', 'eng-m3-l7', 'prod-m3-l1', 'prod-m3-l2', 'prod-m3-l3', 'prod-m3-l4', 'prod-m3-l5', 'prod-m3-l6', 'eng-m4-l1', 'eng-m4-l2', 'eng-m4-l3', 'eng-m4-l4', 'eng-m4-l5', 'eng-m4-l6', 'prod-m4-l1', 'prod-m4-l2', 'prod-m4-l3', 'prod-m4-l4', 'prod-m4-l5', 'eng-m5-l1', 'eng-m5-l2', 'eng-m5-l3', 'eng-m5-l4', 'eng-m5-l5', 'eng-m5-l6', 'prod-m5-l1', 'prod-m5-l2', 'prod-m5-l3', 'prod-m5-l4', 'prod-m5-l5', 'eng-m6-l1', 'eng-m6-l2', 'eng-m6-l3', 'eng-m6-l4', 'eng-m6-l5', 'prod-m6-l1', 'prod-m6-l2', 'prod-m6-l3', 'prod-m6-l4', 'prod-m6-l5', 'prod-m6-l6', 'eng-m7-l1', 'eng-m7-l2')
+
+// ─── Coding tracks (Python + Java) — merged from a self-contained module ───
+import coding from './coding.js'
+for (const t of coding.tracks) tracks.push(t)
+Object.assign(lessons, coding.lessons)
+
+// Single merged glossary (AI/Product terms + coding terms).
+import baseGlossary from './glossary.js'
+export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}) }

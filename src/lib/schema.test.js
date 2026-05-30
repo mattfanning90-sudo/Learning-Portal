@@ -26,4 +26,16 @@ describe('validateLesson', () => {
     const bad = { ...valid, knowledgeCheck: [{ q: 'x', options: [{ text: 'a', correct: false }], feedback: 'f' }] }
     expect(validateLesson(bad)).toContain('knowledgeCheck[0] has no correct option')
   })
+
+  it('accepts a valid optional codeExamples array', () => {
+    const withCode = { ...valid, codeExamples: [{ language: 'python', caption: 'hi', source: 'print(1)', runnable: true }] }
+    expect(validateLesson(withCode)).toEqual([])
+  })
+
+  it('flags a codeExample missing language or source', () => {
+    const bad = { ...valid, codeExamples: [{ caption: 'oops' }] }
+    const problems = validateLesson(bad)
+    expect(problems).toContain('codeExamples[0] missing language')
+    expect(problems).toContain('codeExamples[0] missing source')
+  })
 })

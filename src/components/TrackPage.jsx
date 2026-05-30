@@ -12,6 +12,8 @@ export default function TrackPage() {
 
   const pct = atlas.trackProgress(trackId, progress.getCompleted())
   const totalLessons = track.modules.reduce((s, m) => s + m.lessonIds.length, 0)
+  const idx = atlas.tracks.findIndex((t) => t.id === trackId)
+  const accent = track.accentVar || 'var(--accent)'
 
   return (
     <div>
@@ -19,12 +21,12 @@ export default function TrackPage() {
         <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', padding: '0 32px', position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
           <div>
-            <div className="label" style={{ color: 'oklch(0.7 0.08 30)', marginBottom: 10 }}>{track.id === 'engineering' ? 'Track 01' : 'Track 02'}</div>
+            <div className="label" style={{ color: accent, marginBottom: 10 }}>{`Track 0${idx + 1}`}</div>
             <h1 className="serif" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: '#fff', lineHeight: 1.15, marginBottom: 12 }}>{track.title}</h1>
             <p style={{ fontSize: '1rem', color: 'oklch(0.78 0.015 250)', maxWidth: '52ch', lineHeight: 1.6 }}>{track.tagline}</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: '#fff' }}>
-            <ProgressRing pct={pct} size={56} stroke={5} />
+            <ProgressRing pct={pct} size={56} stroke={5} color={accent} />
             <div>
               <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>{pct}%</div>
               <div style={{ fontSize: '0.75rem', color: 'oklch(0.7 0.02 250)' }}>{track.modules.length} modules · {totalLessons} lessons</div>

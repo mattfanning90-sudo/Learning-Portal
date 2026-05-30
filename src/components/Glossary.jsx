@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import glossary from '../content/glossary.js'
+import { glossary } from '../content/index.js'
 import { atlas } from '../lib/atlas.js'
 
 export default function Glossary() {

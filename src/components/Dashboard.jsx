@@ -48,14 +48,15 @@ export default function Dashboard() {
 
       {/* Track cards + notes */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
-        {atlas.tracks.map((t) => {
+        {atlas.tracks.map((t, i) => {
           const pct = atlas.trackProgress(t.id, completed)
           const total = t.modules.reduce((s, m) => s + m.lessonIds.length, 0)
+          const accent = t.accentVar || 'var(--accent)'
           return (
             <Link key={t.id} to={`/track/${t.id}`} style={{ textDecoration: 'none', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 20, boxShadow: 'var(--shadow-sm)', display: 'flex', gap: 14, alignItems: 'center' }}>
-              <ProgressRing pct={pct} size={52} stroke={5} />
+              <ProgressRing pct={pct} size={52} stroke={5} color={accent} />
               <div style={{ minWidth: 0 }}>
-                <div className="label" style={{ color: t.id === 'engineering' ? 'var(--accent)' : 'var(--blue)', marginBottom: 4 }}>{t.id === 'engineering' ? 'Track 01' : 'Track 02'}</div>
+                <div className="label" style={{ color: accent, marginBottom: 4 }}>{`Track 0${i + 1}`}</div>
                 <div className="serif" style={{ fontSize: '1.1rem', lineHeight: 1.2 }}>{t.title}</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 4 }}>{pct}% · {total} lessons</div>
               </div>

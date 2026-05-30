@@ -81,4 +81,20 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     const html = renderAt('/lesson/eng-m1-l2')
     expect(html).toContain('to mark complete')
   })
+  it('renders the Python track', () => {
+    const html = renderAt('/track/python')
+    expect(html).toContain('Python')
+    expect(html).toContain('Getting Started')
+  })
+  it('renders a Python lesson with a runnable Try-it section', () => {
+    const html = renderAt('/lesson/py-m1-l1')
+    expect(html).toContain('Try it yourself')
+    expect(html).toContain('Run')
+    expect(html).toContain('print(')
+  })
+  it('renders a Java lesson with runnable code', () => {
+    const html = renderAt('/lesson/java-m1-l1')
+    expect(html).toContain('Try it yourself')
+    expect(html).toContain('System.out.println')
+  })
 })

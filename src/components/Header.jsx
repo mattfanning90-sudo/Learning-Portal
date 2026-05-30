@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { atlas } from '../lib/atlas.js'
 
 const LINKS = [
   { to: '/', label: 'Dashboard', end: true },
-  { to: '/track/engineering', label: 'AI Engineering' },
-  { to: '/track/product', label: 'Product Leadership' },
+  ...atlas.tracks.map((t) => ({ to: `/track/${t.id}`, label: t.title })),
   { to: '/glossary', label: 'Glossary' },
 ]
 
