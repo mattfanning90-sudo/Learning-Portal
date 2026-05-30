@@ -19,8 +19,9 @@ available when they reach for it, without being drowned in it up front.
 
 ## What the product is
 
-A **static, browser-based portal** (React + Vite, no backend, no login). Progress lives in the
-learner's browser. Four tracks, ~107 lessons:
+A **static-first, browser-based portal** (React + Vite). Progress lives in the learner's
+browser by default; an **optional sign-in** syncs it across devices (see *Static-first,
+optionally connected*). Five tracks, 150 lessons:
 
 | Track | Scope |
 |---|---|
@@ -28,17 +29,21 @@ learner's browser. Four tracks, ~107 lessons:
 | **Product Leadership** | 6 modules · 34 lessons — the product operating model, discovery (Cagan/Torres), vision & strategy, leading people, managing AI products, the business/engineering edge |
 | **Python** | 6 modules · 25 lessons — from zero to "Python for data & AI", fully runnable |
 | **Java** | 2 modules · 8 lessons — a from-scratch starter |
+| **Cloud, AWS & FinOps** | 7 modules · 43 lessons — cloud foundations, security, the AWS platform & core services, how the bill works, and FinOps; cert-mapped to AWS Cloud Practitioner + FinOps Certified Practitioner |
 
 **Every lesson follows one rhythm** so the reader is never lost: plain-English core idea →
-🧭 metaphor → collapsible deep-dives → real 📌 case study → key takeaways → an assessment.
+🧭 metaphor → (where a process or architecture is clearer *seen*) an animated step-through
+diagram → collapsible deep-dives → real 📌 case study → key takeaways → an assessment.
 - AI/Product lessons end in a **✦ knowledge check** (with a per-module 5-question quiz).
 - Coding lessons have **runnable examples** and a **blank-terminal challenge**: the learner
   writes code, runs it, and it's auto-marked against an expected output — with coaching on
   wrong attempts (a diagnosis + the lesson's hint). Code executes via the public Wandbox API.
 
-Supporting features: progress tracking, personal notes, a searchable glossary (no term left
-unexplained), an optional setting to require assessments before marking a lesson complete, and
-a Dashboard that recommends what to do next along a "braided" path interleaving the two main tracks.
+Supporting features: progress tracking (with **optional sign-in for cross-device sync**),
+personal notes, an in-lesson navigation menu, animated diagrams, a searchable glossary (no term
+left unexplained), an optional setting to require assessments before marking a lesson complete,
+and a Dashboard that recommends what to do next along a "braided" path (AI⇄Product interleaved,
+with the coding and cloud tracks following).
 
 ## Principles & key decisions
 
@@ -50,7 +55,9 @@ a Dashboard that recommends what to do next along a "braided" path interleaving 
   now partly deliver the hands-on side.
 - **Learn by doing, for code.** Coding is assessed by *building*, not multiple choice — a blank
   terminal marked against a real outcome.
-- **Static and ownable.** No backend to run, no accounts; deployable anywhere (Netlify).
+- **Static-first, optionally connected.** Works with zero backend (progress in the browser);
+  an optional sign-in (Clerk) syncs progress across devices via a small API + Postgres. Deployed
+  on Netlify (static) and Railway (full-stack).
 - **Faithful design system.** One editorial look (Lumen) reused throughout.
 
 ## Success metrics
@@ -63,14 +70,17 @@ a Dashboard that recommends what to do next along a "braided" path interleaving 
 
 ## Roadmap (candidate next steps)
 
-- **Builder spine** (Phase 2): Engineering Module 0 (what an API/JSON/ML is) + a guided
-  "build a tiny AI feature" thread.
-- **Reveal-solution after N tries** for challenges (reference solutions already verified).
-- **Deepen Python** (NumPy/pandas, a real LLM-API lesson) and **grow Java to a full track**.
-- **Cleaner URLs** (BrowserRouter; the SPA redirect already supports it).
-- **Progress export/import** across devices (still no backend).
+The **living list is `docs/product/backlog.md`** (prioritised, with effort). Headlines:
+- **AI "explain-it-back" tutor** — the learner explains a concept, an LLM grades it and probes
+  (open-model, swappable). The feature that actually *measures* fluency.
+- **Fan animated diagrams** out across more lessons; **interactive sims** (e.g. a FinOps cost calculator).
+- **Lazy-load** content to shrink initial load; **full-text search**; **guided onboarding pathway**.
+- **Production-harden auth** (promote Clerk dev→prod instance) + privacy policy / data-deletion.
+- _Shipped since v1:_ optional accounts + cross-device progress sync; the Cloud/AWS/FinOps track;
+  animated diagrams; build chunking.
 
 ## Out of scope (for now)
 
-Accounts/auth, a server or database, video hosting, certificates/payments, multi-user cohorts,
-and a self-hosted code runner (the public Wandbox service is sufficient).
+Video hosting, payments, multi-user cohorts, and a self-hosted code runner (the public Wandbox
+service is sufficient). _(Accounts/auth + a sync database were originally out of scope but are
+now shipped as an **optional** layer — the app still works fully signed-out.)_
