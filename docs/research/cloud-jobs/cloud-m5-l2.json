@@ -1,0 +1,142 @@
+{
+  "id": "cloud-m5-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 2,
+  "title": "Four Ways to Pay for Compute: On-Demand, Spot, Reserved & Savings Plans",
+  "estMinutes": 9,
+  "coreIdea": "AWS sells the same `compute` four ways, and the price drops the more flexibility you trade away and the longer you commit.",
+  "plainEnglish": [
+    "`Compute` is just rented computer power — the servers that run your app, measured by the hour or second.",
+    "AWS sells that exact same power at four different prices, depending on how you agree to buy it.",
+    "Pay full price for total freedom, or accept some rules in exchange for a discount.",
+    "The three things you are really trading are flexibility, commitment, and price.",
+    "Once you see the trade-off, an AWS bill stops looking random and starts looking like a set of choices someone made."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of booking hotel rooms for a company that always needs beds for travelling staff.",
+      "Walking up to the desk and paying the rack rate is `On-Demand`: most expensive, but you can leave any time, no questions asked.",
+      "A last-minute discounted room the hotel couldn't sell is `Spot`: very cheap, but they can ask you to leave with almost no notice if a full-price guest shows up.",
+      "Signing a one- or three-year corporate contract is a `Reserved Instance` or `Savings Plan`: you promise steady business, so they give you a standing discount on every night you book."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four ways, in one breath",
+      "teaser": "same compute, four price tags",
+      "body": [
+        "`On-Demand` means you pay the listed rate per second or hour, start and stop whenever, and promise nothing. It is the flexible, expensive default.",
+        "`Spot` lets you bid on AWS's spare capacity for a steep discount, but AWS can reclaim that server with about two minutes' notice when it needs the room back.",
+        "A `Reserved Instance` (often shortened to `RI`) is a one- or three-year commitment to a specific type of server in exchange for a lower rate.",
+        "A `Savings Plan` is also a one- or three-year commitment, but you promise a steady dollar-per-hour of spend rather than a specific server, so it flexes as your usage shifts."
+      ]
+    },
+    {
+      "title": "The trade-off you are actually buying",
+      "teaser": "flexibility vs commitment vs discount",
+      "body": [
+        "Every option moves three dials: how freely you can change your mind, how long you lock in, and how big a discount you get.",
+        "`On-Demand` keeps full flexibility and zero commitment, so it carries the smallest discount — none.",
+        "`Spot` gives the deepest discount but the least reliability, because the server can vanish mid-job.",
+        "`Reserved Instances` and `Savings Plans` sit in the middle: you give up the freedom to walk away for a year or three, and in return the rate drops on everything you run."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "one server, four bills",
+      "body": [
+        "Imagine one mid-size web server that, at `On-Demand` rates, costs roughly $100 per month — call that the baseline.",
+        "Run that same server on `Spot` and the bill might fall to about $30 per month, but it could be interrupted, so you'd only do this for work that can pause and restart.",
+        "Commit to a 1-year `Savings Plan` or `Reserved Instance` and the bill might drop to about $60 per month, every month, for steady always-on workloads.",
+        "Commit for 3 years and pay some of it upfront, and it might fall toward $40 per month — the deepest discount short of `Spot`.",
+        "These figures are illustrative; real discounts vary by region, server type, and how much you pay upfront, but the shape — more commitment, lower rate — always holds."
+      ]
+    },
+    {
+      "title": "How teams actually mix them",
+      "teaser": "you don't pick one — you layer them",
+      "body": [
+        "Mature teams rarely choose a single option for everything; they build a portfolio.",
+        "Steady, predictable baseline load (the servers running 24/7 all year) gets covered by `Savings Plans` or `Reserved Instances`.",
+        "Spiky or temporary load on top of that runs `On-Demand`, so you never over-commit to capacity you might not need.",
+        "Work that can be interrupted and retried — batch jobs, data crunching, video rendering, large-scale testing — runs on cheap `Spot`.",
+        "Getting that mix right is the heart of `FinOps`: the practice of bringing finance and engineering together to manage cloud spend deliberately."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "On-Demand", "def": "Paying the standard listed rate for compute by the second or hour, with no commitment and the freedom to start or stop any time. The most flexible and most expensive option." },
+    { "term": "Spot", "def": "Buying AWS's spare, unused capacity at a steep discount, on the condition that AWS can reclaim the server with roughly two minutes' notice when it needs it back." },
+    { "term": "Reserved Instance (RI)", "def": "A one- or three-year commitment to a specific type of server, in exchange for a lower hourly rate than On-Demand." },
+    { "term": "Savings Plan", "def": "A one- or three-year commitment to a steady amount of hourly spend (dollars per hour) rather than a specific server, giving a discount that flexes as your usage changes." },
+    { "term": "Commitment", "def": "A promise to keep buying compute for a set period (typically 1 or 3 years), which AWS rewards with a lower price." },
+    { "term": "FinOps", "def": "Financial Operations for the cloud: the practice of finance and engineering teams working together to track and optimise cloud spending as a shared responsibility." }
+  ],
+  "pmAngle": {
+    "body": [
+      "This choice is owned at the intersection of product and finance, not buried in engineering — it is a bet on how confident you are about future usage.",
+      "Committing to Savings Plans or Reserved Instances lowers the unit cost of every customer you serve, but it puts cash on the line; if usage drops, you are still paying for compute you no longer need.",
+      "The product leader's job is to know which workloads are predictable enough to commit and which should stay flexible, because that single decision can swing the gross margin of the whole product."
+    ]
+  },
+  "caseStudy": {
+    "title": "Lyft's cloud commitment, and the cost of getting it wrong",
+    "body": [
+      "Ride-share company Lyft disclosed in its public filings that it had committed to spend $300 million with AWS between 2019 and 2021 — a classic large commitment in exchange for lower rates.",
+      "Committed deals like this only pay off if your usage actually shows up to fill them; if traffic falls short, you still owe the spend.",
+      "Lyft later reported large savings from a focused effort to cut cloud costs, including renegotiating and right-sizing how it bought compute — proof that the buying model, not just the engineering, moves the bill."
+    ],
+    "bridge": "Lyft's story shows the exact trade-off in this lesson at scale: a commitment buys a discount, but only flexibility-versus-commitment judgement decides whether it actually saves money."
+  },
+  "takeaways": [
+    "AWS sells identical compute four ways: On-Demand, Spot, Reserved Instances, and Savings Plans.",
+    "You are always trading among three things: flexibility, length of commitment, and size of discount.",
+    "Spot is cheapest but interruptible; commitments are cheaper than On-Demand but lock you in for 1–3 years.",
+    "Smart teams layer all four — commit to the steady baseline, stay On-Demand for spikes, use Spot for interruptible work."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What are the three things you are fundamentally trading between when you choose a way to pay for compute?",
+      "options": [
+        { "text": "Flexibility, commitment, and discount", "correct": true },
+        { "text": "Speed, memory, and storage", "correct": false },
+        { "text": "Region, operating system, and support tier", "correct": false }
+      ],
+      "feedback": "Every option moves the same three dials: how freely you can change your mind, how long you lock in, and how big a discount you earn."
+    },
+    {
+      "q": "Which pricing option offers the deepest discount but can be interrupted with only about two minutes' notice?",
+      "options": [
+        { "text": "Spot", "correct": true },
+        { "text": "On-Demand", "correct": false },
+        { "text": "A 3-year Reserved Instance", "correct": false }
+      ],
+      "feedback": "Spot uses AWS's spare capacity at a steep discount, but AWS can reclaim the server with roughly two minutes' notice — so it suits work that can pause and retry."
+    },
+    {
+      "q": "How does a Savings Plan differ from a Reserved Instance?",
+      "options": [
+        { "text": "A Savings Plan commits to a steady amount of hourly spend rather than to a specific server type, so it flexes as usage shifts", "correct": true },
+        { "text": "A Savings Plan requires no commitment at all", "correct": false },
+        { "text": "A Savings Plan is always cheaper than every Reserved Instance", "correct": false }
+      ],
+      "feedback": "Both are 1- or 3-year commitments, but a Savings Plan commits to dollars-per-hour of spend rather than a specific instance, making it more flexible across changing usage."
+    },
+    {
+      "q": "What is the smart way for a mature team to use these four options?",
+      "options": [
+        { "text": "Layer them: commit to the steady baseline, stay On-Demand for spikes, and use Spot for interruptible work", "correct": true },
+        { "text": "Pick On-Demand for everything to keep things simple", "correct": false },
+        { "text": "Put every workload on Spot because it is the cheapest", "correct": false }
+      ],
+      "feedback": "There is no single best option; teams build a portfolio, matching each workload's predictability and interruptibility to the right pricing model."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Amazon EC2 pricing (On-Demand, Spot, Savings Plans)", "url": "https://aws.amazon.com/ec2/pricing/" },
+    { "label": "AWS — Savings Plans vs Reserved Instances", "url": "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html" },
+    { "label": "FinOps Foundation — Rate Optimization & commitment-based discounts", "url": "https://www.finops.org/framework/capabilities/rate-optimization/" }
+  ]
+}

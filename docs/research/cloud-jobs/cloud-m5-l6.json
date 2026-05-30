@@ -1,0 +1,198 @@
+{
+  "id": "cloud-m5-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 6,
+  "title": "The Safety Net: Budgets, Alerts & Stopping a Runaway Bill",
+  "estMinutes": 9,
+  "coreIdea": "AWS bills you after you spend, so the safety net is built from `AWS Budgets` (a number you set with alerts when you near it) plus `Cost Anomaly Detection` (a watcher that flags spikes you never saw coming) — together they catch bill shock early, before the month ends.",
+  "plainEnglish": [
+    "On AWS you spend first and get the bill later — there is no card to decline at the till.",
+    "That means a mistake can quietly run up cost for days before anyone notices.",
+    "A budget is a spending number you choose, and an alert is the message you get as you approach it.",
+    "An anomaly alert is different: a watcher that learns your normal pattern and pings you when spend suddenly jumps.",
+    "None of this stops the money by itself — the alert buys you the minutes to go and turn the tap off."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the water bill for a house with no meter you can see in real time.",
+      "`AWS Budgets` is a smart meter you fit yourself: you decide 'tell me at 80% of my usual usage, and again at 100%', and it texts you as the dial climbs.",
+      "`Cost Anomaly Detection` is the leak detector: it knows your normal flow, so when a pipe bursts overnight it raises the alarm even though you set no number for that.",
+      "Where the metaphor bends: a leak detector can shut the mains, but these AWS alerts only warn — a human (or a rule you wrote) still has to turn off the tap."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two different safety nets: the line you draw vs the spike you didn't see",
+      "teaser": "budgets catch the known, anomaly detection catches the surprise",
+      "body": [
+        "`AWS Budgets` works on a number you set in advance — say $500 of spend this month.",
+        "You add threshold alerts: messages that fire at chosen points like 80% and 100% of that number, and it can also forecast and warn that you are on track to blow past it.",
+        "But a budget only catches problems you thought to draw a line around.",
+        "`Cost Anomaly Detection` uses machine learning to learn your normal daily spend, then flags an unusual jump — a service that suddenly costs ten times more — even if total spend is still under budget.",
+        "You want both: the budget guards the headline number, the anomaly watcher guards against the surprise hiding inside it."
+      ]
+    },
+    {
+      "title": "An alert is a warning, not a brake",
+      "teaser": "the dangerous gap between 'you got pinged' and 'someone acted'",
+      "body": [
+        "This is the trap that catches newcomers: an alert emails or messages you, but it does not stop spending on its own.",
+        "If the email lands at 2am and no one reads it until morning, the bill keeps climbing all night.",
+        "To get an actual brake you wire the alert to an action — a budget can trigger an `SNS` notification, and that can kick off automation.",
+        "`SNS` is AWS's notification service: it fans one message out to email, SMS, or a script.",
+        "A `budget action` can even apply a restriction automatically, like attaching a deny rule that blocks new resources once you cross a limit — but you must set that up deliberately; nothing is automatic by default."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a small team sets up the safety net, illustrative numbers",
+      "body": [
+        "Imagine a small team whose AWS spend usually runs about $2,000 a month.",
+        "They create a monthly cost budget of $2,400 with threshold alerts at 80% (about $1,920) and 100% (about $2,400), plus a forecasted alert if AWS predicts they will exceed it.",
+        "They also turn on `Cost Anomaly Detection`, which is free to use, and set it to email if any service jumps more than, say, $100 above its normal pattern.",
+        "Two weeks in, a developer accidentally leaves a large GPU server running; it would add roughly $1,500 over the month.",
+        "The anomaly alert fires the next morning — long before the budget would have — and someone shuts the server down, so the actual damage is a few dollars, not a few thousand.",
+        "The cost of the net itself is tiny: anomaly detection is free, and each budget is free for the first two, then about $0.02 per budget per day after that in this example."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "AWS Budgets",
+      "def": "An AWS tool where you set a spending (or usage) target and get alerted as your actual or forecasted spend approaches it."
+    },
+    {
+      "term": "Threshold alert",
+      "def": "A message that fires when spend reaches a point you chose — for example at 80% or 100% of your budget."
+    },
+    {
+      "term": "Forecasted alert",
+      "def": "A warning based on AWS's prediction that you are on track to exceed your budget, so you hear about it before you actually cross the line."
+    },
+    {
+      "term": "Cost Anomaly Detection",
+      "def": "A free AWS service that learns your normal spending pattern using machine learning and flags unusual spikes, even when total spend is still under budget."
+    },
+    {
+      "term": "Bill shock",
+      "def": "The unpleasant surprise of a far-larger-than-expected cloud bill, usually caused by a mistake or runaway resource that ran unnoticed."
+    },
+    {
+      "term": "Budget action",
+      "def": "An automated response you attach to a budget — like sending a notification or applying a restriction that blocks new resources — once a threshold is crossed."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Cloud spend is consumed before it is billed, so the product leader owns a real risk: a misconfiguration can burn budget for days with nothing stopping it.",
+      "Your job is to decide the trade-off between a hard brake (automatically blocking spend, which is safe but can break production) and a soft warning (an alert someone must act on, which is gentler but only as fast as the person reading it).",
+      "Insist that every budget alert has a named owner and a clear action — an alert no one is accountable for is just noise, and the bill keeps running while everyone assumes someone else will look."
+    ]
+  },
+  "caseStudy": {
+    "title": "The accidental $72,000 weekend",
+    "body": [
+      "In a widely-cited 2020 account, indie developer Chris Short and others documented a pattern that has burned many small teams: an experiment or misconfigured service left running on AWS quietly generating thousands of dollars in charges before anyone noticed.",
+      "One well-known write-up described a startup that ran up roughly $72,000 over a single weekend after a runaway process spun up far more resources than intended, with no budget or anomaly alert in place to catch it.",
+      "Because AWS bills after the fact, the first signal was the invoice — by which point the damage was done.",
+      "AWS now actively recommends `AWS Budgets` and `Cost Anomaly Detection` as the first thing every account should switch on, precisely to turn that silent weekend into a Saturday-morning email."
+    ],
+    "bridge": "The horror stories all share one root cause — no safety net was watching while spend ran free, which is exactly the gap budgets and anomaly alerts are built to close."
+  },
+  "takeaways": [
+    "AWS bills after you spend, so a budget plus alerts is your early-warning system against bill shock.",
+    "`AWS Budgets` guards a number you set; `Cost Anomaly Detection` catches surprise spikes you never drew a line around — use both.",
+    "An alert only warns; to actually stop spend you must wire it to a `budget action` or automation.",
+    "Every alert needs a named owner and a clear action, or the bill keeps climbing while it's ignored."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the key difference between an AWS Budget alert and a Cost Anomaly Detection alert?",
+      "options": [
+        {
+          "text": "A budget alert fires against a number you set in advance; anomaly detection learns your normal pattern and flags unusual spikes even when you're still under budget",
+          "correct": true
+        },
+        {
+          "text": "A budget alert is free but anomaly detection is the expensive enterprise feature",
+          "correct": false
+        },
+        {
+          "text": "They are the same feature with two different names",
+          "correct": false
+        }
+      ],
+      "feedback": "Budgets watch a threshold you chose; anomaly detection uses machine learning to catch surprise jumps that no preset number would have caught."
+    },
+    {
+      "q": "An AWS Budget alert fires at 2am saying you've hit 100% of budget. What actually happens to your spending?",
+      "options": [
+        {
+          "text": "Nothing automatically — the alert only warns you; spend keeps running until a person or a configured action stops it",
+          "correct": true
+        },
+        {
+          "text": "AWS immediately shuts down all your servers to protect you",
+          "correct": false
+        },
+        {
+          "text": "Your account is permanently deleted",
+          "correct": false
+        }
+      ],
+      "feedback": "An alert is a warning, not a brake. To stop spend you must wire it to a budget action or automation — otherwise the bill climbs until someone reads the message."
+    },
+    {
+      "q": "Why is 'spend now, bill later' the core risk these tools exist to manage?",
+      "options": [
+        {
+          "text": "There's no card declined at the moment of overspend, so a mistake can quietly run up cost for days before the invoice reveals it",
+          "correct": true
+        },
+        {
+          "text": "AWS charges a large fixed monthly fee no matter what you use",
+          "correct": false
+        },
+        {
+          "text": "You must pre-pay for every service before you can launch it",
+          "correct": false
+        }
+      ],
+      "feedback": "Because AWS meters usage and bills afterward, nothing blocks a runaway resource in the moment — budgets and anomaly alerts add the early warning that's otherwise missing."
+    },
+    {
+      "q": "What is the FinOps best practice for any budget alert you set up?",
+      "options": [
+        {
+          "text": "Give it a named owner and a clear action, so someone is accountable for responding",
+          "correct": true
+        },
+        {
+          "text": "Email it to the whole company so everyone shares responsibility equally",
+          "correct": false
+        },
+        {
+          "text": "Set the threshold as high as possible so it rarely fires",
+          "correct": false
+        }
+      ],
+      "feedback": "An alert with no owner is just noise; assigning a clear owner and action is what turns a warning into a response before the bill runs away."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS Budgets — official AWS documentation",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    },
+    {
+      "label": "AWS Cost Anomaly Detection — official AWS documentation",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/getting-started-ad.html"
+    },
+    {
+      "label": "FinOps Foundation — Anomaly Management capability",
+      "url": "https://www.finops.org/framework/capabilities/anomaly-management/"
+    }
+  ]
+}

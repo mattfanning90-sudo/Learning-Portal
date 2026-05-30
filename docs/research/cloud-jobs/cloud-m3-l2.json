@@ -1,0 +1,133 @@
+{
+  "id": "cloud-m3-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 2,
+  "title": "The Account Is the Boundary: Accounts, Organizations & the Root User",
+  "estMinutes": 9,
+  "coreIdea": "In AWS, the `account` is the wall that contains both your security and your bill — and `AWS Organizations` lets you build a whole estate of these walls under one roof.",
+  "plainEnglish": [
+    "When people say 'we run on AWS,' the first thing to ask is: which `account`?",
+    "An AWS `account` is a single container that holds your cloud resources, has its own login, and gets its own monthly bill.",
+    "Everything inside one account can, in principle, see and touch everything else in that same account — but it stops at the account's edge.",
+    "That edge is why the account is the natural place to draw a line: one team, one project, or one environment can live inside its own account, walled off from the rest.",
+    "Big companies don't run one giant account; they run dozens or hundreds, grouped and governed together using a free service called `AWS Organizations`."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of an AWS `account` as a single apartment in a building. Inside the apartment, anyone you let in can open any cupboard and use any appliance, and the electricity bill for that apartment comes addressed only to it.",
+      "`AWS Organizations` is the building's management company: it owns the whole block, sets house rules every apartment must follow, and gets one consolidated bill for all the apartments at once.",
+      "The `root user` is the master key that opened the apartment the very first day — it can do absolutely anything, including things no normal tenant should. You lock that master key in a safe and almost never touch it again.",
+      "Where the metaphor bends: unlike real apartments, AWS lets you spin up a brand-new 'apartment' in minutes and tear it down just as fast — accounts are cheap and disposable, which is exactly why companies make so many of them."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The account is both a security boundary and a billing boundary",
+      "teaser": "one wall does two jobs at once",
+      "body": [
+        "An AWS `account` draws two lines at the same time, and that is the key idea.",
+        "First, it is a security boundary: by default, resources in one account cannot reach resources in another. To cross that line you must deliberately open a door — there is no accidental leak from account to account.",
+        "Second, it is a billing boundary: every charge a resource racks up lands on the bill for the account it lives in, so the account is also the smallest natural unit of cost.",
+        "This is why teams isolate work by account. Put the experimental sandbox in its own account and a runaway test can't touch production data — and you can see its cost in one clean number."
+      ]
+    },
+    {
+      "title": "AWS Organizations: governing many accounts as one estate",
+      "teaser": "from one apartment to a whole building",
+      "body": [
+        "Serious AWS users do not cram everything into one account; they run many and tie them together with `AWS Organizations`, a free management service.",
+        "An Organization has one `management account` (the building owner) sitting above a tree of `member accounts`, which you can group into `organizational units` — folders like 'Production' or 'Finance'.",
+        "Two big levers come with this. `Consolidated billing` rolls every account's charges into one invoice and pools usage so the whole estate can qualify for volume discounts together.",
+        "`Service control policies`, or `SCPs`, are guardrails the management account sets centrally — for example, 'no account may create resources outside Australia' — that no member account can override, not even its own admins."
+      ]
+    },
+    {
+      "title": "The root user: the one login you should almost never use",
+      "teaser": "the master key belongs in the safe",
+      "body": [
+        "When you create an AWS account, the email you sign up with becomes the `root user` — an all-powerful identity that can do anything, including close the account or change the billing.",
+        "It is dangerous precisely because it ignores most of the guardrails you set up later. `SCPs` and most permission rules do not restrain it, so if it is stolen, the attacker owns everything.",
+        "AWS's own guidance is blunt: do not use the root user for everyday work. Lock it down with `multi-factor authentication` (a second login step, like a code from your phone), and create separate, limited identities for daily tasks.",
+        "There is a tiny list of jobs that genuinely require root — like changing the account's support plan — and those are the only times you should ever sign in as it."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "a worked example with illustrative numbers",
+      "body": [
+        "Picture a mid-sized startup. Instead of one shared login, they run an Organization with four accounts: 'Production', 'Staging', 'Sandbox', and 'Security'.",
+        "Setting all this up costs nothing extra — `AWS Organizations`, `organizational units`, and `SCPs` are free; you pay only for the resources each account actually uses.",
+        "Suppose, in this illustrative example, Production runs about $8,000 a month, Staging about $1,500, Sandbox about $400, and Security tooling about $600 — roughly $10,500 in total.",
+        "Because consolidated billing pools usage, the whole estate crosses a volume-discount tier together rather than each account paying full retail, which might shave, say, a few hundred dollars off that combined bill.",
+        "The real win is clarity: finance sees four labelled numbers, not one blurry $10,500, so when Sandbox jumps to $2,000 next month, everyone knows instantly which wall the cost is leaking from."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "AWS account", "def": "A single container that holds your cloud resources, has its own login, and gets its own bill — and acts as both a security and a billing boundary." },
+    { "term": "AWS Organizations", "def": "A free AWS service for creating and governing many accounts together under one management account, with shared billing and central rules." },
+    { "term": "Root user", "def": "The original all-powerful login created with an account; it can do anything and is dangerous, so it should be locked down and almost never used." },
+    { "term": "Consolidated billing", "def": "An Organizations feature that combines every account's charges into one invoice and pools usage so the whole estate can earn volume discounts together." },
+    { "term": "Service control policy (SCP)", "def": "A central guardrail set by the management account that limits what member accounts are allowed to do — and that they cannot override." },
+    { "term": "Multi-factor authentication (MFA)", "def": "A second login step beyond a password, such as a one-time code from your phone, used to protect sensitive logins like the root user." }
+  ],
+  "pmAngle": {
+    "body": [
+      "The account boundary is your cleanest tool for answering 'who pays for this?' — give a team or product its own account and its cost becomes a single line finance can attribute without an argument.",
+      "Choosing how to slice accounts is a real ownership decision: more accounts means cleaner cost and blast-radius isolation, but more setup and cross-account plumbing to manage.",
+      "The trade-off you own is governance versus speed — `SCPs` and a locked-down root user reduce risk, but every guardrail you add is also a door someone has to ask permission to open."
+    ]
+  },
+  "caseStudy": {
+    "title": "Code Spaces: the company killed by one stolen control panel",
+    "body": [
+      "In 2014, a code-hosting company called Code Spaces ran its business on AWS.",
+      "An attacker gained access to its AWS control panel and, when Code Spaces tried to fight back, the attacker deleted most of the company's resources, backups, and machines.",
+      "Because so much lived under one set of all-powerful credentials with no real separation or recovery path, the damage was total — Code Spaces shut down within days.",
+      "It is the textbook example of why a powerful master login must be protected with MFA and why critical workloads should be isolated, not piled behind a single account-wide key."
+    ],
+    "bridge": "Code Spaces shows the account boundary in the negative: when one all-powerful login controls everything inside the wall and the wall is the whole company, losing that login loses the company."
+  },
+  "takeaways": [
+    "An AWS account is one wall doing two jobs: a security boundary and a billing boundary.",
+    "Big estates run many accounts governed together with free `AWS Organizations`, sharing one bill via consolidated billing.",
+    "`SCPs` are central guardrails member accounts cannot override — but they do not restrain the root user.",
+    "The root user is the all-powerful master key: protect it with MFA, lock it in the safe, and almost never use it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why is the AWS account called a 'boundary'?",
+      "options": [
+        { "text": "It is both a security boundary and a billing boundary — resources are isolated within it and its costs land on one bill", "correct": true },
+        { "text": "It limits how many users can log in at the same time", "correct": false },
+        { "text": "It caps the maximum amount you are allowed to spend each month", "correct": false }
+      ],
+      "feedback": "Correct — an account walls resources off from other accounts (security) and gathers all its charges onto one invoice (billing), so it is the natural unit for both isolation and cost."
+    },
+    {
+      "q": "What does AWS Organizations let a company do?",
+      "options": [
+        { "text": "Govern many accounts together with central rules and combine their charges into one consolidated bill", "correct": true },
+        { "text": "Make a single account run faster by adding more servers", "correct": false },
+        { "text": "Replace the need for any logins by removing the root user", "correct": false }
+      ],
+      "feedback": "Right — Organizations groups multiple accounts under one management account, applies central guardrails like SCPs, and consolidates billing across the whole estate."
+    },
+    {
+      "q": "Why is the root user considered dangerous?",
+      "options": [
+        { "text": "It is all-powerful and ignores most guardrails, so if it is stolen the attacker controls everything", "correct": true },
+        { "text": "It can only be used once and then the account is locked forever", "correct": false },
+        { "text": "It automatically deletes resources if you stop paying", "correct": false }
+      ],
+      "feedback": "Correct — the root user can do anything and is not restrained by SCPs or most permission rules, which is why AWS says to protect it with MFA and avoid using it for daily work."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Root user best practices for your AWS account", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html" },
+    { "label": "AWS Organizations User Guide — What is AWS Organizations?", "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html" },
+    { "label": "AWS Well-Architected Framework — Security Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" }
+  ]
+}

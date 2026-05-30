@@ -1,0 +1,149 @@
+{
+  "id": "cloud-m5-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 4,
+  "title": "Reading the Bill: Cost Explorer & the Cost and Usage Report (CUR)",
+  "estMinutes": 9,
+  "coreIdea": "AWS gives you two ways to see spend: `Cost Explorer` for a quick visual answer, and the `Cost and Usage Report` (CUR) for the line-by-line source of truth.",
+  "plainEnglish": [
+    "An AWS bill is not one number. It is millions of tiny charges, one for almost every hour each service runs.",
+    "To make sense of that, AWS gives you two tools that read the same underlying data.",
+    "`Cost Explorer` is a dashboard. It draws charts and answers questions fast, but it rounds and groups things for you.",
+    "The `Cost and Usage Report`, or CUR, is the full raw spreadsheet behind those charts. It has one row per charge, with every detail.",
+    "When a chart and a finance spreadsheet disagree, the CUR is the tie-breaker. It is the official record everyone trusts."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a busy restaurant at the end of the night. Cost Explorer is the manager's summary screen: \"tonight we did about $4,000, mostly drinks and mains.\" You read it in five seconds and you roughly know the story.",
+      "The CUR is the stack of every single itemised receipt — every coffee, every side of fries, every table, time-stamped. Nobody reads it for fun, but when an accountant disputes the takings, you count the receipts.",
+      "The metaphor bends in one place: the receipts here arrive automatically, several times a day, and there are millions of them. No human reads the CUR directly — software does."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two tools, one set of facts",
+      "teaser": "the dashboard vs the ledger",
+      "body": [
+        "`Cost Explorer` is a point-and-click console. You pick a date range, group by service or by `tag` (a label you attach to resources), and it draws a chart in seconds.",
+        "It is built for fast questions: \"what jumped last month?\" or \"which team is growing?\" It can also forecast spend for the next few months.",
+        "The CUR is different. It is a set of files AWS drops into your own storage bucket, refreshed up to a few times a day.",
+        "Both read the same billing data. The difference is depth: Cost Explorer summarises, the CUR shows every line."
+      ]
+    },
+    {
+      "title": "Why the CUR is the source of truth",
+      "teaser": "one row per charge, every detail attached",
+      "body": [
+        "The CUR has the finest grain AWS offers: roughly one row per resource, per hour, per charge type.",
+        "Each row carries the service, the region, the exact usage amount, the price applied, and any discount.",
+        "Critically, it shows both the public \"list\" price and your actual price after `Reserved Instances`, `Savings Plans`, and `credits` are applied.",
+        "Cost Explorer cannot expose every one of those columns. That is why finance teams and cost tools load the CUR, not the dashboard, when the number has to be exact and auditable."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "a worked example with illustrative numbers",
+      "body": [
+        "Imagine a startup's bill comes to about $20,000 in a month (illustrative figures throughout).",
+        "In Cost Explorer they group by service and see roughly $12,000 of compute, $5,000 of storage, and $3,000 of data transfer — a 30-second read.",
+        "Compute looks high, so they open the CUR. There they find around 4 million rows, and filtering shows about $4,000 came from one mislabelled test environment that nobody turned off.",
+        "The CUR also reveals that a `Savings Plan` cut the list price of compute from roughly $15,000 down to the $12,000 they actually paid — a detail the headline chart never showed.",
+        "Note the tools themselves: Cost Explorer's basic views are free to view, while the CUR's only real cost is the cheap storage and queries on the files it generates — typically a few dollars a month."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Cost Explorer",
+      "def": "A point-and-click AWS dashboard that charts and forecasts your spend, grouped by things like service, account, or tag."
+    },
+    {
+      "term": "Cost and Usage Report (CUR)",
+      "def": "The most detailed AWS billing data available — a set of files with roughly one row per charge — delivered into your own storage bucket as the official record of spend."
+    },
+    {
+      "term": "Source of truth",
+      "def": "The one dataset everyone agrees is authoritative; when other reports disagree, you check it. For AWS cost, that is the CUR."
+    },
+    {
+      "term": "Tag",
+      "def": "A label (a key and value, like `team=payments`) you attach to a resource so you can later group costs by team, project, or environment."
+    },
+    {
+      "term": "Amortized cost",
+      "def": "A way of spreading an upfront commitment, like a `Savings Plan`, evenly across the months it covers, so each month's bill reflects its fair share rather than one big spike."
+    },
+    {
+      "term": "Billing console",
+      "def": "The AWS web area where you find your invoices, Cost Explorer, and the setup for the Cost and Usage Report."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you do not need to read CUR rows yourself, but you must know it exists and that it is the number finance will defend.",
+      "Your decision is ownership: insist that resources are tagged by team and feature, because an untagged bill is one you cannot split, charge back, or explain.",
+      "The trade-off you own is speed versus rigour — Cost Explorer for the standup answer, the CUR (usually via a tool sitting on top of it) when a budget, a customer's unit cost, or a board slide has to be exact."
+    ]
+  },
+  "caseStudy": {
+    "title": "Airbnb reads the raw bill, not just the dashboard",
+    "body": [
+      "Airbnb runs a large, long-standing AWS estate and has written publicly about controlling its cloud cost.",
+      "Its engineering team built cost-management tooling on top of detailed AWS billing data — the line-item layer the CUR provides — rather than relying on summary charts alone.",
+      "That let them attribute spend to specific services and teams and catch waste that a high-level dashboard would have averaged away.",
+      "The same pattern shows up across the FinOps Foundation's published case studies: mature teams treat the CUR as the foundation and build reporting on top of it."
+    ],
+    "bridge": "Airbnb's approach is the core idea in action — the dashboard starts the conversation, but the line-item CUR is what they trust and build on."
+  },
+  "takeaways": [
+    "Cost Explorer answers fast and visual; the CUR is the complete, auditable record.",
+    "When a chart and a finance spreadsheet disagree, the CUR is the tie-breaker.",
+    "The CUR shows your real price after discounts — Reserved Instances, Savings Plans, and credits.",
+    "Untagged spend is unsplittable spend; tagging is what makes either tool useful."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A finance analyst and an engineer get different numbers for last month's compute spend. Which AWS data should settle the dispute?",
+      "options": [
+        { "text": "The Cost and Usage Report (CUR), because it is the line-item source of truth", "correct": true },
+        { "text": "A Cost Explorer chart, because it loads fastest", "correct": false },
+        { "text": "Whichever number is lower, to be safe", "correct": false }
+      ],
+      "feedback": "The CUR carries one row per charge with full detail, so it is the authoritative record everyone defers to when summaries disagree."
+    },
+    {
+      "q": "What is the main difference between Cost Explorer and the CUR?",
+      "options": [
+        { "text": "Cost Explorer summarises spend in charts; the CUR is the full line-by-line raw data", "correct": true },
+        { "text": "Cost Explorer is for storage costs and the CUR is for compute costs", "correct": false },
+        { "text": "They use completely separate billing systems that often disagree", "correct": false }
+      ],
+      "feedback": "Both read the same billing data. Cost Explorer summarises it visually; the CUR exposes every individual line for exact, auditable analysis."
+    },
+    {
+      "q": "Why does tagging resources matter for reading the bill?",
+      "options": [
+        { "text": "Tags let you group costs by team, project, or environment so spend can be split and explained", "correct": true },
+        { "text": "Tags make AWS charge you less for the same usage", "correct": false },
+        { "text": "Tags are required before AWS will generate any bill at all", "correct": false }
+      ],
+      "feedback": "A tag is a label you attach to resources. Without tags, the bill is one undifferentiated total you cannot attribute to a team or feature."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS Docs — What is the AWS Cost and Usage Report?",
+      "url": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+    },
+    {
+      "label": "AWS Docs — Analyzing your costs with AWS Cost Explorer",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+    },
+    {
+      "label": "FinOps Foundation — Data Ingestion & Normalization (FinOps Framework)",
+      "url": "https://www.finops.org/framework/capabilities/data-ingestion/"
+    }
+  ]
+}

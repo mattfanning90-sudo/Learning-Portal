@@ -1,0 +1,209 @@
+{
+  "id": "cloud-m7-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 5,
+  "title": "Forecasting a Bill That Changes Daily",
+  "estMinutes": 9,
+  "coreIdea": "A cloud bill moves every day, so you forecast it by predicting the things that drive usage — like active users or jobs run — rather than just drawing a line from last month, and a `budget` is the limit you commit to while a `forecast` is your honest best guess of where you'll actually land.",
+  "plainEnglish": [
+    "A normal bill, like rent, is the same number every month, so it is easy to plan around.",
+    "A cloud bill is not like that — it changes every single day, because you only pay for what you actually use that day.",
+    "If more customers show up, or one job runs longer, today's spend ticks up, and the month-end total moves with it.",
+    "A `forecast` is your best honest guess of where that moving total will land by the end of the month or quarter.",
+    "A `budget` is different: it is the limit you commit to in advance and promise not to blow through.",
+    "The skill in this lesson is forecasting a number that won't sit still, so finance isn't surprised and engineering isn't blamed."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture forecasting a restaurant's food bill for the month instead of its rent.",
+      "Rent is fixed, so you just write it down; but food cost rises and falls with how many diners walk in, so you don't guess the food bill directly — you predict covers (diners served) and multiply by the cost per cover.",
+      "That is `driver-based forecasting`: find the real thing that moves the cost, predict that, and let the dollars follow.",
+      "Where the metaphor bends: a cloud bill has many drivers at once — users, data stored, jobs run — so you usually track a handful together, not one tidy 'covers' number."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Budget vs forecast: a promise vs a prediction",
+      "teaser": "one is a limit you set, the other is where you'll really land",
+      "body": [
+        "A `budget` is a number you decide up front and commit to — \"we will spend no more than $50,000 this month.\"",
+        "A `forecast` is a prediction you keep updating — \"at today's pace, we're actually heading for about $57,000.\"",
+        "They answer different questions: the budget asks \"what did we agree to?\" and the forecast asks \"what is really going to happen?\"",
+        "The gap between them is the early-warning signal: a forecast running above budget on day 10 means act now, not explain later.",
+        "In AWS you can wire this up with `AWS Budgets`, which lets you set a limit and get alerted when your spend or forecast is on track to cross it."
+      ]
+    },
+    {
+      "title": "Why straight-line forecasting breaks in the cloud",
+      "teaser": "last month times one is a trap",
+      "body": [
+        "The lazy method is `straight-line` (also called run-rate) forecasting: take recent spend and project it forward unchanged.",
+        "It is fine for steady, fixed costs, and AWS Cost Explorer even offers a built-in forecast that does roughly this with some trend and seasonality added.",
+        "But cloud spend is `variable spend` — it rises and falls with how hard the product is being used — so a flat projection misses the things that actually move it.",
+        "It can't see a marketing campaign about to triple sign-ups, a big customer going live next week, or a price change you negotiated.",
+        "Straight-line tells you where yesterday was heading; it can't tell you where the business is about to go."
+      ]
+    },
+    {
+      "title": "Driver-based forecasting: predict the cause, not the dollars",
+      "teaser": "tie the bill to something the business already plans",
+      "body": [
+        "A `cost driver` is the real-world thing that makes usage go up or down — active users, orders processed, gigabytes stored, or batch jobs run.",
+        "`Driver-based forecasting` predicts those drivers first, then converts each one to dollars using a `unit cost` (roughly the cloud cost per user, per order, or per gigabyte).",
+        "Its power is that it speaks the business's language: when product forecasts 20% more users, you can translate that straight into expected spend.",
+        "It also splits the forecast into pieces you can question — \"is the growth assumption right?\" is a far better conversation than \"is $57,000 right?\"",
+        "The catch is honesty about assumptions: a driver forecast is only as good as the growth numbers and unit costs you feed it, so you label them and revisit them."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "forecasting a SaaS bill from one driver",
+      "body": [
+        "Imagine a SaaS app whose AWS cost is dominated by one driver: monthly active users. These figures are illustrative, not real prices.",
+        "Last month it served about 100,000 active users and the AWS bill came to roughly $30,000, so the `unit cost` is about $0.30 per active user.",
+        "Straight-line forecasting would just repeat last month: about $30,000 again, end of story.",
+        "But product is forecasting 130,000 active users next month because a campaign launches, so the driver-based forecast is 130,000 × $0.30, or about $39,000.",
+        "That extra ~$9,000 isn't a surprise overrun — it's a planned, explained number finance can fund and engineering can defend, and if the real driver lands at 120,000 you simply re-forecast to about $36,000 mid-month."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Budget",
+      "def": "A spending limit you commit to in advance and agree not to exceed, like \"no more than $50,000 this month.\""
+    },
+    {
+      "term": "Forecast",
+      "def": "Your best honest prediction of where spending will actually land by the end of a period, updated as new information arrives."
+    },
+    {
+      "term": "Variable spend",
+      "def": "Cost that rises and falls with how much the product is used, instead of staying the same every month like rent."
+    },
+    {
+      "term": "Cost driver",
+      "def": "The real-world thing that makes cloud usage go up or down, such as active users, orders processed, or gigabytes stored."
+    },
+    {
+      "term": "Unit cost",
+      "def": "The cloud cost of one unit of a driver, such as the cost per active user or per order, used to turn a usage forecast into dollars."
+    },
+    {
+      "term": "Driver-based forecasting",
+      "def": "Forecasting spend by first predicting its cost drivers and then multiplying each by its unit cost, rather than projecting last month's dollars forward."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you own the assumptions, not the arithmetic: the forecast lives or dies on the growth numbers your roadmap implies, so the moment you plan a campaign or a big launch you owe finance an updated driver.",
+      "Driver-based forecasting also reframes who pays for what — if cost scales with active users, then a free-tier surge or a heavy enterprise customer is a product decision with a price tag, not just an engineering bill.",
+      "The trade-off you hold is precision versus speed: a rough driver model you can update weekly beats a perfect spreadsheet that's stale by the time anyone reads it."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix forecasts capacity by predicting demand, not dollars",
+    "body": [
+      "Netflix runs almost its entire streaming platform on AWS, where cost rises and falls with how many people are watching.",
+      "Its engineering teams have publicly described forecasting future compute capacity by predicting the underlying driver — viewing demand and traffic patterns, including predictable spikes like a popular new release — rather than just extrapolating last month's bill.",
+      "By forecasting the demand first and translating that into the infrastructure (and therefore the spend) it will need, Netflix can provision ahead of a surge instead of being surprised by it.",
+      "That is driver-based thinking at massive scale: model the cause, and let the cost forecast follow from it."
+    ],
+    "bridge": "Netflix's approach is the core idea in action — you forecast a daily-changing bill far more reliably by predicting what drives the usage than by drawing a flat line from last month."
+  },
+  "takeaways": [
+    "A budget is a limit you commit to; a forecast is your updating prediction of where you'll really land.",
+    "Cloud spend is variable, so straight-line \"last month again\" forecasting misses what actually moves it.",
+    "Driver-based forecasting predicts the cause — users, orders, gigabytes — then multiplies by a unit cost to get dollars.",
+    "Forecast quality is assumption quality: label your growth numbers and unit costs, and re-forecast as they change."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the difference between a budget and a forecast?",
+      "options": [
+        {
+          "text": "A budget is a spending limit you commit to in advance; a forecast is your updating prediction of where spend will actually land",
+          "correct": true
+        },
+        {
+          "text": "A budget is for engineering and a forecast is for finance, but they are the same number",
+          "correct": false
+        },
+        {
+          "text": "A forecast is the limit you must not exceed, while a budget is just a rough guess",
+          "correct": false
+        }
+      ],
+      "feedback": "The budget is the promise you set; the forecast is the honest estimate of reality. The gap between them is your early-warning signal."
+    },
+    {
+      "q": "Why does straight-line (run-rate) forecasting often fail for cloud spend?",
+      "options": [
+        {
+          "text": "Cloud spend is variable and changes with usage, so projecting last month forward misses campaigns, launches, and growth that move the real drivers",
+          "correct": true
+        },
+        {
+          "text": "AWS forbids straight-line forecasting and blocks accounts that try it",
+          "correct": false
+        },
+        {
+          "text": "Straight-line forecasting only works for companies with more than 100,000 users",
+          "correct": false
+        }
+      ],
+      "feedback": "A flat projection assumes nothing changes, but cloud cost rises and falls with usage. It tells you where yesterday was heading, not where the business is going."
+    },
+    {
+      "q": "In driver-based forecasting, how do you turn a predicted driver into a dollar forecast?",
+      "options": [
+        {
+          "text": "Multiply the forecast amount of the driver by its unit cost — for example 130,000 active users at about $0.30 each",
+          "correct": true
+        },
+        {
+          "text": "Add a fixed 10% buffer to last month's total and call it the forecast",
+          "correct": false
+        },
+        {
+          "text": "Ask AWS support to set the number for you each month",
+          "correct": false
+        }
+      ],
+      "feedback": "Driver-based forecasting predicts the cause first (the driver), then converts it to dollars using a unit cost. That makes the forecast something the business can question and defend."
+    },
+    {
+      "q": "A product leader plans a marketing campaign expected to grow active users by 30% next month. What should they do for the forecast?",
+      "options": [
+        {
+          "text": "Update the driver assumption so finance gets a planned, explained number before the spend arrives",
+          "correct": true
+        },
+        {
+          "text": "Say nothing, since the cloud bill will simply sort itself out",
+          "correct": false
+        },
+        {
+          "text": "Wait until month-end and explain the overrun afterwards",
+          "correct": false
+        }
+      ],
+      "feedback": "Driver-based forecasting only works if the assumptions stay current. A planned growth driver becomes a funded, defensible cost instead of a surprise overrun."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — Forecasting (capability)",
+      "url": "https://www.finops.org/framework/capabilities/forecasting/"
+    },
+    {
+      "label": "AWS — Forecasting with AWS Cost Explorer",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-forecast.html"
+    },
+    {
+      "label": "AWS — Managing your costs with AWS Budgets",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    }
+  ]
+}

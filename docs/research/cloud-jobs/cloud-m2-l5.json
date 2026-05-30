@@ -1,0 +1,141 @@
+{
+  "id": "cloud-m2-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m2",
+  "order": 5,
+  "title": "Built to Survive: Availability, Redundancy & Designing for Failure",
+  "estMinutes": 9,
+  "coreIdea": "Things in the cloud break all the time, so good systems are designed to keep working when a part fails — by having spares (`redundancy`), automatic switchover (`failover`), and honest uptime promises measured in \"nines\".",
+  "plainEnglish": [
+    "Every computer fails eventually — a disk dies, a building loses power, a network hiccups.",
+    "In the cloud you can't stop failures, so the goal is to keep the service running anyway.",
+    "The trick is to keep spare copies of things, spread them apart, and switch to a spare the moment one breaks.",
+    "How often a service stays up is called its `availability`, and people describe it in \"nines\" — like 99.9% of the time.",
+    "Designing on purpose for the day something breaks is called \"design for failure,\" and it's the heart of a reliable cloud system."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a passenger jet. It has two engines, not because it needs both to fly, but so it can keep flying if one quits mid-air.",
+      "That second engine is `redundancy` — a spare that does nothing useful until the moment it saves you.",
+      "When an engine fails, the plane doesn't crash and the pilot doesn't rebuild it in the air; the systems simply lean on the other engine. That automatic switch is `failover`.",
+      "Where the metaphor bends: a plane carries one spare engine, while the cloud lets you keep your spares in entirely separate airports, so even a whole airport going dark doesn't ground you."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Availability, and what \"the nines\" really promise",
+      "teaser": "99.9% sounds tiny; the gap is bigger than you think",
+      "body": [
+        "`Availability` is the share of time a service is actually working and reachable. It's usually written as a percentage of uptime.",
+        "People shorten these percentages to \"nines.\" Three nines means 99.9% uptime; four nines means 99.99%.",
+        "The numbers feel close but the downtime is wildly different. Three nines allows about 8.8 hours of downtime per year, while four nines allows only about 53 minutes per year.",
+        "Each extra nine is roughly ten times less downtime — and usually a lot more money and engineering to achieve."
+      ]
+    },
+    {
+      "title": "Redundancy and failover: spares plus an automatic switch",
+      "teaser": "the spare is useless without the switch",
+      "body": [
+        "`Redundancy` means having more than one of something, so no single part is the only thing standing between you and an outage.",
+        "`Failover` is the automatic move to the spare when the main one fails — fast, and without a human scrambling at 3am.",
+        "On AWS, the key building block is the `Availability Zone`, or `AZ`: one or more separate data centres in a region, far enough apart that one flooding or losing power won't take the others down.",
+        "The standard pattern is \"Multi-AZ\": run copies in two or more zones, so if one zone dies, traffic fails over to another and customers barely notice."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a shop database goes from a single box to Multi-AZ",
+      "body": [
+        "Imagine a small online shop running its database on AWS's managed `RDS` (Relational Database Service). A single instance might cost roughly $200 a month in this illustrative example.",
+        "On one instance, if that zone has an outage, the shop is simply down until it recovers — there is no spare to switch to.",
+        "Turning on \"Multi-AZ\" tells AWS to keep a synchronised standby copy in a second zone and fail over automatically. The rough trade-off here: it roughly doubles the database bill to about $400 a month, because you're paying for the standby too.",
+        "So the real decision isn't technical — it's whether avoiding, say, a few hours of downtime a year is worth roughly $200 a month extra. For a checkout system losing thousands per hour, that's an easy yes; for an internal report, probably not."
+      ]
+    },
+    {
+      "title": "SLAs: the promise, and what it actually pays out",
+      "teaser": "a refund is not the same as your money back",
+      "body": [
+        "An `SLA` (Service Level Agreement) is the provider's written promise about availability, plus what they owe you if they miss it.",
+        "Read it closely: AWS SLAs typically pay out as service credits — money off your next bill — not cash for your lost business.",
+        "The credit is also usually small relative to your real loss; a few percent off your bill won't cover revenue from a missed sale.",
+        "So an SLA tells you how seriously a provider takes uptime, but it does not make you whole. Your own redundancy is what actually protects the business."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Availability", "def": "The share of time a service is working and reachable, usually written as a percentage of uptime — for example 99.9%." },
+    { "term": "The nines", "def": "Shorthand for availability percentages. \"Three nines\" is 99.9%; \"four nines\" is 99.99%. Each extra nine means roughly ten times less downtime." },
+    { "term": "Redundancy", "def": "Keeping more than one copy of something so no single part failing can take the whole service down — like a plane's second engine." },
+    { "term": "Failover", "def": "The automatic switch to a spare when the main component fails, so the service keeps running without someone fixing it by hand." },
+    { "term": "Availability Zone (AZ)", "def": "One or more separate AWS data centres within a region, spaced apart so one losing power or flooding won't take the others down." },
+    { "term": "SLA (Service Level Agreement)", "def": "A provider's written promise about availability and what they owe you — usually bill credits, not cash — if they miss the target." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Availability is a dial you pay for, and the trade-off you own is uptime versus cost: each extra nine typically costs more in duplicated infrastructure and engineering effort, with diminishing returns.",
+      "Decide the target per system, not for everything at once — your checkout flow may justify Multi-AZ and four nines, while an internal dashboard is fine on one instance, and that choice is a budget decision as much as a technical one.",
+      "Never let a vendor's SLA stand in for your own resilience: the credits rarely cover your real losses, so the question to ask is \"what does our redundancy cost, and is it cheaper than the downtime it prevents?\""
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix and the Chaos Monkey",
+    "body": [
+      "Netflix runs almost entirely on AWS and serves hundreds of millions of viewers, so an outage is hugely costly.",
+      "Rather than hope failures never happen, Netflix built a tool called `Chaos Monkey` that deliberately kills running servers in production, at random, during business hours.",
+      "The point is to force every service to survive losing a part without anyone noticing — proving the redundancy and failover actually work, instead of assuming they do.",
+      "This grew into a practice now called \"chaos engineering,\" and it's the clearest real-world example of designing for failure on purpose."
+    ],
+    "bridge": "Netflix doesn't try to prevent failures; it assumes them and proves it can survive each one — which is exactly what \"design for failure\" means."
+  },
+  "takeaways": [
+    "You can't stop cloud components from failing, so reliable systems are designed to keep running when one does.",
+    "Redundancy gives you spares; failover is the automatic switch to them — you need both.",
+    "\"Nines\" describe availability: each extra nine means roughly ten times less downtime, and usually a lot more cost.",
+    "An SLA is a promise backed by bill credits, not a refund of your lost business — your own redundancy is the real protection."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the difference between redundancy and failover?",
+      "options": [
+        { "text": "Redundancy is having a spare; failover is the automatic switch to that spare when the main part fails.", "correct": true },
+        { "text": "Redundancy is the switch to a spare; failover is keeping a spare around.", "correct": false },
+        { "text": "They are two words for the exact same thing.", "correct": false }
+      ],
+      "feedback": "Redundancy is the spare itself, and failover is the automatic move to it. A spare with no switch doesn't help you when something breaks."
+    },
+    {
+      "q": "Roughly how much downtime per year does \"three nines\" (99.9% availability) allow?",
+      "options": [
+        { "text": "About 8.8 hours per year.", "correct": true },
+        { "text": "About 53 minutes per year.", "correct": false },
+        { "text": "About 5 minutes per year.", "correct": false }
+      ],
+      "feedback": "99.9% leaves about 0.1% of the year as downtime, which works out to roughly 8.8 hours. Four nines (99.99%) tightens that to about 53 minutes."
+    },
+    {
+      "q": "Why does running a database \"Multi-AZ\" on AWS improve availability?",
+      "options": [
+        { "text": "It keeps a standby copy in a separate Availability Zone and fails over to it if one zone goes down.", "correct": true },
+        { "text": "It makes the single database server run faster so it never crashes.", "correct": false },
+        { "text": "It moves all responsibility for uptime onto AWS's SLA.", "correct": false }
+      ],
+      "feedback": "Multi-AZ spreads copies across separate data centres, so a single zone's outage triggers an automatic failover rather than taking you offline."
+    },
+    {
+      "q": "If an AWS service misses its SLA, what do you typically get?",
+      "options": [
+        { "text": "Service credits toward your next bill, usually small relative to your real loss.", "correct": true },
+        { "text": "A full cash refund of all revenue you lost during the outage.", "correct": false },
+        { "text": "Nothing — SLAs are just marketing and pay out nothing.", "correct": false }
+      ],
+      "feedback": "AWS SLAs generally pay bill credits, not cash for lost business, and the credit rarely covers your true loss — which is why your own redundancy matters."
+    }
+  ],
+  "sources": [
+    { "label": "AWS Well-Architected Framework — Reliability Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html" },
+    { "label": "AWS — Regions and Availability Zones", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/" },
+    { "label": "Netflix Technology Blog — The Netflix Simian Army (Chaos Monkey)", "url": "https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116" }
+  ]
+}

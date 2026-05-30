@@ -1,0 +1,141 @@
+{
+  "id": "cloud-m2-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m2",
+  "order": 2,
+  "title": "Identity Is the New Perimeter: Authentication vs Authorization",
+  "estMinutes": 9,
+  "coreIdea": "In the cloud, the question that decides safety isn't \"are you inside the network?\" — it's \"who are you (authentication) and what are you allowed to do (authorization)?\"",
+  "plainEnglish": [
+    "Old security worked like a castle. A firewall was the wall, and being inside the wall meant you were trusted.",
+    "The cloud has no clean wall. Your data lives in someone else's data centre, and people connect from laptops, phones, and other apps all over the world.",
+    "So the main control moved from the network to identity — proving who you are, and then limiting what you can touch.",
+    "Two ideas do the heavy lifting. Authentication asks \"who are you?\" Authorization asks \"what are you allowed to do?\"",
+    "Get those two right and an attacker who steals one password still can't roam freely."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a large office building. Authentication is the front-desk check that confirms you are really Sam — your photo ID and the guard's nod.",
+      "Authorization is what your keycard actually opens once you're inside: Sam's badge opens the third floor, but not the server room or the finance vault.",
+      "The old castle model trusted anyone who got past the front door. The identity model gives every person a personal keycard that only opens the exact rooms their job needs — so one lost badge can't unlock the whole building.",
+      "Where the metaphor bends: in the cloud the \"guard\" can re-check you continuously, not just once at the door."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Authentication vs authorization: two different doors",
+      "teaser": "one proves who you are; the other limits what you touch",
+      "body": [
+        "Authentication is identity. It is the step where you prove you are who you claim to be, usually with a password plus a second factor like a code on your phone.",
+        "Authorization is permission. Once your identity is confirmed, it decides which actions and which resources you may use.",
+        "They are easy to confuse because they happen back to back. A simple rule: authentication is the bouncer checking your ID; authorization is the wristband that says which areas you can enter.",
+        "On AWS, the service that runs both is `IAM`, short for Identity and Access Management. It is where you create users, roles, and the rules that grant or deny each action."
+      ]
+    },
+    {
+      "title": "Why the firewall stopped being the main wall",
+      "teaser": "there is no longer a clear inside or outside",
+      "body": [
+        "A firewall is a filter that allows or blocks network traffic based on where it comes from. It assumes a clear inside and outside.",
+        "The cloud blurred that line. Your systems run in shared data centres, staff work from home, and software talks to other software across the public internet.",
+        "If you can't trust a connection just because it's \"inside,\" you have to check identity on every request instead. That approach is called `zero trust` — never trust by location, always verify who is asking.",
+        "The principle that ties it together is `least privilege`: give each identity the smallest set of permissions it needs, and nothing more."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a small team locks down an S3 bucket of customer files",
+      "body": [
+        "Say a startup stores customer invoices in `S3`, AWS's file-storage service. They create an IAM role — a set of permissions, not a person — that allows only \"read invoices,\" and attach it to their billing app.",
+        "Authentication: the app proves its identity to AWS automatically using short-lived credentials, so there is no password to leak. Authorization: the role's policy permits reading that one bucket and denies everything else.",
+        "The good news on cost: IAM, roles, and policies are free to use on AWS — you don't pay per user or per rule. The real \"cost\" is people-time spent designing and reviewing permissions.",
+        "Illustrative example: enabling multi-factor authentication might cost roughly $0 in software (it's built in), but a misconfigured public bucket can cost a fortune — think regulatory fines and breach cleanup running into the millions, as several real leaks have shown."
+      ]
+    },
+    {
+      "title": "Stronger doors: MFA and short-lived keys",
+      "teaser": "stolen passwords matter less when identity is layered",
+      "body": [
+        "Multi-factor authentication, or `MFA`, asks for a second proof beyond a password — usually a one-time code or a tap on your phone. A stolen password alone then gets an attacker nowhere.",
+        "Long-lived secret keys are a classic weak spot, because if one leaks it works until someone notices. Modern practice favours short-lived credentials that expire in minutes or hours.",
+        "Together these shrink the \"blast radius\" — the damage one stolen credential can do.",
+        "This is the heart of the perimeter shift: you stop betting safety on the wall, and start betting it on strong, well-scoped identities."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Authentication", "def": "Proving who you are — for example, a password plus a code from your phone. It answers the question \"are you really you?\"" },
+    { "term": "Authorization", "def": "Deciding what a confirmed identity is allowed to do — which actions and which resources it can use." },
+    { "term": "IAM (Identity and Access Management)", "def": "The AWS service where you create identities and write the rules that grant or deny each action. It runs both authentication and authorization." },
+    { "term": "Least privilege", "def": "The rule of giving every identity the smallest set of permissions it needs to do its job, and nothing extra." },
+    { "term": "Zero trust", "def": "A security approach that never trusts a request just because of where it comes from; it verifies the identity behind every request instead." },
+    { "term": "MFA (multi-factor authentication)", "def": "Requiring a second proof of identity beyond a password, such as a one-time code or a tap on your phone, so a stolen password alone isn't enough." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Identity is mostly free to configure but expensive to get wrong, so the trade-off a product leader owns is speed versus blast radius. Loosely scoped permissions ship features faster today and create your worst incident tomorrow.",
+      "Decide who owns the permission model — usually a security or platform team — and make \"least privilege by default\" a stated requirement, not a clean-up task for later.",
+      "When you weigh a vendor or a new integration, ask how it authenticates and whether it supports MFA and short-lived credentials; that one question screens out a lot of future risk."
+    ]
+  },
+  "caseStudy": {
+    "title": "Capital One's 2019 breach: a permissions failure, not a broken wall",
+    "body": [
+      "In 2019, Capital One disclosed a breach affecting roughly 100 million people in the US. The attacker did not smash through a firewall.",
+      "A misconfigured web application firewall was tricked into using its own cloud permissions to reach data it should never have touched in `S3` storage.",
+      "The root issue was over-broad authorization: an identity that could read far more than its job required. In 2020 a US regulator fined Capital One $80 million over the incident.",
+      "Stronger least-privilege scoping on that identity would have contained the damage even after the initial mistake."
+    ],
+    "bridge": "The wall held; the identity's permissions didn't — which is exactly why identity, not the network, is now the perimeter."
+  },
+  "takeaways": [
+    "Authentication proves who you are; authorization decides what you may do — two separate checks.",
+    "The cloud has no clean inside or outside, so identity replaced the firewall as the main control.",
+    "Least privilege plus MFA shrinks the damage any single stolen credential can cause.",
+    "On AWS, IAM is free to use; the real cost of identity is the people-time to design it well."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the difference between authentication and authorization?",
+      "options": [
+        { "text": "Authentication proves who you are; authorization decides what you're allowed to do.", "correct": true },
+        { "text": "Authentication decides what you can do; authorization proves who you are.", "correct": false },
+        { "text": "They are two names for the same single check.", "correct": false }
+      ],
+      "feedback": "Authentication is the identity check (\"are you really you?\"), and authorization is the permission check (\"what may you touch?\"). They happen back to back but are different jobs."
+    },
+    {
+      "q": "Why did identity replace the network firewall as the main security control in the cloud?",
+      "options": [
+        { "text": "Because the cloud has no clear inside or outside, so trust must be based on who is asking, not where they connect from.", "correct": true },
+        { "text": "Because firewalls were made illegal for cloud providers.", "correct": false },
+        { "text": "Because firewalls are too expensive to run in the cloud.", "correct": false }
+      ],
+      "feedback": "Your systems run in shared data centres and people connect from everywhere, so location no longer signals trust. You verify identity on each request instead — the idea behind zero trust."
+    },
+    {
+      "q": "A startup gives its billing app an IAM role that can only read one S3 bucket and nothing else. Which principle is this?",
+      "options": [
+        { "text": "Least privilege — the smallest set of permissions needed for the job.", "correct": true },
+        { "text": "Multi-factor authentication.", "correct": false },
+        { "text": "Encryption at rest.", "correct": false }
+      ],
+      "feedback": "Granting only the exact permissions a job needs, and nothing more, is least privilege. It keeps the blast radius small if that identity is ever compromised."
+    },
+    {
+      "q": "In the 2019 Capital One breach, what was the core failure?",
+      "options": [
+        { "text": "An identity had far broader permissions than it needed, so it could reach data it should never have touched.", "correct": true },
+        { "text": "The company had no firewall at all.", "correct": false },
+        { "text": "AWS lost the customer data from its data centres.", "correct": false }
+      ],
+      "feedback": "The wall held; the permissions didn't. Over-broad authorization let a compromised component read sensitive data — a textbook case for least privilege."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — IAM best practices (Security & Compliance)", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html" },
+    { "label": "AWS Well-Architected Framework — Security Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" },
+    { "label": "U.S. OCC — $80M civil penalty over Capital One 2019 incident", "url": "https://www.occ.gov/news-issuances/news-releases/2020/nr-occ-2020-101.html" }
+  ]
+}

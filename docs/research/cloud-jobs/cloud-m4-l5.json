@@ -1,0 +1,158 @@
+{
+  "id": "cloud-m4-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 5,
+  "title": "Databases Without the PhD: RDS, Aurora & DynamoDB — SQL vs NoSQL",
+  "estMinutes": 9,
+  "coreIdea": "A database is just where your app keeps the truth; the big choice is whether that truth lives in neat related tables (`SQL`) or in flexible self-contained records (`NoSQL`), and AWS will run either one for you so your team doesn't babysit servers.",
+  "plainEnglish": [
+    "Every app needs a place to store the facts it can't afford to lose: who the customers are, what they bought, what they owe.",
+    "That place is a database — a program built only for storing data and handing it back fast and reliably.",
+    "There are two main shapes. One stores data in tables that link together, like a spreadsheet that knows its relationships. The other stores data as loose, self-contained records, like a pile of index cards.",
+    "Running a database yourself means patching, backups, and 2am pages when it crashes. A `managed database` means AWS does that grunt work, and you just use it.",
+    "This lesson names the three you'll hear most — `RDS`, `Aurora`, and `DynamoDB` — and how to pick between them."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A SQL database is a well-run filing cabinet where every drawer has a fixed set of labelled folders, and folders cross-reference each other: the 'orders' drawer points at the 'customers' drawer so nothing is written twice.",
+      "A NoSQL database is a stack of index cards, where each card holds everything about one thing in one place — fast to grab, but you copy shared details onto many cards instead of cross-referencing.",
+      "The filing cabinet keeps everything tidy and consistent but slows down when a thousand people open drawers at once. The index cards scale to millions of grabs but trust you to keep the copies in sync.",
+      "The metaphor bends in one place: real NoSQL can still link records — it just doesn't do it for you automatically the way SQL does."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "SQL vs NoSQL: two ways to hold the truth",
+      "teaser": "tidy related tables vs flexible standalone records",
+      "body": [
+        "A `relational database` (the SQL kind) stores data in tables with fixed columns, and tables link by shared IDs. You query it with `SQL`, a decades-old language for asking precise questions across those links.",
+        "Its superpower is consistency: a rule called a `transaction` guarantees that a transfer either fully happens or fully doesn't — money never half-moves.",
+        "A `NoSQL database` drops the rigid table grid. The most common style stores each item as a self-contained record, so you grab everything about one user in a single fast lookup.",
+        "The trade: NoSQL bends to huge scale and changing data shapes, but you often give up automatic cross-table consistency and have to plan your access patterns up front."
+      ]
+    },
+    {
+      "title": "The three names you'll hear: RDS, Aurora, DynamoDB",
+      "teaser": "managed SQL, supercharged SQL, and serverless NoSQL",
+      "body": [
+        "`RDS` (Relational Database Service) runs familiar SQL engines for you — `PostgreSQL`, `MySQL`, and others — and handles patching, backups, and standby copies. You still pick a server size.",
+        "`Aurora` is AWS's own SQL engine, compatible with PostgreSQL and MySQL, rebuilt for the cloud. It's faster and more resilient than plain RDS, and `Aurora Serverless` can shrink and grow capacity on its own.",
+        "`DynamoDB` is a `NoSQL` key-value database that is fully `serverless`: there's no server to size, it scales to enormous request rates, and it returns answers in single-digit milliseconds.",
+        "Rough rule of thumb: reach for RDS or Aurora when data is relational and you value consistency; reach for DynamoDB when you need massive, predictable speed at scale and simple lookup patterns."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "a small online store, with illustrative numbers",
+      "body": [
+        "Picture a mid-size online store. Orders, customers, and refunds are deeply related and must never half-update, so that lives in `Aurora` (SQL). The shopping-cart and session data is high-volume, simple lookups, so that lives in `DynamoDB` (NoSQL).",
+        "Illustrative Aurora bill: a small instance runs roughly $0.10–$0.15 per hour, so about $75–$110 per month, plus a few dollars for storage and backups. You pay whether or not traffic spikes.",
+        "Illustrative DynamoDB bill on `on-demand` pricing: you pay per request, very roughly $1.25 per million writes and $0.25 per million reads in this example, plus about $0.25 per GB-month of storage. A quiet month costs almost nothing; a busy one scales up smoothly.",
+        "Key cost lesson: the SQL instance bills for time it's switched on; the serverless NoSQL table bills for what you actually use. These are clearly illustrative figures — always check the live AWS pricing pages."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Relational database (SQL)",
+      "def": "A database that stores data in linked tables of rows and columns, queried with the SQL language; great when records relate to each other and must stay consistent."
+    },
+    {
+      "term": "NoSQL database",
+      "def": "A database that stores data without rigid tables — often as self-contained records — trading some consistency guarantees for flexibility and huge scale."
+    },
+    {
+      "term": "Managed database",
+      "def": "A database where the cloud provider handles the boring, risky operations work — patching, backups, failover — so your team just stores and reads data."
+    },
+    {
+      "term": "Transaction",
+      "def": "An all-or-nothing bundle of database changes: either every step succeeds together or none of them apply, so data is never left half-updated."
+    },
+    {
+      "term": "Serverless (database)",
+      "def": "A service where you never choose or run a server; capacity scales automatically and you're billed for actual usage rather than for a machine left switched on."
+    },
+    {
+      "term": "Aurora",
+      "def": "AWS's own cloud-built SQL database, compatible with PostgreSQL and MySQL, designed to be faster and more resilient than running those engines yourself."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The database choice is one of the most expensive decisions to reverse, because migrating live data is slow, risky, and rarely on the roadmap once you've shipped.",
+      "A product leader owns the trade-off between consistency and cost: SQL on a fixed instance gives predictable correctness but a steady bill even at 3am idle, while serverless NoSQL gives elastic cost but pushes the burden of designing access patterns onto the team up front.",
+      "Who pays shifts with the model: an always-on Aurora instance is a fixed line item finance can forecast, whereas DynamoDB on-demand is variable spend that rises with success — great for unpredictable launches, scary if nobody is watching the bill."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon.com moves its cart to DynamoDB",
+    "body": [
+      "Amazon's own shopping engineers hit a wall: at peak events like Prime Day, traditional relational databases struggled to keep the shopping cart fast and available under enormous, spiky load.",
+      "That pain led Amazon to build `DynamoDB`, a NoSQL database designed for predictable single-digit-millisecond responses at massive scale.",
+      "During a 2019 Prime Day, DynamoDB handled trillions of requests across the event, peaking at tens of millions of requests per second, without the cart slowing down.",
+      "Amazon deliberately accepted NoSQL's simpler query model in exchange for that scale and reliability — the cart didn't need complex cross-table joins, it needed to never break."
+    ],
+    "bridge": "Amazon picked NoSQL for the cart and kept SQL for relational data elsewhere — proof that the right answer is matching each workload to the database shape that fits it, not crowning one winner."
+  },
+  "takeaways": [
+    "SQL stores linked tables and protects consistency; NoSQL stores flexible records and protects scale.",
+    "RDS runs familiar SQL engines for you; Aurora is AWS's faster cloud-built SQL; DynamoDB is serverless NoSQL.",
+    "A fixed SQL instance bills for time switched on; serverless NoSQL bills for actual usage.",
+    "Choose the database to fit the workload — it's costly and slow to change later, so the decision is a real one to own."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A workload involves money transfers that must never be left half-completed. Which database shape fits best?",
+      "options": [
+        { "text": "A relational (SQL) database, because transactions make changes all-or-nothing", "correct": true },
+        { "text": "Any NoSQL database, because they are always faster", "correct": false },
+        { "text": "It makes no difference which you pick", "correct": false }
+      ],
+      "feedback": "Relational databases use transactions to guarantee that a set of changes either fully happens or fully doesn't — exactly what money movement needs."
+    },
+    {
+      "q": "What mainly distinguishes DynamoDB from RDS and Aurora?",
+      "options": [
+        { "text": "DynamoDB is a serverless NoSQL database; RDS and Aurora are SQL databases", "correct": true },
+        { "text": "DynamoDB can only store one record at a time", "correct": false },
+        { "text": "RDS and Aurora cannot be backed up", "correct": false }
+      ],
+      "feedback": "DynamoDB is AWS's serverless key-value NoSQL service, while RDS and Aurora run relational SQL engines."
+    },
+    {
+      "q": "Why is 'managed' the selling point of RDS and Aurora?",
+      "options": [
+        { "text": "AWS handles patching, backups, and failover so your team doesn't run the servers", "correct": true },
+        { "text": "It means the database is free to use", "correct": false },
+        { "text": "It means the data can never be queried with SQL", "correct": false }
+      ],
+      "feedback": "A managed database offloads the operational grunt work — patching, backups, standby copies — to AWS, so teams focus on using the data."
+    },
+    {
+      "q": "How does cost typically differ between an always-on Aurora instance and a DynamoDB on-demand table?",
+      "options": [
+        { "text": "Aurora bills for the time the instance is running; DynamoDB on-demand bills per request and storage used", "correct": true },
+        { "text": "Both are completely free under all conditions", "correct": false },
+        { "text": "DynamoDB always costs more than Aurora regardless of usage", "correct": false }
+      ],
+      "feedback": "A running Aurora instance bills for uptime even when idle, while DynamoDB on-demand charges for the reads, writes, and storage you actually use."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Amazon RDS — AWS documentation",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    },
+    {
+      "label": "Amazon DynamoDB — Developer Guide",
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    },
+    {
+      "label": "Amazon Aurora — User Guide",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "id": "cloud-m5-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 3,
+  "title": "The Bill Nobody Predicts: Data Transfer & Egress",
+  "estMinutes": 9,
+  "coreIdea": "In the cloud, moving data *out* — to the internet, to another region, or even between zones — costs money, and `data egress` is the line item that surprises almost everyone.",
+  "plainEnglish": [
+    "Storing data in the cloud is cheap, and putting data *in* is almost always free.",
+    "The catch is moving data *out* — that is called `egress`, and you pay per gigabyte that leaves.",
+    "There are several flavours: out to the public internet, across to another region, and even between zones in the same region.",
+    "Nobody puts these on the whiteboard when they design a system, so the charge quietly piles up.",
+    "Learning where egress hides is one of the fastest ways to stop a cloud bill from creeping."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a giant self-storage facility. Putting your boxes *into* a unit is free, and the rent on the unit is cheap.",
+      "But every time you carry a box *out* through the front gate, the facility weighs it and charges you by the kilogram.",
+      "Worse, there are inner gates too: moving a box to a unit across town (another region) or even to the next building in the same complex (another zone) has its own smaller toll.",
+      "The metaphor bends slightly — in the cloud the 'weight' is gigabytes of data, and the tolls depend on exactly which gate you cross, not distance."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The three gates: internet, inter-region, and inter-AZ",
+      "teaser": "where data crosses a boundary, a meter starts ticking",
+      "body": [
+        "`Data egress` is charged whenever data crosses certain network boundaries, and there are three you must know.",
+        "First, `internet egress`: data leaving AWS for the public internet — the file your user downloads, the API response your app sends back. This is the biggest and most common charge.",
+        "Second, `inter-region transfer`: data moving from one geographic `region` (say Sydney) to another (say Virginia). Regions are far apart, so this carries its own per-gigabyte fee.",
+        "Third, `inter-AZ transfer`: data moving between `Availability Zones` — separate data-centre buildings inside one region. This is cheaper but easy to forget, because it can be triggered just by two of your own servers chatting across zones.",
+        "Data coming *in* (`ingress`) from the internet is almost always free, which is exactly why egress catches people off guard."
+      ]
+    },
+    {
+      "title": "Why egress pricing exists (and why it is sticky)",
+      "teaser": "the business logic behind the surprise",
+      "body": [
+        "Cloud providers pay real money for the long-distance fibre and equipment that carries data out to the world, so they pass that cost on per gigabyte.",
+        "Charging for egress but not ingress gently encourages you to *keep* your data and computing inside their cloud — moving large datasets out is expensive.",
+        "Critics call this a `data gravity` effect: the more data you store, the more costly it becomes to ever leave.",
+        "Regulators have noticed. In 2024 AWS, Google Cloud, and Microsoft Azure all announced they would waive egress fees for customers fully migrating *off* their platform, under pressure from the EU's Data Act and the UK competition regulator."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "a video startup's monthly transfer bill, with illustrative numbers",
+      "body": [
+        "Imagine a small video app in the Sydney region that streams 50 terabytes (50,000 GB) out to viewers each month.",
+        "Internet egress is roughly $0.114 per GB for the first chunk in this example, so 50,000 GB lands near $5,700 a month — often larger than the storage and compute combined.",
+        "Now suppose their database is in Sydney but they spin up an analytics copy in Virginia, shipping 5,000 GB across. Inter-region transfer at about $0.02 per GB adds roughly $100.",
+        "Their app servers also talk to a cache in a different zone, pushing 10,000 GB between AZs at about $0.01 per GB each way — another $100 or so they never planned for.",
+        "The fix in this example: put a `CDN` (a content delivery network like Amazon CloudFront) in front, which caches videos closer to viewers and bills egress at a lower blended rate — these are illustrative figures, not a live quote."
+      ]
+    },
+    {
+      "title": "How teams actually cut the egress bill",
+      "teaser": "the standard playbook engineers reach for",
+      "body": [
+        "Use a `CDN` so popular content is served from edge locations near users instead of re-shipping it out of the region every time.",
+        "Keep chatty services in the same `Availability Zone` so they avoid the inter-AZ toll, balancing that against the resilience of spreading across zones.",
+        "Avoid needless inter-region copying; replicate data across regions only when you truly need the redundancy or latency.",
+        "Watch for the silent ones: pulling data back from another cloud, or routing internal traffic through a `NAT gateway`, which adds its own per-gigabyte processing charge on top."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Data egress", "def": "Data leaving a defined network boundary — out to the internet, to another region, or to another zone. In the cloud you pay per gigabyte that goes out." },
+    { "term": "Ingress", "def": "Data coming *into* the cloud from the internet. In AWS this is almost always free, which is why egress is the one that surprises people." },
+    { "term": "Region", "def": "A geographic location where a cloud provider clusters data centres, like Sydney or Virginia. Moving data between regions carries a transfer fee." },
+    { "term": "Availability Zone (AZ)", "def": "One or more separate data-centre buildings inside a single region, isolated for resilience. Data moving between AZs in a region carries a small per-gigabyte charge." },
+    { "term": "CDN (Content Delivery Network)", "def": "A network of caching servers placed near users (like Amazon CloudFront) that serves repeated content from the edge, cutting both latency and egress cost." },
+    { "term": "Data gravity", "def": "The pull that makes data hard to move once it accumulates — because moving it out is slow and expensive, so it tends to stay where it is." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Egress is the cost lever most product leaders never see until the bill arrives, so owning it early is a quiet superpower.",
+      "The trade-off you own is locality versus reach: serving users globally and spreading across regions and zones improves speed and resilience, but every boundary crossed adds transfer cost that lands on your budget, not engineering's.",
+      "When a team proposes a multi-region setup or a new analytics pipeline, the right question is 'how much data moves, across which boundary, and who pays for that traffic?'"
+    ]
+  },
+  "caseStudy": {
+    "title": "Cloudflare's campaign against AWS egress fees",
+    "body": [
+      "Cloudflare, a major internet infrastructure company, publicly argued for years that AWS charges customers far more for data egress than the underlying bandwidth actually costs.",
+      "In a widely cited 2021 analysis, Cloudflare estimated that in some regions AWS's egress prices were many times the wholesale market rate for bandwidth.",
+      "The pressure, alongside EU and UK regulators, helped push AWS to scrap egress fees in 2024 for customers who fully move their data off the platform.",
+      "It is a concrete reminder that egress is not a tiny technical detail — it is a pricing lever big enough to draw competitors and regulators into the fight."
+    ],
+    "bridge": "The Cloudflare dispute is egress made visible: the same per-gigabyte 'out' charge that surprises a single startup is large enough to move an entire industry."
+  },
+  "takeaways": [
+    "Putting data into the cloud is free; the surprise charge is `egress` — data moving out.",
+    "Three boundaries bill: out to the internet, between regions, and between Availability Zones.",
+    "Internet egress is usually the biggest line; a CDN like CloudFront is the standard way to cut it.",
+    "Always ask how much data crosses which boundary — that is where an unpredicted bill comes from."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In AWS, which direction of data transfer is typically the one that costs money?",
+      "options": [
+        { "text": "Egress — data moving out to the internet, another region, or another zone", "correct": true },
+        { "text": "Ingress — data coming in from the internet", "correct": false },
+        { "text": "Data sitting at rest in storage, untouched", "correct": false }
+      ],
+      "feedback": "Ingress is almost always free and data at rest is billed as storage, not transfer. It is egress — data leaving a boundary — that carries the per-gigabyte charge people forget to budget for."
+    },
+    {
+      "q": "Two of your own servers in the same region talk constantly but sit in different Availability Zones. What happens to the bill?",
+      "options": [
+        { "text": "You are charged a small inter-AZ transfer fee for the data moving between them", "correct": true },
+        { "text": "Nothing — traffic inside one region is always free", "correct": false },
+        { "text": "You are charged full internet egress rates", "correct": false }
+      ],
+      "feedback": "Moving data between Availability Zones carries a small per-gigabyte charge each way. It is cheaper than internet egress but easy to forget, since it can be triggered just by your own services chatting across zones."
+    },
+    {
+      "q": "A startup streams large volumes of video to users worldwide and wants to cut its egress bill. What is the standard first move?",
+      "options": [
+        { "text": "Put a CDN like Amazon CloudFront in front to cache content near users", "correct": true },
+        { "text": "Copy all the data to a second region for safety", "correct": false },
+        { "text": "Move the servers into more Availability Zones", "correct": false }
+      ],
+      "feedback": "A CDN caches popular content at edge locations near users, so it is served from the edge instead of being re-shipped out of the region every time — cutting both latency and egress cost. The other two options would add transfer cost, not reduce it."
+    },
+    {
+      "q": "Why do cloud providers charge for egress but generally not for ingress?",
+      "options": [
+        { "text": "Outbound long-distance bandwidth costs them real money, and the asymmetry gently encourages keeping data in their cloud", "correct": true },
+        { "text": "Incoming data is harder to measure than outgoing data", "correct": false },
+        { "text": "Ingress damages their hardware while egress does not", "correct": false }
+      ],
+      "feedback": "Providers pay for the fibre that carries data out, so they bill egress per gigabyte. Making ingress free while egress is paid also creates 'data gravity' — it is cheap to bring data in and costly to ever take it back out."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Understanding data transfer charges (Amazon VPC pricing)", "url": "https://docs.aws.amazon.com/vpc/latest/userguide/transit-gateway-data-transfer-charges.html" },
+    { "label": "AWS News — Free data transfer out to internet when moving out of AWS", "url": "https://aws.amazon.com/blogs/aws/free-data-transfer-out-to-internet-when-moving-out-of-aws/" },
+    { "label": "FinOps Foundation — FinOps Framework", "url": "https://www.finops.org/framework/" }
+  ]
+}

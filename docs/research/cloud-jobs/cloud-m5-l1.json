@@ -1,0 +1,131 @@
+{
+  "id": "cloud-m5-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 1,
+  "title": "Pay-As-You-Go, Decoded — and the Free-Tier Traps",
+  "estMinutes": 9,
+  "coreIdea": "Cloud pricing is a metered bill across a few repeating dimensions — and the free tier is a marketing on-ramp with edges that quietly become charges.",
+  "plainEnglish": [
+    "The cloud does not sell you a server you own. It rents you resources by the unit, and the meter never stops while they run.",
+    "Almost every charge is one of a few things: time something runs, how much data you store, how much data you move, and how many times you call a service.",
+    "Amazon Web Services, the largest cloud provider, calls this `pay-as-you-go` — you pay for what you use, with no upfront purchase.",
+    "The `free tier` looks like a gift, but it has limits and time windows. Cross an edge and the meter starts billing in the background."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the cloud as a self-storage facility crossed with a taxi meter. The storage unit charges you every month it holds your boxes, the taxi charges you for every minute the engine runs, and there is a small fee every time a courier carries a box out the front gate.",
+      "The `free tier` is the facility's \"first month free\" promotion. It is real, but it covers one small unit for a limited time — leave a big unit running past the window and a full bill arrives without anyone phoning to warn you.",
+      "Where the metaphor bends: a taxi stops when you get out, but a cloud resource keeps running — and billing — until you explicitly switch it off."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four levers almost every charge pulls",
+      "teaser": "compute, storage, data transfer, requests",
+      "body": [
+        "Most cloud charges come from four dimensions, and naming them lets you read any bill.",
+        "`Compute` is paying for processing time — a virtual server billed per second or hour while it is on.",
+        "`Storage` is paying to keep data sitting somewhere, billed per gigabyte per month.",
+        "`Data transfer` (also called `egress`) is paying to move data out of the provider's network to the internet — usually the sneaky one.",
+        "`Requests` are paying per action, like the number of times an app reads or writes a file."
+      ]
+    },
+    {
+      "title": "Why \"data out\" is the lever people forget",
+      "teaser": "free to send in, charged to take out",
+      "body": [
+        "Sending data into AWS (`ingress`) is almost always free, because the provider wants your data to arrive.",
+        "Sending data out to the internet (`egress`) is metered per gigabyte, and at large volume it dominates the bill.",
+        "This is the same asymmetry as the storage facility: easy to drop boxes off, a fee every time you carry one out the gate.",
+        "It is why teams serving lots of video or images watch egress closely — the storage is cheap, the shipping is not."
+      ]
+    },
+    {
+      "title": "What the free tier actually looks like — and what it costs when you cross it",
+      "teaser": "illustrative numbers, three free-tier shapes",
+      "body": [
+        "The AWS free tier comes in three shapes, and mixing them up is how bills appear. These figures are illustrative, not live prices.",
+        "Always-free: some amounts never expire — for example, roughly the first 25 GB per month in the `DynamoDB` database stays free indefinitely.",
+        "12-months-free: a server like a small `EC2` instance is free up to about 750 hours per month, but only for your first year — month 13 might bill on the order of $8–$10 for that same instance.",
+        "Trials: short windows that simply end, after which the full rate applies.",
+        "The classic trap: you launch two free `EC2` servers, each 750 hours covers one, so the second runs fully billed — that is roughly 750 hours times about $0.012/hour, or about $9 in this example, for a resource you thought was free."
+      ]
+    },
+    {
+      "title": "How the meter becomes a bill",
+      "teaser": "small unit prices times big usage",
+      "body": [
+        "Each unit price looks tiny on its own — fractions of a cent per request, a cent or two per gigabyte.",
+        "The bill is small numbers multiplied by large usage, summed across many services, every hour of the month.",
+        "Nothing tells you to stop. A test server left on over a weekend keeps billing while everyone is offline.",
+        "This is why a `budget` alert — a threshold that emails you when spend crosses a line — is the first thing cost-aware teams set up."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Pay-as-you-go", "def": "A pricing model where you pay only for the resources you actually use, billed by the unit, with no upfront purchase." },
+    { "term": "Free tier", "def": "AWS's limited free allowance for new and ongoing usage, split into always-free amounts, 12-month-free amounts, and short trials." },
+    { "term": "Compute", "def": "Paying for processing power — a virtual server billed per second or hour for the time it is running." },
+    { "term": "Data transfer (egress)", "def": "The charge for moving data out of the provider's network to the internet; sending data in is usually free." },
+    { "term": "Request", "def": "A single action against a service, such as one read or write; many services bill a tiny amount per request." },
+    { "term": "Budget alert", "def": "A spending threshold you set so the provider emails or notifies you when your bill crosses a chosen amount." }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you do not pay for licences once — you own a recurring meter that scales with usage, so a viral week can spike the bill before revenue catches up.",
+      "Decide early who watches cost: in the cloud, the team shipping the feature is usually the team that owns its bill, which is the core idea behind `FinOps` (bringing finance and engineering into the same cost conversation).",
+      "The trade-off you own is convenience versus visibility — pay-as-you-go removes the upfront purchase decision, so you must replace it with budgets and alerts or the surprise lands at month-end."
+    ]
+  },
+  "caseStudy": {
+    "title": "Pinterest's commit-and-overrun cloud bill",
+    "body": [
+      "Pinterest runs almost entirely on AWS and disclosed in its 2019 pre-IPO filings that it had committed to spend $750 million on cloud through 2023.",
+      "Because pay-as-you-go scales with traffic, an unusually busy period could push real usage above what it had planned and pre-committed for.",
+      "Pinterest stated that exceeding its committed usage could force it to pay higher on-demand rates, directly raising its costs — a metered bill reacting to demand, at massive scale."
+    ],
+    "bridge": "Even a company spending hundreds of millions still lives by the same meter you do: usage drives the bill, and unplanned usage drives it up."
+  },
+  "takeaways": [
+    "Almost every cloud charge is compute time, stored gigabytes, data moved out, or number of requests.",
+    "Data in is usually free; data out (egress) is metered and often the surprise on the bill.",
+    "The free tier has three shapes — always-free, 12-months-free, and trials — and crossing any edge starts real charges.",
+    "Tiny unit prices times large usage equal a real bill, so set a budget alert before you spend, not after."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which set best describes the main dimensions a cloud bill is built from?",
+      "options": [
+        { "text": "Compute time, storage, data transfer, and requests", "correct": true },
+        { "text": "Login count, screen size, browser type, and uptime", "correct": false },
+        { "text": "A single flat monthly fee per account", "correct": false }
+      ],
+      "feedback": "Cloud bills are metered across a few repeating levers — compute, storage, data transfer, and requests. Name them and you can read almost any bill."
+    },
+    {
+      "q": "Why is moving data often more costly than people expect?",
+      "options": [
+        { "text": "Sending data out to the internet (egress) is metered per gigabyte, while sending it in is usually free", "correct": true },
+        { "text": "Both sending data in and out are billed at the same high rate", "correct": false },
+        { "text": "Data transfer is always free in the cloud", "correct": false }
+      ],
+      "feedback": "Ingress (data in) is typically free, but egress (data out) is metered per gigabyte and can dominate the bill at volume."
+    },
+    {
+      "q": "You launch two identical small EC2 servers under the 12-month free tier that covers about 750 instance-hours per month. What happens?",
+      "options": [
+        { "text": "The 750 free hours cover roughly one server, so the second runs fully billed and shows up as a charge", "correct": true },
+        { "text": "Both servers are free because the free tier covers any number of instances", "correct": false },
+        { "text": "Neither server runs until you pay upfront for both", "correct": false }
+      ],
+      "feedback": "The free allowance is a fixed pool of hours, not per-server. A second always-on instance burns past it and bills for the overflow."
+    }
+  ],
+  "sources": [
+    { "label": "AWS Free Tier — official page", "url": "https://aws.amazon.com/free/" },
+    { "label": "AWS Pricing — How AWS pricing works", "url": "https://aws.amazon.com/pricing/" },
+    { "label": "FinOps Foundation — What is FinOps?", "url": "https://www.finops.org/introduction/what-is-finops/" }
+  ]
+}

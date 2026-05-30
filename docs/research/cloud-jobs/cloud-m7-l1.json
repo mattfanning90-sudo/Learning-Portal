@@ -1,0 +1,209 @@
+{
+  "id": "cloud-m7-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 1,
+  "title": "Showback vs Chargeback: Making Teams See Their Spend",
+  "estMinutes": 9,
+  "coreIdea": "Cost allocation slices one big cloud bill into per-team numbers; `showback` just shows each team its share, while `chargeback` actually bills it back to them.",
+  "plainEnglish": [
+    "A company gets one giant monthly bill from its cloud provider, like AWS.",
+    "Nobody can act on one giant number, because nobody knows which team caused which part of it.",
+    "`Cost allocation` is the work of splitting that one bill into a clear share for each team, product, or environment.",
+    "`Showback` means you show each team its share, as information, but the central budget still pays.",
+    "`Chargeback` goes further: each team's share is actually moved onto that team's own budget, so they pay for what they use.",
+    "The whole point is to turn an invisible cost into a number a specific person feels responsible for."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a shared house with one electricity bill that lands in the kitchen each month.",
+      "`Showback` is taping a note to each housemate's door: \"your gaming PC, your space heater, and your hot showers came to about this much\" — but the house fund still pays the whole bill.",
+      "`Chargeback` is the next step: each housemate actually transfers their share into the house fund, so the person running the space heater all winter feels it in their own wallet.",
+      "Where the metaphor bends: a cloud bill isn't read off a single meter — you only get clean per-team numbers if every resource is tagged first, which is the hard part this lesson keeps coming back to."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why one bill is useless and how tagging fixes it",
+      "teaser": "you can't manage a number nobody owns",
+      "body": [
+        "The cloud bill arrives as one total, mixing every team's usage together.",
+        "To split it, you attach labels to each resource — in AWS these labels are called `tags` (a `tag` is just a key-and-value sticker like `team: payments` or `env: prod`).",
+        "You also group accounts under one umbrella using `AWS Organizations`, so a whole team or product can map to its own account.",
+        "Tools like `AWS Cost Explorer` then group the bill by those tags and accounts, turning one total into a per-team breakdown.",
+        "The rule of thumb: untagged spend is unallocated spend, and unallocated spend is nobody's problem — which means it never gets cut."
+      ]
+    },
+    {
+      "title": "Showback vs chargeback: same data, very different teeth",
+      "teaser": "visibility you can ignore vs a cost you actually pay",
+      "body": [
+        "`Showback` and `chargeback` use the same allocated numbers; the difference is whether real money moves.",
+        "`Showback` is a report: \"here is your share.\" It informs, but the central budget still absorbs the cost, so a team can nod and change nothing.",
+        "`Chargeback` puts the share onto the team's own budget, so overspending hurts their numbers, not a faceless central pool.",
+        "Chargeback drives the strongest accountability, but it needs allocation people trust — if the numbers look unfair, you get a billing war instead of better behaviour.",
+        "Most organisations start with showback to build trust in the data, then move to chargeback once the splits are accurate and uncontested."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "a $40k bill, split three ways",
+      "body": [
+        "Imagine a monthly AWS bill of about $40,000 in this example, landing as one line on the finance system.",
+        "After tagging by `team`, `AWS Cost Explorer` splits it: Payments roughly $22,000, Search roughly $11,000, and about $7,000 sitting in an `untagged` bucket nobody can explain.",
+        "Under showback, finance emails each team its share; the central cloud budget still pays all $40,000, and that mystery $7,000 just rolls on.",
+        "Under chargeback, Payments' $22,000 and Search's $11,000 land on their own budgets — and suddenly Payments has a reason to chase down why their share doubled.",
+        "Notice the lever: shrinking the untagged $7,000 toward zero is usually the fastest, cheapest win, because you can't charge back what you can't attribute. These figures are illustrative, not real prices."
+      ]
+    },
+    {
+      "title": "Avoiding the billing war",
+      "teaser": "fair, explainable, and agreed beats precise-but-resented",
+      "body": [
+        "Chargeback fails when teams feel the numbers are wrong, surprising, or punitive.",
+        "Shared costs — a database or network everyone uses — are the classic flashpoint, because there's no single owner to bill.",
+        "The FinOps fix is to agree a simple, explainable split rule up front (for example, by usage or an even share) rather than chasing a perfect formula nobody understands.",
+        "Pair every chargeback number with the context to act on it: what drove it, and what a team can actually do to lower it.",
+        "Visibility plus a fair, agreed method is what turns spend into accountability instead of an internal fight."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Cost allocation",
+      "def": "The practice of splitting one shared cloud bill into a clear cost for each team, product, or environment."
+    },
+    {
+      "term": "Showback",
+      "def": "Showing each team its share of cloud spend as information, while a central budget still pays the bill."
+    },
+    {
+      "term": "Chargeback",
+      "def": "Moving each team's share of cloud spend onto that team's own budget, so they actually pay for what they use."
+    },
+    {
+      "term": "Tag",
+      "def": "A simple key-and-value label stuck on a cloud resource, like `team: payments`, used to sort the bill by who is responsible."
+    },
+    {
+      "term": "Unallocated (untagged) spend",
+      "def": "Cloud cost that can't be traced to any team because the resources weren't labelled, so it stays nobody's responsibility."
+    },
+    {
+      "term": "FinOps",
+      "def": "A practice where finance, engineering, and product share responsibility for cloud spend so teams make cost-aware decisions."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, your decision is how hard a lever to pull: showback nudges behaviour with information, while chargeback forces ownership by putting spend on the team's own budget.",
+      "You own the trade-off between accountability and goodwill — push to chargeback before the allocation is trusted and you spend your political capital fighting about whose number is wrong.",
+      "The practical sequence is yours to set: get clean tagging first, run showback to prove the data, then move to chargeback once teams accept the splits."
+    ]
+  },
+  "caseStudy": {
+    "title": "Airbnb makes cloud cost a team-by-team number",
+    "body": [
+      "Airbnb runs its platform almost entirely on AWS, and as it grew, its single cloud bill became too large and too blended to manage centrally.",
+      "Its engineering team built internal cost-attribution tooling that breaks the AWS bill down by service and team, then shows each team a regular, clear view of the spend it generated.",
+      "By making each team see its own slice rather than hiding it in one corporate total, Airbnb turned cost into something individual teams could own and optimise.",
+      "This put the showback idea — visibility first — into practice at large scale before any money was forced back onto teams."
+    ],
+    "bridge": "Airbnb's move shows the core idea in action: you can't make a team accountable for spend until you first make that team see its own share of the bill."
+  },
+  "takeaways": [
+    "Cost allocation turns one unmanageable cloud bill into a per-team number someone can own.",
+    "Showback shows the share as information; chargeback actually moves the cost onto the team's budget.",
+    "Untagged spend is unallocated spend — and unallocated spend never gets cut.",
+    "Visibility plus a fair, agreed split rule drives accountability without starting a billing war."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core difference between showback and chargeback?",
+      "options": [
+        {
+          "text": "Showback shows a team its share as information, while chargeback actually moves that cost onto the team's own budget",
+          "correct": true
+        },
+        {
+          "text": "Showback is for AWS bills and chargeback is for other cloud providers",
+          "correct": false
+        },
+        {
+          "text": "Showback is more accurate, while chargeback is only a rough estimate",
+          "correct": false
+        }
+      ],
+      "feedback": "Both use the same allocated numbers. The only difference is whether real money moves: showback informs, chargeback bills it back."
+    },
+    {
+      "q": "In AWS, what makes it possible to split one bill into per-team costs?",
+      "options": [
+        {
+          "text": "Tagging resources with labels like `team: payments`, then grouping the bill by those tags",
+          "correct": true
+        },
+        {
+          "text": "Asking AWS support to manually divide the invoice each month",
+          "correct": false
+        },
+        {
+          "text": "Paying a higher subscription tier that itemises everything automatically",
+          "correct": false
+        }
+      ],
+      "feedback": "Tags are the labels that let tools like AWS Cost Explorer group spend by who is responsible. No tags means no clean allocation."
+    },
+    {
+      "q": "Why is large untagged spend a problem for cost accountability?",
+      "options": [
+        {
+          "text": "It can't be traced to any team, so it stays nobody's responsibility and rarely gets cut",
+          "correct": true
+        },
+        {
+          "text": "AWS charges a penalty fee for every untagged resource",
+          "correct": false
+        },
+        {
+          "text": "Untagged resources automatically run slower than tagged ones",
+          "correct": false
+        }
+      ],
+      "feedback": "If no one owns it, no one optimises it. Shrinking the untagged bucket is usually the fastest first win."
+    },
+    {
+      "q": "What is the most common way to avoid a billing war when introducing chargeback?",
+      "options": [
+        {
+          "text": "Agree a simple, explainable split rule for shared costs up front, and start with showback to build trust in the data",
+          "correct": true
+        },
+        {
+          "text": "Make the chargeback numbers as complex as possible so no one questions them",
+          "correct": false
+        },
+        {
+          "text": "Bill all shared costs to whichever team complains the least",
+          "correct": false
+        }
+      ],
+      "feedback": "Fair, agreed, and explainable beats precise-but-resented. Trust in the numbers is what turns visibility into accountability."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — Allocation (Cost Allocation, Showback & Chargeback)",
+      "url": "https://www.finops.org/framework/capabilities/allocation/"
+    },
+    {
+      "label": "AWS — Tagging Best Practices (cost allocation tags)",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    }
+  ]
+}

@@ -51,6 +51,14 @@ for (const t of coding.tracks) {
 }
 Object.assign(lessons, coding.lessons)
 
-// Single merged glossary (AI/Product terms + coding terms).
+// ─── Cloud, AWS & FinOps track — merged from a self-contained module ───
+import cloud from './cloud.js'
+for (const t of cloud.tracks) {
+  tracks.push(t)
+  for (const m of t.modules) braided.push(...m.lessonIds)
+}
+Object.assign(lessons, cloud.lessons)
+
+// Single merged glossary (AI/Product terms + coding terms + cloud terms).
 import baseGlossary from './glossary.js'
-export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}) }
+export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}), ...(cloud.cloudGlossary || {}) }

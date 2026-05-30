@@ -1,0 +1,119 @@
+{
+  "id": "cloud-m1-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 6,
+  "title": "Public, Private, Hybrid, Multi-Cloud: Picking a Home for Workloads",
+  "estMinutes": 9,
+  "coreIdea": "A `deployment model` is simply a decision about *where* your software lives and *who* owns the machines under it — and the real choice is a trade-off between control, cost, compliance, and lock-in, not a search for one 'best' answer.",
+  "plainEnglish": [
+    "Every piece of software has to run on a computer somewhere.",
+    "A `workload` is just a unit of software doing a job — an app, a database, a website.",
+    "A `deployment model` is the decision about where that workload lives and who owns the hardware it runs on.",
+    "There are four common homes: `public cloud`, `private cloud`, `hybrid cloud`, and `multi-cloud`.",
+    "Picking one is never just technical — it is a business call about control, cost, rules you must follow, and how stuck you become."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think about where a company houses its staff.",
+      "A `public cloud` is renting desks in a giant shared serviced office: someone else owns the building, the power, and the cleaners, and you pay only for the desks you use this month.",
+      "A `private cloud` is buying your own building — total control and privacy, but you now pay for the roof, the security guards, and every empty room whether or not anyone sits in it.",
+      "`Hybrid` keeps your sensitive head-office work in your own building while overflow teams rent serviced desks; `multi-cloud` means renting from several serviced-office chains at once so no single landlord can squeeze you. The metaphor bends in one place: moving a workload between clouds is far harder than moving a desk, which is exactly why 'lock-in' matters."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four models, in plain terms",
+      "teaser": "what each one actually means",
+      "body": [
+        "`Public cloud` means a provider like `Amazon Web Services` (AWS), Microsoft `Azure`, or Google Cloud owns the data centres, and many different customers share that pooled hardware. You rent capacity on demand and pay for what you use.",
+        "`Private cloud` means cloud-style infrastructure dedicated to a single organisation — either in your own data centre or hosted for you alone. You get more control and isolation, but you carry the cost and the maintenance.",
+        "`Hybrid cloud` deliberately connects a private environment to a public cloud so workloads and data can move between them. `Multi-cloud` means using more than one public provider on purpose — say AWS for one system and Google Cloud for another.",
+        "Hybrid and multi-cloud sound similar but answer different questions: hybrid mixes private and public; multi-cloud spreads across several public providers."
+      ]
+    },
+    {
+      "title": "The four trade-offs that actually drive the choice",
+      "teaser": "control, cost, compliance, lock-in",
+      "body": [
+        "Control: a private cloud gives you the most say over hardware and security; a public cloud hands a lot of that to the provider in exchange for convenience.",
+        "Cost: public cloud turns a big up-front purchase (`CapEx`, capital expenditure) into a flexible monthly bill (`OpEx`, operating expenditure) — great for unpredictable demand, but it can balloon if left unwatched.",
+        "Compliance: some laws or contracts say data must stay in a certain country or on certain hardware, which can push a workload toward private or hybrid. This is often about `data residency` — the rule that data physically lives in a named place.",
+        "Lock-in: the more you lean on one provider's special features, the more expensive and painful it becomes to leave. Multi-cloud reduces that grip but adds real complexity, because every provider works differently."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "an illustrative bill for one workload, three ways",
+      "body": [
+        "Picture one modest web application: it needs roughly the equivalent of two always-on servers plus a database. All figures below are illustrative examples, not live prices.",
+        "Public cloud (on-demand): renting that capacity might run about $300 a month — you pay only while it runs, and nothing the month you switch it off. If traffic triples for a sale, you scale up for a few days and the bill rises only for those days.",
+        "Public cloud, but committed: promise the provider 1–3 years of usage (AWS calls these `Savings Plans` or `Reserved Instances`) and the same workload might drop to roughly $180 a month — about a 40% saving in this example — in exchange for giving up flexibility.",
+        "Private cloud: buying two servers and storage might be about $20,000 up-front, then perhaps $400 a month for power, cooling, space, and staff time — cheaper per month at steady high usage, but you paid a lump sum and you eat the cost of any idle capacity. The lesson: public wins on flexibility and small/spiky workloads; private can win on large, steady, predictable ones."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Workload", "def": "A single unit of software doing a job — for example an app, a website, or a database — that has to run on some computer somewhere." },
+    { "term": "Public cloud", "def": "Computing capacity rented on demand from a provider like AWS, Azure, or Google Cloud, where many customers share the same pooled hardware and you pay for what you use." },
+    { "term": "Private cloud", "def": "Cloud-style infrastructure dedicated to one organisation alone — in its own data centre or hosted exclusively for it — giving more control but carrying the cost." },
+    { "term": "Hybrid cloud", "def": "A setup that deliberately links a private environment to a public cloud so workloads and data can move between the two." },
+    { "term": "Multi-cloud", "def": "Using more than one public cloud provider on purpose, so no single provider holds all your systems." },
+    { "term": "Vendor lock-in", "def": "The difficulty and cost of leaving a provider once you depend on its specific features — the deeper you go, the harder it is to switch." }
+  ],
+  "pmAngle": {
+    "body": [
+      "A product leader rarely chooses the model alone, but they own the trade-off and have to defend it. The lever they pull most is `CapEx` versus `OpEx`: public cloud means no big purchase and a bill that scales with usage, which is why finance teams love it for new bets that might not pan out.",
+      "The trap they own is the runaway monthly bill — public cloud makes spending easy and invisible until someone asks why it doubled. That is why `FinOps`, the practice of bringing engineering and finance together to manage cloud cost, exists. The leader's job is to ask 'who pays, and what are we giving up?' — flexibility, control, or the freedom to leave — before the architecture decides it for them."
+    ]
+  },
+  "caseStudy": {
+    "title": "Dropbox leaves the public cloud",
+    "body": [
+      "Dropbox originally stored its users' files on AWS, the public cloud. As it grew to hundreds of millions of users, its storage needs became enormous, steady, and highly predictable — the exact profile where owning hardware can beat renting it.",
+      "Over roughly 2015–2016 Dropbox built its own custom storage infrastructure and moved the bulk of its data off AWS onto its own systems, a project it nicknamed 'Magic Pocket.' In its IPO filing, Dropbox reported saving about $75 million over the two years following the move. Notably, it stayed hybrid — keeping some workloads and certain regions on the public cloud rather than going all-in on private."
+    ],
+    "bridge": "Dropbox shows the core idea exactly: there is no single best home — at huge, steady scale the trade-offs flipped, so they moved the predictable workload to private and kept the spiky rest on public."
+  },
+  "takeaways": [
+    "The four homes are public (rented, shared), private (owned, dedicated), hybrid (private linked to public), and multi-cloud (several public providers).",
+    "Picking a model is a trade-off across control, cost, compliance, and lock-in — not a hunt for one 'best' answer.",
+    "Public cloud swaps a big up-front purchase for a flexible monthly bill, which is ideal for small or spiky workloads.",
+    "At large, steady, predictable scale, owning hardware can become cheaper — as Dropbox found when it left AWS."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the key difference between hybrid cloud and multi-cloud?",
+      "options": [
+        { "text": "Hybrid links a private environment to a public cloud, while multi-cloud uses more than one public provider", "correct": true },
+        { "text": "Hybrid is always cheaper than multi-cloud", "correct": false },
+        { "text": "Multi-cloud means using only Amazon Web Services, while hybrid means using Azure", "correct": false }
+      ],
+      "feedback": "Hybrid is about mixing private and public; multi-cloud is about spreading across several public providers. They answer different questions."
+    },
+    {
+      "q": "A startup expects unpredictable, spiky traffic and has little cash for hardware up front. Which model fits best, and why?",
+      "options": [
+        { "text": "Public cloud, because it turns a big up-front purchase into a flexible pay-for-what-you-use bill", "correct": true },
+        { "text": "Private cloud, because owning servers is always cheapest", "correct": false },
+        { "text": "Multi-cloud, because using two providers automatically halves the cost", "correct": false }
+      ],
+      "feedback": "Public cloud swaps CapEx for OpEx and scales with demand — exactly what a cash-light, spiky startup needs. Private requires a lump sum, and multi-cloud adds complexity, not automatic savings."
+    },
+    {
+      "q": "Why did moving its predictable, massive storage off AWS make sense for Dropbox?",
+      "options": [
+        { "text": "Because at huge, steady, predictable scale, owning dedicated hardware can cost less than renting public-cloud capacity", "correct": true },
+        { "text": "Because the public cloud is unsafe for storing files", "correct": false },
+        { "text": "Because private cloud is always the right choice for every company", "correct": false }
+      ],
+      "feedback": "The trade-off flipped at scale: steady, predictable demand is the profile where owning hardware can beat renting, which is why Dropbox saved money — not because public cloud is unsafe or always wrong."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Types of Cloud Computing (public, private, hybrid)", "url": "https://aws.amazon.com/types-of-cloud-computing/" },
+    { "label": "FinOps Foundation — What is FinOps?", "url": "https://www.finops.org/introduction/what-is-finops/" },
+    { "label": "Dropbox — The Epic Story of Dropbox's Exodus from the Amazon Cloud Empire (Wired)", "url": "https://www.wired.com/2016/03/epic-story-dropboxs-exodus-amazon-cloud-empire/" }
+  ]
+}

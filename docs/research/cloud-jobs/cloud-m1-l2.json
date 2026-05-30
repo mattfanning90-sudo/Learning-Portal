@@ -1,0 +1,176 @@
+{
+  "id": "cloud-m1-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 2,
+  "title": "Renting Beats Owning: the CapEx → OpEx Shift That Changed IT",
+  "estMinutes": 9,
+  "coreIdea": "The cloud's biggest change wasn't technical — it turned computers from a big up-front purchase you own into a metered bill you pay only while you use it.",
+  "plainEnglish": [
+    "For decades, running software meant buying your own computers first.",
+    "A company spent a large sum up front on physical machines called `servers`, then waited weeks for them to arrive and be set up.",
+    "The cloud flipped this.",
+    "Now you rent computing from a provider like `AWS` (Amazon Web Services) by the hour or even the second, and you stop paying the moment you stop using it.",
+    "That single change — from owning to renting — is what let small teams build things that once needed a big company's budget."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Owning servers is like buying a car. You pay the full price on day one, you park it whether you drive it or not, and you pay for repairs, insurance, and a garage even on the days it sits idle.",
+      "The cloud is like calling an Uber. You pay only for the trips you take, the moment the ride ends the meter stops, and you never think about oil changes or where to park.",
+      "Where the metaphor bends: an Uber takes minutes to arrive, while cloud servers appear in seconds — and you can summon a thousand of them at once, then send them all away."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two ways to pay for the same thing",
+      "teaser": "the difference between a purchase and a bill",
+      "body": [
+        "`CapEx`, short for capital expenditure, is money spent up front to buy an asset you own — like a building or a server.",
+        "`OpEx`, short for operating expenditure, is money spent on the ongoing running of the business — like rent or an electricity bill.",
+        "Owning servers is CapEx: a big cheque now, for hardware you hope you sized correctly.",
+        "Renting cloud computing is OpEx: a smaller, recurring bill that rises and falls with how much you actually use."
+      ]
+    },
+    {
+      "title": "Why the flip reshaped how companies build",
+      "teaser": "guessing demand used to be a bet-the-company decision",
+      "body": [
+        "With CapEx you had to guess your demand months in advance.",
+        "Guess too low and your site crashes under load; guess too high and you've burned cash on machines that sit idle.",
+        "OpEx removes the guess: you grow the computers to match real demand, a property the industry calls `elasticity`.",
+        "Because the up-front cost is gone, the cost of trying an idea collapses — a failed experiment costs a few dollars instead of a warehouse of hardware."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "the same workload, owned versus rented (illustrative numbers)",
+      "body": [
+        "Say a startup needs enough computing to run its app, using a rented cloud server called an `EC2` instance (Amazon's Elastic Compute Cloud).",
+        "Owning the equivalent might mean spending roughly $15,000 up front on a physical server, plus about $200 a month for power, cooling, and a slice of an IT person's time — paid whether the app is busy or not.",
+        "Renting a comparable EC2 instance in this example costs about $0.10 per hour, which is roughly $70 a month if you leave it on around the clock — and $0 the months you switch it off.",
+        "The headline isn't just the lower number; it's that the rented bill scales down to nearly nothing when you're not using it, while the owned server keeps costing money the day after you bought it.",
+        "These figures are illustrative round numbers for teaching, not live AWS prices — real prices vary by region, instance size, and discounts."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "CapEx (capital expenditure)",
+      "def": "A large up-front payment to buy something you own and keep, like a server or a building."
+    },
+    {
+      "term": "OpEx (operating expenditure)",
+      "def": "An ongoing, pay-as-you-go cost of running the business, like rent or a monthly utility bill."
+    },
+    {
+      "term": "Server",
+      "def": "A computer whose job is to run software and serve it to other people over a network, rather than sit on your desk."
+    },
+    {
+      "term": "Elasticity",
+      "def": "The cloud's ability to add or remove computing automatically as demand rises and falls, so you pay for what you actually use."
+    },
+    {
+      "term": "EC2 (Elastic Compute Cloud)",
+      "def": "Amazon's service for renting virtual servers by the second or hour, the most common way to run an app on AWS."
+    },
+    {
+      "term": "FinOps",
+      "def": "The practice of managing cloud spending as a team sport — engineers, finance, and product together watch the metered bill and keep it under control."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "When you move to OpEx, the cost of your product stops being a one-time purchase and becomes a meter that runs every second your software is on.",
+      "That makes spending a product decision, not just a finance one — a feature that quietly leaves servers running is now a recurring line on the bill someone owns.",
+      "The trade-off a product leader owns is speed versus discipline: renting lets you ship and experiment cheaply, but without `FinOps` habits the same flexibility lets cost creep up unnoticed."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix moves off its own data centres",
+    "body": [
+      "Netflix used to run its streaming service from servers it owned in its own data centres.",
+      "After a 2008 database failure halted DVD shipping for three days, it began a multi-year migration onto AWS, finishing in 2016 by shutting its last data centre for streaming.",
+      "Instead of buying hardware to handle the worst-case Friday-night surge all year round, Netflix now rents capacity that scales up for the evening peak and back down overnight.",
+      "It pays for the computing it actually uses, when millions of viewers are watching, rather than parking idle servers for the quiet hours."
+    ],
+    "bridge": "Netflix swapped a giant CapEx bet on owned hardware for an elastic OpEx bill that follows real demand — the exact flip this lesson is about."
+  },
+  "takeaways": [
+    "CapEx is buying and owning computers up front; OpEx is renting them and paying only while you use them.",
+    "Renting removes the need to guess demand in advance, because capacity grows and shrinks with real usage.",
+    "The economic flip is what made cheap experimentation possible — a failed idea now costs dollars, not a warehouse.",
+    "Pay-as-you-go means cost is always running, so someone must own watching the bill (that's FinOps)."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core economic shift the cloud introduced?",
+      "options": [
+        {
+          "text": "From buying and owning servers up front (CapEx) to renting computing as you use it (OpEx)",
+          "correct": true
+        },
+        {
+          "text": "From paying for software monthly to paying for it once, forever",
+          "correct": false
+        },
+        {
+          "text": "From slow internet connections to fast ones",
+          "correct": false
+        }
+      ],
+      "feedback": "The headline change is owning versus renting: CapEx is a big up-front purchase, OpEx is a metered bill that tracks actual use."
+    },
+    {
+      "q": "Why does pay-as-you-go pricing make experimentation cheaper?",
+      "options": [
+        {
+          "text": "Cloud providers give all experiments away for free",
+          "correct": false
+        },
+        {
+          "text": "A failed experiment only costs the small amount of computing it used, instead of a large up-front hardware purchase",
+          "correct": true
+        },
+        {
+          "text": "Experiments run faster on rented servers than owned ones",
+          "correct": false
+        }
+      ],
+      "feedback": "Because there's no up-front purchase, the cost of trying an idea collapses to a few dollars of metered usage — so trying and failing is cheap."
+    },
+    {
+      "q": "A team leaves several large EC2 instances running over a quiet weekend with no users. Under the OpEx model, what happens?",
+      "options": [
+        {
+          "text": "Nothing — once you've started a server, the cost is already paid in full",
+          "correct": false
+        },
+        {
+          "text": "The meter keeps running, so the idle servers add cost the whole weekend",
+          "correct": true
+        },
+        {
+          "text": "AWS automatically shuts them off because no one is using them",
+          "correct": false
+        }
+      ],
+      "feedback": "Pay-as-you-go means the meter runs as long as the server is on, used or not — which is exactly why someone must watch the bill (FinOps)."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Six Advantages of Cloud Computing (Trade capital expense for variable expense)",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html"
+    },
+    {
+      "label": "AWS Case Study — Netflix on AWS",
+      "url": "https://aws.amazon.com/solutions/case-studies/innovators/netflix/"
+    },
+    {
+      "label": "FinOps Foundation — What is FinOps?",
+      "url": "https://www.finops.org/introduction/what-is-finops/"
+    }
+  ]
+}

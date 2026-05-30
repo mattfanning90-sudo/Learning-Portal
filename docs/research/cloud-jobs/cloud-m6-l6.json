@@ -1,0 +1,125 @@
+{
+  "id": "cloud-m6-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 6,
+  "title": "Crawl, Walk, Run: Maturing a FinOps Practice",
+  "estMinutes": 9,
+  "coreIdea": "A `FinOps` practice grows in three stages — `Crawl`, `Walk`, `Run` — and the point isn't to sprint to `Run` everywhere, but to know honestly which stage each capability is at and to invest where the savings are real.",
+  "plainEnglish": [
+    "`FinOps` is the discipline of managing cloud spending as a team sport between finance, engineering, and product.",
+    "No company gets good at it overnight, so the FinOps Foundation describes maturity in three plain stages: `Crawl`, `Walk`, and `Run`.",
+    "`Crawl` is just starting — you can see roughly what you spend, but reporting is patchy and action is occasional.",
+    "`Walk` means the basics are routine — costs are tagged, dashboards are trusted, and teams act on them most of the time.",
+    "`Run` means cost is automated and built into daily decisions, with hard cases handled and savings measured."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of learning to manage household money. `Crawl` is the month you finally look at your bank statement and get the fright of seeing where it all went — you have visibility, but no system.",
+      "`Walk` is when you have a budget, you check it weekly, and most months you stick to it without much drama.",
+      "`Run` is when saving is automatic — direct debits into savings, alerts when a bill spikes, and you barely think about it because the system catches problems for you.",
+      "Where the metaphor bends: a household has one decision-maker, while FinOps maturity is measured per capability across many teams — you can be at `Run` on tagging and still `Crawl` on forecasting."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The three stages, and why they're per-capability",
+      "teaser": "you don't have one maturity level — you have many",
+      "body": [
+        "The FinOps Foundation defines maturity as `Crawl`, `Walk`, `Run` — a deliberately gentle ladder, not a pass/fail grade.",
+        "`Crawl` means a capability exists but is basic, manual, and reactive — you find out about a cost spike after the bill arrives.",
+        "`Walk` means it's a repeatable process more teams follow, with goals and some automation.",
+        "`Run` means it's automated, measured, and part of everyday decisions, with the difficult edge cases handled too.",
+        "Crucially, maturity is assessed per capability, not for the whole company — `tagging` might be at `Run` while `forecasting` is still `Crawl`."
+      ]
+    },
+    {
+      "title": "The principle: chase value, not a perfect score",
+      "teaser": "advancing a stage is only worth it if the savings beat the effort",
+      "body": [
+        "A common trap is treating `Run` as a trophy to win on every capability — that wastes effort on areas where the spend is tiny.",
+        "The FinOps principle is to mature a capability only when the value justifies the cost of doing so.",
+        "If a workload costs a few hundred dollars a month, hand-tuning it to `Run` is a poor use of an engineer's week.",
+        "If it costs millions, even a `Walk`-level improvement can pay for itself many times over.",
+        "So maturity is a means to an end — measurable savings and better decisions — not the end itself."
+      ]
+    },
+    {
+      "title": "What it looks like in practice: a worked walkthrough",
+      "teaser": "one team's journey from Crawl to Run on a single bill (illustrative numbers)",
+      "body": [
+        "Imagine a team running a web app on `AWS` that costs roughly $40,000 a month in this example — all figures here are illustrative, not live prices.",
+        "At `Crawl`, nobody tags resources, so the bill is one big undifferentiated number; the only review is a quarterly finance email asking 'why is this so high?'",
+        "At `Walk`, they enforce `tagging` (labels like `team:checkout` on each resource), stand up `AWS Cost Explorer` dashboards, and set a `AWS Budgets` alert at $45,000 — they spot about $6,000/month of idle test servers and switch on auto-shutdown.",
+        "At `Run`, `Compute Optimizer` recommendations and `Savings Plans` (a commitment to steady usage for a discount) are reviewed automatically, anomaly alerts fire within hours, and right-sizing is continuous — trimming a further ~$5,000/month.",
+        "Net effect in this example: from a $40k black box to roughly $29k with full visibility — about a 27% reduction, most of it captured at the `Walk` stage with cheap, basic hygiene."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "FinOps", "def": "The practice of managing cloud spending as a shared responsibility between finance, engineering, and product, so teams get the most value per dollar." },
+    { "term": "Crawl / Walk / Run", "def": "The FinOps Foundation's three maturity stages: basic and manual (Crawl), repeatable and routine (Walk), and automated and continuous (Run)." },
+    { "term": "Capability", "def": "A specific FinOps activity that is assessed for maturity on its own — for example forecasting, tagging, or anomaly detection — rather than rating the whole company at once." },
+    { "term": "Tagging", "def": "Attaching labels (like team or environment) to cloud resources so costs can be sorted by who owns them and what they're for." },
+    { "term": "Savings Plans", "def": "An AWS pricing option where you commit to a steady amount of usage for one or three years in exchange for a lower rate than on-demand." },
+    { "term": "Anomaly detection", "def": "Automated monitoring that flags an unusual jump in spend quickly, so you catch a runaway cost in hours rather than at the end of the month." }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you own the trade-off between effort spent maturing a capability and the savings it returns — so push the team to mature where the spend is large, not where the score is low.",
+      "Frame the question as 'who pays and how much do we save?': a `Walk`-level fix on a million-dollar workload beats a `Run`-level fix on a trivial one.",
+      "Your job is to keep FinOps anchored to business value, so the practice never becomes box-ticking that consumes more engineering time than the cloud bill it's trying to shrink."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify's centralized FinOps team",
+    "body": [
+      "Spotify, a member of the FinOps Foundation, built a dedicated cloud cost team and shared its approach in FinOps Foundation case material.",
+      "Rather than chase a perfect score everywhere, they built shared tooling and dashboards so individual engineering teams could see and own their own costs.",
+      "That move — from a central finance view to per-team visibility and accountability — is exactly the `Crawl`-to-`Walk` shift, embedding cost awareness into the teams that actually create the spend.",
+      "The lesson others cite is that culture and visibility, not a single clever tool, are what move a practice up the ladder."
+    ],
+    "bridge": "Spotify advanced by giving teams visibility and ownership first — proof that maturity is about routine and culture, not racing every capability to Run."
+  },
+  "takeaways": [
+    "FinOps maturity has three stages — Crawl (basic/manual), Walk (repeatable), Run (automated and measured).",
+    "Maturity is assessed per capability, so you can be at Run on tagging and Crawl on forecasting at the same time.",
+    "Advance a capability only when the savings justify the effort — value, not a perfect score, is the goal.",
+    "Most easy wins come early: basic tagging, dashboards, and budget alerts at the Walk stage capture much of the savings cheaply."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In the FinOps maturity model, what does the 'Run' stage describe?",
+      "options": [
+        { "text": "Cost management that is automated, measured, and part of everyday decisions, with hard cases handled", "correct": true },
+        { "text": "The very first time a team looks at its cloud bill", "correct": false },
+        { "text": "A stage every capability must reach for the practice to count as mature", "correct": false }
+      ],
+      "feedback": "Run is the most advanced stage — automated, measured, continuous — but it's not a target for every capability; you advance only where the value justifies it."
+    },
+    {
+      "q": "A workload costs about $300 a month. The team wants to spend a week hand-tuning it to reach 'Run' maturity. What's the FinOps-minded response?",
+      "options": [
+        { "text": "Go ahead — every capability should reach Run", "correct": false },
+        { "text": "Skip it — the effort almost certainly outweighs the tiny possible savings", "correct": true },
+        { "text": "Fine-tune the pricing model instead before doing anything else", "correct": false }
+      ],
+      "feedback": "FinOps says to mature a capability only when the value justifies the cost; spending a week to shave a $300 bill fails that test."
+    },
+    {
+      "q": "Why is FinOps maturity assessed per capability rather than as one company-wide grade?",
+      "options": [
+        { "text": "Because the cloud provider sets the grade for you", "correct": false },
+        { "text": "Because a team can be advanced at one activity (like tagging) while still basic at another (like forecasting)", "correct": true },
+        { "text": "Because only finance is allowed to measure maturity", "correct": false }
+      ],
+      "feedback": "Different capabilities mature at different speeds, so a single overall label would hide where the real gaps and opportunities are."
+    }
+  ],
+  "sources": [
+    { "label": "FinOps Foundation — FinOps Maturity Model (Crawl, Walk, Run)", "url": "https://www.finops.org/framework/maturity-model/" },
+    { "label": "FinOps Foundation — Principles", "url": "https://www.finops.org/framework/principles/" },
+    { "label": "AWS Well-Architected Framework — Cost Optimization Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html" }
+  ]
+}

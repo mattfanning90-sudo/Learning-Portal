@@ -1,0 +1,141 @@
+{
+  "id": "cloud-m2-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m2",
+  "order": 3,
+  "title": "Least Privilege & Blast Radius: the Two Ideas Behind Safe Access",
+  "estMinutes": 9,
+  "coreIdea": "Two ideas shape almost every cloud permission decision: give each identity the least access it needs (`least privilege`), and design so that if something is compromised, the damage stays small (a contained `blast radius`).",
+  "plainEnglish": [
+    "Every action in the cloud is allowed or denied by a permission.",
+    "Two simple ideas decide how those permissions should be set.",
+    "Least privilege means giving each person, app, or service only the access it genuinely needs — and nothing more.",
+    "Blast radius means assuming something will eventually be broken into, and limiting how far that one break-in can spread.",
+    "Least privilege is the cause; a small blast radius is the effect. Tight permissions are what keep one mistake from becoming a disaster."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a submarine. It is split into watertight compartments with sealed doors between them.",
+      "If one compartment floods, the crew seals the doors and the rest of the vessel stays dry. The leak is real, but its blast radius is one room, not the whole ship.",
+      "Least privilege is the rule that decides where those doors go: each crew member can only open the few hatches their job requires, so a single lost key can't swing every door at once.",
+      "Where the metaphor bends: in the cloud you can add, move, and re-check those doors constantly, which a real submarine can't."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Least privilege: start from zero, then add only what's needed",
+      "teaser": "default to 'no', grant the exact 'yes'",
+      "body": [
+        "Least privilege means every identity starts with no access, and you grant only the specific actions it needs to do its job.",
+        "An identity is anything that acts in the cloud — a person, an application, or a background service.",
+        "The opposite is the lazy default: hand out broad 'admin' access so nothing is ever blocked. It feels faster, but it makes every identity a master key.",
+        "On AWS the rules are written as a `policy` — a short document that lists which actions are allowed on which resources. You attach policies to identities through `IAM`, the Identity and Access Management service."
+      ]
+    },
+    {
+      "title": "Blast radius: assume a breach, then contain it",
+      "teaser": "the question isn't 'if', it's 'how far'",
+      "body": [
+        "Blast radius is the amount of damage a single failure or break-in can cause before it's stopped.",
+        "Good cloud design assumes that some credential will eventually leak or some component will be compromised. The goal is to make sure that one event can't reach everything.",
+        "You shrink the blast radius by carving systems into separate compartments — for example, separate AWS `accounts` for the test and live versions of a product, so a problem in one can't touch the other.",
+        "Least privilege and blast radius are two views of the same move: every permission you don't grant is a door an attacker can't walk through."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a small team scopes one app's access to one folder",
+      "body": [
+        "Say a team runs a photo app. Its image-resizing service needs to read and write files in one `S3` bucket — AWS's file-storage service — and do nothing else.",
+        "Least privilege version: an IAM `role` (a set of permissions, not a person) that allows only read and write on that single bucket, using short-lived credentials that expire automatically.",
+        "Lazy version: that same service gets blanket admin access. If its credential leaks, the attacker can read every bucket, spin up servers, and delete backups.",
+        "The cost of doing it right is mostly people-time, not dollars: IAM roles and policies are free to use on AWS. The cost of doing it wrong is the blast radius — illustrative cleanup from a single over-permissioned breach has run into the millions in fines and recovery for real companies, versus roughly $0 of extra software to scope the role tightly."
+      ]
+    },
+    {
+      "title": "How permissions are kept honest over time",
+      "teaser": "access granted on Monday is a risk by Friday if no one checks",
+      "body": [
+        "Permissions tend to pile up. People change roles, projects end, and old access is rarely removed — a slow drift called 'permission creep'.",
+        "AWS offers tools to fight this. `IAM Access Analyzer` flags access that is broader than what's actually being used, and access can be reviewed and trimmed on a schedule.",
+        "A `guardrail` is a rule set high up that can't be overridden lower down — for example, a company-wide block on making any storage bucket public.",
+        "The discipline is ongoing: least privilege isn't a one-time setup, it's a habit of granting narrowly and removing access the moment it's no longer needed."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Least privilege", "def": "The rule of giving every identity only the access it genuinely needs to do its job, and nothing more. You start from zero and add specific permissions." },
+    { "term": "Blast radius", "def": "How much damage a single failure or break-in can cause before it's contained. A small blast radius means one problem can't spread to everything." },
+    { "term": "Identity", "def": "Anything that acts in the cloud and can be granted permissions — a person, an application, or a background service." },
+    { "term": "Policy", "def": "On AWS, a short document that lists which actions are allowed (or denied) on which resources. You attach it to an identity to control what it can do." },
+    { "term": "IAM role", "def": "A reusable set of permissions that an application or service can take on, instead of a permanent password. It usually hands out short-lived credentials that expire." },
+    { "term": "Guardrail", "def": "A high-level rule that can't be overridden by lower-level settings — for example, a company-wide block on making any storage public." }
+  ],
+  "pmAngle": {
+    "body": [
+      "The trade-off a product leader owns here is speed versus blast radius. Broad permissions ship a feature faster today and create your worst incident tomorrow; narrow permissions cost a little setup time now and cap the size of any future failure.",
+      "This is cheap to configure and expensive to get wrong: IAM is free, so the real spend is engineering time and the discipline to keep access trimmed. Name an owner — usually a security or platform team — and make 'least privilege by default' a stated requirement, not a cleanup task.",
+      "When you weigh a new vendor or integration, ask one question: what is the blast radius if this is compromised? That frames the risk in terms any executive understands."
+    ]
+  },
+  "caseStudy": {
+    "title": "Capital One's 2019 breach: one over-permissioned identity, a huge blast radius",
+    "body": [
+      "In 2019, Capital One disclosed a breach affecting roughly 100 million people in the US and Canada. No wall was smashed.",
+      "A misconfigured component was tricked into using its own cloud permissions, and those permissions were far broader than its job required.",
+      "Because that one identity could reach so much, the blast radius was enormous: it read sensitive customer data stored in `S3`. A US regulator later fined Capital One $80 million over the incident.",
+      "Tight least-privilege scoping on that single identity would have contained the damage to almost nothing, even after the initial mistake."
+    ],
+    "bridge": "One identity with too much access is exactly how a small mistake becomes a 100-million-person breach — which is why least privilege and a small blast radius drive every permission decision."
+  },
+  "takeaways": [
+    "Least privilege means starting from zero access and granting only the exact permissions a job needs.",
+    "Blast radius is how far one break-in can spread; good design assumes a breach and contains it.",
+    "Tight permissions are the cause; a small blast radius is the effect — the two ideas are one move seen from two sides.",
+    "On AWS, IAM is free to use; the real cost is the discipline to grant narrowly and trim access over time."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does 'least privilege' mean?",
+      "options": [
+        { "text": "Give each identity only the access it genuinely needs, starting from zero and adding the specific permissions required.", "correct": true },
+        { "text": "Give every identity broad admin access so nothing is ever blocked.", "correct": false },
+        { "text": "Remove all permissions so no one can do anything.", "correct": false }
+      ],
+      "feedback": "Least privilege starts from no access and grants only what a job requires. Broad admin access is the opposite — it turns every identity into a master key."
+    },
+    {
+      "q": "What is a 'blast radius' in cloud security?",
+      "options": [
+        { "text": "How much damage a single failure or break-in can cause before it's contained.", "correct": true },
+        { "text": "The physical distance between two AWS data centres.", "correct": false },
+        { "text": "The number of users allowed to log in at once.", "correct": false }
+      ],
+      "feedback": "Blast radius is about containment: if something is compromised, how far can it spread? A small blast radius means one problem can't reach everything."
+    },
+    {
+      "q": "A service only needs to read and write one S3 bucket, but it's given blanket admin access instead. Why is that risky?",
+      "options": [
+        { "text": "If its credential leaks, the attacker inherits all that access, so the blast radius is the whole account, not one bucket.", "correct": true },
+        { "text": "Admin access makes the service run more slowly.", "correct": false },
+        { "text": "AWS charges extra per permission granted to a role.", "correct": false }
+      ],
+      "feedback": "Over-broad access means a single leaked credential can reach everything. Scoping the role to just that one bucket keeps the blast radius tiny."
+    },
+    {
+      "q": "In the 2019 Capital One breach, what made the damage so large?",
+      "options": [
+        { "text": "A single identity had far broader permissions than it needed, so a compromise could reach huge amounts of data.", "correct": true },
+        { "text": "AWS lost the customer data from its own data centres.", "correct": false },
+        { "text": "The company had switched off all of its firewalls.", "correct": false }
+      ],
+      "feedback": "The break-in itself was contained at first, but the over-permissioned identity gave it a wide blast radius. Tight least-privilege scoping would have limited the damage."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — IAM best practices: apply least-privilege permissions", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html" },
+    { "label": "AWS Well-Architected Framework — Security Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" },
+    { "label": "U.S. OCC — $80M civil penalty over Capital One 2019 incident", "url": "https://www.occ.gov/news-issuances/news-releases/2020/nr-occ-2020-101.html" }
+  ]
+}

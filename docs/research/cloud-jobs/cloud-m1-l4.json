@@ -1,0 +1,141 @@
+{
+  "id": "cloud-m1-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 4,
+  "title": "Buy for Peak No More: Elasticity, Scaling & Pay-for-What-You-Use",
+  "estMinutes": 9,
+  "coreIdea": "In the cloud you rent computing power that grows and shrinks with demand, so you stop buying enough hardware for your busiest hour and instead pay only for what you actually use.",
+  "plainEnglish": [
+    "For decades, companies bought their own computers and had to guess how busy they would ever get.",
+    "To be safe, they bought enough hardware for their busiest possible moment — the `peak`.",
+    "That hardware then sat mostly idle the rest of the time, like a stadium built for one sold-out night a year.",
+    "The cloud changes this: you can add computing power in minutes when demand rises, and switch it off when demand falls.",
+    "Because you only pay while the power is running, you no longer have to size and buy your hardware for the peak."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Old way: you buy a fleet of delivery vans big enough for your busiest day of the year, then watch most of them sit in the car park for the other 364 days.",
+      "Cloud way: you rent vans by the hour from a depot with thousands of them, calling for more the instant a rush starts and returning them the moment it ends.",
+      "The metaphor bends slightly: cloud capacity is so vast it feels effectively unlimited, and you can summon it in minutes rather than driving to a depot.",
+      "The trade-off is also real — rented vans cost more per hour than ones you own outright, so the saving comes from never paying for idle ones."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Scaling up versus scaling out",
+      "teaser": "a bigger machine, or simply more machines",
+      "body": [
+        "`Vertical scaling` (scaling up) means giving one machine more power — more memory or faster processors — like upgrading a laptop.",
+        "`Horizontal scaling` (scaling out) means adding more machines that share the load — like opening extra checkout lanes in a supermarket.",
+        "Vertical scaling is simple but hits a ceiling: there is only so big one machine can get, and you usually must turn it off to upgrade it.",
+        "Horizontal scaling is the cloud's preferred move, because you can keep adding ordinary machines and remove them just as easily."
+      ]
+    },
+    {
+      "title": "Elasticity and auto-scaling",
+      "teaser": "the system right-sizes itself while you sleep",
+      "body": [
+        "`Elasticity` is the ability to add and remove capacity automatically as real demand rises and falls.",
+        "`Auto-scaling` is the feature that does this for you: you set rules, and the system adds machines when it gets busy and removes them when it goes quiet.",
+        "On AWS, `Amazon EC2 Auto Scaling` watches a signal like processor load and launches or shuts down virtual machines to match it.",
+        "The goal is to always have just enough — not the wasteful surplus of the old peak-buying world, and not so little that the service slows down."
+      ]
+    },
+    {
+      "title": "What it looks like in practice and what it costs",
+      "teaser": "a Friday-night sale, costed two ways (illustrative figures)",
+      "body": [
+        "Imagine an online shop that needs 2 servers most of the time but 20 servers for a 3-hour Friday-night sale.",
+        "Old way: buy 20 servers outright. Say each costs about $5,000, so roughly $100,000 up front — and 18 of them sit idle nearly all week.",
+        "Cloud way: rent a virtual server for, say, about $0.10 per hour. Run 2 servers all month (2 × 730 hours × $0.10 ≈ $146) and auto-scale to 20 only for the 3-hour sale (18 extra × 3 hours × $0.10 ≈ $5).",
+        "In this example the cloud bill is roughly $151 for the month, versus a $100,000 hardware purchase you would still be paying off years later.",
+        "These numbers are illustrative, not live prices — but the shape is real: you pay for the busy 3 hours, not for owning peak capacity forever."
+      ]
+    },
+    {
+      "title": "The risk: elastic costs cut both ways",
+      "teaser": "the same dial that saves money can spend it fast",
+      "body": [
+        "Because capacity scales up automatically, your bill scales up automatically too.",
+        "A traffic spike, a runaway program, or a bad auto-scaling rule can quietly launch dozens of machines and run up real money.",
+        "This is why `FinOps` exists — a practice that brings finance, engineering and product together to watch and control cloud spend.",
+        "Elasticity is a powerful tool, but someone has to own the guardrails: spending limits, alerts, and sensible scaling rules."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Elasticity", "def": "The cloud's ability to automatically add capacity when demand rises and remove it when demand falls, so you closely match what you actually need." },
+    { "term": "Auto-scaling", "def": "A feature that adds or removes machines for you based on rules you set, such as a target processor load — no human has to press a button." },
+    { "term": "Vertical scaling (scaling up)", "def": "Making one machine more powerful by giving it more memory or faster processors. Simple, but it eventually hits a hard ceiling." },
+    { "term": "Horizontal scaling (scaling out)", "def": "Adding more machines that share the workload, rather than enlarging a single one. The cloud's preferred way to grow." },
+    { "term": "Provisioning for peak", "def": "The old habit of buying enough hardware to handle your busiest possible moment, leaving most of it idle the rest of the time." },
+    { "term": "FinOps", "def": "A practice that brings finance, engineering and product together to monitor and control cloud spending, so elastic costs do not run away." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Elasticity turns a big up-front hardware purchase (capital cost) into a flexible monthly bill (operating cost) that moves with usage — which finance teams and product roadmaps love.",
+      "But that flexibility hands you a new ownership job: someone must set the scaling rules and spending guardrails, or a quiet spike becomes a loud invoice.",
+      "The trade-off you own is speed-and-comfort versus cost: more headroom keeps the service fast under surprise load, but every idle machine is money you chose to spend."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix scales for the evening rush",
+    "body": [
+      "Netflix runs its streaming service on AWS and faces a hugely uneven day: traffic surges every evening as people sit down to watch, then falls overnight.",
+      "Rather than owning enough servers for the peak evening hour, Netflix uses auto-scaling to add capacity as demand climbs and shed it when viewers log off.",
+      "Netflix has publicly described using AWS Auto Scaling to handle these predictable daily swings without manually provisioning for the worst case."
+    ],
+    "bridge": "Netflix proves the core idea at massive scale: match capacity to real demand, hour by hour, instead of buying for the peak and paying for idle the rest of the time."
+  },
+  "takeaways": [
+    "The cloud lets you rent capacity that grows and shrinks, so you stop buying hardware for your busiest hour.",
+    "Vertical scaling means a bigger machine; horizontal scaling means more machines — the cloud favours the latter.",
+    "Elasticity plus auto-scaling means the system right-sizes itself automatically against real demand.",
+    "Elastic cost cuts both ways, so guardrails and FinOps ownership matter as much as the technology."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why did companies running their own data centres traditionally buy hardware sized for peak demand?",
+      "options": [
+        { "text": "Adding more hardware later took weeks or months, so they had to be ready for the busiest moment in advance", "correct": true },
+        { "text": "Idle hardware was cheaper to run than busy hardware", "correct": false },
+        { "text": "Regulators required them to keep spare servers at all times", "correct": false }
+      ],
+      "feedback": "Buying and installing hardware was slow, so you had to provision for the peak up front — leaving most of it idle the rest of the time."
+    },
+    {
+      "q": "What is the difference between vertical and horizontal scaling?",
+      "options": [
+        { "text": "Vertical scaling makes one machine more powerful; horizontal scaling adds more machines to share the load", "correct": true },
+        { "text": "Vertical scaling adds more machines; horizontal scaling makes one machine more powerful", "correct": false },
+        { "text": "They are two names for the exact same thing", "correct": false }
+      ],
+      "feedback": "Vertical (up) means a bigger single machine; horizontal (out) means more machines working together — the cloud's preferred way to grow."
+    },
+    {
+      "q": "What does elasticity, paired with auto-scaling, let a cloud system do?",
+      "options": [
+        { "text": "Automatically add capacity when demand rises and remove it when demand falls", "correct": true },
+        { "text": "Guarantee the monthly bill never changes", "correct": false },
+        { "text": "Eliminate the need to ever monitor spending", "correct": false }
+      ],
+      "feedback": "Elasticity plus auto-scaling matches capacity to real demand automatically — which also means the bill moves with usage, so spend still needs watching."
+    },
+    {
+      "q": "Why does FinOps matter once a system can scale automatically?",
+      "options": [
+        { "text": "Because capacity scaling up automatically means costs scale up automatically too, so spend needs guardrails and ownership", "correct": true },
+        { "text": "Because auto-scaling makes cloud services impossible to slow down", "correct": false },
+        { "text": "Because FinOps replaces the need for any engineers", "correct": false }
+      ],
+      "feedback": "The same dial that saves money by scaling down can spend it fast by scaling up, so FinOps puts finance, engineering and product on the guardrails."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — What is Auto Scaling?", "url": "https://aws.amazon.com/autoscaling/" },
+    { "label": "AWS Well-Architected Framework — Cost Optimization Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html" },
+    { "label": "FinOps Foundation — What is FinOps?", "url": "https://www.finops.org/introduction/what-is-finops/" }
+  ]
+}

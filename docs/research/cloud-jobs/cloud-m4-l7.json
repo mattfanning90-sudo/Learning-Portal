@@ -1,0 +1,135 @@
+{
+  "id": "cloud-m4-l7",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 7,
+  "title": "Watching It Run: CloudWatch Metrics, Logs & Alarms",
+  "estMinutes": 9,
+  "coreIdea": "`CloudWatch` is the dashboard for everything you run on AWS — it collects metrics, logs, and alarms so you can see how the system is behaving and get told the moment something breaks, because you cannot manage what you cannot see.",
+  "plainEnglish": [
+    "When you run software on AWS, you need a way to know if it's healthy.",
+    "`CloudWatch` is the built-in tool AWS gives you for exactly that.",
+    "It gathers three kinds of signal: metrics (numbers over time), logs (the text records your app writes), and alarms (rules that shout when a number crosses a line).",
+    "You arrange those signals on a dashboard so a human can glance and understand.",
+    "The whole point is simple: a system you can't see is a system you can't fix or control."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the instrument panel and dashcam in a car.",
+      "The gauges show live numbers — speed, fuel, engine temperature — that's `CloudWatch` metrics.",
+      "The dashcam keeps a running recording you can rewind to see exactly what happened — that's `CloudWatch` logs.",
+      "And the dashboard warning light that flashes when oil runs low is the alarm. Where the metaphor bends: a car shows you one vehicle, while `CloudWatch` watches thousands of moving parts at once."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Metrics, logs, and alarms — three different signals",
+      "teaser": "numbers, words, and a tripwire",
+      "body": [
+        "A metric is a number measured over time, like `CPUUtilization` at 80% or requests per second.",
+        "Metrics are great for trends and live gauges — they answer 'how busy, how fast, how full?'",
+        "A log is a line of text your application writes, like 'user 42 payment failed: card declined'.",
+        "Logs answer 'what exactly happened, and why?' — you read them when a metric looks wrong.",
+        "An alarm watches one metric and changes state when it crosses a threshold you set — then it can email you, page an on-call engineer, or trigger an automatic action."
+      ]
+    },
+    {
+      "title": "Dashboards and the difference between monitoring and observability",
+      "teaser": "knowing it broke vs knowing why",
+      "body": [
+        "A dashboard is a single screen that pins your most important metrics and logs side by side.",
+        "It turns scattered signals into one view a human can read in seconds.",
+        "Monitoring means watching for problems you already know to expect — 'is CPU too high?'",
+        "Observability is the broader goal: collecting enough signal that you can answer questions you didn't think to ask in advance, like 'why are only Australian users seeing errors?'",
+        "Good dashboards plus searchable logs are what let a team move from 'something is wrong' to 'here is the cause' fast."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a small web app, illustrative numbers",
+      "body": [
+        "Imagine a small web app running on a few servers, plus a database, all on AWS.",
+        "`CloudWatch` automatically collects basic metrics like CPU and network for free, sampled every 5 minutes.",
+        "You turn on detailed 1-minute metrics and ship your app logs — say roughly 10 GB of logs a month — which might cost about $15 a month in this example.",
+        "You set one alarm: if error rate stays above 2% for 5 minutes, page the on-call engineer; a handful of alarms costs only a few dollars a month here.",
+        "The trap is logging everything at full volume: a chatty app dumping hundreds of GB of logs can quietly run to hundreds of dollars a month, so teams set retention limits and filter noise.",
+        "Net: basic visibility is cheap, but observability has a real, usage-based bill you must design for, not ignore."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "CloudWatch", "def": "AWS's built-in monitoring service that collects metrics, logs, and alarms from your AWS resources and apps, and shows them on dashboards." },
+    { "term": "Metric", "def": "A number measured over time — like CPU usage or requests per second — used to see trends and current health." },
+    { "term": "Log", "def": "A line of text an application or service writes to record what happened, which you read to understand the detail behind a problem." },
+    { "term": "Alarm", "def": "A rule that watches one metric and changes state when it crosses a threshold you set, so it can notify a person or trigger an action." },
+    { "term": "Dashboard", "def": "A single customisable screen that pins your most important metrics and logs together so a human can read system health at a glance." },
+    { "term": "Observability", "def": "Collecting enough signal (metrics, logs, traces) that you can answer questions about your system you didn't anticipate — not just the ones you pre-planned for." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Observability is a cost line and an ownership decision, not a free default — every metric, log line, and alarm you keep is billed by volume and retention.",
+      "As the product leader you own the trade-off between visibility and spend: too little and an outage hides for hours; too much and the monitoring bill balloons, sometimes rivalling the cost of the thing being monitored.",
+      "Your sharpest move is to decide which few signals actually matter to the customer experience, alarm on those, and set sane retention on the rest — so the team sees what counts without paying to hoard noise."
+    ]
+  },
+  "caseStudy": {
+    "title": "AWS's own 2017 S3 outage and the dashboard that couldn't load",
+    "body": [
+      "On 28 February 2017, a typo in a command during routine maintenance took a large chunk of Amazon S3 storage offline in the US-EAST-1 region for about four hours.",
+      "The failure rippled across the internet, knocking over sites and apps that depended on S3.",
+      "In a painful twist, AWS's own Service Health Dashboard — the page customers check for status — partly relied on S3, so for a while it couldn't show red even though things were broken.",
+      "AWS's public post-mortem credited its internal metrics with pinpointing the root cause quickly, and it changed how it surfaced status so the dashboard wouldn't depend on the thing it was reporting on."
+    ],
+    "bridge": "Even AWS learned the hard way that you cannot manage what you cannot see — and that your monitoring must not fall over with the system it watches."
+  },
+  "takeaways": [
+    "`CloudWatch` gathers three signals: metrics (numbers), logs (text records), and alarms (threshold rules) — shown on dashboards.",
+    "Metrics tell you something is wrong; logs tell you why; alarms tell you the moment it happens.",
+    "Observability has a real, usage-based cost — design what to keep and for how long, rather than logging everything forever.",
+    "You cannot manage what you cannot see: visibility is the foundation under reliability and cost control."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In CloudWatch, what is the difference between a metric and a log?",
+      "options": [
+        { "text": "A metric is a number measured over time; a log is a line of text recording what happened", "correct": true },
+        { "text": "A metric is text and a log is a number — they're just two names for the same thing", "correct": false },
+        { "text": "A metric is for security and a log is only for billing", "correct": false }
+      ],
+      "feedback": "Metrics are numeric signals you trend and gauge (like CPU%); logs are the text records you read to understand the detail behind a problem."
+    },
+    {
+      "q": "What does a CloudWatch alarm actually do?",
+      "options": [
+        { "text": "It changes state when a metric crosses a threshold you set, and can then notify a person or trigger an action", "correct": true },
+        { "text": "It permanently shuts down your application whenever any error occurs", "correct": false },
+        { "text": "It stores all of your application's text logs for free forever", "correct": false }
+      ],
+      "feedback": "An alarm watches one metric against a threshold and changes state when crossed, letting it page an engineer or trigger an automatic response."
+    },
+    {
+      "q": "Why isn't full observability simply 'free' once you turn CloudWatch on?",
+      "options": [
+        { "text": "Detailed metrics, log storage, and high log volume are billed by usage and retention, so heavy logging can cost real money", "correct": true },
+        { "text": "AWS charges a fixed flat fee that never changes regardless of how much you log", "correct": false },
+        { "text": "Observability is illegal to use in production without a special license", "correct": false }
+      ],
+      "feedback": "Basic metrics are cheap, but detailed metrics and large log volumes are usage-priced — a chatty app can run up a surprising bill, so you set retention and filter noise."
+    },
+    {
+      "q": "What's the core reason 'you cannot manage what you cannot see' matters here?",
+      "options": [
+        { "text": "Without visibility into metrics and logs, you can't detect, diagnose, or control how the system behaves", "correct": true },
+        { "text": "AWS requires a dashboard before it will let you create any servers", "correct": false },
+        { "text": "Dashboards make applications run faster by adding more CPU", "correct": false }
+      ],
+      "feedback": "Visibility is the foundation: if you can't see the signals, you can't catch problems, find their cause, or keep cost and reliability under control."
+    }
+  ],
+  "sources": [
+    { "label": "Amazon CloudWatch — official AWS documentation", "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html" },
+    { "label": "AWS: Summary of the Amazon S3 Service Disruption (Feb 28, 2017)", "url": "https://aws.amazon.com/message/41926/" },
+    { "label": "AWS Well-Architected Framework — Operational Excellence Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/welcome.html" }
+  ]
+}

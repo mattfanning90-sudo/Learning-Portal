@@ -1,0 +1,146 @@
+{
+  "id": "cloud-m1-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 3,
+  "title": "Pizza as a Service: IaaS, PaaS & SaaS Made Obvious",
+  "estMinutes": 9,
+  "coreIdea": "Cloud comes in three heights — `IaaS`, `PaaS`, and `SaaS` — and the only thing that really changes between them is how much the provider manages for you versus how much you manage yourself.",
+  "plainEnglish": [
+    "When people say 'the cloud,' they don't mean one thing. They mean a stack of choices about who does the work.",
+    "Some clouds hand you bare building blocks and let you assemble everything. Others hand you a finished product you just log into.",
+    "We label the three common heights `IaaS`, `PaaS`, and `SaaS`. The 'aaS' part just means 'as a Service' — you rent it instead of owning it.",
+    "The higher you climb, the less you manage and the more the provider manages for you. That trade — control versus convenience — is the whole story.",
+    "Once you can place any product on this ladder, half the jargon engineers and vendors throw around suddenly has a home."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine you want pizza for dinner. You have four ways to get it, each handing more of the work to someone else.",
+      "Cook it from scratch at home (that's running your own data centre — the cloud isn't even involved). Buy a frozen pizza and bake it yourself: the shop made the dough and toppings, you supply the oven, electricity, and kitchen — that's `IaaS`. Order delivery: they cook it, you just supply the table, drinks, and dining room — that's `PaaS`. Go out to a restaurant: they handle everything, you only choose and eat — that's `SaaS`.",
+      "Notice what never changes: you always end up with pizza. What changes is how much of the kitchen is yours to manage. The metaphor bends in one place — real cloud bills you by the minute and lets you switch 'restaurants' fast, which no pizza shop allows."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The stack, from the ground up",
+      "teaser": "the same layers, just drawn at three heights",
+      "body": [
+        "Every running app sits on a stack of layers. At the bottom is the physical hardware and the network. Above that sits the `operating system` (the base software, like Windows or Linux, that lets programs run). Above that is the `runtime` and middleware (the plumbing your code needs to execute). Then comes your actual application, and finally the data inside it.",
+        "`IaaS` (Infrastructure as a Service) rents you the bottom: virtual machines, storage, and networking. You still install and patch the operating system and everything above it. `AWS` calls its core IaaS compute `EC2` (Elastic Compute Cloud) and its core storage `S3` (Simple Storage Service).",
+        "`PaaS` (Platform as a Service) rents you a ready-made platform: you upload your code and the provider runs the servers, the operating system, and the plumbing for you. `AWS Elastic Beanstalk` and Heroku are classic examples.",
+        "`SaaS` (Software as a Service) is the finished product you just use in a browser. Gmail, Salesforce, and Dropbox are SaaS — you manage nothing but your own data and settings."
+      ]
+    },
+    {
+      "title": "Who patches the server at 2am?",
+      "teaser": "the boring question that decides everything",
+      "body": [
+        "The cleanest way to tell the models apart is to ask: when a security update needs installing, whose pager goes off?",
+        "With `IaaS`, it's your team — you chose the operating system, so you patch it. With `PaaS`, the provider patches the platform underneath; you only worry about your own code. With `SaaS`, you don't even know a patch happened; the vendor does it silently.",
+        "This is the idea AWS formalises as the `shared responsibility model`: the provider secures the cloud itself, and you secure what you put in it. The higher up the stack you buy, the smaller your half of that responsibility becomes."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "one app, three bills (illustrative numbers)",
+      "body": [
+        "Say a small team runs a web app used by a few thousand people. These figures are illustrative only — real prices vary by region, usage, and discounts.",
+        "On `IaaS`, they rent a couple of `EC2` virtual machines and some `S3` storage. The infrastructure bill might be roughly $300 a month, but they also pay an engineer to patch servers and respond to outages — call it a day or two of work each month, hidden in salary.",
+        "On `PaaS`, they push the same code to `Elastic Beanstalk`. The bill might rise to roughly $450 a month because the platform convenience carries a premium, but the engineer's babysitting time drops to near zero. They traded dollars for hours.",
+        "On `SaaS`, they don't build the app at all — they pay for a finished tool like Salesforce at, say, roughly $25–$150 per user per month. With 20 users that is a predictable subscription, and zero servers to think about. The lesson: the sticker price is never the whole cost — the staff time you save (or spend) is part of the real bill."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "IaaS (Infrastructure as a Service)",
+      "def": "Renting raw computing building blocks — virtual machines, storage, networking — and managing the operating system and everything above it yourself. Most control, most work."
+    },
+    {
+      "term": "PaaS (Platform as a Service)",
+      "def": "Renting a ready-made platform where you upload your code and the provider runs the servers and base software for you. You manage your app and data; they manage the rest."
+    },
+    {
+      "term": "SaaS (Software as a Service)",
+      "def": "Using a finished software product over the internet, usually in a browser, for a subscription. You manage only your own data and settings; the vendor runs everything else."
+    },
+    {
+      "term": "operating system",
+      "def": "The base software (like Windows or Linux) that sits on a computer and lets other programs run. In IaaS you maintain it; in PaaS and SaaS the provider does."
+    },
+    {
+      "term": "shared responsibility model",
+      "def": "AWS's framing of security as a split: the provider secures the cloud infrastructure itself, and the customer secures what they put into it. Your share shrinks as you move up from IaaS to SaaS."
+    },
+    {
+      "term": "managed service",
+      "def": "Any cloud offering where the provider handles the operational chores — patching, scaling, backups — so you don't. PaaS and SaaS are heavily managed; raw IaaS is not."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "This ladder is really a build-versus-buy decision in disguise, and you own it. Climbing higher (toward SaaS) trades money and control for speed and fewer staff to hire; staying low (IaaS) trades cash and headcount for flexibility and lock-in avoidance.",
+      "Watch who actually pays. A cheaper IaaS sticker price can hide an expensive on-call engineer, while a pricey SaaS subscription can be the bargain once you count the salaries you didn't spend.",
+      "The trade-off a product leader explicitly owns: how much undifferentiated plumbing is your team really willing to operate, versus rent, so they can spend their scarce time on the thing that makes your product special?"
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix moves up the stack onto AWS",
+    "body": [
+      "After a database failure halted DVD shipments in 2008, Netflix decided to stop running its own data centres and migrate entirely onto Amazon Web Services, finishing the move in 2016.",
+      "Crucially, Netflix didn't just rent bare virtual machines and stop there. It leaned heavily on higher, managed AWS services — storage, databases, and streaming infrastructure — so its engineers could focus on recommendations and streaming quality rather than patching servers.",
+      "Today Netflix streams to hundreds of millions of subscribers worldwide without owning the underlying hardware, an outcome it has repeatedly credited to building on AWS rather than running its own infrastructure."
+    ],
+    "bridge": "Netflix's choice is this lesson in action: it climbed the ladder toward managed services precisely to hand off the plumbing it didn't want to manage."
+  },
+  "takeaways": [
+    "IaaS, PaaS, and SaaS are the same stack at three heights — the only real difference is how much you manage versus the provider.",
+    "The higher you go, the less control and operational work you have, and usually the higher the per-unit price.",
+    "Ask 'whose pager goes off when a patch is due?' to instantly place any product on the ladder.",
+    "The sticker price is never the full cost — staff time saved or spent is part of the real bill you own."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In the pizza metaphor, which option matches PaaS (Platform as a Service)?",
+      "options": [
+        { "text": "Ordering pizza delivery — they cook it, you supply the table and drinks", "correct": true },
+        { "text": "Baking a frozen pizza yourself using your own oven and kitchen", "correct": false },
+        { "text": "Eating at a full-service restaurant where they handle everything", "correct": false }
+      ],
+      "feedback": "Delivery is PaaS: the provider runs the cooking (servers and base software) while you supply only the surrounding bits (your app and data). The frozen pizza is IaaS and the restaurant is SaaS."
+    },
+    {
+      "q": "Under the AWS shared responsibility model, who installs security patches on the operating system when you use raw IaaS like EC2?",
+      "options": [
+        { "text": "You, the customer — because you chose and run the operating system", "correct": true },
+        { "text": "AWS, automatically and silently, on every customer's behalf", "correct": false },
+        { "text": "Nobody — IaaS virtual machines never need patching", "correct": false }
+      ],
+      "feedback": "With IaaS you manage the operating system, so patching it is your responsibility. AWS secures the underlying infrastructure; you secure what you run on it."
+    },
+    {
+      "q": "Which is the clearest example of SaaS?",
+      "options": [
+        { "text": "Gmail or Salesforce, used in a browser for a subscription", "correct": true },
+        { "text": "An EC2 virtual machine you log into and configure yourself", "correct": false },
+        { "text": "Elastic Beanstalk, where you upload code and it runs the servers", "correct": false }
+      ],
+      "feedback": "Gmail and Salesforce are finished products you simply use — pure SaaS. EC2 is IaaS and Elastic Beanstalk is PaaS, both of which still leave you managing more of the stack."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Types of Cloud Computing (IaaS, PaaS, SaaS)",
+      "url": "https://aws.amazon.com/types-of-cloud-computing/"
+    },
+    {
+      "label": "AWS — Shared Responsibility Model",
+      "url": "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    },
+    {
+      "label": "AWS Case Study — Netflix",
+      "url": "https://aws.amazon.com/solutions/case-studies/netflix/"
+    }
+  ]
+}

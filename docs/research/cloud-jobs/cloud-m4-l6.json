@@ -1,0 +1,140 @@
+{
+  "id": "cloud-m4-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 6,
+  "title": "The Glue: Queues, Events & APIs (SQS, SNS, EventBridge, API Gateway)",
+  "estMinutes": 9,
+  "coreIdea": "Glue services let parts of a system talk through messages and events instead of calling each other directly, so one part can fail or slow down without dragging the rest down with it.",
+  "plainEnglish": [
+    "A modern app is rarely one big program. It is many smaller pieces that have to talk to each other.",
+    "The risky way is to wire them together directly, where piece A calls piece B and waits for an answer.",
+    "If B is slow or down, A is now stuck too, and the failure spreads.",
+    "Glue services sit in the middle so the pieces never talk directly. They pass `messages` and `events` instead.",
+    "This is called `decoupling`: loosening the tight link between parts so each can fail, scale, or be replaced on its own."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a busy restaurant. The waiter does not stand at the kitchen pass shouting an order and waiting until the chef hands back a finished plate.",
+      "Instead the waiter clips a ticket onto a rail and walks away to serve other tables. The kitchen works through tickets at its own pace.",
+      "The ticket rail is the queue. It lets the dining room and the kitchen run at different speeds without either one freezing up.",
+      "Where the metaphor bends: a real queue can also retry a dropped ticket and quietly hold thousands at once, which no paper rail could do."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Queue vs. event: pull one job, or broadcast the news",
+      "teaser": "the two basic shapes of glue",
+      "body": [
+        "`Amazon SQS` (Simple Queue Service) is a queue: a line of jobs waiting to be done. One worker pulls a job, finishes it, and the job is removed. It is one-to-one work hand-off.",
+        "`Amazon SNS` (Simple Notification Service) is a broadcaster: one message is fanned out to many subscribers at once. It is one-to-many announcement.",
+        "`Amazon EventBridge` is the smart switchboard for `events` (a notice that something happened, like \"order placed\"). It reads each event and routes it by rules to whichever services care.",
+        "A common pattern is SNS or EventBridge fanning an event out to several SQS queues, so each downstream team processes it on its own clock."
+      ]
+    },
+    {
+      "title": "API Gateway: the front door",
+      "teaser": "how the outside world is let in safely",
+      "body": [
+        "An `API` (Application Programming Interface) is just an agreed way for one program to ask another program to do something.",
+        "`Amazon API Gateway` is the managed front door that receives those requests from phones, browsers, or partners and hands them to your code.",
+        "It does the unglamorous gatekeeping: checking who is allowed in, throttling abusive traffic, and shielding the services behind it.",
+        "So the queues and events are the plumbing inside the building; the API Gateway is the reception desk that decides who gets through the door."
+      ]
+    },
+    {
+      "title": "Why this makes systems resilient",
+      "teaser": "failure stops spreading",
+      "body": [
+        "When a slow service is hidden behind a queue, a traffic spike just makes the line longer, not the whole app crash. The queue absorbs the surge like a shock absorber.",
+        "If a worker crashes mid-job, the message is not lost. After a wait it reappears for another worker to retry.",
+        "Messages that keep failing get parked in a `dead-letter queue`: a side queue for poison messages, so one bad item cannot block the line forever.",
+        "This is the whole point of glue: a problem in one piece becomes a local delay, not a system-wide outage."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "illustrative figures, not a live quote",
+      "body": [
+        "Picture an online store on a sale day. A shopper hits checkout, the request lands at `API Gateway`, and an \"order placed\" event goes to `EventBridge`.",
+        "EventBridge routes it to three `SQS` queues: one for the warehouse, one for email receipts, one for fraud checks. Each runs at its own pace.",
+        "These services charge mostly per request, so cost scales with traffic. As an illustrative example only: SQS is on the order of roughly $0.40 per million requests, and API Gateway HTTP APIs are roughly $1 per million requests.",
+        "So 10 million orders in a sale month might cost roughly $4 of SQS and about $10 of API Gateway in this example. The bill is tiny next to the cost of the checkout going down for an hour. Always confirm current numbers on the AWS pricing pages."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Decoupling", "def": "Loosening the direct link between parts of a system so each can fail, scale, or be replaced without breaking the others." },
+    { "term": "Queue", "def": "A waiting line of jobs or messages. Workers pull items one at a time and process them at their own pace." },
+    { "term": "Event", "def": "A small notice that something happened, like \"order placed\" or \"file uploaded\", that other services can react to." },
+    { "term": "API (Application Programming Interface)", "def": "An agreed way for one program to ask another to do something, like a menu of requests it accepts." },
+    { "term": "Fan-out", "def": "Sending one message to many subscribers at once, so several services all react to the same event." },
+    { "term": "Dead-letter queue", "def": "A side queue that catches messages which keep failing, so one bad message cannot block the whole line." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Glue services are cheap to run but expensive to design badly, so the trade-off a product leader owns is complexity versus resilience: every queue you add buys fault tolerance but adds a moving part to monitor and reason about.",
+      "Because they bill per request, cost tracks usage almost perfectly, which makes them easy to forecast but means a runaway retry loop can quietly multiply your bill.",
+      "The decision you own is where to draw the seams: which steps must be decoupled because they can fail independently, and which are simple enough to keep as a direct call."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon.com's own move off a monolith",
+    "body": [
+      "In the early 2000s Amazon.com was a single giant codebase where one change could stall the whole site. The company famously broke it into small services that talk only through defined interfaces and messages.",
+      "That re-plumbing into independent, message-connected services is the origin story of the AWS messaging tools, and SQS became the first publicly launched AWS service in 2006.",
+      "Today an action like adding an item to a cart sets off events that fan out to recommendations, inventory, and pricing services, each running independently so a hiccup in one does not freeze checkout."
+    ],
+    "bridge": "Amazon decoupled its own pieces with queues and events precisely so a failure in one stays local, which is exactly what glue services are for."
+  },
+  "takeaways": [
+    "Glue services let parts talk through messages and events, not direct calls, so failures stay local.",
+    "SQS is a one-to-one work queue; SNS and EventBridge fan one message out to many.",
+    "API Gateway is the managed front door that lets outside traffic in safely.",
+    "These services bill per request, so cost is easy to forecast but a retry storm can inflate it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the main benefit of putting a queue between two services instead of having one call the other directly?",
+      "options": [
+        { "text": "If the second service is slow or down, the first is not stuck waiting, so the failure does not spread.", "correct": true },
+        { "text": "It guarantees the second service never fails.", "correct": false },
+        { "text": "It removes the need to ever monitor the second service.", "correct": false }
+      ],
+      "feedback": "A queue decouples the two. The slow or failed service just makes the line longer, instead of freezing the caller and spreading the outage."
+    },
+    {
+      "q": "You need one \"order placed\" event to trigger several independent services at once. Which fits best?",
+      "options": [
+        { "text": "A fan-out service like SNS or EventBridge that broadcasts the event to many subscribers.", "correct": true },
+        { "text": "A single SQS queue that one worker pulls from.", "correct": false },
+        { "text": "API Gateway, because it is the front door.", "correct": false }
+      ],
+      "feedback": "SNS and EventBridge are built for one-to-many fan-out. A single SQS queue is one-to-one, and API Gateway only handles incoming requests at the edge."
+    },
+    {
+      "q": "What does Amazon API Gateway primarily do?",
+      "options": [
+        { "text": "Acts as the managed front door for incoming requests, handling access checks and throttling.", "correct": true },
+        { "text": "Stores messages in a waiting line for workers to pull.", "correct": false },
+        { "text": "Permanently deletes any message that fails to process.", "correct": false }
+      ],
+      "feedback": "API Gateway is the reception desk for outside traffic. Holding messages is a queue's job, and failed messages are parked in a dead-letter queue, not deleted."
+    },
+    {
+      "q": "A message keeps failing every time a worker tries to process it. Where does it end up?",
+      "options": [
+        { "text": "In a dead-letter queue, so one bad message cannot block the rest of the line.", "correct": true },
+        { "text": "Broadcast to every subscriber as an alert.", "correct": false },
+        { "text": "Sent back to API Gateway to retry forever.", "correct": false }
+      ],
+      "feedback": "A dead-letter queue catches poison messages after repeated failures, keeping the main line flowing while you investigate the bad item separately."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Amazon SQS Developer Guide", "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" },
+    { "label": "AWS — Amazon EventBridge User Guide", "url": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html" },
+    { "label": "AWS Well-Architected Framework — Reliability Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html" }
+  ]
+}

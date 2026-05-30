@@ -1,0 +1,141 @@
+{
+  "id": "cloud-m4-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 4,
+  "title": "Getting Found: DNS (Route 53), Load Balancers & the CDN (CloudFront)",
+  "estMinutes": 9,
+  "coreIdea": "Before your app can serve anyone, a request must find it (`DNS`), get spread across your servers (`load balancer`), and ideally be served from a copy stored close to the user (`CDN`).",
+  "plainEnglish": [
+    "When someone types your web address, a lot happens before they see your page.",
+    "First their device has to translate the name (like `example.com`) into a numeric address it can actually connect to. That translation system is called `DNS`.",
+    "Then the request usually arrives at a traffic cop called a `load balancer`, which decides which of your many servers should handle it.",
+    "And for things that do not change often — images, videos, scripts — a `CDN` keeps copies near the user so the page loads fast and your servers do less work.",
+    "On AWS these three jobs map to three named services: `Route 53`, `Elastic Load Balancing`, and `CloudFront`."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a huge concert. DNS is the directory at the front gate that turns the band's name into a specific gate number, so the crowd knows where to go.",
+      "The load balancer is the line of ushers at that gate, waving each person to whichever turnstile is least busy so nobody gets crushed.",
+      "The CDN is the merch and drinks stalls dotted all around the stadium, so fans grab what they need from the nearest stall instead of all walking back to one warehouse.",
+      "The metaphor bends in one place: a CDN does not just hold souvenirs, it can also pass shoppers through to the warehouse when they ask for something the stall does not stock yet."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "DNS: the internet's phone book (`Route 53`)",
+      "teaser": "names are for humans; computers need numbers",
+      "body": [
+        "Every server on the internet is reachable by a numeric `IP address`, like a phone number. People cannot remember those, so we use names like `shop.example.com` instead.",
+        "`DNS` (the Domain Name System) is the global lookup service that turns a name into the right number. AWS's version is `Route 53`.",
+        "A `DNS record` is a single entry in that phone book — for example, \"`example.com` points to this address.\"",
+        "`Route 53` can also do clever routing: send users to the nearest region, or quietly route around a server that has failed a `health check` (an automatic 'are you alive?' ping)."
+      ]
+    },
+    {
+      "title": "Load balancers: one front door, many servers (`Elastic Load Balancing`)",
+      "teaser": "spread the crowd so no single server falls over",
+      "body": [
+        "You rarely run a popular app on one server. You run several identical copies so you can handle more users and survive one of them crashing.",
+        "A `load balancer` is the single front door in front of those copies. It receives every request and forwards it to a healthy server with spare capacity.",
+        "On AWS this is `Elastic Load Balancing`. The most common type is the `Application Load Balancer (ALB)`, which understands web traffic and can route by URL path.",
+        "Crucially, if one server stops responding to health checks, the load balancer simply stops sending it traffic — users never notice."
+      ]
+    },
+    {
+      "title": "CDN: keep copies close to the user (`CloudFront`)",
+      "teaser": "the shortest trip is the one you do not take",
+      "body": [
+        "Data still obeys physics: a request to a server far away is slower than one nearby.",
+        "A `CDN` (Content Delivery Network) is a worldwide network of cache servers, called `edge locations`, that store copies of your content close to users.",
+        "AWS's CDN is `CloudFront`. The first user in a city fetches a file from your main server (the `origin`); `CloudFront` saves a copy at the nearby edge, so the next thousand users get it instantly.",
+        "This is `caching` — keeping a ready-made copy so you do not rebuild or refetch the same thing every time. It cuts load on your servers and can cut your bandwidth bill."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "one request, three services, an illustrative monthly bill",
+      "body": [
+        "Imagine a small Australian news site. A reader in Sydney opens it. `Route 53` answers the name lookup and points them at `CloudFront`.",
+        "`CloudFront` serves the logo and article images straight from the Sydney edge cache (a `cache hit`). Only the fresh article text is fetched from the origin behind an `Application Load Balancer`, which spreads it across two servers.",
+        "Illustrative figures only, not live prices: `Route 53` is roughly $0.50 per hosted zone per month plus about $0.40 per million lookups. An `Application Load Balancer` runs roughly $16–$25 per month in this small example, plus a usage charge. `CloudFront` data transfer out is on the order of $0.085 per GB for the first tier in many regions.",
+        "The headline point: serving 10 million image views from the CDN cache costs far less, and feels far faster, than serving all 10 million from your own servers — because most never touch your origin at all."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "DNS (Domain Name System)", "def": "The internet's phone book. It turns a human-friendly name like example.com into the numeric address a computer can actually connect to." },
+    { "term": "Route 53", "def": "AWS's DNS service. It answers name lookups, can route users to the nearest or healthiest server, and runs health checks to route around failures." },
+    { "term": "Load balancer", "def": "A single front door that receives all incoming requests and spreads them across several identical servers, skipping any that are unhealthy. On AWS this is Elastic Load Balancing." },
+    { "term": "Application Load Balancer (ALB)", "def": "The most common AWS load balancer for web apps. It understands web requests and can send different URL paths to different groups of servers." },
+    { "term": "CDN (Content Delivery Network)", "def": "A worldwide network of cache servers that store copies of your content close to users, so pages load faster and your own servers do less work. AWS's CDN is CloudFront." },
+    { "term": "Edge location", "def": "One of the many CDN cache servers spread around the world. Content served from an edge near the user arrives faster than content fetched from a distant origin." }
+  ],
+  "pmAngle": {
+    "body": [
+      "These three services are mostly small line items, but the trade-off you own is bigger: how much you cache at the edge directly shapes both speed and your data-transfer bill.",
+      "Caching more on CloudFront means fewer trips to your origin servers, which usually means lower compute and bandwidth cost and a faster product — the rare win-win, paid for by getting cache rules right.",
+      "The decision you actually make is what content is safe to cache and for how long; cache too aggressively and users see stale data, cache too little and you pay for every request twice."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix runs its own CDN at the edge",
+    "body": [
+      "Netflix streams a huge share of the world's internet video, and shipping every stream from a few central servers would be slow and ruinously expensive.",
+      "So Netflix built Open Connect, its own CDN: it places caching appliances inside internet providers' networks, right at the edge near viewers.",
+      "When you press play, the video is usually served from a cache a short hop away, not from a distant data centre. Netflix has publicly described serving the large majority of its traffic from these local caches.",
+      "It is the same caching idea AWS sells as CloudFront, just operated by Netflix at enormous scale."
+    ],
+    "bridge": "Storing copies of content close to the user — the core of a CDN — is what lets a service be both fast and affordable at global scale."
+  },
+  "takeaways": [
+    "Route 53 is DNS: it turns your domain name into the address a request can reach.",
+    "A load balancer (Elastic Load Balancing) spreads traffic across healthy servers so no single one falls over.",
+    "CloudFront is the CDN: it caches content at edge locations near users for speed and lower origin load.",
+    "A higher cache hit rate usually means a faster product and a smaller bill at the same time."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does Route 53 (DNS) actually do when a user visits your site?",
+      "options": [
+        { "text": "Translates the human-friendly name into the numeric address the request can connect to", "correct": true },
+        { "text": "Stores cached copies of images close to the user", "correct": false },
+        { "text": "Spreads incoming requests evenly across your servers", "correct": false }
+      ],
+      "feedback": "DNS is the phone book: it turns a name like example.com into an IP address. Caching is CloudFront's job and spreading traffic is the load balancer's job."
+    },
+    {
+      "q": "Why does a load balancer run health checks on the servers behind it?",
+      "options": [
+        { "text": "So it can stop sending traffic to a server that has stopped responding, without users noticing", "correct": true },
+        { "text": "So it can permanently delete servers that cost too much", "correct": false },
+        { "text": "So it can cache static images closer to the user", "correct": false }
+      ],
+      "feedback": "Health checks let the load balancer route around a failed server instantly. That is how you stay up when one copy crashes."
+    },
+    {
+      "q": "Your image files load slowly for users far from your servers. Which AWS service most directly helps?",
+      "options": [
+        { "text": "CloudFront — a CDN that caches copies at edge locations near users", "correct": true },
+        { "text": "Route 53 — change the DNS records", "correct": false },
+        { "text": "An Application Load Balancer — add more front doors", "correct": false }
+      ],
+      "feedback": "A CDN like CloudFront stores copies close to users, so distance stops being the bottleneck. DNS and load balancers do not solve the physics of distance."
+    },
+    {
+      "q": "Why is raising your CloudFront cache hit rate often a cost win as well as a speed win?",
+      "options": [
+        { "text": "More cache hits mean fewer requests reach your origin servers, lowering compute and bandwidth costs", "correct": true },
+        { "text": "Caching makes your DNS lookups free", "correct": false },
+        { "text": "A higher cache hit rate removes the need for a load balancer", "correct": false }
+      ],
+      "feedback": "Each cache hit is a request your own servers never have to handle, which cuts both load and transfer cost while serving the user faster."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — What is Amazon Route 53?", "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html" },
+    { "label": "AWS — What is Elastic Load Balancing?", "url": "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html" },
+    { "label": "AWS — What is Amazon CloudFront?", "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html" }
+  ]
+}

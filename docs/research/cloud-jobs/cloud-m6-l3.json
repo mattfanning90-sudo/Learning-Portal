@@ -1,0 +1,164 @@
+{
+  "id": "cloud-m6-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 3,
+  "title": "Inform → Optimize → Operate: the FinOps Lifecycle",
+  "estMinutes": 9,
+  "coreIdea": "FinOps is a repeating loop in three phases: first you make spending visible (`Inform`), then you act to cut waste (`Optimize`), then you turn those wins into routine habits (`Operate`).",
+  "plainEnglish": [
+    "FinOps is the discipline of managing what a company spends on the cloud.",
+    "It is not a one-off cleanup. It is a loop that teams run over and over.",
+    "The loop has three phases, and they always come in the same order.",
+    "First `Inform`: see clearly where the money is going and who is spending it.",
+    "Then `Optimize`: find and remove the waste you just made visible.",
+    "Then `Operate`: bake the good behaviour into everyday work so it sticks."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of running a busy shared household where everyone uses the one credit card.",
+      "First you read the statement and tag each charge so people can see what they each cost (Inform).",
+      "Then you cancel the gym nobody attends and switch to a cheaper energy plan (Optimize).",
+      "Then you agree house rules — a monthly budget review, alerts when a bill spikes — so the savings do not quietly creep back (Operate).",
+      "Where the metaphor bends: a household bill is fixed each month, while cloud spend changes by the hour, so the FinOps loop never really stops."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Inform: you cannot manage what you cannot see",
+      "teaser": "make the bill legible before you touch it",
+      "body": [
+        "The cloud bill arrives as one giant number with thousands of line items.",
+        "The `Inform` phase turns that fog into a clear picture.",
+        "Teams use `tagging` — labels like `team:checkout` or `env:prod` attached to each resource — so costs can be split by team, product, or feature.",
+        "This is also where `showback` and `chargeback` live: showing each team its share of the bill, or actually billing it back to them.",
+        "The goal is shared, trusted numbers that everyone agrees are real."
+      ]
+    },
+    {
+      "title": "Optimize: act on what you now see",
+      "teaser": "cut the waste the data just exposed",
+      "body": [
+        "Once spending is visible, the `Optimize` phase removes waste and gets better prices.",
+        "Common moves: turn off idle resources, `rightsize` (match a server's size to what it actually uses), and delete unattached storage.",
+        "Teams also buy commitments — `Reserved Instances` or `Savings Plans`, where you promise steady usage for one to three years in exchange for a lower rate.",
+        "Each action is a deliberate trade-off, not an automatic win, which is why it follows Inform rather than guessing in the dark."
+      ]
+    },
+    {
+      "title": "Operate: make good behaviour the default",
+      "teaser": "turn one-off wins into routine",
+      "body": [
+        "Savings made once tend to erode as new resources spin up.",
+        "The `Operate` phase builds habits and guardrails so the gains hold.",
+        "That means setting `budgets`, automatic alerts when spend spikes, regular cost reviews, and clear ownership for each team's bill.",
+        "It also means defining policies — for example, every resource must be tagged before it launches.",
+        "Operate closes the loop and feeds fresh questions back into Inform."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "one quarter through the loop, with example figures",
+      "body": [
+        "Imagine a startup with a cloud bill of about $100,000 a month and no idea how it splits.",
+        "Inform: they tag everything and learn that roughly $38,000 is the data team's overnight analytics jobs they did not know were running 24/7.",
+        "Optimize: they schedule those jobs to run only when needed and rightsize two oversized servers, trimming about $22,000 a month; they also buy a one-year Savings Plan on their steady baseline for a further ~10% off that portion.",
+        "Operate: they set a budget alert at $85,000 and a weekly cost review, so the next surprise gets caught in days, not at the end of the quarter.",
+        "These figures are illustrative, but the shape is real: the biggest single saving usually comes from simply seeing the bill clearly for the first time."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "FinOps",
+      "def": "A practice for managing cloud spending, where engineering, finance, and product work together to get the most value for every dollar."
+    },
+    {
+      "term": "FinOps lifecycle",
+      "def": "The repeating three-phase loop of Inform, then Optimize, then Operate, that teams run continuously rather than once."
+    },
+    {
+      "term": "Tagging",
+      "def": "Attaching labels (such as team or environment) to cloud resources so the bill can be sliced by who or what caused the cost."
+    },
+    {
+      "term": "Showback / chargeback",
+      "def": "Showback means showing each team its share of the cloud bill for awareness; chargeback means actually billing that cost to the team's budget."
+    },
+    {
+      "term": "Rightsizing",
+      "def": "Resizing a cloud resource so its capacity matches the work it actually does, instead of paying for headroom that sits idle."
+    },
+    {
+      "term": "Savings Plan / Reserved Instance",
+      "def": "A discount you get by committing to a steady amount of usage for one to three years, in exchange for a lower price than pay-as-you-go."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you own the trade-off between speed and spend, so knowing which phase you are in tells you what to ask for.",
+      "If costs are a mystery, push for Inform — demand tagging and a showback view before anyone argues about cuts.",
+      "Remember that Optimize choices like multi-year commitments lock in money; that is a real decision finance co-owns, not a quiet engineering tweak."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify cuts cloud waste by making spend visible",
+    "body": [
+      "Spotify runs at huge scale on Google Cloud and built an internal tool, Cost Insights, inside its open-source developer platform Backstage.",
+      "The tool shows each engineering team its own cloud costs in plain language, with trends and likely causes — a textbook Inform step.",
+      "Spotify reported that giving teams this visibility, rather than a central team policing the bill, drove the behaviour changes that actually reduced waste.",
+      "They then open-sourced the Cost Insights plugin so other companies could operate the same loop."
+    ],
+    "bridge": "Spotify did not start by slashing costs; it started by making them visible to the people who create them, which is exactly what Inform is for."
+  },
+  "takeaways": [
+    "FinOps runs as a continuous loop, always in the order Inform → Optimize → Operate.",
+    "Inform makes spend visible (tagging, showback); you cannot manage what you cannot see.",
+    "Optimize acts on that visibility — rightsizing, killing idle resources, buying commitments.",
+    "Operate turns one-off savings into budgets, alerts, and habits so gains do not erode."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the correct order of the three FinOps lifecycle phases?",
+      "options": [
+        { "text": "Inform → Optimize → Operate", "correct": true },
+        { "text": "Optimize → Inform → Operate", "correct": false },
+        { "text": "Operate → Optimize → Inform", "correct": false }
+      ],
+      "feedback": "You make spending visible first (Inform), act on it (Optimize), then make the good behaviour routine (Operate). The order matters because you cannot optimize what you cannot yet see."
+    },
+    {
+      "q": "Which activity belongs to the Inform phase?",
+      "options": [
+        { "text": "Tagging resources so costs can be split by team", "correct": true },
+        { "text": "Buying a three-year Savings Plan for cheaper rates", "correct": false },
+        { "text": "Setting an automatic budget alert for spikes", "correct": false }
+      ],
+      "feedback": "Tagging creates the visibility that defines Inform. Buying commitments is Optimize, and budget alerts are an Operate guardrail."
+    },
+    {
+      "q": "Why does FinOps emphasise the Operate phase rather than stopping after a round of cuts?",
+      "options": [
+        { "text": "Savings tend to erode as new resources spin up, so habits and guardrails keep gains in place", "correct": true },
+        { "text": "Cloud prices are fixed, so the only work left is paperwork", "correct": false },
+        { "text": "Operate replaces the need to ever look at the bill again", "correct": false }
+      ],
+      "feedback": "Operate exists because cloud usage keeps changing; budgets, alerts, and reviews stop hard-won savings from quietly creeping back."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — FinOps Framework (Phases)",
+      "url": "https://www.finops.org/framework/phases/"
+    },
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    },
+    {
+      "label": "Spotify Engineering — Cost Insights in Backstage",
+      "url": "https://backstage.spotify.com/discover/blog/managing-cloud-costs-with-backstage/"
+    }
+  ]
+}

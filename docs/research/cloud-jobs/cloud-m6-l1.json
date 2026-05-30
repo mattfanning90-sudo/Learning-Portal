@@ -1,0 +1,179 @@
+{
+  "id": "cloud-m6-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 1,
+  "title": "What FinOps Really Is: Financial Accountability for Variable Spend",
+  "estMinutes": 9,
+  "coreIdea": "FinOps is the practice of giving engineers, finance, and product shared visibility and accountability for cloud's pay-as-you-go bill, so people who spend the money help manage it.",
+  "plainEnglish": [
+    "In the old world, you bought a server once and the cost was fixed and known.",
+    "In the cloud, you rent computing by the second, and the bill changes every day based on what your software does.",
+    "That moving bill is called `variable spend`, and a single engineer's code change can quietly raise it.",
+    "FinOps is the discipline that brings financial accountability to that variable spend.",
+    "It does this by getting engineering, finance, and product to look at the same cost data and make trade-offs together."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a shared house where everyone runs the heating, lights, and hot water as much as they like, and one mystery bill arrives at the end of the month.",
+      "FinOps is the house rule that puts a smart meter in every room and shows each housemate, in near real time, what their habits cost.",
+      "Nobody is told to sit in the dark — they just get the numbers in time to decide whether the long hot shower is worth it.",
+      "The metaphor bends in one place: a cloud bill can change far faster than a utility bill, sometimes spiking within hours, so the visibility has to be quick."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the cloud broke the old way of managing cost",
+      "teaser": "the bill moved from the procurement team to the keyboard",
+      "body": [
+        "Buying your own servers is a `capital expense` — one big upfront purchase you own and depreciate.",
+        "Cloud is an `operating expense` — a metered, pay-as-you-go cost that lands every month and never stops moving.",
+        "The deeper shift is who controls the spend: an engineer choosing a bigger database or leaving a test server running is now making a financial decision.",
+        "Finance can no longer manage cost alone, because the people creating it are spread across every engineering team.",
+        "FinOps exists to close that gap, not by taking control away from engineers but by giving them the cost signal to act on."
+      ]
+    },
+    {
+      "title": "The three people at the table",
+      "teaser": "engineering, finance, and product, speaking one language",
+      "body": [
+        "FinOps is fundamentally about collaboration, so it names who must be in the room.",
+        "Engineering owns the technical choices that create cost and can change them fastest.",
+        "Finance owns the budget, the forecast, and the conversation with leadership about what was spent and why.",
+        "Product owns the trade-off: is this feature worth what it costs to run, and how do we price it.",
+        "FinOps gives all three a shared vocabulary so a cost conversation does not turn into a blame conversation."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "a single forgotten setting, in dollars",
+      "body": [
+        "Imagine a team runs an analytics database on AWS to crunch reports.",
+        "They pick an instance — a rented virtual machine — that costs, in this illustrative example, roughly $1.50 per hour, about $1,080 a month if left on around the clock.",
+        "Reports only run during business hours, so the machine sits idle for roughly two-thirds of the month.",
+        "A FinOps review flags the idle time, and the team turns the machine off nights and weekends, cutting that line to about $360 a month — a rough two-thirds saving with no loss of function.",
+        "FinOps did not buy a cheaper machine; it made the waste visible to the people who could switch it off. Figures here are illustrative, not live AWS prices."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "FinOps",
+      "def": "A practice that brings financial accountability to cloud's variable spend by uniting engineering, finance, and product around shared cost data and decisions. The name blends 'Finance' and 'DevOps'."
+    },
+    {
+      "term": "variable spend",
+      "def": "A cost that changes based on usage rather than staying fixed. In the cloud you pay for what you actually consume, so the bill moves up and down with what your software does."
+    },
+    {
+      "term": "pay-as-you-go",
+      "def": "The cloud pricing model where you are billed per unit of use — per second of a machine, per gigabyte stored — instead of buying hardware upfront."
+    },
+    {
+      "term": "capital expense vs operating expense",
+      "def": "Capital expense (CapEx) is a big one-time purchase you own, like buying servers. Operating expense (OpEx) is an ongoing metered cost, like a monthly cloud bill. Cloud shifts spending from CapEx to OpEx."
+    },
+    {
+      "term": "instance",
+      "def": "A single rented virtual computer in the cloud, such as an AWS `EC2` instance. You pick its size and pay for the time it runs."
+    },
+    {
+      "term": "FinOps Foundation",
+      "def": "The non-profit, part of the Linux Foundation, that defines the FinOps framework, its principles, and the FinOps Certified Practitioner credential."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, FinOps reframes cloud cost as a feature-level decision you own, not a back-office line item finance worries about alone.",
+      "Your job is the trade-off: a feature that costs more to run than it earns is a margin problem, and you decide whether to optimize it, reprice it, or cut it.",
+      "The person who designs and prioritizes the feature is, in effect, the person who commits the company to its running cost — so you want that bill visible before launch, not after."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify builds cost accountability into engineering",
+    "body": [
+      "Spotify runs at huge scale on Google Cloud and shared publicly how it tackled rising, hard-to-attribute cloud cost.",
+      "Rather than have finance police spending, it built internal tooling (it open-sourced a cost-insights plugin for its Backstage developer platform) that shows each engineering team the cost of the services they own.",
+      "Engineers see their spend next to the value it creates, so reducing waste becomes a normal part of building, not an audit imposed from outside.",
+      "This is FinOps in action: visibility plus shared ownership across engineering and finance, exactly what the FinOps Foundation describes as the goal."
+    ],
+    "bridge": "Spotify's move — putting the cost in front of the people who create it — is the entire idea of FinOps: accountability for variable spend, owned together."
+  },
+  "takeaways": [
+    "Cloud turned cost into variable, pay-as-you-go spend that engineers create with everyday technical choices.",
+    "FinOps is the discipline of giving that spend financial accountability through shared visibility.",
+    "Its core move is collaboration: engineering, finance, and product making cost trade-offs with the same data.",
+    "FinOps optimizes value and decisions, not just lower bills — sometimes the right call is to spend more."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What problem is FinOps primarily designed to solve?",
+      "options": [
+        {
+          "text": "Bringing financial accountability to the variable, pay-as-you-go spend of the cloud",
+          "correct": true
+        },
+        {
+          "text": "Choosing which programming language a team should use",
+          "correct": false
+        },
+        {
+          "text": "Negotiating the one-time purchase price of physical servers",
+          "correct": false
+        }
+      ],
+      "feedback": "FinOps exists because cloud spend is variable and created by many people; it brings accountability to that moving bill rather than to hardware purchases."
+    },
+    {
+      "q": "Which three groups does FinOps explicitly bring to the table?",
+      "options": [
+        {
+          "text": "Engineering, finance, and product",
+          "correct": true
+        },
+        {
+          "text": "Legal, marketing, and human resources",
+          "correct": false
+        },
+        {
+          "text": "Sales, support, and security only",
+          "correct": false
+        }
+      ],
+      "feedback": "FinOps is about collaboration: engineering creates the cost, finance owns the budget, and product owns the value trade-off — they need a shared language."
+    },
+    {
+      "q": "Why can't finance manage cloud cost alone the way it once managed server purchases?",
+      "options": [
+        {
+          "text": "Because the cost is now created by engineers' day-to-day technical choices across many teams",
+          "correct": true
+        },
+        {
+          "text": "Because cloud bills are always fixed and never change month to month",
+          "correct": false
+        },
+        {
+          "text": "Because finance teams are no longer allowed to see any cost data",
+          "correct": false
+        }
+      ],
+      "feedback": "In the cloud the people creating spend are spread across engineering, so accountability has to be shared — that is the gap FinOps closes."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — What is FinOps?",
+      "url": "https://www.finops.org/introduction/what-is-finops/"
+    },
+    {
+      "label": "FinOps Foundation — FinOps Principles",
+      "url": "https://www.finops.org/framework/principles/"
+    },
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    }
+  ]
+}

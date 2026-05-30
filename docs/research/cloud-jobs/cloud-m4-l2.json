@@ -1,0 +1,158 @@
+{
+  "id": "cloud-m4-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 2,
+  "title": "Storage That Fits the Job: S3, EBS, EFS — and S3 Storage Classes",
+  "estMinutes": 9,
+  "coreIdea": "AWS gives you three shapes of storage — object (`S3`), block (`EBS`), and file (`EFS`) — and within `S3` a set of storage classes that trade fast access for lower cost.",
+  "plainEnglish": [
+    "Storage is just where your data lives when the computer isn't actively using it.",
+    "AWS does not sell one kind of storage. It sells three shapes, each built for a different job.",
+    "Object storage (`S3`) is for whole files you drop in and pull out as a unit — photos, videos, backups.",
+    "Block storage (`EBS`) is a fast disk you attach to one running server, the way a hard drive attaches to a laptop.",
+    "File storage (`EFS`) is a shared folder many servers can read and write at the same time."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of three ways to keep your stuff.",
+      "Object storage (`S3`) is a vast self-storage warehouse: you hand over a sealed box with a label, and any time later you ask for that box back by its label. You never rearrange what's inside the box from the warehouse — you take the whole box.",
+      "Block storage (`EBS`) is the desk drawer bolted to your own desk: fast to reach, but it belongs to that one desk (one server) only.",
+      "File storage (`EFS`) is a shared filing cabinet in the office that everyone can open at once. The metaphor bends a little — `S3` can actually be reached over the internet, while the drawer and cabinet usually stay inside your private network."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Object vs block vs file — what each is really for",
+      "teaser": "same data, three very different jobs",
+      "body": [
+        "`S3` (Simple Storage Service) is object storage. You put an entire file in and get it back by its name. It scales almost without limit and is reached over the network, which makes it the default home for images, videos, logs, data lakes, and backups.",
+        "`EBS` (Elastic Block Store) is block storage — a virtual hard drive for one `EC2` server (a rented computer in the cloud). It is fast and low-latency, so it suits a database or operating system that needs to read and write constantly.",
+        "`EFS` (Elastic File System) is file storage: one shared folder that many servers mount at once. Reach for it when a fleet of machines must all see the same files, like a shared content directory."
+      ]
+    },
+    {
+      "title": "S3 storage classes — paying for how often you touch the data",
+      "teaser": "the same file can cost very different amounts",
+      "body": [
+        "Inside `S3`, you pick a storage class based on how often you read the data.",
+        "`S3 Standard` is for data you use all the time — highest storage price, but instant access and no retrieval fee.",
+        "`S3 Standard-Infrequent Access` (Standard-IA) is for data you rarely read: cheaper to store, but you pay a small fee each time you fetch it.",
+        "`S3 Glacier` classes are deep archive — very cheap to store, but reads can cost more and may take minutes to hours, so they suit records you keep for compliance but almost never open.",
+        "There is also `S3 Intelligent-Tiering`, which watches your access pattern and moves each object to the cheapest sensible class automatically."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "one terabyte, four storage classes, illustrative numbers",
+      "body": [
+        "Imagine you store 1 terabyte (1,000 GB) of customer photos. These are rough, illustrative figures, not a live price list.",
+        "On `S3 Standard` at roughly $0.023 per GB per month, that terabyte costs about $23 a month — and reading it is effectively free.",
+        "Move the same terabyte to `Standard-IA` at about $0.0125 per GB and storage drops to roughly $12.50 a month — but you now pay about $0.01 for every GB you retrieve, so a full read of all 1,000 GB adds about $10.",
+        "Park it in `Glacier Deep Archive` at around $0.001 per GB and storage falls to about $1 a month — but a restore costs more and can take hours.",
+        "The lesson: matching the class to how often you actually read the data can cut a storage bill by 90% or more — and putting hot, frequently-read data in an archive class quietly racks up retrieval fees."
+      ]
+    },
+    {
+      "title": "How teams choose — a quick decision path",
+      "teaser": "three questions that pick the right storage",
+      "body": [
+        "First ask: does one server need a fast disk for an operating system or database? That points to `EBS`.",
+        "Next ask: do many servers need to share the same live files at once? That points to `EFS`.",
+        "Otherwise, for whole files you read and write as a unit, use `S3` — then pick the class by access frequency: hot data on `Standard`, rarely-read data on `Standard-IA`, archives on `Glacier`."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Object storage (S3)",
+      "def": "Storage where each file is kept whole and fetched by its name; great for photos, videos, backups, and logs, and it scales almost without limit."
+    },
+    {
+      "term": "Block storage (EBS)",
+      "def": "A fast virtual hard drive attached to a single cloud server, ideal for an operating system or a busy database."
+    },
+    {
+      "term": "File storage (EFS)",
+      "def": "A shared folder that many servers can read and write at the same time, like a filing cabinet the whole office uses."
+    },
+    {
+      "term": "S3 storage class",
+      "def": "A pricing tier inside S3 that trades fast, free access for cheaper storage; you pick it based on how often you read the data."
+    },
+    {
+      "term": "Retrieval fee",
+      "def": "A charge you pay each time you read data out of a cheaper, infrequent-access or archive storage class."
+    },
+    {
+      "term": "Intelligent-Tiering",
+      "def": "An S3 option that automatically moves each file to the cheapest sensible class based on how often it is actually used."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Storage class is a cost decision a product or finance leader can own without writing code: the wrong tier is one of the easiest cloud bills to overpay.",
+      "The trade-off you own is access speed and retrieval fees versus monthly storage price — cold archives are cheap to keep but slow and sometimes pricey to read.",
+      "Engineering usually picks object versus block versus file by technical fit; you add value by asking 'how often do we really touch this data?' and pushing rarely-read data to cheaper classes."
+    ]
+  },
+  "caseStudy": {
+    "title": "Pinterest's image storage on S3",
+    "body": [
+      "Pinterest stores its enormous library of user images and the data behind its recommendations on Amazon `S3`, using it as the durable home for billions of objects.",
+      "Because not every pin is viewed equally often, lifecycle rules and tiering let cold, rarely-viewed content sit in cheaper classes while hot content stays on fast `Standard` storage.",
+      "The same picture can move between storage classes over its life without changing the application — only the bill changes."
+    ],
+    "bridge": "That is the core idea in action: pick the storage shape for the job, then tune the S3 class to how often you actually read the data."
+  },
+  "takeaways": [
+    "Three shapes: `S3` for whole files, `EBS` for one server's fast disk, `EFS` for a shared folder across many servers.",
+    "Inside `S3`, the storage class trades fast free access for cheaper storage — choose by access frequency.",
+    "`Standard` for hot data, `Standard-IA` for rarely read, `Glacier` for archives you almost never open.",
+    "Matching the class to real usage can cut a storage bill dramatically; misplaced data leaks money through retrieval fees."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A fleet of web servers all need to read and write the same set of live files at the same time. Which AWS storage fits best?",
+      "options": [
+        { "text": "`EFS` — shared file storage many servers can mount at once", "correct": true },
+        { "text": "`EBS` — a fast disk attached to a single server", "correct": false },
+        { "text": "`S3 Glacier` — deep archive for data you rarely open", "correct": false }
+      ],
+      "feedback": "`EFS` is file storage built to be shared across many servers simultaneously. `EBS` attaches to only one server, and Glacier is for cold archives."
+    },
+    {
+      "q": "You have backups you must keep for seven years but expect to read almost never. Which S3 storage class is the most cost-effective home?",
+      "options": [
+        { "text": "`S3 Standard`, so reads are always instant and free", "correct": false },
+        { "text": "A `Glacier` archive class, accepting slower, pricier retrieval", "correct": true },
+        { "text": "`EBS`, because backups need a fast attached disk", "correct": false }
+      ],
+      "feedback": "Rarely-read, long-term archives belong in a Glacier class: storage is very cheap, and the slower, costlier retrieval rarely matters when you almost never read the data."
+    },
+    {
+      "q": "What is the main trade-off you accept when you move data from `S3 Standard` to `Standard-Infrequent Access`?",
+      "options": [
+        { "text": "Lower storage price, but you pay a retrieval fee each time you read it", "correct": true },
+        { "text": "The data becomes faster to read but more expensive to store", "correct": false },
+        { "text": "The data can no longer be shared across servers", "correct": false }
+      ],
+      "feedback": "Standard-IA cuts the monthly storage price but adds a per-GB retrieval fee, so it pays off only for data you read infrequently."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Cloud Storage on AWS (S3, EBS, EFS overview)",
+      "url": "https://aws.amazon.com/products/storage/"
+    },
+    {
+      "label": "AWS — Amazon S3 Storage Classes",
+      "url": "https://aws.amazon.com/s3/storage-classes/"
+    },
+    {
+      "label": "FinOps Foundation — FinOps Framework",
+      "url": "https://www.finops.org/framework/"
+    }
+  ]
+}

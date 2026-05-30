@@ -1,0 +1,147 @@
+{
+  "id": "cloud-m6-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 2,
+  "title": "The Six FinOps Principles: the Shared Belief System",
+  "estMinutes": 9,
+  "coreIdea": "The six `FinOps` principles are the shared rules of the road that let engineering, finance, and product agree on how to spend cloud money well — collaborate, decide by business value, own your usage, keep the data accessible and timely, run a central team, and use the cloud's variable cost model on purpose.",
+  "plainEnglish": [
+    "`FinOps` is the practice of managing the money you spend on cloud computing.",
+    "Cloud bills change every day, so old once-a-year budgeting doesn't fit.",
+    "The `FinOps` Foundation — the industry body that defines the practice — wrote six principles everyone agrees to follow.",
+    "Think of them as a shared belief system, not a tool: they tell engineering, finance, and product how to behave so cloud spend stays sensible.",
+    "Once a room shares these six beliefs, arguments about cloud cost get a lot calmer."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a household where several adults all share one credit card.",
+      "It only works if they agree on house rules: talk to each other, spend on what actually matters, each person owns their own swipes, the statement is visible to all, one person reconciles it, and you take advantage of off-peak deals.",
+      "The six `FinOps` principles are exactly those house rules, scaled up to a company's cloud card.",
+      "Where the metaphor bends: a household card has a fixed limit, while a cloud bill can balloon overnight if nobody is watching."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why a 'belief system' and not just a tool",
+      "teaser": "people problems, not software problems",
+      "body": [
+        "Cloud spend is decided by hundreds of small engineering choices made every day.",
+        "No dashboard can fix that if the people making those choices don't share a goal.",
+        "So the `FinOps` Foundation published principles — agreed beliefs — before it talks about tools.",
+        "The principles align three groups who normally speak different languages: engineering (who spend), finance (who pay), and product (who decide what's worth building).",
+        "Get the beliefs right and the tools become useful; skip them and the best tool just produces reports nobody acts on."
+      ]
+    },
+    {
+      "title": "The six principles, in plain English",
+      "teaser": "six beliefs, one shared language",
+      "body": [
+        "One: teams need to collaborate — engineers, finance, and product work together in near real time, not in separate silos.",
+        "Two: decisions are driven by the business value of cloud — you judge spend by the value it creates, not just by whether it's cheap.",
+        "Three: everyone takes ownership of their cloud usage — the engineers who spin up resources own the cost of those resources.",
+        "Four: `FinOps` data should be accessible and timely — cost data shows up fast and where people work, because a bill that arrives a month late can't change a decision.",
+        "Five: a centralized team drives `FinOps` — one small group runs the practice, buys the big commitments, and coaches everyone else.",
+        "Six: take advantage of the variable cost model of the cloud — treat pay-as-you-go as a feature, sizing up and down on demand instead of buying fixed kit."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "the six principles on one team's bill",
+      "body": [
+        "Imagine one product team running an app on AWS with a cloud bill of about $40,000 a month in this example.",
+        "Ownership (principle three) means each engineer can see that their test servers left running overnight add roughly $3,000 a month — so they switch them off and that line drops.",
+        "Timely data (principle four) means they see yesterday's spend in a shared `AWS Cost Explorer` view, not a surprise invoice weeks later.",
+        "The central team (principle five) buys a `Savings Plan` — a commitment to a steady level of usage in exchange for a lower rate — cutting the steady compute portion by around 30% in this example.",
+        "Business value (principle two) means they keep an expensive, fast database because it lifts checkout conversion, even though a cheaper one exists — value beats raw cheapness.",
+        "Net: in this illustration the team trims the bill from about $40,000 to roughly $30,000 a month without shipping less, because the beliefs changed the behaviour."
+      ]
+    },
+    {
+      "title": "Crawl, walk, run — principles are a starting line, not a finish",
+      "teaser": "you adopt them in stages",
+      "body": [
+        "Nobody lives all six principles perfectly on day one.",
+        "The `FinOps` Foundation describes maturity as 'Crawl, Walk, Run' — start small, prove value, then go deeper.",
+        "A 'Crawl' team might just make last month's bill visible to engineers (a first step on principles three and four).",
+        "A 'Run' team forecasts spend, automates rightsizing, and ties cloud cost to unit economics like cost-per-customer.",
+        "The principles stay the same; what changes is how fully and how fast you practise them."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "FinOps", "def": "A practice for managing cloud spending where engineering, finance, and product work together to get the most business value from every dollar spent on cloud." },
+    { "term": "FinOps Foundation", "def": "The industry non-profit (part of the Linux Foundation) that defines FinOps, publishes its principles and framework, and runs the Certified Practitioner exam." },
+    { "term": "Cloud cost ownership", "def": "The idea that the people who create cloud usage — usually the engineers who launch resources — are accountable for the cost it generates, instead of cost being 'finance's problem'." },
+    { "term": "Variable cost model", "def": "The cloud's pay-as-you-go pricing: you pay for what you use and can scale up or down at any time, rather than buying fixed hardware up front." },
+    { "term": "Savings Plan", "def": "An AWS commitment to use a steady amount of compute for one or three years in exchange for a lower price — a way to act on the variable cost principle for predictable usage." },
+    { "term": "Crawl, Walk, Run", "def": "The FinOps Foundation's model for adopting the practice in stages — start simple, prove value, then mature into forecasting and automation." }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader the principle you most directly own is business value: you decide which cloud spend is worth it, so a fast database that lifts conversion can be the right call even when it isn't the cheapest.",
+      "You also set who pays — the principles push cost ownership down to the teams creating it, which means your roadmap trade-offs now carry a visible price tag your engineers can see.",
+      "Your job is to make value, not cheapness, the goal in the room: cut the waste nobody benefits from, and defend the spend that moves a metric customers feel."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify open-sources its FinOps tooling in Backstage",
+    "body": [
+      "Spotify, which runs a huge amount of infrastructure on Google Cloud, built an internal cost-insights tool to give engineering teams visibility into their own cloud spend.",
+      "In 2020 it released that tool as a plugin for `Backstage`, its open-source developer platform, so each team could see and own its costs directly inside the tools they already used.",
+      "This is the ownership and accessible-and-timely principles made real: cost data was put in front of the engineers who generate it, in near real time, rather than buried in a finance report.",
+      "Spotify reported that giving teams this visibility helped them spot and reduce waste without a central team having to police every decision."
+    ],
+    "bridge": "That is the belief system in action: collaboration, ownership, and timely data turned cloud cost from finance's headache into something every team could see and act on."
+  },
+  "takeaways": [
+    "The six `FinOps` principles are a shared belief system that aligns engineering, finance, and product on cloud spend.",
+    "The six: collaborate; decide by business value; everyone owns their usage; data is accessible and timely; a central team drives it; and use the variable cost model on purpose.",
+    "Value beats cheapness — the goal is the most business value per dollar, not the smallest possible bill.",
+    "You adopt the principles in stages (Crawl, Walk, Run); the beliefs are fixed, your maturity grows."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What are the six FinOps principles best described as?",
+      "options": [
+        { "text": "A shared belief system — agreed rules of behaviour — that aligns engineering, finance, and product on cloud spend", "correct": true },
+        { "text": "A specific AWS software product you install to automatically lower your bill", "correct": false },
+        { "text": "A legal contract that caps how much a company is allowed to spend on cloud", "correct": false }
+      ],
+      "feedback": "The principles are agreed beliefs about how people should behave, published by the FinOps Foundation — not a tool, contract, or spending cap."
+    },
+    {
+      "q": "The principle 'decisions are driven by the business value of cloud' means what in practice?",
+      "options": [
+        { "text": "You judge spend by the value it creates, so worthwhile spend can beat the cheapest option", "correct": true },
+        { "text": "You always pick the cheapest possible service regardless of its effect on the product", "correct": false },
+        { "text": "Only the finance team is allowed to make any decision about cloud spend", "correct": false }
+      ],
+      "feedback": "The goal is the most business value per dollar, not the smallest bill — a costlier service that lifts a real metric can be the right call."
+    },
+    {
+      "q": "Who takes ownership of cloud usage under the FinOps principles?",
+      "options": [
+        { "text": "Everyone who creates the usage — typically the engineers who launch the resources own their cost", "correct": true },
+        { "text": "Only the central finance department, since cost is purely a finance matter", "correct": false },
+        { "text": "The cloud provider, because AWS is responsible for keeping customer bills low", "correct": false }
+      ],
+      "feedback": "Ownership is pushed to the people generating the spend so cost becomes everyone's concern, not just finance's — supported by a central team."
+    },
+    {
+      "q": "What does the principle 'take advantage of the variable cost model of the cloud' encourage?",
+      "options": [
+        { "text": "Treating pay-as-you-go as a feature — scaling up and down on demand instead of buying fixed kit", "correct": true },
+        { "text": "Signing the longest possible fixed contract so the price can never change", "correct": false },
+        { "text": "Refusing to use any cloud service that charges by usage", "correct": false }
+      ],
+      "feedback": "The cloud's pay-for-what-you-use pricing is an advantage: you flex capacity with demand and use commitments like Savings Plans for steady usage."
+    }
+  ],
+  "sources": [
+    { "label": "FinOps Foundation — FinOps Principles", "url": "https://www.finops.org/framework/principles/" },
+    { "label": "FinOps Foundation — What is FinOps?", "url": "https://www.finops.org/introduction/what-is-finops/" },
+    { "label": "Spotify Engineering — Spotify's Cost Insights tool, open-sourced in Backstage", "url": "https://engineering.atspotify.com/2020/09/managing-clouds-from-the-ground-up-cost-engineering-at-spotify/" }
+  ]
+}

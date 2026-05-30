@@ -1,0 +1,185 @@
+{
+  "id": "cloud-m5-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m5",
+  "order": 5,
+  "title": "Tags Are Money: Cost Allocation Tags & Accounts as Cost Boundaries",
+  "estMinutes": 9,
+  "coreIdea": "If a dollar of cloud spend is not labelled with who owns it, you cannot manage it — so `tags` and account boundaries are how you turn one giant anonymous bill into spend you can actually steer.",
+  "plainEnglish": [
+    "Your cloud provider sends one big bill for everything you ran.",
+    "By default that bill does not say which team, product, or project caused each charge.",
+    "A `tag` is a small label you attach to a resource — like `team: payments` or `env: production` — so charges can be sorted by who they belong to.",
+    "You can also split spend by putting different teams in separate `accounts`, which acts like a hard wall around their costs.",
+    "Spend with no label is invisible spend: nobody recognises it, so nobody trims it."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine a giant shared office where every team orders supplies on one company credit card.",
+      "At month-end you get a single statement with hundreds of charges and no notes — you have no idea which team bought what.",
+      "A `tag` is writing the team's name on each receipt as it comes in, so you can total spend per team later without a forensic investigation.",
+      "A separate `account` is more like giving each team its own credit card — a firmer wall, but more cards to keep track of. The metaphor bends slightly: in the cloud, one resource can carry many tags at once, where a paper receipt usually only fits one note."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What a tag is, and why 'untagged' is the real enemy",
+      "teaser": "a label is cheap; an unexplained bill is expensive",
+      "body": [
+        "A `tag` is just a key and a value you stick on a resource — for example `cost-center: 4400` or `owner: ana.lee`.",
+        "On its own a tag does nothing to the resource; it only adds meaning you can later report on.",
+        "Crucially, `AWS` will not let you split your bill by a tag until you switch that tag on as a `cost allocation tag` in the billing console.",
+        "Any resource you forget to tag lands in an 'untagged' bucket — real money that no team claims, so no team cuts it."
+      ]
+    },
+    {
+      "title": "Accounts and OUs: walls, not just labels",
+      "teaser": "sometimes you want a fence, not a sticker",
+      "body": [
+        "A tag is a soft label inside one account; an `account` is a hard boundary around a whole set of resources.",
+        "With `AWS Organizations` you group many accounts under one roof and roll their bills up to a single payer — so you still get one total, but cleanly separated underneath.",
+        "An `OU` (Organizational Unit) is a folder of accounts — for example a 'Marketing' OU holding that department's accounts — so rules and reports can apply to the whole group.",
+        "Accounts give you cleaner separation than tags (no risk of a forgotten label) but more overhead, so most firms use both: accounts for big divisions, tags for fine detail inside them."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "an illustrative bill, before and after labels",
+      "body": [
+        "Suppose a startup gets a monthly cloud bill of about $40,000 in this example, and at first nothing is tagged.",
+        "All they can see is the total and the service breakdown — say roughly $24,000 of compute, $9,000 of storage, $7,000 of everything else — but not who caused it.",
+        "They turn on two cost allocation tags, `team` and `env`, and require them on every new resource. Now the same $40,000 splits out as roughly $22,000 to the `payments` team, $13,000 to `search`, and about $5,000 still 'untagged'.",
+        "That untagged $5,000 turns out to be old test servers from a project that ended; switching them off saves roughly $5,000 a month — money that was simply invisible before the labels existed."
+      ]
+    },
+    {
+      "title": "Making tags actually stick",
+      "teaser": "a tag nobody enforces is a tag nobody applies",
+      "body": [
+        "The hard part of tagging is not the idea — it is consistency, because `team=Payments` and `team=payments` count as two different groups.",
+        "Teams agree a short list of required tags up front (often owner, environment, and cost center) and write it down as a tagging policy.",
+        "Tools like `AWS Tag Policies` and `Service Control Policies` can warn on, or even block, resources created without the required tags.",
+        "Reports such as `Cost Explorer` and the `Cost and Usage Report` then read those tags to show spend by team — but only for tags you switched on as cost allocation tags."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Tag",
+      "def": "A small key-and-value label attached to a cloud resource, such as team or environment, used to organise and group it."
+    },
+    {
+      "term": "Cost allocation tag",
+      "def": "A tag you have switched on in the billing console so that your bill can be split and totalled by that label."
+    },
+    {
+      "term": "Account (as a cost boundary)",
+      "def": "A self-contained space holding a set of cloud resources; spend inside it is cleanly walled off from other accounts."
+    },
+    {
+      "term": "AWS Organizations",
+      "def": "A service that groups many AWS accounts under one roof, rolling their separate bills up to a single payer."
+    },
+    {
+      "term": "OU (Organizational Unit)",
+      "def": "A folder that groups related accounts inside AWS Organizations so policies and reports can apply to the whole group at once."
+    },
+    {
+      "term": "Untagged spend",
+      "def": "Charges from resources with no useful label, so no team is identified as the owner and the cost goes unmanaged."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, your tagging strategy is what lets you say 'this feature costs us this much' instead of guessing — it turns cloud spend into a line you can defend or cut.",
+      "You own the trade-off between fine-grained tags (more detail, more discipline to maintain) and account separation (cleaner walls, more accounts to run); most teams use both, with accounts for big divisions and tags for the detail.",
+      "The decision you really own is whose name goes on each dollar: untagged spend has no owner, and spend with no owner is the first thing to balloon and the last thing anyone cuts."
+    ]
+  },
+  "caseStudy": {
+    "title": "Airbnb wires cost back to teams",
+    "body": [
+      "Airbnb runs almost entirely on AWS and, as it grew, found that a single shared bill made it hard to know which team's choices drove cost.",
+      "Its engineering teams have publicly described building cost-attribution tooling on top of AWS billing data, using tags and account structure to map spend back to the teams and services responsible.",
+      "Once a team could see its own number, it could act on it — right-sizing oversized resources and shutting down idle ones instead of treating the cloud bill as someone else's problem."
+    ],
+    "bridge": "Airbnb's win came not from a new discount but from labelling spend so each team could finally see, and own, its share — exactly what cost allocation tags and account boundaries are for."
+  },
+  "takeaways": [
+    "Untagged spend is invisible spend: with no owner, it is the last thing anyone trims.",
+    "A tag is just a label; it only affects your bill once you switch it on as a cost allocation tag.",
+    "Accounts and OUs are hard walls around cost; tags are soft labels inside them — most firms use both.",
+    "Consistency beats cleverness: enforce a short, agreed list of required tags so reports actually add up."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why is 'untagged spend' a problem for a finance or product leader?",
+      "options": [
+        {
+          "text": "It costs more per hour than tagged spend does",
+          "correct": false
+        },
+        {
+          "text": "No team is identified as the owner, so nobody is accountable for trimming it",
+          "correct": true
+        },
+        {
+          "text": "AWS refuses to bill you for resources that have no tags",
+          "correct": false
+        }
+      ],
+      "feedback": "Tagging does not change the price of a resource. The problem is ownership: with no label, no team recognises the cost as theirs, so it drifts and grows."
+    },
+    {
+      "q": "You added a `team` tag to your resources, but your bill still will not split spend by team. What is the most likely reason?",
+      "options": [
+        {
+          "text": "You have not switched `team` on as a cost allocation tag in the billing console",
+          "correct": true
+        },
+        {
+          "text": "Tags only work on storage, never on compute",
+          "correct": false
+        },
+        {
+          "text": "You need a separate AWS account for every team before any tag works",
+          "correct": false
+        }
+      ],
+      "feedback": "A tag is just a label until you activate it as a cost allocation tag in billing; only then can the bill be totalled by that tag."
+    },
+    {
+      "q": "What is the main difference between using tags and using separate accounts to divide cost?",
+      "options": [
+        {
+          "text": "Tags are free but accounts always cost extra money each month",
+          "correct": false
+        },
+        {
+          "text": "Tags are soft labels inside one account, while a separate account is a hard wall around a whole set of resources",
+          "correct": true
+        },
+        {
+          "text": "Tags work only in AWS, while accounts work across every cloud provider",
+          "correct": false
+        }
+      ],
+      "feedback": "Accounts give cleaner separation with no risk of a forgotten label, but more overhead; tags give fine detail inside an account. Most teams use both."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Using cost allocation tags (Billing & Cost Management User Guide)",
+      "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+    },
+    {
+      "label": "FinOps Foundation — Capability: Allocation",
+      "url": "https://www.finops.org/framework/capabilities/allocation/"
+    },
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar: Expenditure and usage awareness",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/expenditure-and-usage-awareness.html"
+    }
+  ]
+}

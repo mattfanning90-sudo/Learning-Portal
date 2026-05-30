@@ -1,0 +1,206 @@
+{
+  "id": "cloud-m7-l7",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 7,
+  "title": "The Culture Problem: Cost-Aware Engineering Without Killing Velocity",
+  "estMinutes": 9,
+  "coreIdea": "FinOps wins or fails on culture, not dashboards: the goal is engineers who treat cost as one quiet input to good decisions, not a fear that slows them down.",
+  "plainEnglish": [
+    "`FinOps` is the practice of managing cloud spending as a team sport between engineering, finance, and product.",
+    "Most of the savings on the cloud are not found in tools. They are found in the daily choices engineers make about what to build and how to run it.",
+    "So the real challenge is cultural: how do you make people care about cost without making them afraid to ship?",
+    "Get it wrong and you get `cost theater` — lots of meetings and dashboards, but no real change in behaviour or spend.",
+    "Get it right and cost becomes just another quality signal, like speed or reliability, that good engineers weigh without being told to."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of cloud cost like the electricity bill in a busy restaurant kitchen.",
+      "You do not put a manager at the door clipboard in hand, demanding each chef justify every minute the oven is on. That would slow service to a crawl and the food would suffer.",
+      "Instead you put a clear meter on the wall where everyone can see it, you make turning off idle equipment the easy default, and you celebrate the chef who cuts the bill without cutting the menu.",
+      "The metaphor bends in one place: a kitchen's bill is roughly fixed, while cloud spend can swing wildly overnight, so the meter on the wall has to be far more timely and granular."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why this is a culture problem, not a tooling problem",
+      "teaser": "the spend is set the moment code is written",
+      "body": [
+        "On the cloud, an engineer's design choices are also spending decisions.",
+        "Picking a chatty database query, leaving a test environment running overnight, or over-sizing a server all cost real money, often without anyone noticing for weeks.",
+        "Finance cannot fix this from a spreadsheet, because they do not write the code that creates the cost.",
+        "So the only durable lever is the engineer's own awareness at the moment of the decision.",
+        "This is why the `FinOps Foundation` frames the whole practice around culture and shared accountability, not just reports."
+      ]
+    },
+    {
+      "title": "Cost theater: the failure mode to avoid",
+      "teaser": "looking busy about money while nothing changes",
+      "body": [
+        "`Cost theater` is activity that signals cost-consciousness without actually changing behaviour or spend.",
+        "Classic examples: a weekly cost dashboard nobody acts on, a savings target with no owner, or a freeze on all new infrastructure that just slows the business down.",
+        "It often backfires by making engineers feel watched and blamed, which kills the very curiosity you want.",
+        "The tell is simple: lots of reporting and ceremony, but the actual spend curve and the daily decisions look exactly the same."
+      ]
+    },
+    {
+      "title": "What cost-aware engineering looks like in practice (illustrative)",
+      "teaser": "a small, owned, visible win — with numbers",
+      "body": [
+        "Imagine a team running a reporting service on `AWS`. A `dashboard` (a `showback` report that shows each team its own spend without billing it internally) flags they are spending about $9,000 a month, far above the roughly $4,000 of a similar team.",
+        "Instead of a top-down mandate, the team owns the investigation. They find a test environment left running 24/7 (about $2,000 a month) and several over-sized servers they can safely shrink, a tactic called `rightsizing`, saving roughly another $2,500 a month.",
+        "They schedule the test environment to switch off nights and weekends and rightsize the servers, cutting the bill to about $4,500 a month, with no impact on the product.",
+        "The win is named in the team channel and the engineer who spotted it is credited. Total saving here is roughly $4,500 a month, or about $54,000 a year, from two changes that took an afternoon.",
+        "Note these are illustrative figures to show the shape of a real win, not live AWS prices."
+      ]
+    },
+    {
+      "title": "The product and leadership role: make the right thing the easy thing",
+      "teaser": "you own the trade-off, not the blame",
+      "body": [
+        "Leaders set the tone by treating cost as one input among speed, quality, and reliability, never the only one that matters.",
+        "Practical moves: give each team visibility into its own spend, set a clear owner for cost goals, and build cost checks into existing workflows rather than adding new gates.",
+        "Crucially, protect velocity by deciding out loud which costs are worth it. Paying more for a faster launch can be the right call.",
+        "The leader's job is to make the cost-aware choice the default and the easy path, so engineers rarely have to stop and think about it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "FinOps",
+      "def": "A practice where engineering, finance, and product work together to manage and get the most value from cloud spending; short for Financial Operations."
+    },
+    {
+      "term": "cost-aware engineering",
+      "def": "Engineers treating cost as a normal quality signal — like speed or reliability — and weighing it in everyday technical decisions."
+    },
+    {
+      "term": "cost theater",
+      "def": "Activity that looks like cost control (dashboards, meetings, targets) but does not actually change behaviour or reduce spend."
+    },
+    {
+      "term": "velocity",
+      "def": "How quickly a team can ship new features and improvements; the speed of delivery that cost controls must not strangle."
+    },
+    {
+      "term": "showback",
+      "def": "A report that shows each team its own cloud spending for visibility, without actually charging the cost to that team's budget (unlike chargeback, which does charge it)."
+    },
+    {
+      "term": "rightsizing",
+      "def": "Adjusting the size of cloud resources, usually shrinking over-provisioned servers, to match real usage and cut waste without hurting performance."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you own the trade-off between spend and speed, so name it explicitly: decide which features are worth paying a premium to ship faster, and which idle costs are pure waste.",
+      "Make sure each team can see its own spend (showback) and has a clear owner for cost goals, so accountability lands on the people making the decisions rather than on finance.",
+      "Your real deliverable is psychological safety around cost: engineers should surface and fix waste because it is rewarded, not hide it because they fear being blamed."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify's Cost Insights and the FinOps culture behind it",
+    "body": [
+      "Spotify built cost visibility directly into Backstage, the internal developer portal it created and later open-sourced, through a plugin called Cost Insights.",
+      "Rather than policing teams from finance, the tool shows each engineering team its own cloud cost trends inside the tools they already use every day, framed around their own services.",
+      "Spotify has described this as deliberately optimising for engineer engagement: surface the data where engineers work, let teams own their numbers, and make acting on cost a normal part of the workflow rather than a separate audit.",
+      "The result is cost-awareness that scales across hundreds of teams without a central team manually chasing every bill."
+    ],
+    "bridge": "Spotify's win came not from a new dashboard alone but from putting cost where engineers already work and letting them own it — culture first, exactly the core idea of this lesson."
+  },
+  "takeaways": [
+    "Cloud spend is decided when code is written, so engineer awareness is the only durable lever.",
+    "Cost theater is the failure mode: ceremony and dashboards with no change in behaviour or spend.",
+    "Make the cost-aware choice the easy default and reward people for finding waste, not blaming them.",
+    "Leaders own the speed-versus-spend trade-off and must protect velocity by deciding out loud which costs are worth it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why is embedding cost-awareness mainly a culture problem rather than a tooling problem?",
+      "options": [
+        {
+          "text": "Because cloud spend is largely set by the design and operational choices engineers make, which finance cannot control from a spreadsheet",
+          "correct": true
+        },
+        {
+          "text": "Because cloud billing tools are too expensive for most companies to buy",
+          "correct": false
+        },
+        {
+          "text": "Because finance teams are not allowed to view engineering dashboards",
+          "correct": false
+        }
+      ],
+      "feedback": "The spend is created at the moment of the technical decision, so the durable lever is the engineer's own awareness, not a report finance produces after the fact."
+    },
+    {
+      "q": "Which of these is the clearest example of 'cost theater'?",
+      "options": [
+        {
+          "text": "A weekly cost dashboard that everyone watches but no one ever acts on, while spend keeps climbing",
+          "correct": true
+        },
+        {
+          "text": "A team rightsizing over-provisioned servers after spotting waste in their own showback report",
+          "correct": false
+        },
+        {
+          "text": "Giving each team visibility into its own spend with a named owner for cost goals",
+          "correct": false
+        }
+      ],
+      "feedback": "Cost theater is ceremony without change. A dashboard that is watched but never acted on while spend rises is the textbook case; the other two options are real behaviour change."
+    },
+    {
+      "q": "What is a product leader's main responsibility when building a cost-aware culture without killing velocity?",
+      "options": [
+        {
+          "text": "Owning the speed-versus-spend trade-off out loud and making the cost-aware choice the easy default",
+          "correct": true
+        },
+        {
+          "text": "Freezing all new infrastructure spending until the budget is back under target",
+          "correct": false
+        },
+        {
+          "text": "Routing every engineering decision through a finance approval gate first",
+          "correct": false
+        }
+      ],
+      "feedback": "Leaders protect velocity by deciding explicitly which costs are worth it and making the efficient path the default; blanket freezes and approval gates slow the business and breed cost theater."
+    },
+    {
+      "q": "In showback, what happens to the cost a team sees?",
+      "options": [
+        {
+          "text": "The team sees its own spend for visibility, but the cost is not actually charged to its budget",
+          "correct": true
+        },
+        {
+          "text": "The cost is automatically deducted from the team's budget the moment it appears",
+          "correct": false
+        },
+        {
+          "text": "The cost is hidden from the team and reported only to finance",
+          "correct": false
+        }
+      ],
+      "feedback": "Showback shows a team its spend to drive awareness without billing it internally; charging it to the team's budget would be chargeback instead."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — What is FinOps (Framework & Principles)",
+      "url": "https://www.finops.org/framework/"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    },
+    {
+      "label": "Spotify Engineering — Building a Culture of Cost Awareness with Backstage Cost Insights",
+      "url": "https://backstage.io/blog/2020/10/22/cost-insights-plugin"
+    }
+  ]
+}

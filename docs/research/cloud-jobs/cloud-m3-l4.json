@@ -1,0 +1,120 @@
+{
+  "id": "cloud-m3-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 4,
+  "title": "Four Doors In: Console, CLI, SDK & Infrastructure-as-Code",
+  "estMinutes": 9,
+  "coreIdea": "There are four ways to operate AWS, and as soon as you run more than a toy setup, defining your cloud as code (`Infrastructure-as-Code`) is the one that wins.",
+  "plainEnglish": [
+    "AWS is just a giant set of services you rent — but you still have to tell it what to switch on.",
+    "There are four ways to give those instructions, and they all do the same job through different doors.",
+    "You can click around a website, type commands, write a small program, or hand AWS a written blueprint.",
+    "The first three are great for learning and one-off tasks. The fourth, a written blueprint, is how serious teams run real systems."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of setting up a new office. You can walk around flipping switches and signing for furniture yourself — that's the clicking-around `Console`.",
+      "You can radio precise instructions one at a time to an assistant — that's typing `CLI` commands.",
+      "You can write a script your robot assistant follows — that's the `SDK`, used inside other software.",
+      "Or you can hand a builder one signed floor plan and say 'make the office match this, exactly' — that's `Infrastructure-as-Code`. The plan can rebuild the same office a hundred times without you flipping a single switch. The metaphor bends in one place: the cloud 'office' is rebuilt by software in minutes, not by trades over weeks."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four doors, and what each is for",
+      "teaser": "same building, four entrances",
+      "body": [
+        "Door one is the `Management Console` — the AWS website you click through. Best for learning, looking around, and the occasional manual fix.",
+        "Door two is the `CLI` (Command-Line Interface) — you type commands in a terminal. Faster for repetitive jobs and easy to drop into scripts.",
+        "Door three is the `SDK` (Software Development Kit) — ready-made code libraries so your own application can call AWS directly, for example to save a file when a user clicks 'upload'.",
+        "Door four is `Infrastructure-as-Code` (IaC) — you write a file describing the cloud you want, and a tool builds it for you. The first three change AWS by hand or one call at a time; the fourth treats your whole setup as a single document you can review, version, and replay."
+      ]
+    },
+    {
+      "title": "Why Infrastructure-as-Code wins at scale",
+      "teaser": "the blueprint beats the memory",
+      "body": [
+        "Clicking works for one server. It falls apart at fifty, across three environments, touched by a dozen people.",
+        "With IaC the setup is written down, so it is repeatable — the same file produces an identical environment every time, killing the 'works on my machine' problem.",
+        "It is reviewable — a change goes through the same approval as normal code, so mistakes get caught before they ship.",
+        "And it is reversible — if a change breaks things, you roll back to the previous version of the file. The two best-known tools are AWS's own `CloudFormation` and the multi-cloud `Terraform` by HashiCorp."
+      ]
+    },
+    {
+      "title": "What it looks like in practice, and what it costs",
+      "teaser": "a small walkthrough with illustrative numbers",
+      "body": [
+        "Say you need a basic web setup: one small server, a database, and storage for files. By hand in the Console that is roughly 15 to 20 separate screens, and easy to misconfigure.",
+        "As Infrastructure-as-Code it is one file of about 60 lines. Running it builds everything in a few minutes, and you can spin up identical copies for testing, staging, and production from the same file.",
+        "The AWS resources themselves cost the same either way — illustratively about $50 to $80 a month for a setup this size. Crucially, `CloudFormation` and `Terraform` are free to use; you pay only for the resources they create.",
+        "The real saving is people-time and avoided mistakes: an engineer rebuilding this by hand might take half a day and forget a security setting; the file rebuilds it correctly in minutes. (All figures here are illustrative, not live prices.)"
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Management Console", "def": "The AWS website you log into and click through to turn services on and off by hand." },
+    { "term": "CLI (Command-Line Interface)", "def": "A tool for typing AWS commands in a terminal instead of clicking, so tasks can be scripted and repeated." },
+    { "term": "SDK (Software Development Kit)", "def": "Ready-made code libraries that let your own application talk to AWS directly, for example to upload a file when a user clicks a button." },
+    { "term": "Infrastructure-as-Code (IaC)", "def": "Describing the cloud setup you want in a written file, so a tool can build, rebuild, and tear it down automatically." },
+    { "term": "CloudFormation", "def": "AWS's own Infrastructure-as-Code tool; you give it a template file and it provisions the matching AWS resources." },
+    { "term": "Terraform", "def": "A popular Infrastructure-as-Code tool by HashiCorp that works across AWS and other cloud providers using one common language." }
+  ],
+  "pmAngle": {
+    "body": [
+      "When a team commits to Infrastructure-as-Code, you are trading a little up-front engineering effort for repeatability, faster recovery, and an audit trail of every change to your infrastructure.",
+      "You own that trade-off: the same file that defines the system also defines its cost, so reviewing the IaC is where you catch expensive resources before they ship and rack up the bill.",
+      "Ask 'is this defined as code?' early — manual click-ops is the quiet source of surprise outages and surprise invoices that no one can fully explain."
+    ]
+  },
+  "caseStudy": {
+    "title": "Capital One rebuilds its bank on Infrastructure-as-Code",
+    "body": [
+      "Capital One, one of the largest US banks, moved off its private data centres and onto AWS, closing the last of them in 2020.",
+      "Rather than have engineers click servers into existence, it defined its environments as code so they could be built consistently and reviewed for security before going live.",
+      "Defining infrastructure in version-controlled files let a heavily regulated bank prove what was deployed and replay it reliably across many teams — something hand-clicking thousands of resources could never guarantee."
+    ],
+    "bridge": "At a bank's scale, the written blueprint is not a nicety — it is the only door that is repeatable, reviewable, and reversible enough to trust."
+  },
+  "takeaways": [
+    "Four doors into AWS: click the `Console`, type the `CLI`, code via the `SDK`, or declare it with Infrastructure-as-Code.",
+    "Console and CLI are great for learning and one-offs; the SDK is for apps that call AWS themselves.",
+    "Infrastructure-as-Code (`CloudFormation` or `Terraform`) wins at scale because it is repeatable, reviewable, and reversible.",
+    "The IaC tools are free; you pay only for the AWS resources they create — so the file is also where cost gets controlled."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A team is running fifty servers across test, staging, and production, touched by a dozen engineers. Which door should they primarily use?",
+      "options": [
+        { "text": "Infrastructure-as-Code, so the whole setup is repeatable, reviewable, and reversible", "correct": true },
+        { "text": "The Management Console, because clicking is the most reliable at scale", "correct": false },
+        { "text": "The SDK, because every infrastructure change should live inside the product's own code", "correct": false }
+      ],
+      "feedback": "At scale, a written blueprint can rebuild identical environments and roll back bad changes — clicking by hand cannot."
+    },
+    {
+      "q": "What do CloudFormation and Terraform actually cost to use?",
+      "options": [
+        { "text": "Nothing to use; you pay only for the AWS resources they create", "correct": true },
+        { "text": "A flat monthly licence fee per environment", "correct": false },
+        { "text": "A percentage of your total AWS bill", "correct": false }
+      ],
+      "feedback": "The tools themselves are free. The cost comes from the servers, databases, and storage they provision for you."
+    },
+    {
+      "q": "Which door is designed for your own application to talk to AWS while it runs, like saving a file when a user clicks 'upload'?",
+      "options": [
+        { "text": "The SDK (Software Development Kit)", "correct": true },
+        { "text": "The Management Console", "correct": false },
+        { "text": "Infrastructure-as-Code", "correct": false }
+      ],
+      "feedback": "The SDK gives your app code libraries to call AWS directly; IaC defines infrastructure, and the Console is for clicking by hand."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — What is Infrastructure as Code (IaC)?", "url": "https://aws.amazon.com/what-is/iac/" },
+    { "label": "AWS Well-Architected Framework — Operational Excellence Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/welcome.html" },
+    { "label": "AWS Case Study — Capital One", "url": "https://aws.amazon.com/solutions/case-studies/capital-one/" }
+  ]
+}

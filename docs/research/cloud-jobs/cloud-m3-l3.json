@@ -1,0 +1,162 @@
+{
+  "id": "cloud-m3-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 3,
+  "title": "Global, Regional, Zonal: Which Services Live Where",
+  "estMinutes": 9,
+  "coreIdea": "Every AWS service has a scope — `global`, `regional`, or `zonal` — and that scope quietly decides your resilience, your latency, and your bill.",
+  "plainEnglish": [
+    "AWS is not one giant computer in the sky. It is a set of data centres spread across the world.",
+    "Those data centres are organised into three sizes of building block: a single data centre cluster called an `Availability Zone`, a group of those clusters in one part of the world called a `Region`, and the whole worldwide network on top.",
+    "Each AWS service lives at one of these levels. Some run everywhere at once, some live inside one Region, and some sit in just one zone.",
+    "Knowing which level a service lives at tells you how it fails, how fast it responds, and what it costs to move data around."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a global retail chain. The brand and the website work the same everywhere on earth — that is a `global` service, like AWS's `Route 53` address book.",
+      "Each country has its own warehouse network serving that country — that is a `Region`, a self-contained chunk of AWS in one part of the world.",
+      "Inside each country there are several separate warehouses, far enough apart that one flooding does not take down the others — those are `Availability Zones`.",
+      "The metaphor bends in one place: AWS warehouses in different countries barely talk to each other on purpose, so a problem in one Region rarely spreads. That isolation is a feature, not a flaw."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The three scopes, plainly",
+      "teaser": "global sees everything, regional stays in one country, zonal sits in one building",
+      "body": [
+        "A `global` service is not tied to any one place. Its settings are the same wherever you read them. Identity and access (`IAM`), the `Route 53` address book, and the `CloudFront` content delivery network are global.",
+        "A `regional` service lives inside one Region but spreads itself across that Region's zones for safety. Object storage (`S3`) and many managed databases work this way.",
+        "A `zonal` service runs inside a single Availability Zone. A single virtual server (`EC2 instance`) or a single attached disk (`EBS volume`) lives in exactly one zone. If that zone has trouble, that one resource has trouble."
+      ]
+    },
+    {
+      "title": "Why scope decides resilience and latency",
+      "teaser": "isolation protects you; distance slows you down",
+      "body": [
+        "Resilience means staying up when something breaks. Because zones are physically separate, spreading copies across two or three zones means one zone failing does not take you down.",
+        "Regions are isolated from each other on purpose, so a Region-wide problem does not spill over. That is why critical systems sometimes run in two Regions.",
+        "Latency is the delay before data arrives. The further data travels, the longer the wait. Serving a user from a nearby Region or a nearby `CloudFront` edge feels instant; serving them from across the planet feels sluggish."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a worked example with illustrative figures",
+      "body": [
+        "Say you run an app on three `EC2` servers, one in each of three zones in the Sydney Region, behind a load balancer. If one zone fails, the other two keep serving — that is zonal redundancy.",
+        "Moving data between zones in the same Region is cheap but not free. In this example, cross-zone transfer might run at roughly $0.01 per gigabyte each way, so a chatty app shuffling 10,000 GB a month between zones could add about $100–$200 to the bill — a number teams often miss.",
+        "Copying data out to a second Region for disaster recovery is pricier: inter-Region transfer in this example sits around $0.02 per gigabyte, so replicating 10,000 GB a month costs roughly $200. Serving users through a `CloudFront` edge can be cheaper than serving straight from a far-away Region, because the data travels less distance. These are illustrative figures — always check the live AWS pricing page.",
+        "The lesson: the same workload can cost noticeably more or less depending only on where its pieces sit and how often they talk across zone or Region lines."
+      ]
+    },
+    {
+      "title": "How to read a service's scope",
+      "teaser": "the console and the docs tell you, if you know where to look",
+      "body": [
+        "In the AWS console, a Region selector sits in the top-right corner. If switching it changes what you see, that service is regional. If your settings look identical no matter what you pick, it is global.",
+        "The AWS documentation states each service's scope directly. When in doubt, assume regional — that is the most common case — and confirm before you design around it.",
+        "This single habit stops a classic mistake: assuming a backup in another Region is automatically protected by a global setting, when in fact you must copy the data there yourself."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Availability Zone (AZ)",
+      "def": "One or more physically separate data centres inside a Region, with their own power and networking, placed far enough apart that one failing does not knock out the others."
+    },
+    {
+      "term": "Region",
+      "def": "A named geographic area (such as Sydney or Ireland) that contains several Availability Zones and acts as a self-contained, isolated chunk of AWS."
+    },
+    {
+      "term": "Global service",
+      "def": "An AWS service whose settings are the same everywhere and are not tied to any single Region — for example `IAM`, `Route 53`, and `CloudFront`."
+    },
+    {
+      "term": "Latency",
+      "def": "The delay between asking for data and receiving it; it grows with physical distance, so nearer usually means faster."
+    },
+    {
+      "term": "Data transfer cost",
+      "def": "The charge AWS applies for moving data between zones, between Regions, or out to the internet; staying local is cheaper than crossing those lines."
+    },
+    {
+      "term": "Edge location",
+      "def": "A small AWS site close to end users, used by `CloudFront` to cache content so it travels a shorter distance and arrives faster."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Scope is a cost-and-risk lever a product leader owns, not an engineering detail to wave through. Choosing to run in two Regions buys you protection from a Region-wide outage, but you pay for it twice over in compute and in cross-Region data transfer.",
+      "The trade-off you own is how much resilience the product actually needs versus what it costs to keep duplicate copies talking across zones and Regions. Ask engineers where the data lives and how often it crosses those lines — that is usually where surprise spend hides."
+    ]
+  },
+  "caseStudy": {
+    "title": "The December 2021 US-EAST-1 outage",
+    "body": [
+      "On 7 December 2021, AWS's `US-EAST-1` Region in Northern Virginia suffered a major outage that took down parts of Netflix, Disney+, Ticketmaster, and Amazon's own delivery operations for hours.",
+      "Because so many companies ran critical systems in that one Region — and because some global control features are operated from it — the blast radius was huge. Teams that had spread workloads across multiple Regions weathered it far better than those concentrated in one.",
+      "AWS's own status tooling was partly affected too, which slowed everyone's understanding of what was happening."
+    ],
+    "bridge": "The outage was a live demonstration that a Region is an isolation boundary: putting all your eggs in one Region means one Region's bad day becomes your bad day."
+  },
+  "takeaways": [
+    "Every AWS service is global, regional, or zonal — and that scope is not a detail, it is a design decision.",
+    "Spreading across zones protects against one data centre failing; spreading across Regions protects against a whole Region failing.",
+    "Data that crosses zone or Region lines costs money, and that cost scales with how chatty your app is.",
+    "When unsure of a service's scope, assume regional and confirm in the AWS docs before designing around it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A single `EC2` virtual server and its attached `EBS` disk live at which scope?",
+      "options": [
+        { "text": "Zonal — inside one Availability Zone", "correct": true },
+        { "text": "Global — available identically everywhere", "correct": false },
+        { "text": "Regional — automatically spread across the whole Region", "correct": false }
+      ],
+      "feedback": "Correct. A single EC2 instance and its EBS volume sit in one Availability Zone, so if that zone has trouble, that resource does too. Resilience comes from running copies in more than one zone."
+    },
+    {
+      "q": "Why does AWS keep Regions isolated from one another on purpose?",
+      "options": [
+        { "text": "So that a problem in one Region does not spill over and affect the others", "correct": true },
+        { "text": "To force customers to pay for data transfer between Regions", "correct": false },
+        { "text": "Because the Regions run completely different software versions", "correct": false }
+      ],
+      "feedback": "Right. Region isolation contains failures, which is exactly why running critical systems in a second Region protects against a Region-wide outage like US-EAST-1 in 2021."
+    },
+    {
+      "q": "Which of these is a genuinely `global` AWS service?",
+      "options": [
+        { "text": "`Route 53`, the DNS address-book service", "correct": true },
+        { "text": "An `S3` storage bucket", "correct": false },
+        { "text": "An `EBS` disk volume", "correct": false }
+      ],
+      "feedback": "Route 53 is global — its records resolve the same everywhere. S3 buckets are regional and EBS volumes are zonal, so both are tied to a place."
+    },
+    {
+      "q": "Your app shuffles a lot of data between zones in the same Region. What should you expect on the bill?",
+      "options": [
+        { "text": "A modest but real cross-zone data transfer charge that grows with volume", "correct": true },
+        { "text": "Nothing — transfer inside a Region is always completely free", "correct": false },
+        { "text": "The same high charge as sending data out to the public internet", "correct": false }
+      ],
+      "feedback": "Cross-zone transfer is cheap per gigabyte but not free, so a chatty app moving large volumes can quietly add a meaningful amount each month. It is still cheaper than internet egress."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Regions, Availability Zones, and Local Zones (official docs)",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html"
+    },
+    {
+      "label": "AWS — Global Infrastructure overview",
+      "url": "https://aws.amazon.com/about-aws/global-infrastructure/"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Reliability Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "id": "cloud-m6-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 5,
+  "title": "Why Cloud Cost Is Different: Variable, Decentralized & Engineer-Driven",
+  "estMinutes": 9,
+  "coreIdea": "Cloud spend is variable, decentralized, and set by engineers' daily choices — so it behaves like a usage meter you read after the fact, not a fixed budget you sign off once a year.",
+  "plainEnglish": [
+    "In the old world, you bought servers up front and put them in a room. The bill was big, fixed, and decided once a year by a few senior people.",
+    "In the cloud, you rent computing power by the second and pay only for what you use. There is almost nothing to buy up front.",
+    "That flips the cost model in three ways. Spending goes up and down hour by hour. It is spread across many teams instead of one budget. And the people steering it are the engineers writing code, not the finance team.",
+    "`FinOps` is the discipline that brings finance, engineering, and product back to one table so those daily choices add up to spending you actually meant."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A traditional data center is like buying a car. You pay a large sum once, you own it, and your monthly cost is roughly fixed whether you drive it or leave it parked.",
+      "The cloud is like a city of ride-shares with hundreds of staff who can all order a car at any moment, on the company account. Each ride is cheap and instant, so nobody hesitates. But the bill is the sum of thousands of small decisions made by people who never see the total.",
+      "The metaphor bends in one helpful way: unlike a ride-share, a forgotten cloud resource keeps running and charging you 24/7 until someone notices and turns it off."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Variable: the meter runs by the second",
+      "teaser": "from a fixed annual cheque to a live usage meter",
+      "body": [
+        "On-premises hardware is a `capital expense` — a big up-front purchase you depreciate over years. The number is known and fixed.",
+        "Cloud is an `operating expense` — you pay per second or per gigabyte for exactly what you consume, like electricity.",
+        "This is powerful: when traffic spikes you scale up in minutes, and when it drops you scale down and stop paying. But it also means the bill is not knowable in advance — it is the running total of usage you have not finished generating yet."
+      ]
+    },
+    {
+      "title": "Decentralized: hundreds of small hands on the dial",
+      "teaser": "no single gatekeeper signs off spend anymore",
+      "body": [
+        "Buying a physical server used to require a purchase order and a manager's signature. That friction was an accidental cost control.",
+        "In the cloud, any engineer with access can launch a database or a fleet of servers with one command or a few clicks. The friction is gone.",
+        "So spend is now spread across dozens of teams, services, and accounts. No single person sees or approves the whole picture, which is why visibility — knowing who spent what and why — becomes the first job of FinOps."
+      ]
+    },
+    {
+      "title": "Engineer-driven: cost is now a design decision",
+      "teaser": "the bill is written in code, not in the budget meeting",
+      "body": [
+        "The choices that set your bill are technical and made daily. Which instance size? How many copies for safety? How long do we keep old data? Do we leave the test environment running overnight?",
+        "Each of those is an engineering decision, often made in seconds, that quietly moves the monthly bill.",
+        "This is why FinOps insists engineers see the cost of their choices, ideally near-real-time. You cannot ask people to spend wisely if the price tag only arrives in a finance report 30 days later."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "one forgotten checkbox, a four-figure surprise",
+      "body": [
+        "Imagine an engineer spins up a test `EC2` virtual server to reproduce a bug on a Friday. They pick a large instance, roughly $0.40 per hour in this example, and forget to shut it down.",
+        "Left running, that single box costs about $0.40 × 24 × 30 ≈ $288 a month — for nothing. Now imagine 20 such forgotten resources across teams: roughly $5,700 a month, about $69,000 a year, with no purchase order anywhere.",
+        "Compare that to the data-center past: buying an equivalent server was one visible $4,000 purchase that a manager approved. Same money, but in the cloud it arrived as 20 invisible decisions nobody signed off.",
+        "The fix is not heroics. It is `tagging` (labelling each resource with its team and purpose), shared dashboards, and automatic shutdown of idle test environments — the everyday machinery of FinOps."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "FinOps",
+      "def": "A practice that brings finance, engineering, and product together to manage cloud spending as a shared, ongoing responsibility — not a once-a-year budget."
+    },
+    {
+      "term": "Capital expense (CapEx)",
+      "def": "A large up-front purchase of an asset you own and use for years, like buying physical servers for a data center."
+    },
+    {
+      "term": "Operating expense (OpEx)",
+      "def": "An ongoing pay-as-you-go cost for something you rent or consume, like paying the cloud per second of compute used."
+    },
+    {
+      "term": "On-premises (on-prem)",
+      "def": "Running your own servers in your own building or rented rack, instead of renting capacity from a cloud provider."
+    },
+    {
+      "term": "Tagging",
+      "def": "Labelling each cloud resource with metadata — such as team, project, or environment — so costs can be traced back to who created them and why."
+    },
+    {
+      "term": "Showback / Chargeback",
+      "def": "Reporting cloud costs back to the team that caused them. Showback just shows the number; chargeback actually bills the team's budget."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, cloud cost is no longer someone else's spreadsheet — it is a feature of your roadmap that your engineers ship daily. The trade-off you own is speed versus spend: the same freedom that lets a team launch a feature in an afternoon is what lets cost drift unnoticed.",
+      "Your job is to make cost visible and owned, not to slow engineers down. Insist on tagging and showback so each team sees its own bill, and treat a surprising cloud invoice the way you would a quality incident — as a signal that ownership, not willpower, was missing."
+    ]
+  },
+  "caseStudy": {
+    "title": "Adobe's $80,000-a-day surprise",
+    "body": [
+      "Adobe engineers ran a machine-learning job on Microsoft Azure that, through a misconfiguration, kept scaling up resources far beyond what was intended.",
+      "Because cloud spend is variable and decentralized, the cost climbed to roughly $80,000 per day before anyone caught it — a documented example used in FinOps training to show how fast unmanaged usage compounds.",
+      "There was no faulty hardware and no signed purchase order. It was ordinary engineering choices, running unwatched, on a meter that never stops."
+    ],
+    "bridge": "Variable spend made the cost climb, decentralization meant no one was watching the total, and an engineer's configuration set it in motion — the three forces of cloud cost in a single bill."
+  },
+  "takeaways": [
+    "Cloud cost is variable (a live meter), decentralized (many teams), and engineer-driven (set in code) — the opposite of a fixed annual data-center budget.",
+    "The old purchase-order friction that controlled spend is gone, so visibility and ownership must replace it.",
+    "Engineers' daily technical choices — instance size, idle resources, data retention — are the real cost levers.",
+    "FinOps exists to put finance, engineering, and product at one table and make those choices visible in near-real-time."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core difference between traditional data-center cost and cloud cost?",
+      "options": [
+        {
+          "text": "Cloud spend is variable, decentralized, and driven by engineers' daily choices, rather than a fixed budget decided up front",
+          "correct": true
+        },
+        {
+          "text": "Cloud is always cheaper, so cost management is no longer needed",
+          "correct": false
+        },
+        {
+          "text": "Cloud cost is still a single fixed annual purchase, just paid to a different vendor",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the shift from a fixed up-front purchase to a variable, many-hands, code-driven meter is exactly why FinOps exists."
+    },
+    {
+      "q": "Why does removing the old 'purchase-order' step make cost control harder in the cloud?",
+      "options": [
+        {
+          "text": "Any engineer can now launch costly resources instantly, so no single gatekeeper sees or approves total spend",
+          "correct": true
+        },
+        {
+          "text": "Cloud providers hide the bill until the end of the year",
+          "correct": false
+        },
+        {
+          "text": "Engineers are not allowed to see cost data at all",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — that purchasing friction was an accidental control. Removing it speeds teams up but spreads spend across many hands, so visibility must be rebuilt deliberately."
+    },
+    {
+      "q": "An engineer leaves a test server running over a weekend. Why is that a bigger problem in the cloud than on-premises?",
+      "options": [
+        {
+          "text": "The cloud meter keeps charging by the second for as long as the resource runs, even when it is doing nothing useful",
+          "correct": true
+        },
+        {
+          "text": "Cloud servers physically wear out faster when left on",
+          "correct": false
+        },
+        {
+          "text": "On-premises servers also send a new invoice every hour they run",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — an owned on-prem server costs the same whether on or off, but a cloud resource bills continuously, so idle waste accumulates silently."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — What is FinOps?",
+      "url": "https://www.finops.org/introduction/what-is-finops/"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    },
+    {
+      "label": "AWS Cloud Financial Management — Pay-as-you-go pricing",
+      "url": "https://aws.amazon.com/pricing/"
+    }
+  ]
+}

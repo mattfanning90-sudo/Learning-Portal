@@ -1,0 +1,126 @@
+{
+  "id": "cloud-m1-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 5,
+  "title": "Where the Cloud Physically Lives: Regions, Availability Zones & Edge",
+  "estMinutes": 9,
+  "coreIdea": "The cloud is real buildings full of computers in specific places on Earth, and *where* you run things quietly decides how fast, how legal, and how reliable your service is.",
+  "plainEnglish": [
+    "The cloud is not floating in the sky. It is physical buildings called data centres, full of computers, in known locations around the world.",
+    "Big cloud providers group those buildings into `Regions` (a metro area like Sydney) and, inside each Region, separate clusters called `Availability Zones`.",
+    "They also place much smaller `edge` locations close to users, near big cities, to deliver content quickly.",
+    "Choosing where your software runs shapes three things: how fast it feels, which laws apply to your data, and how well it survives a failure."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a national supermarket chain. A `Region` is a whole city it operates in, like Sydney. Inside that city it runs several separate warehouses, far enough apart that one flood cannot soak them all — those are the `Availability Zones`.",
+      "The small corner shops near every neighbourhood are the `edge` locations: tiny, close to you, stocked only with the popular items so you get them fast.",
+      "The metaphor bends in one place: the warehouses are deliberately close enough to talk to each other in milliseconds, which a real supermarket would not need."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Regions, Zones and Edge: three sizes of 'somewhere'",
+      "teaser": "one big place, a few buildings inside it, and tiny outposts everywhere",
+      "body": [
+        "A `Region` is a geographic area, usually a metro, where a provider clusters its data centres. AWS names them like `ap-southeast-2` (Sydney) or `us-east-1` (Northern Virginia).",
+        "Inside each Region sit multiple `Availability Zones` (often called `AZ`s) — one or more separate data centres with their own power and cooling, placed miles apart but linked by fast private fibre.",
+        "`Edge` locations are a separate, much larger network of small sites. They cache copies of your content close to users so a video or web page loads from nearby, not from across an ocean.",
+        "Rule of thumb: a Region is a city, an AZ is a building in that city, an edge location is a kiosk down your street."
+      ]
+    },
+    {
+      "title": "Why placement decides speed, law and survival",
+      "teaser": "the same app can be fast or slow, legal or not, alive or down",
+      "body": [
+        "Speed: data travels at the speed of light, so distance is `latency`. A user in Sydney hitting a server in Virginia waits roughly 200 milliseconds per round trip just for the distance — placing the server in Sydney cuts that to a handful.",
+        "Law: many countries require certain data to stay inside their borders. This is `data residency`. Picking a Region is how you keep, say, Australian health records physically in Australia.",
+        "Survival: spreading copies across multiple AZs means one building losing power does not take you down. This is `high availability`. Spreading across whole Regions protects against a rare event that hits an entire metro."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (with illustrative numbers)",
+      "teaser": "a simple two-zone setup and roughly what it costs",
+      "body": [
+        "Imagine a small Australian booking app. It runs two copies of its servers, one in each of two AZs in the Sydney Region, behind a load balancer that splits traffic between them.",
+        "If one AZ goes dark, the other keeps serving — that redundancy is the price of staying online. In this example each server costs roughly $70 per month, so running two instead of one adds about $70 a month for resilience.",
+        "Storing customer data in the Sydney Region (not the cheaper US Region) satisfies data residency. The Sydney Region may run a little pricier, perhaps 5–10% more in this illustration, which is a real trade-off you accept for compliance.",
+        "To speed up images for users, they put a `CDN` (content delivery network) in front, serving cached files from edge locations. Edge data transfer might run around $0.10 per gigabyte in this example — small per file, but worth watching at scale."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Region", "def": "A geographic area, usually a metro like Sydney, where a cloud provider clusters its data centres. You pick a Region to control where your software and data physically live." },
+    { "term": "Availability Zone (AZ)", "def": "One or more separate data centres inside a Region, each with its own power and cooling, placed far enough apart to fail independently but linked by fast private fibre." },
+    { "term": "Edge / CDN", "def": "A large network of small sites near users that cache copies of your content. A content delivery network (CDN) uses them so files load from nearby instead of from a distant Region." },
+    { "term": "Latency", "def": "The delay before data arrives, mostly caused by physical distance. Shorter distance means lower latency, which makes an app feel snappier." },
+    { "term": "Data residency", "def": "A legal or policy requirement that data physically stays inside a particular country or area. You meet it by choosing a Region in the right place." },
+    { "term": "High availability", "def": "Designing a system so it keeps working even when one part fails, usually by running copies across multiple Availability Zones." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Region and AZ choices are a cost-versus-risk decision a product leader owns, not just an engineering detail. Spreading across more zones and Regions buys resilience, but you literally pay for the duplicate servers, storage and cross-Region data transfer that make it possible.",
+      "Data residency is usually non-negotiable: legal and compliance say which Region is allowed, and that can rule out a cheaper one. Your job is to name the trade-off out loud — 'this design adds about X per month and survives a zone outage' — so the room decides on purpose, not by accident."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2017 S3 outage in us-east-1",
+    "body": [
+      "On 28 February 2017, AWS's storage service `S3` had a major outage in its `us-east-1` Region in Northern Virginia. A typo during routine maintenance took far more servers offline than intended.",
+      "Because so many companies had concentrated their systems in that single Region, sites and apps across the internet — from Slack to news outlets to smart-home devices — broke at the same time.",
+      "Teams that had spread their workloads across multiple Regions rode it out; many that depended on one Region simply went down with it."
+    ],
+    "bridge": "It is a vivid reminder that the cloud lives in specific buildings in specific places — and that where you choose to run quietly decides whether one bad day takes you offline."
+  },
+  "takeaways": [
+    "A Region is a city, an Availability Zone is a building in it, an edge location is a kiosk down the street.",
+    "Where you run decides three things at once: latency (speed), data residency (law), and availability (survival).",
+    "Resilience is bought, not free — multiple zones and Regions mean paying for duplicate capacity and data transfer.",
+    "Concentrating everything in one Region is convenient until that Region has a bad day."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the difference between a Region and an Availability Zone?",
+      "options": [
+        { "text": "A Region is a geographic area like a metro; an Availability Zone is one or more separate data centres inside that Region.", "correct": true },
+        { "text": "A Region is a single building; an Availability Zone is the whole continent it sits in.", "correct": false },
+        { "text": "They are two names for exactly the same thing.", "correct": false }
+      ],
+      "feedback": "A Region is the city-sized area; the Availability Zones are the independent data centres inside it, placed apart so they fail separately."
+    },
+    {
+      "q": "Your law team says Australian customer data must physically stay in Australia. Which concept does this require you to honour when choosing where to run?",
+      "options": [
+        { "text": "Data residency — choosing a Region located in Australia.", "correct": true },
+        { "text": "Latency — picking the server with the fastest network card.", "correct": false },
+        { "text": "Edge caching — putting a CDN in front of the app.", "correct": false }
+      ],
+      "feedback": "Data residency is met by selecting a Region in the right country. Latency and edge caching are about speed, not where data legally lives."
+    },
+    {
+      "q": "Why does running your app across two Availability Zones instead of one cost more?",
+      "options": [
+        { "text": "You pay for duplicate servers and capacity so the app survives if one zone fails.", "correct": true },
+        { "text": "Cloud providers charge a fixed fine for using more than one zone.", "correct": false },
+        { "text": "A second zone makes every request twice as slow, so you pay a speed penalty.", "correct": false }
+      ],
+      "feedback": "High availability is bought: the extra cost is the duplicate capacity in the second zone that keeps you online during an outage."
+    },
+    {
+      "q": "What is the main job of an edge location (CDN)?",
+      "options": [
+        { "text": "Cache copies of content close to users so it loads quickly from nearby.", "correct": true },
+        { "text": "Permanently store the only copy of your most sensitive database.", "correct": false },
+        { "text": "Replace your Region so you no longer need any data centre.", "correct": false }
+      ],
+      "feedback": "Edge locations are small, nearby caches that cut distance and speed up delivery. Your authoritative data still lives in a Region."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — Global Infrastructure: Regions and Availability Zones", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/" },
+    { "label": "AWS Well-Architected Framework — Reliability Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html" },
+    { "label": "Amazon — Summary of the S3 Service Disruption in US-EAST-1 (Feb 2017)", "url": "https://aws.amazon.com/message/41926/" }
+  ]
+}

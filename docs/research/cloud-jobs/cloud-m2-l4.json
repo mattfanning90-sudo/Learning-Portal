@@ -1,0 +1,142 @@
+{
+  "id": "cloud-m2-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m2",
+  "order": 4,
+  "title": "Locks Everywhere: Encryption at Rest and in Transit, in Plain English",
+  "estMinutes": 9,
+  "coreIdea": "Encryption scrambles your data so only someone with the right key can read it — at rest while it sits in storage, and in transit while it travels — and on AWS a managed key service called `KMS` holds and guards those keys for you.",
+  "plainEnglish": [
+    "Encryption means scrambling readable data into nonsense that only the right key can turn back.",
+    "Without the key, what an attacker steals is just gibberish.",
+    "Your data spends its life in two states. It sits still in storage — that is data \"at rest.\" It moves across networks — that is data \"in transit.\"",
+    "You want both states locked, because a thief can grab data from a disk or snatch it off the wire.",
+    "The hard part isn't the scrambling — it's safely managing the keys, which is exactly what a managed key service does for you."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a sensitive document. Encryption at rest is locking it in a safe while it sits in your office overnight.",
+      "Encryption in transit is putting it in a locked, tamper-proof courier pouch while a driver carries it across town.",
+      "You want both locks: a safe protects against a break-in, but does nothing for a document grabbed mid-delivery, and the courier pouch does the reverse.",
+      "Where the metaphor bends: digital \"locks\" don't slow you down like a physical safe — modern encryption is so fast it's effectively always on."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "At rest vs in transit: two places data can be stolen",
+      "teaser": "lock the safe and lock the courier pouch",
+      "body": [
+        "`Encryption at rest` protects data while it is stored — on a hard drive, in a database, or in a file-storage bucket. If someone walks off with the disk, they get scrambled nonsense.",
+        "`Encryption in transit` protects data while it moves between two points, such as your phone and a website. If someone taps the network cable in between, they still can't read it.",
+        "You need both, because they defend against different attacks. A safe doesn't help a document stolen in the post, and a locked pouch doesn't help one stolen from the office.",
+        "On the web, encryption in transit is what `TLS` does — Transport Layer Security, the technology behind the padlock and the `https` in your browser's address bar."
+      ]
+    },
+    {
+      "title": "The whole game is the keys",
+      "teaser": "scrambling is easy; guarding the key is the hard part",
+      "body": [
+        "An `encryption key` is a secret string of data used to scramble and unscramble information. Hold the key and you can read the data; lose it and you can't; let it leak and so can an attacker.",
+        "So the real challenge isn't the maths of scrambling — it's storing keys safely, rotating them, and controlling who may use them.",
+        "Doing this by hand is risky and easy to get wrong, like hiding a spare house key under the doormat.",
+        "This is why cloud providers offer a `managed key service` — a purpose-built vault that creates, stores, and guards your keys, and logs every single use."
+      ]
+    },
+    {
+      "title": "How KMS works, conceptually",
+      "teaser": "you never hold the master key — the vault uses it for you",
+      "body": [
+        "On AWS the managed key service is `KMS`, short for Key Management Service. Think of it as a guarded vault for your keys.",
+        "The master key inside KMS never leaves the vault. Instead of handing it out, KMS uses a clever trick called `envelope encryption`.",
+        "Here's the trick: a small \"data key\" scrambles your actual data, and the KMS master key then scrambles that data key. So the locked data travels with its own locked key beside it.",
+        "To read the data, a service asks KMS to unlock the data key first — and KMS only says yes if your `IAM` permissions allow it. Every request is checked and logged."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a clinic turns on encryption for its patient records (illustrative figures)",
+      "body": [
+        "Imagine a small clinic storing patient records in `S3`, AWS's file-storage service, behind a web app. They want both kinds of encryption on.",
+        "At rest: they switch on S3 encryption and point it at a KMS key. Files are scrambled on disk automatically; staff using the app never notice. In transit: the app already uses `https`/TLS, so records are scrambled as they travel to the browser.",
+        "On cost, the encryption itself is cheap. A customer-managed KMS key runs about $1 per month in this example, plus roughly $0.03 per 10,000 unlock requests — so a clinic doing tens of thousands of requests a month might pay only a few dollars.",
+        "Compare that with the downside of skipping it: a single breach of unencrypted health records can trigger fines and notification costs running into the millions. A few dollars of encryption is one of the cheapest forms of insurance in the cloud.",
+        "These figures are illustrative, not live prices — but the shape is real: encryption is nearly free, and going without it is what gets expensive."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Encryption", "def": "Scrambling readable data into nonsense that only the correct key can turn back into the original. Without the key, what you have is unreadable." },
+    { "term": "Encryption at rest", "def": "Protecting data while it is stored — on a disk, in a database, or in a storage bucket — so a stolen drive yields only gibberish." },
+    { "term": "Encryption in transit", "def": "Protecting data while it moves between two points, such as your laptop and a website, so it can't be read if intercepted on the network." },
+    { "term": "Encryption key", "def": "A secret string of data used to scramble and unscramble information. Whoever holds the key can read the data, which is why keys must be guarded." },
+    { "term": "KMS (Key Management Service)", "def": "The AWS service that acts as a guarded vault for your encryption keys — it creates, stores, controls access to, and logs the use of your keys." },
+    { "term": "TLS (Transport Layer Security)", "def": "The standard technology that encrypts data in transit on the web. It is what the padlock and the \"https\" in your browser's address bar represent." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Encryption at rest and in transit is cheap to switch on but expensive to omit, so the trade-off a product leader owns is a few dollars of key management versus the breach-and-fine risk of plaintext data.",
+      "Decide who owns the key policy — usually a security or platform team — and treat \"encrypted by default, with KMS-managed keys\" as a baseline requirement rather than a feature to schedule later.",
+      "Be clear who pays and who is accountable: under the shared responsibility model AWS gives you the encryption tools, but turning them on and controlling key access is your job, and that ownership is what auditors and customers will ask about."
+    ]
+  },
+  "caseStudy": {
+    "title": "AWS encrypts S3 by default after years of public-bucket leaks",
+    "body": [
+      "For years, misconfigured `S3` storage buckets caused headline data leaks — including a 2017 exposure of records on roughly 198 million US voters left in an unencrypted, publicly readable bucket by a contractor named Deep Root Analytics.",
+      "These incidents pushed encryption from an opt-in extra toward a default. In January 2023, AWS announced that all new objects uploaded to S3 are now encrypted at rest automatically, at no extra cost.",
+      "Customers can still choose KMS-managed keys for tighter control and audit logging, but the floor was raised so that \"forgot to turn it on\" stops being a way to leak data.",
+      "Pairing that at-rest default with TLS in transit means data is locked in both states by design, not by luck."
+    ],
+    "bridge": "Making encryption the default for stored data is the core idea in action: lock data at rest and in transit so a stolen copy is just gibberish."
+  },
+  "takeaways": [
+    "Encryption scrambles data so only the key holder can read it — protect it at rest in storage and in transit on the network.",
+    "Scrambling is the easy part; safely managing the keys is the real challenge, which is what a managed key service solves.",
+    "On AWS, KMS guards your keys and uses envelope encryption so the master key never leaves the vault and every use is logged.",
+    "Encryption costs a few dollars to enable but going without it risks breaches and fines in the millions — cheap insurance."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the difference between encryption at rest and encryption in transit?",
+      "options": [
+        { "text": "At rest protects data while it is stored; in transit protects data while it moves across a network.", "correct": true },
+        { "text": "At rest protects data while it moves; in transit protects data while it is stored.", "correct": false },
+        { "text": "They are two names for the same single protection.", "correct": false }
+      ],
+      "feedback": "At rest is the safe for stored data; in transit is the locked courier pouch for data on the move. They defend against different attacks, so you want both."
+    },
+    {
+      "q": "Why is managing the keys considered the hard part of encryption?",
+      "options": [
+        { "text": "Because anyone who gets the key can read the data, so keys must be stored, rotated, and access-controlled carefully.", "correct": true },
+        { "text": "Because the maths of scrambling data is impossible for modern computers.", "correct": false },
+        { "text": "Because encryption keys must be typed in by hand every time data is read.", "correct": false }
+      ],
+      "feedback": "Scrambling is fast and well understood; the risk is the key. A leaked or badly stored key lets an attacker unscramble everything, which is why a managed service guards it."
+    },
+    {
+      "q": "What does envelope encryption let KMS do?",
+      "options": [
+        { "text": "Use a master key that never leaves the vault to scramble a smaller data key, which in turn scrambles your actual data.", "correct": true },
+        { "text": "Send your master key out to every server so each one can decrypt data locally.", "correct": false },
+        { "text": "Avoid using any keys at all by hiding the data instead.", "correct": false }
+      ],
+      "feedback": "The master key stays inside KMS. It scrambles a data key that scrambles your data, so a service asks KMS to unlock the data key — and only if its IAM permissions allow it."
+    },
+    {
+      "q": "A clinic stores patient files in S3 with KMS encryption on and serves them over https. Roughly what is the cost picture?",
+      "options": [
+        { "text": "A few dollars a month for encryption, which is cheap insurance against breach fines that can run into the millions.", "correct": true },
+        { "text": "Encryption typically costs more than the storage and bandwidth it protects.", "correct": false },
+        { "text": "Encryption is free but requires buying dedicated hardware in the clinic.", "correct": false }
+      ],
+      "feedback": "A managed key is about a dollar a month plus a small per-request fee in this example, while an unencrypted health-record breach can cost millions — so encryption is among the cheapest protections available."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — KMS concepts: envelope encryption", "url": "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" },
+    { "label": "AWS News — Amazon S3 encrypts new objects by default (Jan 2023)", "url": "https://aws.amazon.com/blogs/aws/amazon-s3-encrypts-new-objects-by-default/" },
+    { "label": "AWS Well-Architected Framework — Security Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" }
+  ]
+}

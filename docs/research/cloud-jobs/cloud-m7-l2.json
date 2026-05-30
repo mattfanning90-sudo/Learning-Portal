@@ -1,0 +1,158 @@
+{
+  "id": "cloud-m7-l2",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 2,
+  "title": "Unit Economics: Cost per Customer, Feature & Transaction",
+  "estMinutes": 9,
+  "coreIdea": "A total cloud bill tells you almost nothing; dividing that bill by the thing the business actually sells — a customer, a feature, a transaction — turns spend into a number that grows or shrinks for a reason you can explain.",
+  "plainEnglish": [
+    "Your cloud bill is one big number. It went up. But did it go up because the business is winning, or because something is wasteful?",
+    "On its own, the total can't answer that. A bigger bill is good news if you doubled your customers, and bad news if you didn't.",
+    "Unit economics fixes this. You take the cost and divide it by the unit that matters to the business — one customer, one feature, one transaction.",
+    "Now you have a `unit cost`: a number like \"about $0.40 per customer per month\" that you can track, compare, and defend.",
+    "This is the metric that scales with the business, because it answers the only question leadership really asks: are we getting more efficient as we grow, or less?"
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a restaurant's monthly electricity bill. If the owner only ever looks at the total, a rising bill is terrifying — costs are out of control.",
+      "But divide that bill by the number of meals served, and you get \"cost of power per meal.\" Suddenly the picture is clear: if you served twice as many meals for a 20% bigger bill, your cost per meal fell, and that is a triumph, not a crisis.",
+      "Unit economics in the cloud is exactly this division. The total is the scary headline; the cost-per-meal is the truth.",
+      "Where the metaphor bends: a restaurant's power use is roughly steady, but cloud costs can be wired directly to usage — so in the cloud the cost per unit is often more controllable, and more revealing, than in a kitchen."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the total bill is a liar",
+      "teaser": "the same number can mean opposite things",
+      "body": [
+        "A total cost has no context. A 30% rise could be growth, or it could be a memory leak quietly burning money.",
+        "Finance can't tell those apart from the total, and neither can you.",
+        "A `unit cost` puts the spend next to the business activity that drove it. That single division is what makes the number honest.",
+        "It also lets you compare across time and across teams fairly, because you're measuring efficiency, not just size."
+      ]
+    },
+    {
+      "title": "Three units, three different questions",
+      "teaser": "customer, feature, transaction — pick the one that maps to a decision",
+      "body": [
+        "Cost per customer answers: as we sign up more customers, are we getting cheaper to run, or more expensive? This is the unit a `SaaS` (software-as-a-service) business lives or dies on.",
+        "Cost per feature answers: is this specific capability worth what it costs to keep running? A feature loved by 1% of users but costing 30% of the bill is a candidate for the chop.",
+        "Cost per transaction answers: does each order, ride, or payment we process actually make money once infrastructure is paid for? This is the marginal-cost question.",
+        "The skill isn't computing all three — it's choosing the unit that maps to the decision you're trying to make."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a worked example with illustrative numbers",
+      "body": [
+        "Imagine a B2B app. Last month its cloud bill was about $50,000 (all figures illustrative). It served 25,000 active customers, so cost per customer was roughly $2.00.",
+        "To get there you need `tagging` — labels on each resource saying which team, product, and environment it belongs to — plus shared costs (logging, networking) split fairly across customers.",
+        "This month the bill is about $60,000, up 20%, which looks alarming on its own. But active customers grew to 40,000. Cost per customer actually fell to about $1.50 — a 25% efficiency gain.",
+        "Now zoom into one feature: a new AI-powered search costs roughly $9,000 a month yet is used by about 800 customers. That's about $11.25 per user of that feature — far above the $1.50 average. That's the conversation FinOps exists to start: keep it, price for it, or optimize it.",
+        "FinOps Foundation calls this practice unit economics, and treats it as the most mature thing a cost program can do."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Unit economics",
+      "def": "Looking at cost (and revenue) per single unit of the business — one customer, one order, one feature — instead of as one lump sum, so you can see whether growth is making you more or less efficient."
+    },
+    {
+      "term": "Unit cost / cost-per-X",
+      "def": "The number you get when you divide spend by a meaningful business unit, e.g. cost per customer or cost per transaction. The 'X' is whatever the business actually counts."
+    },
+    {
+      "term": "FinOps",
+      "def": "Short for 'Financial Operations.' A practice where engineering, finance, and product share responsibility for cloud spending, so cost becomes an everyday decision-making input rather than a once-a-month surprise."
+    },
+    {
+      "term": "Tagging / cost allocation",
+      "def": "Labelling each cloud resource (e.g. 'team=payments', 'env=prod') so the bill can be split and attributed to the right product, team, or customer. Without it, you can't compute a trustworthy cost-per-X."
+    },
+    {
+      "term": "Marginal cost",
+      "def": "The extra cost of serving one more unit — one more customer or transaction. If marginal cost is below what that unit earns, growth is profitable; if it's above, growth loses money."
+    },
+    {
+      "term": "SaaS",
+      "def": "Software-as-a-Service: software you rent over the internet (like Slack or Salesforce) instead of installing. These businesses care intensely about cost per customer because they grow by adding customers."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "A product leader uses unit cost to decide which features earn their keep and how to price them — if a feature costs $11 per user but the plan it sits in earns $9, someone is losing money on every signup, and the product owner owns that trade-off.",
+      "It also settles the 'who pays?' fight: with tagging in place, the cost of a feature lands on the team that ships it, not on a faceless central bill, which changes behaviour fast.",
+      "The decision you own is the trade-off between a great experience and its marginal cost — and unit economics is the only honest way to see that trade-off before it shows up in the margins."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify: cost per stream, not just the total bill",
+    "body": [
+      "Spotify runs enormous cloud and content-delivery costs to stream music to hundreds of millions of users. Looking only at the total would tell them almost nothing useful.",
+      "Spotify's engineering teams have publicly described building internal cost-attribution tooling (their 'Cost Insights' work, shared via their Backstage platform) so each squad can see the cloud cost of the services they own.",
+      "By pushing cost down to the team and service level, Spotify turns an opaque total into per-team, per-service unit costs that engineers can actually act on — the core FinOps move of allocation before optimization."
+    ],
+    "bridge": "Spotify didn't shrink one giant bill; they divided it into units each team could own and improve — which is exactly what cost-per-X is for."
+  },
+  "takeaways": [
+    "A total cloud bill is context-free; dividing it by a business unit makes it honest.",
+    "Cost per customer, feature, and transaction each answer a different decision — pick the unit that matches the call you're making.",
+    "Unit cost should fall (or hold) as you grow; if it rises with scale, something is wrong.",
+    "You can't compute trustworthy unit costs without tagging and cost allocation underneath."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A team's cloud bill rose 20% last month. What additional fact would best tell you whether that's good or bad news?",
+      "options": [
+        { "text": "How the number of active customers changed over the same period", "correct": true },
+        { "text": "Which cloud provider the company uses", "correct": false },
+        { "text": "How many engineers are on the team", "correct": false }
+      ],
+      "feedback": "Right — a 20% rise is great if customers grew faster than that (cost per customer fell) and bad if they didn't. The total alone can't tell you; you need the unit."
+    },
+    {
+      "q": "Why is 'cost per customer' often called the metric that scales with the business?",
+      "options": [
+        { "text": "It shows whether you get more or less efficient as you add customers, which is the core question as a business grows", "correct": true },
+        { "text": "It is always lower than the total cloud bill", "correct": false },
+        { "text": "It automatically reduces the cloud bill each month", "correct": false }
+      ],
+      "feedback": "Correct — a healthy business sees unit cost hold or fall as it grows. That trend, not the raw total, tells leadership whether scaling is working."
+    },
+    {
+      "q": "A feature is loved by a small group but costs far more per user than the company-wide average. In FinOps terms, what does that finding mostly do?",
+      "options": [
+        { "text": "Starts a decision — keep it, price for it, or optimize it", "correct": true },
+        { "text": "Proves the feature must be deleted immediately", "correct": false },
+        { "text": "Means the cloud provider is overcharging", "correct": false }
+      ],
+      "feedback": "Right — unit economics surfaces the trade-off; it doesn't dictate the answer. The point is to make the cost visible so product and finance can decide deliberately."
+    },
+    {
+      "q": "What has to be in place before you can compute a trustworthy cost-per-customer or cost-per-feature?",
+      "options": [
+        { "text": "Tagging and cost allocation, so spend can be attributed to the right thing", "correct": true },
+        { "text": "A larger total cloud budget", "correct": false },
+        { "text": "Moving everything to a single server", "correct": false }
+      ],
+      "feedback": "Correct — without tags labelling each resource, the bill is one undivided lump and any per-unit number you compute is a guess."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — Unit Economics capability",
+      "url": "https://www.finops.org/framework/capabilities/unit-economics/"
+    },
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    },
+    {
+      "label": "Spotify Engineering — Cost Insights with Backstage",
+      "url": "https://backstage.spotify.com/discover/blog/managing-cloud-costs-with-backstage/"
+    }
+  ]
+}

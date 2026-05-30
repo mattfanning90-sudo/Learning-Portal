@@ -1,0 +1,132 @@
+{
+  "id": "cloud-m1-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m1",
+  "order": 1,
+  "title": "Someone Else's Computer — and Why That Misses the Point",
+  "estMinutes": 9,
+  "coreIdea": "The cloud is on-demand, self-service computing you rent over the internet — and the real shift is operational, not just whose hardware it runs on.",
+  "plainEnglish": [
+    "\"The cloud\" sounds mystical, but it is just computers in big buildings owned by another company.",
+    "You rent slices of those computers over the internet and pay only for what you use.",
+    "The joke \"the cloud is just someone else's computer\" is technically true and almost completely misses the point.",
+    "What actually changed is how fast and how cheaply you can start: no buying servers, no waiting weeks, no guessing how big to build."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Owning a server is like buying your own diesel generator: you pay the full cost up front, you maintain it, and you size it for the worst day you can imagine — so most days it sits half-idle.",
+      "The cloud is like the electricity grid: you flip a switch, power flows instantly, and the meter charges you only for what you draw.",
+      "The metaphor bends in one place — electricity is a single commodity, while the cloud sells hundreds of different \"appliances\" (storage, databases, AI), not just raw power."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The five traits that actually define \"cloud\"",
+      "teaser": "If it lacks these, it is just a rented computer",
+      "body": [
+        "The US standards body `NIST` defines cloud by five traits, and they are the real point.",
+        "On-demand self-service: you provision a server yourself, in minutes, with no human on the other end.",
+        "Broad network access: you reach it over the internet from anywhere.",
+        "Resource pooling: many customers share one giant pool of hardware, invisibly partitioned.",
+        "Rapid elasticity: capacity scales up and down automatically as demand moves.",
+        "Measured service: usage is metered, so you pay per hour, per gigabyte, or per request."
+      ]
+    },
+    {
+      "title": "Why \"someone else's computer\" undersells it",
+      "teaser": "The shift is from owning to operating",
+      "body": [
+        "If it were only about location, you would still buy, size, and babysit the machine — just in a colder room.",
+        "The real change is that capacity becomes a dial, not a purchase.",
+        "You stop spending a big lump of cash on hardware (a `capital expense`) and start paying a flowing monthly bill (an `operating expense`).",
+        "That swap moves the risk: instead of betting on demand months ahead, you follow demand in real time."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "A worked example with illustrative numbers",
+      "body": [
+        "Say you launch a small web app. You rent one virtual server — on AWS that is an `EC2` instance — for, in this example, roughly $0.10 per hour.",
+        "Run it all month and that is about $73; the buy-your-own equivalent might be a $3,000 server plus power, cooling, and a person to mind it.",
+        "Your app goes viral for one weekend, so elasticity spins up nine more identical servers automatically. For those 48 hours you pay about 10 servers x $0.10 x 48 hours, roughly $48 extra.",
+        "Monday it shrinks back to one server and the extra charge stops. You never bought ten machines you would use for two days.",
+        "All figures here are illustrative, not live prices — but the shape is the lesson: you pay for the peak only while the peak lasts."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "cloud computing", "def": "Renting computing power, storage, and services over the internet, on demand, and paying only for what you use." },
+    { "term": "on-demand self-service", "def": "Being able to switch computing resources on or off yourself, in minutes, without asking a person or filing a ticket." },
+    { "term": "elasticity", "def": "The ability for capacity to grow and shrink automatically as demand rises and falls, so you are not stuck at one fixed size." },
+    { "term": "capital expense (CapEx)", "def": "A large up-front purchase of an asset you own, like buying servers — paid once, then owned and maintained." },
+    { "term": "operating expense (OpEx)", "def": "An ongoing pay-as-you-go cost, like a monthly cloud bill — no big purchase, just a meter that runs while you use the service." },
+    { "term": "provision", "def": "To set up and turn on a computing resource (such as a server or database) so it is ready to use." }
+  ],
+  "pmAngle": {
+    "body": [
+      "The cloud turns a one-time hardware bet into a monthly bill that tracks usage — which means the person who can grow your costs is now every engineer who can click \"launch,\" not just the team that signs purchase orders.",
+      "You trade a hard capacity ceiling for an open-ended bill, so the trade-off you own is speed versus spend: easy to start, easy to overspend if no one is watching the meter.",
+      "That is exactly why `FinOps` — bringing finance and engineering together to govern cloud cost — exists, and why \"who owns the bill?\" becomes a real product question."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix moves to AWS",
+    "body": [
+      "After a 2008 database failure halted DVD shipments, Netflix decided not to run its own data centres anymore.",
+      "Over about seven years it moved its streaming service onto Amazon Web Services, finishing in 2016 and later closing its last data centre.",
+      "On AWS, Netflix can spin up thousands of servers for a big launch and release them afterward — capacity it could never have justified buying outright.",
+      "It now serves hundreds of millions of viewers, with traffic that swings hugely between quiet afternoons and peak evenings."
+    ],
+    "bridge": "Netflix did not just move its computers to someone else's building — it turned capacity into a dial it could turn with demand, which is the operational shift the \"someone else's computer\" joke ignores."
+  },
+  "takeaways": [
+    "The cloud is on-demand, self-service computing rented over the internet and billed by usage.",
+    "\"Someone else's computer\" is true but misses the point — the change is operational, from owning capacity to dialing it.",
+    "Five traits define it: self-service, network access, pooled resources, elasticity, and metered billing.",
+    "Speed and elasticity come with an open-ended bill, which is why cost governance (FinOps) matters from day one."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which phrase best captures what makes something \"cloud\" rather than just a rented computer?",
+      "options": [
+        { "text": "On-demand, self-service, metered capacity you can scale up and down", "correct": true },
+        { "text": "Any computer that is physically located far away from you", "correct": false },
+        { "text": "A server you buy once and then access over the internet", "correct": false }
+      ],
+      "feedback": "Right — the defining traits are self-service, elasticity, and metered billing, not merely where the hardware sits."
+    },
+    {
+      "q": "A company moves from buying its own servers to renting cloud capacity. What changes about its costs?",
+      "options": [
+        { "text": "A large up-front purchase (CapEx) becomes an ongoing pay-as-you-go bill (OpEx)", "correct": true },
+        { "text": "Costs disappear entirely because the cloud provider absorbs them", "correct": false },
+        { "text": "It still pays the same lump sum, just to a different company", "correct": false }
+      ],
+      "feedback": "Correct — the cloud swaps a one-time capital expense for a flowing operating expense that tracks how much you use."
+    },
+    {
+      "q": "Why does elasticity matter for an app whose traffic spikes for one weekend?",
+      "options": [
+        { "text": "Capacity scales up for the spike, then shrinks back, so you only pay for the peak while it lasts", "correct": true },
+        { "text": "It locks in the higher capacity permanently so you are ready next time", "correct": false },
+        { "text": "It makes each server run faster during busy periods", "correct": false }
+      ],
+      "feedback": "Exactly — elasticity lets you add servers for the surge and release them afterward, instead of buying for a peak you rarely hit."
+    },
+    {
+      "q": "Why is \"who owns the cloud bill?\" a real product and leadership question?",
+      "options": [
+        { "text": "Because pay-as-you-go billing is open-ended, so easy starts can become easy overspend without governance", "correct": true },
+        { "text": "Because cloud providers hide all pricing until the end of the year", "correct": false },
+        { "text": "Because the cloud is always cheaper, so the only job is to spend more", "correct": false }
+      ],
+      "feedback": "Right — usage-based billing means many people can grow costs, which is why cost ownership and FinOps practices exist."
+    }
+  ],
+  "sources": [
+    { "label": "NIST — The NIST Definition of Cloud Computing (SP 800-145)", "url": "https://csrc.nist.gov/pubs/sp/800/145/final" },
+    { "label": "AWS — What is Cloud Computing?", "url": "https://aws.amazon.com/what-is-cloud-computing/" },
+    { "label": "AWS Case Study — Netflix on AWS", "url": "https://aws.amazon.com/solutions/case-studies/innovators/netflix/" }
+  ]
+}

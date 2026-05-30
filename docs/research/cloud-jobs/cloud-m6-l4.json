@@ -1,0 +1,209 @@
+{
+  "id": "cloud-m6-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m6",
+  "order": 4,
+  "title": "Everyone Owns the Bill: the Personas (Eng, Finance, Product, Leadership)",
+  "estMinutes": 9,
+  "coreIdea": "FinOps works because four personas — engineering, finance, product, and leadership — each bring a different piece to a cost-aware decision, and `FinOps` practitioners give them one shared language.",
+  "plainEnglish": [
+    "A cloud bill is created by many people, so no single team can own it alone.",
+    "FinOps names the people who must be at the table and what each one brings.",
+    "These groups are called `personas` — a persona is just a role someone plays in a cost decision, not a job title.",
+    "The four core personas are engineering, finance, product, and leadership.",
+    "When each persona does its part with the same numbers, cost stops being a blame game and becomes a shared decision."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a restaurant kitchen on a busy night.",
+      "The chefs (engineering) decide how much gas, produce, and oven time each dish actually burns.",
+      "The bookkeeper (finance) tracks the food budget and warns when costs drift.",
+      "The head of menu (product) decides which dishes are worth selling and how to price them.",
+      "The owner (leadership) sets the goal — grow fast, or protect the margin — that tells everyone else how to weigh those calls.",
+      "The metaphor bends slightly: in the cloud the chefs can change the bill in seconds, so the numbers have to reach everyone far faster than a weekly stock-take."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four personas and what each one brings",
+      "teaser": "different lever, different view, same numbers",
+      "body": [
+        "Engineering owns the technical choices that create cost and can change them fastest, like the size of a server or how long it runs.",
+        "Finance owns the budget, the forecast, and the story leadership hears about what was spent and why.",
+        "Product owns the value trade-off: is a feature worth what it costs to run, and how should it be priced.",
+        "Leadership owns the strategy: it decides whether the company is optimizing for speed, for margin, or for innovation right now.",
+        "Each persona sees the bill from a different angle, which is exactly why they need one shared set of cost data to argue from."
+      ]
+    },
+    {
+      "title": "Why one persona acting alone goes wrong",
+      "teaser": "the failure modes when the table is empty",
+      "body": [
+        "If finance acts alone, it sets a budget cap nobody technical can actually meet, and trust breaks.",
+        "If engineering acts alone, it may chase a clever saving on a service that barely matters to the bill.",
+        "If product acts alone, it ships features without knowing they lose money on every use.",
+        "If leadership acts alone, it demands a blanket cut that quietly slows the teams driving real growth.",
+        "FinOps is the practice of getting all four into the same conversation before the decision is made, not after the bill lands."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "one feature, four voices, illustrative dollars",
+      "body": [
+        "Imagine a product team wants to add an AI chat feature that calls a large language model on every message.",
+        "Engineering estimates it will cost, in this illustrative example, roughly $0.02 per conversation, and at about 500,000 conversations a month that is around $10,000 a month.",
+        "Finance checks the forecast and confirms the $10,000 fits the budget only if the feature lifts paid conversions.",
+        "Product decides the feature is worth it for premium users but not free ones, so it gates the feature behind the paid tier to cap the spend.",
+        "Leadership signs off because the company's current goal is revenue growth, accepting the cost as an investment rather than waste. All figures here are illustrative, not live AWS or model prices."
+      ]
+    },
+    {
+      "title": "The FinOps team is a connector, not a fifth boss",
+      "teaser": "it enables the personas; it does not overrule them",
+      "body": [
+        "A dedicated FinOps practitioner or team does not take ownership of the bill away from anyone.",
+        "Its job is to build the shared cost reports, define the common vocabulary, and run the meetings where the four personas meet.",
+        "Think of it as the translator and scorekeeper, not a new decision-maker.",
+        "The FinOps Foundation's framework is explicit that accountability stays with the teams who create and spend the money."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "persona",
+      "def": "A role someone plays in a cost decision, defined by what they contribute rather than their exact job title. FinOps names engineering, finance, product, and leadership as its core personas."
+    },
+    {
+      "term": "FinOps",
+      "def": "A practice that brings financial accountability to cloud's pay-as-you-go bill by uniting engineering, finance, product, and leadership around shared cost data and decisions. The name blends 'Finance' and 'DevOps'."
+    },
+    {
+      "term": "showback",
+      "def": "Reporting each team or product the cost it caused, for visibility only, without moving money. It shows people their spend so they can act on it, even if the budget is not formally re-billed to them."
+    },
+    {
+      "term": "chargeback",
+      "def": "Formally billing a team or business unit for the cloud cost it caused, so the spend hits that group's own budget. It is showback with real financial consequences attached."
+    },
+    {
+      "term": "unit cost",
+      "def": "Cost expressed per unit of business value — for example dollars per active user, per order, or per conversation — instead of one big monthly total. It lets product and finance judge whether spend is healthy as usage grows."
+    },
+    {
+      "term": "FinOps Foundation",
+      "def": "The non-profit, part of the Linux Foundation, that defines the FinOps framework, its personas and principles, and the FinOps Certified Practitioner credential."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you are the persona who owns the value trade-off: you decide whether a feature earns more than it costs to run.",
+      "Your lever is scope and pricing — gating an expensive feature behind a paid tier, as in the example, is a product decision that directly caps the bill.",
+      "Knowing the other three personas means you bring engineering's cost estimate, finance's budget reality, and leadership's strategy into the room before you commit the company to a running cost."
+    ]
+  },
+  "caseStudy": {
+    "title": "Atlassian gives engineers cost ownership",
+    "body": [
+      "Atlassian, the maker of Jira and Confluence, runs at large scale on AWS and has spoken publicly at AWS re:Invent about its FinOps approach.",
+      "Rather than have finance alone police spending, it gives engineering teams visibility into the cost of the services they own and ties that data to business metrics.",
+      "Finance, product, and leadership use the same numbers to forecast and to decide where investment is worth it, so a cost conversation is informed rather than adversarial.",
+      "This is the persona model in action: each group brings its piece, and a central FinOps capability connects them with shared data."
+    ],
+    "bridge": "Atlassian works because no single persona owns the bill alone — each contributes its view, exactly the collaboration this lesson describes."
+  },
+  "takeaways": [
+    "FinOps names four personas: engineering, finance, product, and leadership.",
+    "Each brings a different lever — technical choices, budget, value trade-off, and strategy — to the same numbers.",
+    "Any persona acting alone produces a predictable failure, from broken trust to money-losing features.",
+    "A FinOps team connects and translates; it does not take ownership of the bill away from the people who create it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which set correctly lists the four core FinOps personas?",
+      "options": [
+        {
+          "text": "Engineering, finance, product, and leadership",
+          "correct": true
+        },
+        {
+          "text": "Sales, marketing, legal, and support",
+          "correct": false
+        },
+        {
+          "text": "Security, compliance, HR, and procurement",
+          "correct": false
+        }
+      ],
+      "feedback": "FinOps brings engineering, finance, product, and leadership to the table because each owns a different part of a cost-aware decision."
+    },
+    {
+      "q": "In the example, why does the product persona gate the AI chat feature behind the paid tier?",
+      "options": [
+        {
+          "text": "To cap the running cost by limiting the feature to users worth the spend",
+          "correct": true
+        },
+        {
+          "text": "To make the engineering team rewrite the feature in a faster language",
+          "correct": false
+        },
+        {
+          "text": "To hide the feature so finance never sees the cost",
+          "correct": false
+        }
+      ],
+      "feedback": "Product owns the value trade-off; gating the feature is a scope decision that directly controls how much the company spends to run it."
+    },
+    {
+      "q": "What is the role of a dedicated FinOps team within the persona model?",
+      "options": [
+        {
+          "text": "To connect the personas with shared data and a common language, not to overrule them",
+          "correct": true
+        },
+        {
+          "text": "To take sole ownership of the cloud bill away from every other team",
+          "correct": false
+        },
+        {
+          "text": "To replace the finance department entirely",
+          "correct": false
+        }
+      ],
+      "feedback": "The FinOps Foundation framework keeps accountability with the teams that create and spend the money; the FinOps team enables and translates."
+    },
+    {
+      "q": "What is the difference between showback and chargeback?",
+      "options": [
+        {
+          "text": "Showback reports a team's cost for visibility; chargeback bills that cost to the team's own budget",
+          "correct": true
+        },
+        {
+          "text": "Showback is for finance and chargeback is for engineering, with no real difference",
+          "correct": false
+        },
+        {
+          "text": "Showback hides costs while chargeback deletes them",
+          "correct": false
+        }
+      ],
+      "feedback": "Both show a team its spend, but only chargeback moves real money onto that team's budget — showback is visibility without the financial transfer."
+    }
+  ],
+  "sources": [
+    {
+      "label": "FinOps Foundation — FinOps Personas",
+      "url": "https://www.finops.org/framework/personas/"
+    },
+    {
+      "label": "FinOps Foundation — What is FinOps?",
+      "url": "https://www.finops.org/introduction/what-is-finops/"
+    },
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    }
+  ]
+}

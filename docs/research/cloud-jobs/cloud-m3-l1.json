@@ -1,0 +1,182 @@
+{
+  "id": "cloud-m3-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 1,
+  "title": "200 Services, One Map: Navigating AWS Without Drowning",
+  "estMinutes": 9,
+  "coreIdea": "You don't memorise AWS's 200+ services — you ask a few classifying questions that drop almost any service into one of a handful of buckets.",
+  "plainEnglish": [
+    "Amazon Web Services, usually shortened to `AWS`, is Amazon's cloud platform — a giant menu of rentable computing services you pay for by usage.",
+    "That menu has more than 200 services, and the names are deliberately playful and unhelpful, so the list feels designed to overwhelm you.",
+    "Here is the relief: you do not need to know all 200. Almost every service is one of a few familiar kinds of thing — somewhere to run code, somewhere to store data, a way to connect things, or a way to keep them secure.",
+    "So instead of memorising, you learn to interrogate. A short set of questions sorts any unfamiliar service into the right bucket in seconds."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of AWS as the world's largest hardware-and-tools megastore. You can't possibly know every product on the shelves, and the brand names are gibberish.",
+      "But you never wander lost, because the store has aisles: power tools here, plumbing there, fasteners over there. The moment you know which aisle a thing lives in, you understand roughly what it is and who it's for — even if you've never seen that exact product.",
+      "Learning AWS is learning the aisles, not the products. The metaphor bends in one place: unlike a store, many AWS services deliberately overlap, so a few items could sit in two aisles at once."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The five aisles almost everything falls into",
+      "teaser": "compute, storage, database, networking, security",
+      "body": [
+        "Compute is anywhere your code actually runs. `EC2` rents you a virtual server; `Lambda` runs a snippet of code on demand with no server to manage.",
+        "Storage is where files and data sit. `S3` holds objects like images, backups, and logs; `EBS` is a virtual hard drive attached to a server.",
+        "Database is structured data you query. `RDS` runs traditional relational databases; `DynamoDB` is a fast key-value store for huge scale.",
+        "Networking connects and exposes things — for example `VPC`, your private network inside AWS. Security and identity controls who can do what, mostly through `IAM`, the permissions system.",
+        "Five aisles cover the overwhelming majority of what teams actually use day to day."
+      ]
+    },
+    {
+      "title": "The questions that classify any service",
+      "teaser": "four questions, and you've placed it",
+      "body": [
+        "Ask: does it run my code, hold my data, connect things, or guard things? That single question lands most services in an aisle.",
+        "Then ask: how much does AWS manage for me? A `managed service` means AWS handles the patching, scaling, and babysitting; you just use it.",
+        "Then ask: is this serverless? `Serverless` means there is no server for you to size or keep running — you pay only when it does work, and AWS scales it invisibly.",
+        "Finally ask: do I pay per-hour, per-request, or per-gigabyte? The pricing shape tells you how the service is meant to be used."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a tiny photo-sharing app, priced out — illustrative numbers",
+      "body": [
+        "Say you run a small photo-sharing app. Pictures live in `S3` (storage). The app's code runs in `Lambda` (serverless compute). User accounts sit in `DynamoDB` (database). `IAM` (security) controls access.",
+        "Illustrative monthly costs, not live prices: storing about 100 GB of photos in `S3` runs roughly $2 to $3, because `S3` is priced at about $0.023 per GB per month in this example.",
+        "`Lambda` is billed per request plus compute time, so a low-traffic app's first million-ish requests might cost roughly $0 to $1 in this example — you pay almost nothing when nobody's using it.",
+        "Total for a quiet month: maybe $5 to $10, illustratively. The point isn't the exact figure. It's that knowing the aisle tells you the pricing shape: storage by the gigabyte, serverless compute by the request."
+      ]
+    },
+    {
+      "title": "Why the names are so weird (and why it's fine)",
+      "teaser": "ignore the branding, read the category",
+      "body": [
+        "AWS names services for marketing, not clarity: `Athena`, `Glue`, `Kinesis`, `SageMaker`. The name rarely tells you what the thing does.",
+        "Every service page states its category in plain language — \"object storage,\" \"managed database,\" \"event streaming.\" That category is the aisle.",
+        "So when a name baffles you, skip it and read the one-line category. The branding is noise; the category is the signal."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "AWS",
+      "def": "Amazon Web Services — Amazon's cloud platform, a large menu of computing services you rent and pay for by usage rather than owning."
+    },
+    {
+      "term": "EC2 vs Lambda (compute)",
+      "def": "Two ways to run code: `EC2` rents you a virtual server you manage; `Lambda` runs a piece of code on demand with no server to look after."
+    },
+    {
+      "term": "S3",
+      "def": "Simple Storage Service — AWS's bucket for storing files and objects like images, backups, and logs, priced per gigabyte stored."
+    },
+    {
+      "term": "managed service",
+      "def": "A service where AWS handles the upkeep — patching, scaling, backups — so you use it without running the underlying machines yourself."
+    },
+    {
+      "term": "serverless",
+      "def": "A style where there is no server for you to size or keep running; you pay only when the code does work, and AWS scales it for you."
+    },
+    {
+      "term": "IAM",
+      "def": "Identity and Access Management — the AWS system that decides who and what is allowed to do which actions on which resources."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "A product leader's job isn't to know every service — it's to recognise which aisle a proposal lives in, so you can ask the right cost question. Storage costs grow with how much you keep; serverless compute costs grow with traffic; servers cost money even while idle.",
+      "That distinction is who-pays-what: a `serverless` choice means the bill tracks usage, which is friendly to a small or spiky product but can surprise you at scale. The trade-off you own is convenience versus control — managed and serverless services cost more per unit but free your engineers from undifferentiated plumbing."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix runs on the AWS aisles",
+    "body": [
+      "Netflix moved its streaming infrastructure onto AWS and finished the migration in 2016, after a major database failure in 2008 pushed it off its own data centres.",
+      "Even at Netflix's scale, the building blocks are the same aisles: `EC2` and later `Lambda` for compute, `S3` for storing video and assets, `DynamoDB` for fast data, and `VPC` for networking.",
+      "Netflix doesn't use exotic, unrecognisable services as its foundation. It uses the handful of categories any beginner can name, just enormously and carefully."
+    ],
+    "bridge": "If the world's biggest streaming service is built from five recognisable aisles, then learning the aisles — not the 200 product names — is exactly the right map."
+  },
+  "takeaways": [
+    "You classify AWS services; you don't memorise them — a few questions place almost any one.",
+    "Most services fall into five aisles: compute, storage, database, networking, security.",
+    "Ask: does it run code, hold data, connect, or guard? Then: how managed, how serverless, how priced?",
+    "The pricing shape (per-hour, per-request, per-gigabyte) follows from the aisle — that's the cost lens."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "You hit an AWS service called `Kinesis` and have no idea what it is. What's the fastest way to understand it?",
+      "options": [
+        {
+          "text": "Read its one-line category (its aisle), like \"event streaming,\" and ignore the name",
+          "correct": true
+        },
+        {
+          "text": "Memorise its full feature list before deciding anything",
+          "correct": false
+        },
+        {
+          "text": "Assume the playful name describes what it does",
+          "correct": false
+        }
+      ],
+      "feedback": "The name is marketing; the category is the signal. Reading the aisle tells you roughly what it is and who it's for in seconds."
+    },
+    {
+      "q": "Which set of five categories covers the overwhelming majority of what teams use on AWS?",
+      "options": [
+        {
+          "text": "Compute, storage, database, networking, security",
+          "correct": true
+        },
+        {
+          "text": "Email, video, gaming, robotics, blockchain",
+          "correct": false
+        },
+        {
+          "text": "Billing, marketing, support, training, sales",
+          "correct": false
+        }
+      ],
+      "feedback": "These five aisles are where almost everything lives. Place a service in one of them and you understand its rough shape."
+    },
+    {
+      "q": "A service is described as `serverless`. What does that mainly tell you about its cost?",
+      "options": [
+        {
+          "text": "You pay mainly when it does work, so an idle, low-traffic app costs almost nothing",
+          "correct": true
+        },
+        {
+          "text": "It is always free because there is no server",
+          "correct": false
+        },
+        {
+          "text": "You pay a fixed monthly fee no matter the usage",
+          "correct": false
+        }
+      ],
+      "feedback": "Serverless means no server to keep running; the bill tracks usage. That's great when traffic is low or spiky, but it scales up with demand."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — What is AWS? (overview of the cloud platform)",
+      "url": "https://aws.amazon.com/what-is-aws/"
+    },
+    {
+      "label": "AWS Documentation — products and services by category",
+      "url": "https://docs.aws.amazon.com/"
+    },
+    {
+      "label": "Netflix on AWS — case study",
+      "url": "https://aws.amazon.com/solutions/case-studies/netflix-case-study/"
+    }
+  ]
+}

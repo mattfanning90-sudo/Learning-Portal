@@ -1,0 +1,134 @@
+{
+  "id": "cloud-m4-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 3,
+  "title": "The Private Network: VPCs, Subnets & Security Groups Without Fear",
+  "estMinutes": 9,
+  "coreIdea": "A `VPC` is your own private slice of the cloud network, divided into `subnets`, with firewalls (`security groups`) deciding exactly what is allowed to talk to what.",
+  "plainEnglish": [
+    "Every server you run in the cloud needs a network to live on.",
+    "A `VPC` (Virtual Private Cloud) is that network — a walled-off, private section of Amazon's cloud that belongs only to you.",
+    "Inside it you carve out `subnets`, which are smaller rooms; some rooms face the public internet, others are kept strictly private.",
+    "Then you set rules — `security groups` — that say which traffic is allowed in and out, like a bouncer with a guest list.",
+    "Get this layout right and your systems are both reachable where they should be and locked down everywhere else."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a `VPC` as your company's own office building inside a giant shared business park (Amazon's cloud).",
+      "Inside the building you have rooms — the `subnets`. The lobby is public: visitors from the street (the internet) can walk in. The back offices are private: no street door at all, you can only reach them from inside the building.",
+      "A `security group` is the security guard posted at each person's door, checking a guest list before letting anyone through.",
+      "The metaphor bends in one place: a security group remembers who it let in and automatically lets their reply back out, which a real-world guard would not bother to do."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Public vs private subnets — the one distinction that matters",
+      "teaser": "what makes a room face the street or hide in the back",
+      "body": [
+        "A `subnet` is a slice of your VPC's address range, usually tied to one physical data-centre zone.",
+        "What makes a subnet 'public' is not a setting called public — it is whether it has a route to an `internet gateway`, the cloud's front door to the open internet.",
+        "Public subnets are where you put things the world must reach, like a web server.",
+        "Private subnets have no direct route to the internet, so you put sensitive things there — databases, internal services — that should never be exposed.",
+        "A private server that still needs to fetch updates reaches out through a `NAT gateway`, which lets traffic go out but blocks anything trying to come in."
+      ]
+    },
+    {
+      "title": "Security groups vs NACLs — two firewalls, two jobs",
+      "teaser": "the bouncer at the door vs the checkpoint at the gate",
+      "body": [
+        "A `security group` is a firewall wrapped around an individual server, controlling what may reach that one machine.",
+        "It is 'stateful', which means if it allows a request in, it automatically allows the reply back out — you only write the rules you care about.",
+        "A `NACL` (Network Access Control List) is a coarser firewall that sits at the edge of a whole subnet, screening everything entering or leaving that room.",
+        "A NACL is 'stateless', so it checks traffic in both directions independently and is mostly used for broad blocking, like banning a known-bad range of addresses.",
+        "Rule of thumb: security groups are your everyday tool; NACLs are an extra outer fence most teams rarely touch."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "a simple two-tier web app, with illustrative numbers",
+      "body": [
+        "Picture a typical small web app: a web server that users hit, and a database it talks to privately.",
+        "You put the web server in a public subnet with a security group that allows web traffic in on port 443 (HTTPS) from anyone, and nothing else.",
+        "You put the database in a private subnet with a security group that allows traffic only from the web server's security group — so the database is unreachable from the internet entirely.",
+        "The VPC, subnets, security groups and an internet gateway themselves cost nothing.",
+        "The pieces that do bill are extras: in this example a `NAT gateway` runs at roughly $0.045 per hour (about $32 a month) plus a per-gigabyte data charge, and reserving a fixed public address (an `Elastic IP`) is free while in use but bills a few cents an hour if left unattached — illustrative figures, not a live quote."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "VPC (Virtual Private Cloud)", "def": "Your own private, walled-off network inside Amazon's cloud, where your servers live and only you control the layout." },
+    { "term": "Subnet", "def": "A smaller section of a VPC — think of it as a room in your building. Public subnets can reach the internet; private ones cannot." },
+    { "term": "Security group", "def": "A firewall attached to an individual server that decides which traffic may reach it. It is stateful: allow a request in and the reply is allowed back out automatically." },
+    { "term": "NACL (Network Access Control List)", "def": "A broader, stateless firewall that screens all traffic entering or leaving a whole subnet — used for coarse, subnet-wide blocking." },
+    { "term": "Internet gateway", "def": "The component that connects a VPC to the open internet. A subnet is only 'public' if it has a route to one." },
+    { "term": "NAT gateway", "def": "A one-way valve that lets a private server reach out to the internet (for updates, say) while blocking anything from reaching in. It is a billed, ongoing cost." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Network layout is where security and cost quietly collide, so it is a decision a product leader should be able to question, not just nod through.",
+      "The trade-off you own is reach versus exposure: putting a service in a public subnet makes it easy to access but widens the attack surface, while private subnets are safer but add cost (a NAT gateway) and complexity for anything that still needs the internet.",
+      "When engineering says 'we need another NAT gateway' or 'the database is in a private subnet,' you should hear a real monthly cost and a deliberate security posture — and be able to ask who pays and why."
+    ]
+  },
+  "caseStudy": {
+    "title": "Capital One's 2019 breach and the misconfigured firewall",
+    "body": [
+      "In 2019, Capital One disclosed a breach exposing data on roughly 100 million people in the US.",
+      "The attacker exploited a misconfigured web application firewall to trick a server into handing over its cloud access credentials, then used those to read data from Amazon storage.",
+      "The root cause was not a flaw in AWS itself but a configuration mistake on the customer's side of the network and permission boundaries.",
+      "It is a textbook reminder that in the cloud, who-can-reach-what is the customer's job to get right — Amazon secures the building, you secure your rooms."
+    ],
+    "bridge": "VPCs, subnets and security groups are exactly the controls that decide who-can-reach-what — and the Capital One case shows the cost of getting that layout wrong."
+  },
+  "takeaways": [
+    "A VPC is your private network in the cloud; subnets are the rooms inside it.",
+    "Public vs private comes down to one thing: whether the subnet has a route to an internet gateway.",
+    "Security groups are stateful firewalls on individual servers; NACLs are stateless fences around whole subnets.",
+    "The network skeleton is free, but NAT gateways and a few other extras carry real ongoing cost."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What makes a subnet 'public' rather than 'private'?",
+      "options": [
+        { "text": "It has a route to an internet gateway", "correct": true },
+        { "text": "It is named 'public' in the console", "correct": false },
+        { "text": "It contains a database server", "correct": false }
+      ],
+      "feedback": "A subnet is public only because it has a route to an internet gateway — the cloud's front door. Without that route, it is private regardless of what you call it."
+    },
+    {
+      "q": "What is the key difference between a security group and a NACL?",
+      "options": [
+        { "text": "A security group is a stateful firewall on an individual server; a NACL is a stateless firewall around a whole subnet", "correct": true },
+        { "text": "A security group controls cost while a NACL controls speed", "correct": false },
+        { "text": "A NACL protects one server and a security group protects the whole VPC", "correct": false }
+      ],
+      "feedback": "Security groups are stateful and wrap individual servers; NACLs are stateless and sit at the edge of an entire subnet for broad blocking."
+    },
+    {
+      "q": "Where should you place a database that must never be reachable from the internet?",
+      "options": [
+        { "text": "In a private subnet with no route to an internet gateway", "correct": true },
+        { "text": "In a public subnet with a strict security group", "correct": false },
+        { "text": "Outside the VPC entirely", "correct": false }
+      ],
+      "feedback": "A private subnet has no route to the internet, so the database simply cannot be reached from outside — the strongest and simplest protection."
+    },
+    {
+      "q": "Which of these network pieces typically carries an ongoing hourly cost?",
+      "options": [
+        { "text": "A NAT gateway", "correct": true },
+        { "text": "The VPC itself", "correct": false },
+        { "text": "A security group", "correct": false }
+      ],
+      "feedback": "The VPC, subnets and security groups are free; a NAT gateway bills per hour plus per gigabyte, so it is a real line item to watch."
+    }
+  ],
+  "sources": [
+    { "label": "AWS — What is Amazon VPC? (official documentation)", "url": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html" },
+    { "label": "AWS — Compare security groups and network ACLs", "url": "https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html" },
+    { "label": "AWS Well-Architected Framework — Security Pillar", "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" }
+  ]
+}

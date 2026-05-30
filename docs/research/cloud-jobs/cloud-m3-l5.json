@@ -1,0 +1,147 @@
+{
+  "id": "cloud-m3-l5",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 5,
+  "title": "The Well-Architected Frame: the Six Pillars AWS Judges Every Design By",
+  "estMinutes": 9,
+  "coreIdea": "AWS scores every cloud design against six fixed pillars — operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability — so the `Well-Architected Framework` is the shared checklist that turns 'is this any good?' into a structured conversation.",
+  "plainEnglish": [
+    "When you build something on AWS, there is no single 'right' way to do it.",
+    "So AWS published a checklist of good habits, called the `Well-Architected Framework`.",
+    "It groups those habits under six headings, called pillars.",
+    "Each pillar is one lens you hold up to a design and ask: are we doing this well?",
+    "The pillars don't tell you what to build — they tell you what questions to ask before you trust it in production."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a building inspector with a six-point checklist before a new house gets approved.",
+      "Is it safe? Will it stand up? Is it cheap to run? Is it kind to the environment? The inspector doesn't design your house — they pressure-test the design you bring.",
+      "The six pillars are that checklist for software running on AWS.",
+      "Where the metaphor bends: an inspector signs off once, but a cloud system is reviewed again and again as it grows and changes."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The six pillars, one line each",
+      "teaser": "the whole frame on a single index card",
+      "body": [
+        "`Operational excellence` — can we run, monitor, and improve this system smoothly day to day?",
+        "`Security` — are data and access protected, and would we know if someone broke in?",
+        "`Reliability` — does it keep working, and recover on its own when a part fails?",
+        "`Performance efficiency` — are we using the right-sized, right-shaped resources for the job?",
+        "`Cost optimization` — are we paying only for value, and not for idle or oversized resources?",
+        "`Sustainability` — are we minimising the energy and hardware footprint of running it?"
+      ]
+    },
+    {
+      "title": "Why a frame beats a gut feeling",
+      "teaser": "it makes trade-offs visible instead of accidental",
+      "body": [
+        "Every real design trades one pillar against another.",
+        "More copies of your data across regions buys reliability — but raises cost and the energy footprint.",
+        "The frame's value is that you choose those trade-offs out loud, on purpose.",
+        "AWS gives you the questions for free in a tool called the `Well-Architected Tool`, where a team answers a structured questionnaire and gets a list of risks.",
+        "A risk flagged here is cheap to fix; the same gap found during an outage is not."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what the trade-off costs)",
+      "teaser": "a small app, two designs, illustrative numbers",
+      "body": [
+        "Imagine a checkout service for a small online shop, running on AWS.",
+        "Design A keeps one copy in a single location to stay cheap — roughly $400 a month in this example.",
+        "A reliability review asks: what happens if that location goes dark? Answer: the shop is down.",
+        "Design B adds a standby copy in a second location and automatic failover — costing about $650 a month, roughly 60% more in this example.",
+        "Cost optimization pushes back: is paying ~$250 extra each month worth it? For a shop that loses ~$5,000 in sales per hour of downtime, the answer is clearly yes.",
+        "The pillars didn't pick the answer — they forced the question, and made the price of each choice explicit."
+      ]
+    },
+    {
+      "title": "How teams actually use it",
+      "teaser": "a periodic review, not a one-time gate",
+      "body": [
+        "Teams run a `Well-Architected Review` at milestones — before launch, after big growth, or once a quarter.",
+        "Each pillar produces findings rated as high, medium, or low risk.",
+        "The team then decides which risks to fix now and which to accept for now, with eyes open.",
+        "AWS also publishes `Lenses` — pillar questions tailored to a specific domain, such as machine learning or serverless.",
+        "The point is repetition: a system that was well-architected last year may not be after it tripled in size."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "Well-Architected Framework", "def": "AWS's published checklist of good cloud-building habits, organised under six pillars. It's guidance, not a product you switch on." },
+    { "term": "Pillar", "def": "One of the six lenses in the framework — a single theme (like security or cost) you evaluate a design against." },
+    { "term": "Trade-off", "def": "Gaining more of one good thing by giving up some of another — for example, buying more reliability by accepting higher cost." },
+    { "term": "Well-Architected Review", "def": "A structured session where a team answers the framework's questions about a system and gets back a prioritised list of risks." },
+    { "term": "Lens", "def": "A specialised add-on set of questions for a particular kind of workload, such as the machine learning lens or the serverless lens." },
+    { "term": "Failover", "def": "Automatically switching to a backup copy of a system when the main one fails, so users barely notice an outage." }
+  ],
+  "pmAngle": {
+    "body": [
+      "As the product leader, you own the trade-offs the pillars surface — and you're the one who signs off on accepting a risk rather than fixing it.",
+      "The most common boardroom fight lives between two pillars: reliability and cost optimization, because more uptime almost always costs more money.",
+      "Your job isn't to score every pillar a perfect ten; it's to decide which pillars matter most for this product right now and to make the engineers' implicit choices explicit and budgeted."
+    ]
+  },
+  "caseStudy": {
+    "title": "AWS adds the sixth pillar",
+    "body": [
+      "The framework launched with five pillars; for years sustainability was not one of them.",
+      "In December 2021, at its re:Invent conference, AWS announced a sixth pillar — Sustainability — focused on cutting the energy and hardware footprint of running workloads.",
+      "It gives teams concrete questions, like choosing efficient instance types, deleting unused storage, and placing workloads in regions with cleaner energy.",
+      "This let customers fold their own carbon-reduction goals into the same review they already used for cost and reliability."
+    ],
+    "bridge": "Adding a pillar shows the frame isn't a fixed law — it's a living checklist of what 'good' means, updated as priorities like sustainability rise."
+  },
+  "takeaways": [
+    "The Well-Architected Framework is one checklist with six pillars: operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability.",
+    "The pillars don't choose your design — they force the right questions and make trade-offs explicit.",
+    "Reliability versus cost is the trade-off product leaders fight over most often.",
+    "It's a repeated review, not a one-time launch gate — re-run it as the system grows."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the AWS Well-Architected Framework, in plain terms?",
+      "options": [
+        { "text": "A six-pillar checklist of good-practice questions to evaluate a cloud design against", "correct": true },
+        { "text": "A paid AWS service that automatically rebuilds your application for you", "correct": false },
+        { "text": "A specific server type optimised for high performance", "correct": false }
+      ],
+      "feedback": "It's guidance — a structured set of questions grouped under six pillars — not a service that does the building for you."
+    },
+    {
+      "q": "Which set is the six pillars?",
+      "options": [
+        { "text": "Operational excellence, security, reliability, performance efficiency, cost optimization, sustainability", "correct": true },
+        { "text": "Speed, storage, networking, billing, support, compliance", "correct": false },
+        { "text": "Compute, database, analytics, AI, security, cost", "correct": false }
+      ],
+      "feedback": "The six pillars are operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability — the last added in 2021."
+    },
+    {
+      "q": "A team adds a standby copy in a second location, raising the monthly bill. Which two pillars are in tension here?",
+      "options": [
+        { "text": "Reliability and cost optimization", "correct": true },
+        { "text": "Security and sustainability", "correct": false },
+        { "text": "Operational excellence and performance efficiency", "correct": false }
+      ],
+      "feedback": "Extra copies and failover buy reliability but cost more — the classic reliability-versus-cost trade-off the framework makes explicit."
+    },
+    {
+      "q": "How often should a Well-Architected Review happen?",
+      "options": [
+        { "text": "Repeatedly — at milestones and as the system grows or changes", "correct": true },
+        { "text": "Exactly once, right before the very first launch", "correct": false },
+        { "text": "Only after a major outage has already occurred", "correct": false }
+      ],
+      "feedback": "A system that was well-architected last year may not be after it scales, so the review is meant to be re-run, not done once."
+    }
+  ],
+  "sources": [
+    { "label": "AWS Well-Architected Framework (official documentation)", "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" },
+    { "label": "AWS: Sustainability Pillar announcement (re:Invent 2021)", "url": "https://aws.amazon.com/blogs/aws/sustainability-pillar-well-architected-framework/" },
+    { "label": "AWS Well-Architected Tool (overview)", "url": "https://aws.amazon.com/well-architected-tool/" }
+  ]
+}

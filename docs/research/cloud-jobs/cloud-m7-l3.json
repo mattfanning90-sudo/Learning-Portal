@@ -1,0 +1,169 @@
+{
+  "id": "cloud-m7-l3",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 3,
+  "title": "Rate Optimization: Committing Wisely with RIs & Savings Plans",
+  "estMinutes": 9,
+  "coreIdea": "You pay a lower rate per hour of cloud compute by promising to keep using a baseline amount for one or three years — and the art is committing to that steady baseline without over-promising.",
+  "plainEnglish": [
+    "Cloud bills come in two flavors: how much you use, and what rate you pay for each unit.",
+    "FinOps splits those into two separate jobs.",
+    "Last lesson was about using less; this one is about paying a lower rate for what you genuinely will use anyway.",
+    "The deal is simple: you promise the cloud provider a steady amount of spend for one or three years, and in return they cut the price — often by 30 to 70 percent in this example.",
+    "The danger is promising more than you'll actually use, because then you pay for a commitment you can't fill."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "It's like an annual gym membership versus paying per visit.",
+      "If you genuinely go three times a week, the yearly membership is far cheaper per visit — that's the committed rate.",
+      "But if you sign up for the platinum unlimited plan and then only show up twice a month, you've locked yourself into paying for sessions you never use.",
+      "The metaphor bends in one place: with the cloud you can study your past attendance precisely before you commit, so the guesswork is much smaller than it looks."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two ways to commit: Reserved Instances vs Savings Plans",
+      "teaser": "an older, rigid coupon and a newer, flexible one",
+      "body": [
+        "A `Reserved Instance` (or `RI`) is the older commitment. You pre-commit to a specific server type in a specific region, and that exact match gets a discounted rate.",
+        "A `Savings Plan` is the newer, more flexible commitment. Instead of naming a server, you simply promise to spend a steady dollar amount per hour on compute — say `$10/hour` in this example — and AWS applies the discount automatically across whatever you run.",
+        "`Compute Savings Plans` are the most flexible kind: the discount follows your usage even if you switch server types, regions, or move to `AWS Lambda` (a service that runs your code without you managing servers).",
+        "The trade-off is that more flexibility usually means a slightly smaller discount than the most rigid commitment."
+      ]
+    },
+    {
+      "title": "Coverage vs utilization: the two dials you watch",
+      "teaser": "how much of your usage is discounted, and how much of your discount is used",
+      "body": [
+        "`Coverage` asks: of all the usage I could have discounted, how much actually is? Low coverage means you're paying full price for steady usage you should have committed.",
+        "`Utilization` asks: of the commitment I bought, how much am I actually filling? Low utilization means you over-committed and are paying for a discount you can't use.",
+        "Healthy FinOps aims for high coverage on your stable baseline and near-100 percent utilization on what you commit.",
+        "The two pull against each other: chase 100 percent coverage and you risk over-committing, which drags utilization down."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "a worked example with labelled, illustrative figures",
+      "body": [
+        "Imagine a team runs a steady fleet of servers that costs about `$10/hour` at the standard on-demand rate, all day every day — roughly $7,200 a month in this example.",
+        "Their usage history shows the bottom `$7/hour` never drops; only the top `$3/hour` swings with traffic spikes.",
+        "They buy a 1-year `Compute Savings Plan` covering that steady `$7/hour`. At an illustrative 30 percent discount, that committed slice now costs about `$4.90/hour` instead of `$7` — saving roughly $1,500 a month.",
+        "They deliberately leave the spiky top `$3/hour` on on-demand pricing, so they never pay for capacity they don't use.",
+        "Result in this example: coverage around 70 percent of total spend, utilization near 100 percent — the FinOps sweet spot."
+      ]
+    },
+    {
+      "title": "Payment options and the over-commitment trap",
+      "teaser": "more cash up front buys a bigger discount, but raises the stakes",
+      "body": [
+        "Both RIs and Savings Plans let you pay `All Upfront`, `Partial Upfront`, or `No Upfront`. Paying more up front earns a slightly deeper discount.",
+        "The terms are one or three years. Three years saves more per hour but locks you in longer, which is risky if your tech or your business might change.",
+        "Over-committing is the classic mistake: you buy a big three-year commitment, then a team re-architects onto something cheaper, and you're stuck paying for a discount you can no longer fill.",
+        "The safe move is to commit only to the baseline you are highly confident will stay flat, and review commitments regularly as they near expiry."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Reserved Instance (RI)",
+      "def": "An older type of commitment where you pre-pay for a specific server type in a specific region for one or three years in exchange for a lower rate."
+    },
+    {
+      "term": "Savings Plan",
+      "def": "A newer, more flexible commitment where you promise a steady dollar-per-hour of compute spend for one or three years, and the discount applies automatically across what you run."
+    },
+    {
+      "term": "Coverage",
+      "def": "The share of your eligible usage that is actually covered by a commitment. High coverage means little steady usage is left paying full on-demand price."
+    },
+    {
+      "term": "Utilization",
+      "def": "The share of a commitment you actually use. Near 100 percent is healthy; low utilization means you over-committed and are wasting the discount."
+    },
+    {
+      "term": "On-demand pricing",
+      "def": "Paying the standard, full per-hour rate with no commitment. Flexible and good for unpredictable or spiky usage, but the most expensive rate per unit."
+    },
+    {
+      "term": "Rate optimization",
+      "def": "Lowering the price you pay per unit of cloud usage — through commitments and discounts — as opposed to reducing how much you use."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, you own a forecasting decision dressed up as a finance one: how confident are you that this baseline workload survives the next one to three years?",
+      "Commit too little and finance leaves real savings on the table; commit too much and you've bought a discount your roadmap can't fill, which someone will have to explain at the next budget review.",
+      "The trade-off you own is roadmap certainty versus rate savings — and the safe default is to commit only to the steady baseline you'd bet on, leaving spiky growth on flexible on-demand pricing."
+    ]
+  },
+  "caseStudy": {
+    "title": "Pinterest's multi-year cloud commitment",
+    "body": [
+      "Pinterest publicly disclosed in regulatory filings around 2017 that it had signed a multi-year commitment to spend roughly $750 million with Amazon Web Services through 2023.",
+      "A commitment that large earns a much lower rate, but it also bets that years of future usage will materialize as expected.",
+      "Analysts and the company itself flagged that if growth or efficiency efforts shifted usage, a long, large commitment could become a cost overhang rather than a saving.",
+      "It is a real-world illustration that the bigger and longer the commitment, the larger both the potential discount and the over-commitment risk."
+    ],
+    "bridge": "Pinterest shows the core idea at scale: a committed rate only pays off if you actually fill the commitment you signed."
+  },
+  "takeaways": [
+    "Rate optimization lowers the price per unit; it is a separate job from using less.",
+    "Commit to your steady baseline, and keep spiky or uncertain usage on flexible on-demand pricing.",
+    "Watch two dials: coverage (how much usage is discounted) and utilization (how much of your commitment you actually use).",
+    "Bigger and longer commitments deepen the discount but raise the risk of paying for capacity you can't fill."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does rate optimization with RIs and Savings Plans actually change about your cloud bill?",
+      "options": [
+        { "text": "It lowers the price you pay per unit of usage in exchange for a commitment", "correct": true },
+        { "text": "It reduces how many servers you are running", "correct": false },
+        { "text": "It deletes unused storage to cut waste", "correct": false }
+      ],
+      "feedback": "Rate optimization changes the rate, not the amount. You commit to steady usage and get a lower per-unit price in return; reducing usage is a separate FinOps job."
+    },
+    {
+      "q": "A team has bought a Savings Plan but is only filling about 60 percent of it. Which dial is unhealthy, and what does it signal?",
+      "options": [
+        { "text": "Low utilization — they over-committed and are paying for a discount they can't use", "correct": true },
+        { "text": "Low coverage — they should immediately buy a bigger commitment", "correct": false },
+        { "text": "High utilization — everything is fine and they should commit more", "correct": false }
+      ],
+      "feedback": "Utilization is the share of a commitment you actually use. At 60 percent they over-committed, so the fix is to commit less next time, not more."
+    },
+    {
+      "q": "Why is leaving spiky, unpredictable usage on on-demand pricing usually the smart move?",
+      "options": [
+        { "text": "Committing to capacity you won't reliably use risks low utilization and wasted spend", "correct": true },
+        { "text": "On-demand pricing is always cheaper per unit than any commitment", "correct": false },
+        { "text": "AWS forbids covering spiky workloads with Savings Plans", "correct": false }
+      ],
+      "feedback": "You only want to commit to the steady baseline you're confident about. Spiky usage that may disappear would leave a commitment underused, so flexible on-demand pricing fits it better."
+    },
+    {
+      "q": "What is the main difference between a Compute Savings Plan and a classic Reserved Instance?",
+      "options": [
+        { "text": "The Savings Plan is more flexible — the discount follows your usage across server types and regions, usually for a slightly smaller discount", "correct": true },
+        { "text": "The Reserved Instance never requires any commitment period", "correct": false },
+        { "text": "The Savings Plan only applies if you pay everything upfront", "correct": false }
+      ],
+      "feedback": "Compute Savings Plans trade a slightly smaller discount for flexibility, applying automatically across server types, regions, and even Lambda, whereas a classic RI is tied to a specific configuration."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Savings Plans User Guide",
+      "url": "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+    },
+    {
+      "label": "AWS — Reserved Instances (Amazon EC2)",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
+    },
+    {
+      "label": "FinOps Foundation — Rate Optimization capability",
+      "url": "https://www.finops.org/framework/capabilities/rate-optimization/"
+    }
+  ]
+}

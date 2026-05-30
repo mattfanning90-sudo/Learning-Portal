@@ -1,0 +1,172 @@
+{
+  "id": "cloud-m7-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 6,
+  "title": "Anomaly Detection: Catching the $40k Surprise on Day One",
+  "estMinutes": 9,
+  "coreIdea": "Cost `anomaly detection` learns what your normal daily cloud spend looks like, then pings you the moment it suddenly jumps — so a runaway cost is a same-day alert, not a month-end shock.",
+  "plainEnglish": [
+    "Cloud bills usually arrive once a month, after the money is already spent.",
+    "By then a mistake — a wrong setting, a runaway job, a leak — may have quietly burned tens of thousands of dollars.",
+    "`Anomaly detection` watches your spend every day instead of every month.",
+    "It learns your normal pattern, then alerts a human the moment spend spikes far above it.",
+    "The goal is simple: turn a $40,000 month-end surprise into a $1,500 alert on day one, while it's still small enough to stop."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a smoke detector in your kitchen.",
+      "It doesn't wait for the monthly fire-brigade report; it learns what normal air looks like and screams the instant smoke appears, while the fire is still a smouldering pan you can deal with.",
+      "Cost anomaly detection is a smoke detector for your cloud bill: it knows your normal daily spend and alarms the moment a cost starts climbing fast.",
+      "Where the metaphor bends — a smoke detector only ever says 'something is wrong,' but a good cost alert also tells you which room is burning: which service, account, or team caused the spike."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the month-end bill is too late",
+      "teaser": "by the time finance sees it, the money is gone",
+      "body": [
+        "Cloud providers bill in arrears — you see the total after the month closes.",
+        "A single bad change can run for 30 days before anyone notices on an invoice.",
+        "Classic causes: a test environment left running, a `data transfer` charge from moving huge volumes between regions, an infinite retry loop, or a leaked access key someone uses to mine cryptocurrency.",
+        "Each of these starts small and compounds daily, so the only cheap moment to catch it is day one — not day thirty.",
+        "Anomaly detection exists to close that 30-day blind spot."
+      ]
+    },
+    {
+      "title": "How it actually works",
+      "teaser": "learn the normal, flag the abnormal, route it to a human",
+      "body": [
+        "`AWS Cost Anomaly Detection` is a free AWS feature that uses machine learning to learn each service's normal spend pattern, including weekly rhythms like quiet weekends.",
+        "You group spend into `monitors` — for example, one per service, per `linked account`, or per cost-allocation tag — so an alert points at a specific suspect, not the whole bill.",
+        "When today's spend breaks far enough from the learned pattern, it raises an anomaly with a root-cause guess and a dollar `impact` estimate.",
+        "You set an `alert subscription`: a threshold (say, anomalies over a chosen dollar amount) plus where to send it — email, or a `Slack`/`Teams` channel via `Amazon SNS`.",
+        "Crucially, it doesn't fix anything; it routes a clear signal to a human who decides what to do."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (illustrative numbers)",
+      "teaser": "a leaked key, caught on day one",
+      "body": [
+        "Suppose your normal `EC2` (rented virtual servers) spend is about $500 a day, steady (all figures illustrative).",
+        "On Monday a leaked access key spins up GPU servers in a region you never use; spend that day jumps to about $2,000 — roughly $1,500 above normal.",
+        "Because your alert threshold is set to about $1,000, an email and a Slack message fire that same evening, naming the service, the region, and the estimated impact.",
+        "An engineer rotates the key and shuts the servers down by Tuesday morning. Total damage: roughly $2,500.",
+        "Without detection, that $1,500-a-day burn runs unnoticed for 30 days — about $45,000 — and lands as a line on the month-end bill nobody can explain. Same mistake, same money per day; the only difference is when you saw it."
+      ]
+    },
+    {
+      "title": "Tuning out the noise",
+      "teaser": "an alarm everyone ignores is worse than no alarm",
+      "body": [
+        "The failure mode of any alert system is `alert fatigue` — so many pings that people mute the channel.",
+        "If your threshold is too low, a normal Black Friday traffic surge or a planned big batch job fires false alarms.",
+        "The fix is to set a dollar threshold that matters, scope monitors tightly, and treat a few missed small anomalies as an acceptable price for a quiet, trusted alarm.",
+        "Pair every alert with context — what spiked and the likely cause — so the receiver can act in minutes, not open an investigation.",
+        "A trusted alarm that fires rarely beats a noisy one that fires constantly and gets ignored."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Cost anomaly detection",
+      "def": "A system that learns your normal daily cloud spend and alerts a human the moment spend jumps far above that pattern, so runaway costs are caught early instead of at month-end."
+    },
+    {
+      "term": "AWS Cost Anomaly Detection",
+      "def": "A free AWS feature that uses machine learning to spot unusual spend per service, account, or tag, and sends alerts with a root-cause guess and a dollar impact estimate."
+    },
+    {
+      "term": "Monitor",
+      "def": "A defined slice of spend that the system watches on its own — for example one service, one account, or one tagged team — so an alert points at a specific suspect rather than the whole bill."
+    },
+    {
+      "term": "Alert subscription",
+      "def": "The rule that says when and how you get told: a dollar threshold for what counts as worth flagging, plus the destination such as email or a Slack channel."
+    },
+    {
+      "term": "Alert fatigue",
+      "def": "When a system fires so many alerts that people start ignoring all of them, including the real ones. The reason a good alarm should fire rarely and meaningfully."
+    },
+    {
+      "term": "Billed in arrears",
+      "def": "Charging after the usage happens. Cloud bills work this way, which is why a costly mistake can run for a full month before it shows up on an invoice."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, the trade-off you own is sensitivity versus noise: set the dollar threshold too low and your team drowns in false alarms and stops looking; too high and the $40k surprise slips through.",
+      "You also own who responds — an alert with no named owner is just a louder version of the month-end shock, so decide up front which team gets paged and acts.",
+      "The spend itself is usually paid from a central cloud budget, but anomaly detection is what lets you push the response — and the accountability — onto the team that caused the spike, the same day it happens."
+    ]
+  },
+  "caseStudy": {
+    "title": "AWS ships anomaly detection as a free, ML-backed service",
+    "body": [
+      "In 2021 AWS launched `AWS Cost Anomaly Detection` for general availability, built directly into the AWS Billing console at no extra charge.",
+      "It applies machine learning to each customer's own spend history, learning normal patterns per service and account and surfacing anomalies with an estimated dollar impact and a likely root cause.",
+      "Customers configure monitors and alert subscriptions to route findings to email or, via Amazon SNS, to chat tools like Slack — so a spike reaches an on-call engineer the same day rather than waiting for the monthly invoice.",
+      "AWS positions it as a core FinOps guardrail, and it maps directly to the FinOps Foundation's 'Anomaly Management' capability."
+    ],
+    "bridge": "AWS making detection free and same-day is the whole idea in one product: the cheapest moment to catch a cost spike is the day it starts, not the day the bill arrives."
+  },
+  "takeaways": [
+    "Cloud bills are billed in arrears, so a mistake can run unnoticed for a full month — anomaly detection closes that blind spot.",
+    "It learns your normal daily spend, then alerts a human on day one when spend jumps far above it.",
+    "AWS Cost Anomaly Detection is free; you define monitors (what to watch) and alert subscriptions (when and where to ping).",
+    "Tune the threshold to beat alert fatigue — a quiet, trusted alarm beats a noisy one everyone mutes."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why is the month-end cloud bill a poor first line of defence against a cost spike?",
+      "options": [
+        { "text": "Cloud is billed in arrears, so a costly mistake can run for up to a month before it appears on the invoice", "correct": true },
+        { "text": "The month-end bill rounds every charge up to the nearest thousand dollars", "correct": false },
+        { "text": "Cloud providers hide anomalies from the monthly invoice on purpose", "correct": false }
+      ],
+      "feedback": "Right — because you only see the total after the month closes, a leak or runaway job can burn money for ~30 days before anyone notices. Anomaly detection is what shortens that to day one."
+    },
+    {
+      "q": "What does AWS Cost Anomaly Detection actually do when it spots a spike?",
+      "options": [
+        { "text": "Raises an alert with a root-cause guess and dollar impact, and routes it to a human via email or chat", "correct": true },
+        { "text": "Automatically shuts down the resources causing the spike", "correct": false },
+        { "text": "Refunds the anomalous spend to your account", "correct": false }
+      ],
+      "feedback": "Correct — it detects and notifies; it does not fix. A human reads the alert, sees the likely cause and impact, and decides what to do."
+    },
+    {
+      "q": "A team sets its anomaly alert threshold extremely low to 'catch everything.' What is the most likely result?",
+      "options": [
+        { "text": "Alert fatigue — so many pings, including false alarms, that the team starts ignoring the channel", "correct": true },
+        { "text": "AWS charges more for the extra alerts generated", "correct": false },
+        { "text": "The machine learning model stops working entirely", "correct": false }
+      ],
+      "feedback": "Right — a threshold that's too sensitive floods people with noise until they mute it, which is worse than a higher threshold that fires rarely but is trusted."
+    },
+    {
+      "q": "What is a 'monitor' in cost anomaly detection, and why does it matter?",
+      "options": [
+        { "text": "A defined slice of spend (e.g. one service, account, or tag) so an alert points at a specific suspect, not the whole bill", "correct": true },
+        { "text": "A dashboard screen that finance watches live around the clock", "correct": false },
+        { "text": "A hardware sensor AWS installs in the data centre", "correct": false }
+      ],
+      "feedback": "Correct — scoping spend into monitors is what lets an alert say 'this service in this account spiked,' which is far more actionable than 'the bill went up.'"
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Detecting unusual spend with AWS Cost Anomaly Detection",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html"
+    },
+    {
+      "label": "FinOps Foundation — Anomaly Management capability",
+      "url": "https://www.finops.org/framework/capabilities/manage-anomalies/"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    }
+  ]
+}

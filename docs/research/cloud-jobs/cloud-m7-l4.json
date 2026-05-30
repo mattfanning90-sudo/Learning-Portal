@@ -1,0 +1,173 @@
+{
+  "id": "cloud-m7-l4",
+  "trackId": "cloud",
+  "moduleId": "cloud-m7",
+  "order": 4,
+  "title": "Usage Optimization: Rightsizing, Scheduling & Killing Zombie Resources",
+  "estMinutes": 9,
+  "coreIdea": "The cheapest cloud resource is the one you turn off, so usage optimization means using less: shrink oversized servers (`rightsizing`), let capacity follow demand (`autoscaling`), switch things off when nobody needs them (`scheduling`), and delete the idle leftovers nobody owns (`zombie resources`).",
+  "plainEnglish": [
+    "In the cloud you pay for what you run, by the second, whether anyone is using it or not.",
+    "So the simplest way to cut the bill is to run less in the first place.",
+    "This lesson is about lowering usage, not haggling over price.",
+    "Four moves do most of the work: rightsizing, autoscaling, scheduling, and deleting idle resources.",
+    "Each one removes capacity you are paying for but not actually using."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of cloud usage like the rooms and lights in a big office building you pay for by the hour, per room, lit or not.",
+      "Rightsizing is realising a team of three sits in a room built for thirty, and moving them to a room that fits.",
+      "Scheduling is turning off the lights and heating overnight and at weekends, when the building is empty anyway.",
+      "Autoscaling is opening extra rooms only when the crowd arrives and locking them again when it leaves; killing zombies is finding the floor that has been lit and heated for a year that nobody even remembers renting.",
+      "The metaphor bends in one place: cloud capacity can grow or shrink in seconds, far faster than any real building."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Rightsizing: stop paying for headroom you never touch",
+      "teaser": "match the machine to the actual work",
+      "body": [
+        "Teams routinely pick a cloud server bigger than they need, just to be safe.",
+        "`Rightsizing` means looking at how much a resource is really used and resizing it to fit.",
+        "On AWS you can spot candidates with `AWS Compute Optimizer`, a free tool that reads usage history and recommends a smaller `instance` (a rented virtual machine) when one is overprovisioned.",
+        "The same idea applies to databases and storage, not just servers.",
+        "Rightsizing is the lowest-risk move because the workload keeps doing exactly what it did, just on a machine that fits it."
+      ]
+    },
+    {
+      "title": "Scheduling and autoscaling: only run it when it's needed",
+      "teaser": "let capacity follow demand instead of running flat-out",
+      "body": [
+        "A lot of cloud spend is for time when nobody is using the system.",
+        "`Scheduling` switches resources off on a timetable — for example, shutting down development and test servers nights and weekends.",
+        "AWS offers a ready-made `Instance Scheduler` to automate that on and off cycle.",
+        "`Autoscaling` is the smarter cousin: it adds capacity automatically when demand rises and removes it when demand falls, so you are not paying for a peak that lasts five minutes a day.",
+        "Together they replace 'always on, just in case' with 'on only when there is work to do'."
+      ]
+    },
+    {
+      "title": "Zombie resources: the spend nobody is watching",
+      "teaser": "find and delete the things still billing after the project ended",
+      "body": [
+        "A `zombie resource` is something still running and still charging you, but doing no useful work.",
+        "Classic examples: storage volumes left behind when a server is deleted, unused `Elastic IP` addresses (a reserved public internet address), idle load balancers, and old snapshots (saved backup copies).",
+        "These survive because no single person owns them, which is exactly why `tagging` — labelling each resource with its owner and purpose — makes them findable.",
+        "Tools like `AWS Cost Explorer` and `AWS Trusted Advisor` flag idle and unattached resources for review.",
+        "The fix is unglamorous but powerful: confirm nobody needs it, then delete it."
+      ]
+    },
+    {
+      "title": "What it looks like in practice — and what it costs",
+      "teaser": "one team, four moves, illustrative dollars",
+      "body": [
+        "Imagine a team spending about $20,000 a month on AWS compute, all left running around the clock.",
+        "Rightsizing: Compute Optimizer flags ten oversized servers; halving them trims roughly $4,000 a month with no change in function.",
+        "Scheduling: their development and test servers — say $6,000 a month — only need business hours, so switching them off nights and weekends (about 70% of the week) saves close to $4,000 more.",
+        "Zombies: a tagging sweep finds $1,500 a month in unattached storage volumes and old snapshots from finished projects, which they delete outright.",
+        "That is roughly $9,500 a month — close to half the bill — removed by using less, before negotiating a single discount. These figures are illustrative, not live AWS prices."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Rightsizing",
+      "def": "Resizing a cloud resource so its capacity matches the work it actually does, instead of paying for headroom that sits idle."
+    },
+    {
+      "term": "Autoscaling",
+      "def": "Letting the cloud automatically add capacity when demand rises and remove it when demand falls, so you pay for the load you have right now rather than a fixed peak."
+    },
+    {
+      "term": "Scheduling",
+      "def": "Turning resources off on a timetable when they are not needed — for example shutting down test servers overnight and at weekends — and back on when they are."
+    },
+    {
+      "term": "Zombie resource",
+      "def": "A cloud resource that is still running and still billing you but no longer does any useful work, such as storage left behind after its server was deleted."
+    },
+    {
+      "term": "Tagging",
+      "def": "Attaching labels such as owner or purpose to each cloud resource, so idle and unowned items can be found, attributed, and safely removed."
+    },
+    {
+      "term": "AWS Compute Optimizer",
+      "def": "A free AWS tool that studies how your resources are actually used and recommends a smaller, better-fitting size when something is overprovisioned."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader, usage optimization is the lever you can pull without finance signing a multi-year commitment — it is reversible and low-risk, so it is usually the first thing to push for.",
+      "Your real job is ownership: decide who is accountable for each environment's bill and require tagging, because zombie resources only survive when nobody owns them.",
+      "The trade-off you own is reliability versus thrift — aggressive scheduling and autoscaling save money but can hurt if a needed system is off, so you set where the line sits."
+    ]
+  },
+  "caseStudy": {
+    "title": "Pinterest cuts cloud waste by using less",
+    "body": [
+      "Pinterest runs almost entirely on AWS and has publicly described chasing efficiency as its usage grew.",
+      "Its engineering and finance teams treated idle and oversized capacity as the first target — rightsizing instances, scaling capacity to match real traffic, and reclaiming resources that were no longer doing work.",
+      "Pinterest reported saving tens of millions of dollars by combining this usage discipline with smarter pricing choices, and it has shared the approach in engineering talks.",
+      "The recurring theme is that the largest, safest savings came from not running things that were not needed, before any clever discounting."
+    ],
+    "bridge": "Pinterest's biggest wins came from using less — rightsizing, scaling to demand, and reclaiming idle capacity — which is exactly what usage optimization is."
+  },
+  "takeaways": [
+    "The cheapest resource is one that is off; usage optimization means running less, not paying less per unit.",
+    "Rightsizing and scheduling/autoscaling cut what you pay for capacity you are not actually using.",
+    "Zombie resources keep billing because nobody owns them — tagging makes them findable and deletable.",
+    "Usage optimization is low-risk and reversible, so it is usually the first FinOps move before commitments."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does 'usage optimization' mainly try to change?",
+      "options": [
+        { "text": "How much capacity you run, by using less of it", "correct": true },
+        { "text": "The price per unit, by negotiating a multi-year discount", "correct": false },
+        { "text": "Which cloud provider you buy from", "correct": false }
+      ],
+      "feedback": "Usage optimization lowers the amount you consume — rightsizing, scheduling, autoscaling, and deleting idle resources. Negotiating a unit price is a separate, rate-focused move."
+    },
+    {
+      "q": "A storage volume is left behind after its server is deleted and keeps billing every month. What is it?",
+      "options": [
+        { "text": "A zombie resource", "correct": true },
+        { "text": "A rightsized instance", "correct": false },
+        { "text": "An autoscaling group", "correct": false }
+      ],
+      "feedback": "It still runs and still charges you but does no useful work, which is the definition of a zombie resource. Tagging by owner is what makes these findable."
+    },
+    {
+      "q": "Why is usage optimization usually the first FinOps move a team makes?",
+      "options": [
+        { "text": "It is low-risk and reversible, with no long-term commitment to sign", "correct": true },
+        { "text": "It permanently locks in a lower price for three years", "correct": false },
+        { "text": "It is the only way to ever reduce a cloud bill", "correct": false }
+      ],
+      "feedback": "Turning off or shrinking what you don't need can be undone immediately, unlike a multi-year commitment, which is why teams start here."
+    },
+    {
+      "q": "Which tool is designed to recommend a smaller, better-fitting size for an overprovisioned AWS resource?",
+      "options": [
+        { "text": "AWS Compute Optimizer", "correct": true },
+        { "text": "AWS Instance Scheduler", "correct": false },
+        { "text": "An Elastic IP address", "correct": false }
+      ],
+      "feedback": "Compute Optimizer reads usage history and suggests rightsizing. Instance Scheduler turns things off on a timetable, and an Elastic IP is just a reserved public address."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS Well-Architected — Cost Optimization Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"
+    },
+    {
+      "label": "AWS — Compute Optimizer (rightsizing recommendations)",
+      "url": "https://aws.amazon.com/compute-optimizer/"
+    },
+    {
+      "label": "FinOps Foundation — Rate vs. Usage Optimization",
+      "url": "https://www.finops.org/framework/capabilities/rate-optimization/"
+    }
+  ]
+}

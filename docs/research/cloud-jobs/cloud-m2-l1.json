@@ -1,0 +1,160 @@
+{
+  "id": "cloud-m2-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m2",
+  "order": 1,
+  "title": "The Shared Responsibility Model: Who Guards What",
+  "estMinutes": 9,
+  "coreIdea": "AWS secures the cloud itself; you secure everything you put inside it — and the exact line between the two slides depending on which service you pick.",
+  "plainEnglish": [
+    "When you run software in the cloud, security is a team sport between you and your cloud provider.",
+    "Amazon Web Services (`AWS`) — the cloud provider — looks after the parts you can never touch: the buildings, the machines, the wiring.",
+    "You look after the parts you control: your data, who gets in, and how you set things up.",
+    "AWS calls this split the Shared Responsibility Model, and it is the first idea every cloud security conversation rests on.",
+    "Get the line wrong and you have a gap nobody is guarding — which is how most cloud breaches actually happen."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of renting an apartment in a secure building.",
+      "The landlord guards the building: the foundations, the locked front gate, the cameras in the lobby, the power supply.",
+      "But inside your own apartment, you decide whether to lock your door and who gets a key — and if you leave it wide open, that is on you, not the landlord.",
+      "The metaphor bends in one place: a landlord can never see inside your apartment, while AWS genuinely cannot read your data either, but it does give you the locks and asks you to actually use them."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "\"Of the cloud\" vs \"in the cloud\"",
+      "teaser": "two short phrases that decide who is to blame",
+      "body": [
+        "AWS sums the whole model up in two phrases.",
+        "AWS is responsible for security *of* the cloud: the physical data centres, the servers, the storage hardware, and the global network connecting them.",
+        "You are responsible for security *in* the cloud: your data, your application code, your user accounts, and your configuration choices.",
+        "A useful test: if you can change it from a screen, it is almost certainly your job; if you would need to physically walk into a data centre to touch it, it is AWS's job."
+      ]
+    },
+    {
+      "title": "The line moves depending on the service",
+      "teaser": "more managed service means less for you to guard",
+      "body": [
+        "The split is not fixed — it slides based on how much of the work AWS does for you.",
+        "Rent a raw virtual server with `EC2` (Elastic Compute Cloud, AWS's rent-a-computer service) and you must patch the operating system, configure the firewall, and manage everything on top — a lot lands on you.",
+        "Use a managed database like `RDS` (Relational Database Service) and AWS patches and runs the database engine for you, so your share shrinks.",
+        "Go fully managed with something like `S3` (Simple Storage Service, AWS's file-storage service) and AWS handles almost all the plumbing — but you still own who can open your files and whether they are encrypted."
+      ]
+    },
+    {
+      "title": "What it looks like in practice (and what it costs)",
+      "teaser": "a small team stores customer files in S3",
+      "body": [
+        "Imagine a 20-person company storing about 1,000 GB of customer files in `S3`, costing roughly $23 a month in this illustrative example (about $0.023 per GB).",
+        "AWS's side is invisible and already paid for: guards, locked data centres, and replacing failed drives so files are not lost.",
+        "Your side costs almost nothing in dollars but everything in attention: switching on encryption (free), turning off public access (free), and setting a policy for who can read the files (free).",
+        "The expensive failure is skipping those free steps — a single mis-set 'public' checkbox can expose every file, and the bill for that is reputational, not a line item.",
+        "Optional add-ons like `Amazon Macie`, which scans S3 for sensitive data, might add roughly $1 per GB scanned in this example — a deliberate spend to reduce risk, not a default."
+      ]
+    },
+    {
+      "title": "Where teams trip over the line",
+      "teaser": "the gap is almost always a setting, not a hack",
+      "body": [
+        "The dangerous spot is the seam between the two sides, where each party assumes the other has it covered.",
+        "AWS will faithfully keep the storage running, but it will not stop you from making a bucket public — that switch is yours.",
+        "It will keep an `EC2` server powered on, but it will not patch the software you installed on it.",
+        "So the practical security questions are nearly always about your configuration: encryption, access rules, and patching — not about the building AWS guards."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Shared Responsibility Model",
+      "def": "AWS's official rule for who secures what: AWS secures the underlying cloud infrastructure, and the customer secures whatever they run and store inside it."
+    },
+    {
+      "term": "Security of the cloud",
+      "def": "AWS's half of the deal — the physical buildings, servers, storage hardware, and network that you can never touch."
+    },
+    {
+      "term": "Security in the cloud",
+      "def": "Your half of the deal — your data, your code, your user accounts, and your settings, including who is allowed in."
+    },
+    {
+      "term": "EC2 (Elastic Compute Cloud)",
+      "def": "AWS's rent-a-computer service. You get a raw virtual server and must secure the operating system and software yourself, so more responsibility falls on you."
+    },
+    {
+      "term": "S3 (Simple Storage Service)",
+      "def": "AWS's file-storage service. AWS handles nearly all the plumbing, but you still control who can open the files and whether they are encrypted."
+    },
+    {
+      "term": "Managed service",
+      "def": "A service where AWS runs and patches more of the stack for you (for example a managed database), shrinking the share of security work you have to do."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "As a product leader you own the decision of how much you hand to AWS versus how much your team keeps — and that choice is both a cost lever and a risk lever.",
+      "Choosing more managed services usually costs more per month but moves patching and uptime work onto AWS, freeing your engineers and shrinking your attack surface; choosing raw infrastructure is cheaper to run but you pay in staff time and accept more ways to get it wrong.",
+      "Either way, the data and access settings are yours to own, so 'AWS handles security' is never a safe answer to give a customer, an auditor, or your board."
+    ]
+  },
+  "caseStudy": {
+    "title": "Capital One's 2019 S3 breach",
+    "body": [
+      "In 2019 a former contractor exploited a misconfigured firewall in front of Capital One's AWS environment and reached data on roughly 100 million people stored in `S3`.",
+      "The AWS infrastructure itself was never broken into — the data centres, hardware, and network all did their job.",
+      "The failure sat squarely on the customer's side of the line: a configuration mistake in how access was set up, exactly the kind of setting AWS leaves to you.",
+      "Capital One later agreed to pay an $80 million regulatory penalty, and the breach became the textbook example of a customer-side cloud failure."
+    ],
+    "bridge": "Capital One shows the model in action: AWS guarded the building flawlessly, but the customer left a door unlocked — and the door is always the customer's job."
+  },
+  "takeaways": [
+    "AWS secures the cloud; you secure what you put in it — that split is the Shared Responsibility Model.",
+    "The line slides: raw services like `EC2` put more on you, fully managed services like `S3` put more on AWS.",
+    "Your data and your access settings are always your responsibility, no matter the service.",
+    "Most cloud breaches are customer-side configuration mistakes, not breaks into AWS's own infrastructure."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Under the AWS Shared Responsibility Model, who is responsible for the physical security of the data centres?",
+      "options": [
+        { "text": "AWS — it secures the underlying infrastructure of the cloud", "correct": true },
+        { "text": "The customer, because they pay for the service", "correct": false },
+        { "text": "It is split evenly, 50/50, in every case", "correct": false }
+      ],
+      "feedback": "Physical buildings, servers, and networks are 'security of the cloud' — AWS's job. You can never touch them, so they are not yours to secure."
+    },
+    {
+      "q": "You store customer files in `S3` and forget to turn off public access. Whose responsibility was that setting?",
+      "options": [
+        { "text": "AWS, because it runs the storage service", "correct": false },
+        { "text": "The customer — access settings are 'security in the cloud'", "correct": true },
+        { "text": "Nobody; AWS blocks public access automatically in all cases", "correct": false }
+      ],
+      "feedback": "Who can open your files is a configuration choice you own. AWS keeps the storage running, but it will not decide your access rules for you."
+    },
+    {
+      "q": "Why does using a fully managed service like `S3` instead of a raw `EC2` server change your security workload?",
+      "options": [
+        { "text": "Because AWS handles more of the underlying stack, so less security work falls to you", "correct": true },
+        { "text": "Because managed services make AWS responsible for your data too", "correct": false },
+        { "text": "Because managed services remove all customer responsibility entirely", "correct": false }
+      ],
+      "feedback": "The line slides with how managed the service is: AWS does more of the plumbing, but you still own your data and access settings."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Shared Responsibility Model",
+      "url": "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    },
+    {
+      "label": "AWS Well-Architected Framework — Security Pillar",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html"
+    },
+    {
+      "label": "US DOJ — Capital One data breach (Paige Thompson) case",
+      "url": "https://www.justice.gov/usao-wdwa/pr/former-seattle-tech-worker-convicted-wire-fraud-and-computer-intrusions"
+    }
+  ]
+}

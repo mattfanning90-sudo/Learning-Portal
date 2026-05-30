@@ -1,0 +1,167 @@
+{
+  "id": "cloud-m4-l1",
+  "trackId": "cloud",
+  "moduleId": "cloud-m4",
+  "order": 1,
+  "title": "Compute Three Ways: Servers (EC2), Functions (Lambda) & Containers",
+  "estMinutes": 9,
+  "coreIdea": "AWS gives you three ways to run code — rent a whole server (`EC2`), hand over a single function (`Lambda`), or ship a packaged app in a container (`ECS`/`EKS`/`Fargate`) — and the right choice mostly comes down to who manages the machine and how you get billed.",
+  "plainEnglish": [
+    "\"Compute\" is just a fancy word for the thing that actually runs your software.",
+    "Your code has to live on a computer somewhere, and in the cloud that computer belongs to Amazon.",
+    "AWS offers three main flavours of compute, and they differ on one question: how much of the machine do you want to manage yourself?",
+    "At one end you rent a full virtual computer and look after it. At the other end you hand AWS a single piece of code and never think about a computer at all.",
+    "Knowing which flavour fits a job — and how each one shows up on the bill — is the heart of talking sensibly about cloud cost."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think about three ways to get a meal cooked. You can rent a fully-equipped kitchen by the hour and cook everything yourself — that is a server (`EC2`). You can use a shared commercial kitchen where you bring your own sealed meal-kit box and they just give you a burner when you need it — that is a container (`Fargate`). Or you can hand a single recipe to a chef who appears, cooks that one dish, hands it back, and vanishes — and you pay only for the seconds they were cooking — that is a function (`Lambda`).",
+      "The food can be identical in all three. What changes is how much kitchen you are responsible for, and whether you pay for the room standing empty.",
+      "The metaphor bends in one place: with `Lambda` you are not really renting a chef, you are renting one act of cooking, billed by the millisecond."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "EC2: renting a whole computer",
+      "teaser": "the most control, and the most to look after",
+      "body": [
+        "`EC2` (Elastic Compute Cloud) gives you a virtual server — a full computer you rent in Amazon's data centre.",
+        "You choose its size, install whatever you like, and it stays on until you turn it off.",
+        "That means maximum control, but you own the chores: patching the operating system, scaling up when traffic spikes, and turning it off when it is idle.",
+        "The catch is that the meter runs whenever the server is on, even at 3am when nobody is using it."
+      ]
+    },
+    {
+      "title": "Lambda: hand over a function, forget the server",
+      "teaser": "no machine to manage, and nothing to pay when idle",
+      "body": [
+        "`Lambda` is AWS's \"serverless\" service: you upload a single function — a small, self-contained piece of code — and AWS runs it on demand.",
+        "\"Serverless\" does not mean there is no server; it means you never see, choose, or manage one.",
+        "When a request comes in, AWS spins up your code, runs it, and shuts it down. When nothing is happening, you pay nothing.",
+        "The trade-off is that it suits short, event-driven jobs, and a cold function can take a moment to wake up — the so-called \"cold start.\""
+      ]
+    },
+    {
+      "title": "Containers: your app in a sealed box (ECS, EKS, Fargate)",
+      "teaser": "consistent everywhere, and a middle ground on control",
+      "body": [
+        "A container is your app plus everything it needs to run, packaged into one sealed box that behaves the same on any machine.",
+        "AWS runs containers two main ways: `ECS` (Elastic Container Service) is Amazon's own simpler manager, and `EKS` (Elastic Kubernetes Service) runs Kubernetes, an industry-standard system many teams already use.",
+        "Either one can run on `EC2` servers you manage, or on `Fargate`, where AWS runs the underlying machines so you only define the box.",
+        "Containers sit between `EC2` and `Lambda`: more portable and consistent than a hand-built server, but with more to manage than a single function."
+      ]
+    },
+    {
+      "title": "What it costs: the same workload, three ways",
+      "teaser": "an illustrative side-by-side on the bill",
+      "body": [
+        "Imagine a small image-resizing job that runs only when a user uploads a photo — say a few thousand times a day, each run finishing in under a second.",
+        "On `EC2` you might rent one small always-on server. Even at full price that is roughly a fixed amount — about $30 a month in this example — whether it runs once or a million times, because you pay for uptime, not work done.",
+        "On `Lambda` you pay per request plus compute time (measured in gigabyte-seconds). For this light, bursty load the bill might land around $5 a month in this example, because you pay only for the fraction of a second each run actually uses.",
+        "On `Fargate` you pay for the CPU and memory your container holds while running; for a job that is busy only in short bursts it would likely sit between the two — call it roughly $15 a month here — handy if the work is steadier or needs a longer-running process. These are illustrative figures to show the shape, not a live quote: the real numbers depend on region, size, and usage."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "compute",
+      "def": "The cloud resource that actually runs your software — the processing power and memory your code uses while it works."
+    },
+    {
+      "term": "EC2 (Elastic Compute Cloud)",
+      "def": "A virtual server you rent from AWS — a full computer you size, configure, and keep running, billed for the time it is switched on."
+    },
+    {
+      "term": "Lambda",
+      "def": "AWS's serverless service: you give it one function (a small piece of code), it runs on demand, and you pay only for the time it actually runs."
+    },
+    {
+      "term": "serverless",
+      "def": "A model where you still use servers but never see or manage them — AWS provisions, scales, and shuts them down for you automatically."
+    },
+    {
+      "term": "container",
+      "def": "Your application bundled with everything it needs into one sealed, portable package that runs the same on any machine."
+    },
+    {
+      "term": "Fargate",
+      "def": "A way to run containers (with ECS or EKS) where AWS manages the underlying servers, so you only define the container and pay for the resources it uses while running."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The compute choice is really a cost-and-ownership choice, and as a product leader you own the trade-off even if an engineer makes the call.",
+      "`EC2` is a fixed, predictable bill that you waste while idle; `Lambda` turns cost into a near-zero floor that scales with real usage but can surprise you at very high volume; containers buy portability and a steady middle.",
+      "The question to ask the room is not \"which is best?\" but \"is this workload always-on or bursty, and who is on the hook to keep the lights on?\" — that decides who pays and how the bill behaves as you grow."
+    ]
+  },
+  "caseStudy": {
+    "title": "iRobot moves Roomba's cloud to Lambda",
+    "body": [
+      "iRobot, the company behind the Roomba vacuum, runs the cloud platform that connects millions of its robots to their owners' phones.",
+      "AWS documents that iRobot built this platform to be almost entirely serverless, leaning heavily on `Lambda` so they did not have to run and patch a fleet of always-on servers.",
+      "Because robot activity is spiky — lots of homes cleaning in the morning, very little overnight — paying per-execution rather than for idle servers let a small team support a huge, uneven load.",
+      "iRobot has publicly described keeping its cloud operations team deliberately tiny by avoiding server management."
+    ],
+    "bridge": "iRobot's choice is the core idea in action: match a bursty workload to the compute model that bills for work done, not for machines sitting idle."
+  },
+  "takeaways": [
+    "Three ways to run code: rent a server (`EC2`), hand over a function (`Lambda`), or ship a container (`ECS`/`EKS`/`Fargate`).",
+    "The real difference is how much of the machine you manage — most with `EC2`, none with `Lambda`.",
+    "Billing follows the model: `EC2` charges for uptime, `Lambda` for actual execution, containers for resources held while running.",
+    "Pick by the workload: always-on and predictable leans `EC2`; short and bursty leans `Lambda`; portable, steady apps lean containers."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which compute option means you never see or manage the underlying server and pay only when your code actually runs?",
+      "options": [
+        { "text": "Lambda", "correct": true },
+        { "text": "EC2", "correct": false },
+        { "text": "An EC2 server running a container", "correct": false }
+      ],
+      "feedback": "Lambda is the serverless option — AWS runs your function on demand and charges per execution, so an idle workload costs essentially nothing."
+    },
+    {
+      "q": "A workload runs steadily 24 hours a day at a constant level. Which option is usually the most natural fit?",
+      "options": [
+        { "text": "An always-on EC2 server", "correct": true },
+        { "text": "Lambda, billed per request", "correct": false },
+        { "text": "Whichever has the lowest idle cost", "correct": false }
+      ],
+      "feedback": "When a machine is busy all the time, paying for steady uptime on EC2 is straightforward; per-request billing tends to shine for bursty, on-and-off loads, not constant ones."
+    },
+    {
+      "q": "What does Fargate let you do?",
+      "options": [
+        { "text": "Run containers without managing the servers underneath them", "correct": true },
+        { "text": "Run a function with no code packaged at all", "correct": false },
+        { "text": "Buy a discounted long-term EC2 server", "correct": false }
+      ],
+      "feedback": "Fargate runs your containers (via ECS or EKS) while AWS handles the underlying machines, so you define the container and pay for the resources it uses while running."
+    },
+    {
+      "q": "Why might an idle EC2 server still cost money overnight?",
+      "options": [
+        { "text": "Because EC2 bills for the time the server is switched on, not for work done", "correct": true },
+        { "text": "Because EC2 charges per request like Lambda", "correct": false },
+        { "text": "Because containers keep it awake", "correct": false }
+      ],
+      "feedback": "EC2 is billed for uptime. A server left running at 3am with no traffic is still on the meter — which is why idle servers are a classic source of cloud waste."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Types of Cloud Computing (compute, serverless, containers)",
+      "url": "https://aws.amazon.com/types-of-cloud-computing/"
+    },
+    {
+      "label": "AWS — AWS Lambda (serverless functions overview & pricing model)",
+      "url": "https://aws.amazon.com/lambda/"
+    },
+    {
+      "label": "AWS Case Study — iRobot serverless platform on AWS Lambda",
+      "url": "https://aws.amazon.com/solutions/case-studies/irobot/"
+    }
+  ]
+}

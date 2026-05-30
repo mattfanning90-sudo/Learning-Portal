@@ -1,0 +1,201 @@
+{
+  "id": "cloud-m3-l6",
+  "trackId": "cloud",
+  "moduleId": "cloud-m3",
+  "order": 6,
+  "title": "A Simple App, Drawn Box by Box: Your First AWS Architecture",
+  "estMinutes": 9,
+  "coreIdea": "A normal web app on AWS is just a handful of boxes wired in a line: `Route 53` to `CloudFront` to a load balancer to a fleet of `EC2` servers to a `RDS` database, with `S3` holding the files.",
+  "plainEnglish": [
+    "When engineers say \"three-tier app,\" they mean three layers: the part you see, the part that thinks, and the part that remembers.",
+    "On AWS, each layer is one named service, and the services connect in a simple chain a request flows through.",
+    "Nothing here is exotic. It is the same shape behind most websites you use, from a news site to an online store.",
+    "Once you can name the boxes and say why each exists, the giant AWS menu stops feeling random."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a busy restaurant. The host out front (`Route 53`) tells arriving guests which door to use. A team of greeters at every entrance (`CloudFront`) hands regulars their usual order instantly so they never wait.",
+      "Inside, a head waiter (the load balancer) spreads guests evenly across identical waiters (`EC2` servers) so no single one gets swamped. The waiters fetch from one shared, carefully-kept pantry (`RDS`), and bulky items like coats live in the cloakroom (`S3`).",
+      "The metaphor bends in one place: in a restaurant you hire one more waiter by hand, but AWS can add or remove waiters automatically as the crowd grows or shrinks."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The chain, box by box",
+      "teaser": "follow one click from a browser to a database and back",
+      "body": [
+        "`Route 53` is AWS's phone book. It turns the typed name `shop.example.com` into the address of the nearest entry point.",
+        "`CloudFront` is a content delivery network: a worldwide set of caches that keep copies of your pages close to users so they load fast. A cache is just a nearby copy kept ready so you do not fetch the original every time.",
+        "The load balancer then hands each request to one of several identical `EC2` servers. `EC2` is a rented virtual computer; \"identical\" is the trick that lets you run many at once.",
+        "Those servers read and write data in `RDS`, a managed database where AWS handles the backups and patching. `S3` stores the big files — images, video, uploads — so the database stays lean."
+      ]
+    },
+    {
+      "title": "Why split it into layers at all",
+      "teaser": "each box can grow, fail, and be paid for on its own",
+      "body": [
+        "Splitting the app lets each layer scale by itself. A traffic spike usually needs more `EC2` servers, not a bigger database.",
+        "`Auto Scaling` is the rule book that adds servers when busy and removes them when quiet, so you pay for roughly what you use.",
+        "It also limits blast radius: if one `EC2` server dies, the load balancer simply stops sending it work and the site stays up.",
+        "And it clarifies ownership. The team tuning the cache is not the team guarding the database."
+      ]
+    },
+    {
+      "title": "What it looks like in practice / what it costs",
+      "teaser": "illustrative monthly bill for a small but real app",
+      "body": [
+        "Imagine a modest app: a few thousand daily visitors, two small `EC2` servers behind one load balancer, one `RDS` database, and some `S3` storage.",
+        "Illustrative figures only, not live prices: the two `EC2` servers might run roughly $60 in this example, the load balancer about $20, `RDS` around $60, `S3` plus `CloudFront` maybe $15, and `Route 53` about $1.",
+        "That is a rough total of about $156 a month — and notice compute and database dominate, while delivery is cheap.",
+        "The lever that moves this bill most is `Auto Scaling`: right-sizing servers and letting them scale down overnight often trims the largest line item without touching the app."
+      ]
+    },
+    {
+      "title": "What is deliberately missing",
+      "teaser": "this is the clean textbook drawing, not the messy production one",
+      "body": [
+        "A real diagram adds security and resilience boxes: a firewall to block bad traffic, and copies of the database in a second data centre in case one fails.",
+        "It also spreads the servers across multiple Availability Zones — separate AWS data centres in one region — so a single building outage cannot take you down.",
+        "Those additions do not change the spine you just learned. They harden it.",
+        "Learn the five-box line first; the extras hang off it later."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Three-tier app",
+      "def": "An app split into three layers: presentation (what the user sees), logic (the servers that do the work), and data (the database that stores it)."
+    },
+    {
+      "term": "Load balancer",
+      "def": "A traffic director that spreads incoming requests evenly across several identical servers so none gets overwhelmed."
+    },
+    {
+      "term": "EC2",
+      "def": "Elastic Compute Cloud — a virtual computer you rent from AWS by the hour to run your application code."
+    },
+    {
+      "term": "Auto Scaling",
+      "def": "A rule that automatically adds servers when traffic is high and removes them when it is low, so you pay closer to what you actually use."
+    },
+    {
+      "term": "RDS",
+      "def": "Relational Database Service — a managed database where AWS handles the backups, patching, and upkeep for you."
+    },
+    {
+      "term": "CloudFront",
+      "def": "AWS's content delivery network: a worldwide set of caches that keep copies of your content near users so pages load quickly."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "This drawing is your cost map: roughly two-thirds of a simple bill is compute and database, so that is where savings live, not in shaving the cheap delivery layer.",
+      "You own the trade-off between always-on capacity (steady cost, instant response) and `Auto Scaling` (lower cost, a brief lag when traffic surges).",
+      "Knowing who owns each box also tells you who to pull into a meeting when a number moves — and who is accountable when it breaks."
+    ]
+  },
+  "caseStudy": {
+    "title": "Netflix runs on this shape",
+    "body": [
+      "Netflix moved its streaming service onto AWS over a seven-year migration that finished in 2016, and has publicly described the building blocks it uses.",
+      "It serves its catalogue and player through `CloudFront`-style content delivery, runs its application logic on fleets of `EC2` servers behind load balancers, and leans heavily on `Auto Scaling` to match capacity to the evening viewing peak.",
+      "Big bulky assets and data sit in `S3`. The same five boxes you just learned, scaled up to hundreds of millions of members."
+    ],
+    "bridge": "Netflix is not a different kind of architecture from your little app — it is the very same box-by-box chain, turned up to enormous volume."
+  },
+  "takeaways": [
+    "A standard web app is a chain: `Route 53` to `CloudFront` to load balancer to `EC2`/`Auto Scaling` to `RDS`, with `S3` for files.",
+    "Layers exist so each part can scale, fail, and be billed independently.",
+    "Compute and database usually dominate the bill; `Auto Scaling` is the biggest cost lever.",
+    "Security and multi-data-centre resilience harden this spine but do not change its shape."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In the three-tier chain, what is the load balancer's job?",
+      "options": [
+        {
+          "text": "Spread incoming requests evenly across several identical EC2 servers",
+          "correct": true
+        },
+        {
+          "text": "Store large files like images and video",
+          "correct": false
+        },
+        {
+          "text": "Translate a domain name into a server address",
+          "correct": false
+        }
+      ],
+      "feedback": "The load balancer is the traffic director. Storing files is `S3`, and translating names is `Route 53`."
+    },
+    {
+      "q": "A simple app suddenly gets a traffic spike. Which box is designed to respond automatically?",
+      "options": [
+        {
+          "text": "Auto Scaling, by adding more EC2 servers",
+          "correct": true
+        },
+        {
+          "text": "RDS, by creating a second database",
+          "correct": false
+        },
+        {
+          "text": "Route 53, by buying a new domain name",
+          "correct": false
+        }
+      ],
+      "feedback": "`Auto Scaling` adds servers when busy and removes them when quiet. A spike usually needs more compute, not a bigger database."
+    },
+    {
+      "q": "On the illustrative monthly bill, which two layers tend to dominate the cost?",
+      "options": [
+        {
+          "text": "Compute (EC2) and the database (RDS)",
+          "correct": true
+        },
+        {
+          "text": "Route 53 and the load balancer",
+          "correct": false
+        },
+        {
+          "text": "CloudFront and S3 storage",
+          "correct": false
+        }
+      ],
+      "feedback": "Compute and database are the heavy line items. That is why right-sizing and scaling servers is the main cost lever."
+    },
+    {
+      "q": "Why split the app into separate layers instead of one big server?",
+      "options": [
+        {
+          "text": "So each layer can scale, fail, and be paid for on its own",
+          "correct": true
+        },
+        {
+          "text": "Because AWS charges less for apps that use more services",
+          "correct": false
+        },
+        {
+          "text": "Because a single server cannot connect to the internet",
+          "correct": false
+        }
+      ],
+      "feedback": "Separation lets you scale the part under pressure and limits the blast radius when one piece fails."
+    }
+  ],
+  "sources": [
+    {
+      "label": "AWS — Three-Tier Architecture Overview (AWS Whitepaper / Architecture Center)",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/serverless-multi-tier-architectures-api-gateway-lambda/three-tier-architecture-overview.html"
+    },
+    {
+      "label": "AWS Well-Architected Framework",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+    },
+    {
+      "label": "AWS Case Study — Netflix",
+      "url": "https://aws.amazon.com/solutions/case-studies/netflix-case-study/"
+    }
+  ]
+}
