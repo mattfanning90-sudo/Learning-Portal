@@ -13,7 +13,7 @@ const read = (s, d) => {
 
 const listeners = new Set()
 const emit = () => listeners.forEach((l) => l())
-const subscribe = (l) => { listeners.add(l); return () => listeners.delete(l) }
+export const subscribe = (l) => { listeners.add(l); return () => listeners.delete(l) }
 const write = (s, v) => { localStorage.setItem(K(s), JSON.stringify(v)); emit() }
 
 // Plain, fully-testable store over localStorage.
@@ -58,6 +58,9 @@ export const store = {
     for (let i = 0; i < count; i++) if (q[i] === undefined) return false
     return true
   },
+  // Snapshot/apply the whole progress blob (used by cross-device sync).
+  exportAll: () => ({ completed: read('completed', {}), notes: read('notes', {}), quiz: read('quiz', {}), challenge: read('challenge', {}), settings: read('settings', {}) }),
+  importAll(blob) { for (const k of ['completed', 'notes', 'quiz', 'challenge', 'settings']) if (blob && blob[k]) write(k, blob[k]) },
 }
 
 // React hook: re-renders subscribed components whenever the store changes.

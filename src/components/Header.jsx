@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { atlas } from '../lib/atlas.js'
+import AuthControls from './AuthControls.jsx'
 
 const LINKS = [
   { to: '/', label: 'Dashboard', end: true },
@@ -24,11 +25,13 @@ export default function Header() {
           <span className="serif" style={{ fontSize: '1.05rem', letterSpacing: '-0.01em' }}>Atlas</span>
         </Link>
 
-        <nav style={{ display: 'flex', gap: 4 }} className="atlas-nav-desktop">
-          {LINKS.map((l) => <NavLink key={l.to} to={l.to} end={l.end} style={linkStyle}>{l.label}</NavLink>)}
-        </nav>
-
-        <button onClick={() => setOpen((o) => !o)} aria-label="Menu" className="atlas-nav-toggle" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.3rem' }}>≡</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <nav style={{ display: 'flex', gap: 4 }} className="atlas-nav-desktop">
+            {LINKS.map((l) => <NavLink key={l.to} to={l.to} end={l.end} style={linkStyle}>{l.label}</NavLink>)}
+          </nav>
+          <AuthControls />
+          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" className="atlas-nav-toggle" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.3rem' }}>≡</button>
+        </div>
       </div>
 
       {open && (

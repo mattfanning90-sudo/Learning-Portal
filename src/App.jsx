@@ -4,10 +4,14 @@ import Dashboard from './components/Dashboard.jsx'
 import TrackPage from './components/TrackPage.jsx'
 import Glossary from './components/Glossary.jsx'
 import LessonPage from './components/lesson/LessonPage.jsx'
+import ProgressSync from './components/ProgressSync.jsx'
+
+const clerkEnabled = !!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      {clerkEnabled && <ProgressSync />}
       <Header />
       <Routes>
         <Route path="/" element={<Dashboard />} />
