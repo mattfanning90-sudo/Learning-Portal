@@ -1,0 +1,149 @@
+{
+  "moduleId": "eng-m4",
+  "trackId": "engineering",
+  "title": "Module 4 — Proving It Works: Evals & Observability",
+  "goal": "The discipline that separates shipped products from demos.",
+  "lessons": [
+    {
+      "id": "eng-m4-l1",
+      "order": 1,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Tasting Routine: Evals Are the New Unit Tests",
+      "summary": "Traditional software is deterministic — a test passes or fails forever. LLMs are probabilistic and their quality is subjective, so you can't prove correctness by inspection. Evals are the systematic, repeatable way to measure whether an AI feature is good enough, catch regressions before users do, and decide whether a change actually helped. Without them, teams play whack-a-mole where fixing one failure silently creates another.",
+      "metaphor_seed": "Evals are a restaurant's tasting routine before service. A normal recipe always tastes the same, so you check it once. But a head chef working with fresh, variable ingredients (an LLM) must taste every dish against a written standard before it leaves the kitchen. Error analysis is the chef tasting a week of returned plates, noticing 'the soup is too salty 40% of the time', and adding a permanent salt-check to the line.",
+      "case_study_seed": "Rechat's 'Lucy' real-estate assistant and Nurture Boss (property-management AI), documented by Hamel Husain: prompt-tweaking alone hit a wall of whack-a-mole regressions until systematic error analysis and tiered evals (cheap code assertions → human/LLM-judge review → live A/B tests) let them see and fix the dominant failure modes and iterate far faster.",
+      "pm_angle": "Error analysis is the most PM-friendly, data-driven practice in all of AI: read real outputs, label failures, group them, fix the most common and costly ones. Binary pass/fail evals force a clear definition of 'good', and an eval suite in CI/CD becomes your regression gate — the thing that lets you change a prompt or upgrade a model without crossing your fingers.",
+      "deep_sections": [
+        "The three levels: code assertions, human/LLM-judge review, live A/B",
+        "Error analysis: read, label, group, target",
+        "Golden datasets and the eval-data flywheel",
+        "Why binary beats arbitrary 1-5 scores"
+      ],
+      "sources": [
+        "https://hamel.dev/blog/posts/evals/",
+        "https://hamel.dev/blog/posts/evals-faq/",
+        "https://www.lennysnewsletter.com/p/evals-error-analysis-and-better-prompts",
+        "https://newsletter.pragmaticengineer.com/p/evals"
+      ]
+    },
+    {
+      "id": "eng-m4-l2",
+      "order": 2,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Leaked Answer Key: Benchmarks vs Reality (SWE-bench vs SWE-Bench Pro)",
+      "summary": "Public leaderboards drive billions in valuation and shape buying decisions, but a high benchmark score can be dangerously misleading. Benchmarks leak into training data (contamination), so models memorize answers rather than solve problems, and clever 'scaffolding' can inflate scores without improving the model. A learner who understands this can cut through marketing claims.",
+      "metaphor_seed": "Benchmarks are like a driving test where the examiner uses the same route every year. Eventually students memorize 'turn left at the bakery' and ace the test without learning to drive (contamination). SWE-Bench Pro is the examiner who switches to fresh, unseen routes and adds highway merging and parallel parking, so scores suddenly drop — revealing who can actually drive in the real world.",
+      "case_study_seed": "SWE-Bench Pro (arXiv 2509.16941, Scale AI, 2025): 1,865 enterprise problems across private, held-out repos built to resist contamination. Frontier models that score 70%+ on the old SWE-bench Verified fall to under 45% Pass@1 (and ~23% on the public Pro set) — the honest benchmark that exposes how inflated the familiar headline number is. Connect to Module 1's 'benchmarks can be gamed' teaser and Module 3's SWE-bench progress story.",
+      "pm_angle": "Stakeholders quote benchmark numbers as if they were product guarantees. Understanding contamination, saturation, and Goodhart's Law ('when a benchmark becomes a target it stops being a good measure') lets you set honest expectations and insist on YOUR domain evals — because a generic leaderboard rarely predicts performance on your specific use case.",
+      "deep_sections": [
+        "Contamination: when the test is in the training data",
+        "Saturation and Goodhart's Law",
+        "The scaffolding effect: harness vs raw model skill",
+        "Why you must build your own domain evals"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2509.16941",
+        "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+        "https://www.codesota.com/news/swe-bench-contamination-debate",
+        "https://llm-stats.com/benchmarks/swe-bench-pro"
+      ]
+    },
+    {
+      "id": "eng-m4-l3",
+      "order": 3,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Flight Simulator vs Live Cockpit: Offline vs Online Evaluation",
+      "summary": "An AI feature can pass every pre-launch test and still fail in the wild, because real users do unexpected things and the world changes. Offline evals (fixed datasets, before launch) catch known failures cheaply; online evals (scoring live traffic, after launch) catch the surprises. Combining them, plus safe rollout patterns like shadow mode and canaries, lets you ship fast without betting the business.",
+      "metaphor_seed": "Offline eval is a flight simulator: you rehearse known emergencies safely on the ground before takeoff. Online eval is the cockpit instruments and a new co-pilot flying 'shadow' on real flights, calling out what they would do while the veteran captain still controls the plane. Only once the trainee's shadow decisions consistently match the captain's do you hand over the controls (canary, then full rollout).",
+      "case_study_seed": "Ramp (corporate-spend fintech) runs its transaction-handling agents in shadow mode on real financial transactions: the agent predicts the action, an LLM judge compares it to what the human actually did, and live actions are enabled only once shadow accuracy crosses a threshold — testing guardrails on real money without risking a dollar.",
+      "pm_angle": "Launch readiness is a core PM call, and these are the tools to make it safely: shadow mode and canary releases let you de-risk a launch with real traffic before full exposure. Knowing offline answers 'is it correct on what we anticipated?' and online answers 'is it working for real users now?' tells you exactly which evidence you need before you flip the switch.",
+      "deep_sections": [
+        "Offline vs online: what each catches",
+        "Shadow mode: testing at 0% exposure",
+        "Canary and A/B: proving real-world improvement, not just eval-score wins"
+      ],
+      "sources": [
+        "https://rhesis.ai/post/offline-vs-online-evaluation-llm-applications",
+        "https://www.statsig.com/perspectives/offline-vs-online-evals",
+        "https://labelstud.io/learningcenter/offline-evaluation-vs-online-evaluation-when-to-use-each/",
+        "https://arxiv.org/html/2411.13768v3"
+      ]
+    },
+    {
+      "id": "eng-m4-l4",
+      "order": 4,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Fast, Cheap, Quirky Grader: LLM-as-Judge",
+      "summary": "Human review is the gold standard but is slow and expensive — you can't have humans grade millions of outputs. LLM-as-judge uses a strong model to score outputs automatically, making large-scale and continuous evaluation affordable. But judges have systematic, well-documented biases, so you must know both how powerful and how dangerous this technique is, and how to keep the judge honest.",
+      "metaphor_seed": "LLM-as-judge is a very fast, very cheap exam grader who can mark a million papers overnight but has quirky habits: they give higher marks to the first essay in the pile and to longer essays regardless of quality. You still use them at scale, but only after spot-checking their marking against a senior examiner's grades and correcting for known habits (shuffle the pile, hide the length).",
+      "case_study_seed": "The 'Judging the Judges' position-bias study (arXiv 2406.07791) systematically showed LLM evaluators favor answers by position regardless of content, and the 2025 LLM-as-a-Judge survey (arXiv 2411.15594) catalogued the bias taxonomy now used to design debiased eval pipelines across industry.",
+      "pm_angle": "LLM-as-judge is the workhorse that makes continuous, large-scale evals affordable — but if you trust an un-calibrated judge, you're flying on a broken instrument. The discipline of anchoring the judge to a human-labeled set before trusting it is a quality gate you should insist on, because every online-monitoring number downstream depends on it.",
+      "deep_sections": [
+        "Pairwise vs pointwise judging with rubrics",
+        "The bias zoo: position, verbosity, self-preference, bandwagon",
+        "Debiasing and aligning the judge to human labels"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2411.15594",
+        "https://arxiv.org/abs/2406.07791",
+        "https://galileo.ai/blog/llm-as-a-judge-vs-human-evaluation",
+        "https://www.emergentmind.com/topics/llm-as-a-judge-evaluations"
+      ]
+    },
+    {
+      "id": "eng-m4-l5",
+      "order": 5,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Flight Data Recorder: Observability and Production Monitoring",
+      "summary": "When an AI app misbehaves, the cause is hidden inside a chain of model calls, tool calls, retrievals, and retries — without instrumentation, debugging is pure guesswork. Observability gives you the X-ray: every step, its latency, its token cost, its inputs and outputs. In 2026 this standardized around OpenTelemetry GenAI conventions, and Gartner projects observability will be ~50% of GenAI deployment investment by 2028.",
+      "metaphor_seed": "Observability is the flight data recorder plus a glass-bottom view of the kitchen. When a customer complains the meal was slow, you don't guess: you replay the exact order and see the salad took 8 seconds but the agent re-fired the grill three times (a retry loop) and waited 40 seconds on a slow supplier (a tool call). OpenTelemetry is the industry agreeing on one wiring diagram so any inspector's equipment can read any kitchen's recorder.",
+      "case_study_seed": "OpenTelemetry's 2026 GenAI observability release standardized LLM tracing, demonstrated with VS Code Copilot exporting telemetry (operation duration and token usage) so developers can compare latency and cost across models on the same dashboards — vendor-neutral instrumentation you set up once.",
+      "pm_angle": "Observability is your source of truth on cost, latency, and quality in production — the dashboard that tells you why a response succeeded or failed and where the money is going. There's no stack trace when an agent goes wrong after 180 steps; tracing is the only way to see what happened. It's also what feeds your online evals their live traffic.",
+      "deep_sections": [
+        "Traces and spans: one request, its steps",
+        "OpenTelemetry GenAI conventions and vendor-neutral instrumentation",
+        "Token, cost, latency, and drift monitoring; PII-safe logging"
+      ],
+      "sources": [
+        "https://opentelemetry.io/blog/2026/genai-observability/",
+        "https://www.langchain.com/langsmith/observability",
+        "https://www.confident-ai.com/knowledge-base/compare/top-7-llm-observability-tools",
+        "https://www.firecrawl.dev/blog/best-llm-observability-tools"
+      ]
+    },
+    {
+      "id": "eng-m4-l6",
+      "order": 6,
+      "moduleId": "eng-m4",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Watching the Whole Operation: Evaluating Agents and Reliability",
+      "summary": "A chatbot that gives a slightly wrong answer is annoying; an agent that books the wrong flight or violates a refund policy causes real harm. Evaluating agents means checking the whole trajectory and the final state — not just the last message — and accounting for variance: the same task can succeed once and fail on retry. The gap between a flashy benchmark number and real reliability is the central trust problem of 2026.",
+      "metaphor_seed": "Evaluating an agent is like assessing a new surgeon — not by a single multiple-choice exam, but by watching entire operations end to end. Did they reach a healthy patient (final state), and follow every safety protocol along the way (policy adherence)? And you don't trust them after one good surgery: you check whether they succeed on four out of four similar operations, because a 'usually great' surgeon who fails one time in four isn't someone you let operate unsupervised.",
+      "case_study_seed": "Sierra's τ²-bench (tau-squared-bench), updated in 2026 with voice and knowledge-retrieval domains and ~38 model entries, measures policy adherence and reports the pass^k metric — exposing that agents scoring ~90% pass^1 can drop to ~70% reliability when the same task is retried. The variance enterprises actually feel in production. Connect to 'Beyond Resolution Rates' (arXiv 2604.02547), which analyzes 33,000+ agent PRs for the behavioral drivers of success and failure.",
+      "pm_angle": "Reliability, not peak capability, is what determines whether you can let an agent run unsupervised. The pass^k insight — that a 90% benchmark can mean ~70% real reliability — reshapes how you set SLAs, decide what needs human approval, and communicate honest expectations. Policy adherence failing while the task 'succeeds' is exactly the trap that ends up in headlines.",
+      "deep_sections": [
+        "State-based evaluation: score the final world, not just the trajectory",
+        "Policy adherence: completing the task but breaking the rules still fails",
+        "pass^k and the reliability gap",
+        "Behavioral drivers of success/failure across 33,000+ PRs"
+      ],
+      "sources": [
+        "https://arxiv.org/pdf/2604.02547",
+        "https://decodethefuture.org/en/ai-agent-benchmarks-2026/",
+        "https://arxiv.org/pdf/2510.04550",
+        "https://www.domo.com/blog/ai-evaluations-101-testing-llms-agents-and-everything-in-between"
+      ]
+    }
+  ]
+}

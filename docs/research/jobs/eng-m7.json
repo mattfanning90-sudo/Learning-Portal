@@ -1,0 +1,55 @@
+{
+  "moduleId": "eng-m7",
+  "trackId": "engineering",
+  "title": "Module 7 — The Product Owner’s Edge",
+  "goal": "Step back and think like a Silicon Valley owner. (Flywheel is taught canonically in the Product track.)",
+  "lessons": [
+    {
+      "id": "eng-m7-l1",
+      "order": 1,
+      "moduleId": "eng-m7",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The New Teammate: How Humans and AI Actually Collaborate",
+      "summary": "AI teammates are now real co-workers on software projects, not just autocomplete. The data shows a nuanced reality: AI brings massive speed but its contributions have lower acceptance rates and tend to be simpler, with humans repositioned as reviewers and change-owners. Understanding how this collaboration really works — its wins and its frictions — is essential for leading a hybrid team.",
+      "metaphor_seed": "A fast, tireless junior teammate who fires off ten times more first drafts than anyone else — but whose drafts get sent back for revision more often and tend to be the simpler tasks. The senior humans shift from writing to directing and reviewing, and the team's throughput depends on getting that hand-off right, not on the junior simply doing more.",
+      "case_study_seed": "The AIDev dataset / 'The Rise of AI Teammates' (arXiv 2507.15003) studied real human-AI pull-request collaboration at scale and found AI teammates deliver dramatic speed but lower acceptance rates and simpler PRs than human contributors — the honest empirical picture of where AI helps and where humans still carry the load.",
+      "pm_angle": "If you're managing a team where AI does real work, you must plan around its real profile: great for volume and simple tasks, weaker on acceptance and complexity, with human review as the bottleneck (the 'economics of attention' from Module 3). This shapes how you assign work, set velocity expectations, and structure review — and protects you from over-claiming AI productivity to leadership.",
+      "deep_sections": [
+        "What the AIDev data actually shows: speed up, acceptance down, complexity down",
+        "The human-as-reviewer/change-owner role",
+        "Designing healthy human-AI hand-offs"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2507.15003",
+        "https://arxiv.org/abs/2604.26275",
+        "https://www.langchain.com/state-of-agent-engineering",
+        "https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html"
+      ]
+    },
+    {
+      "id": "eng-m7-l2",
+      "order": 2,
+      "moduleId": "eng-m7",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Programming With Trust: Synthesizing the Track Into Product Strategy",
+      "summary": "The capstone. The frontier of agentic software engineering is no longer about code — it's about 'programming with trust': aligning an AI team around shared vision, values, and vocabulary, and repositioning humans as reviewers, change-owners, and auditors. This lesson weaves every module into a single coherent way of thinking about building and owning AI products.",
+      "metaphor_seed": "Going from being the best typist in the building to being the editor-in-chief: you no longer write every word, you set the vision and standards, decide what's good enough to publish, and own the result. Trust — earned through evals, guardrails, governance, and a good feedback loop — is the currency that lets you delegate more and review smarter.",
+      "case_study_seed": "'Toward Agentic Software Engineering Beyond Code' (arXiv 2510.19692) frames the field's next phase as 'programming with trust' — vision, values, vocabulary — surveying Jules, Codex, Devin, SWE-agent, AutoCodeRover, and Claude Code, and connecting back to the A-SDLC six-layer architecture (arXiv 2604.26275) and its five open problems: evaluation, governance, technical debt, skill redistribution, and the economics of attention.",
+      "pm_angle": "This is the integrative PM lesson: how the mental model (M1), the build craft (M2), agents (M3), evals (M4), safety (M5), economics (M6), and moats (M7) combine into a strategy for shipping AI products people trust. The job of the AI Product Owner is to engineer trust deliberately, so the organization can safely delegate more work to AI over time.",
+      "deep_sections": [
+        "Vision, values, vocabulary: aligning a human-AI team",
+        "The five open problems of the A-SDLC",
+        "A decision framework: tying every module to a real product call",
+        "The Product Owner as trust engineer"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2510.19692",
+        "https://arxiv.org/abs/2604.26275",
+        "https://www.coderabbit.ai/guides/agentic-sdlc",
+        "https://www.mckinsey.com/capabilities/quantumblack/our-insights/from-ai-table-stakes-to-ai-advantage-building-competitive-moats"
+      ]
+    }
+  ]
+}

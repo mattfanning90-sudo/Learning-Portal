@@ -1,0 +1,169 @@
+{
+  "moduleId": "eng-m1",
+  "trackId": "engineering",
+  "title": "Module 1 — What an LLM Actually Is",
+  "goal": "Build a rock-solid, jargon-free mental model of how a large language model works.",
+  "lessons": [
+    {
+      "id": "eng-m1-l2",
+      "order": 2,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Jet-Lagged Consultant: Capabilities, Limits, and the Map You Must Draw",
+      "summary": "Shipping good AI products is fundamentally about matching the tool to tasks it's genuinely good at and engineering around its real limits. LLMs are superhuman at fluent language, summarizing, drafting, translating, and coding — but they have a frozen knowledge cutoff, can't reliably do exact math, struggle with truly novel problems, and don't know your private data. A great AI PM is a capability-and-limits cartographer.",
+      "metaphor_seed": "A charismatic, jet-lagged expert consultant who has read everything up to last year but just landed with no phone and no files. Ask for fluent advice or a first draft and they're brilliant. Ask for today's stock price, your company's internal policy, or an exact 12-digit multiplication and they'll confidently improvise — unless you hand them the relevant folder (RAG) or a calculator and a phone (tools). The skill is knowing which questions need the folder.",
+      "case_study_seed": "Harvey (legal AI used by firms like Allen & Overy and PwC) and Thomson Reuters' CoCounsel both wrap LLMs in retrieval over verified legal databases plus citations, precisely because a raw model hallucinates case law (as in Mata v. Avianca). The canonical 2025 example of grounding turning an unreliable raw model into a deployable, auditable enterprise product — and the bridge into Module 2.",
+      "pm_angle": "This lesson is the whole job of an AI PM in miniature: draw the map of what the tool can and can't do, then route real features accordingly. It sets up every technique in the rest of the track (RAG, tools, evals) as a deliberate answer to a specific known limit — not a pile of buzzwords.",
+      "deep_sections": [
+        "Strengths and limits, side by side",
+        "Emergent abilities: real capability jump or measurement artifact?",
+        "Why benchmarks can be gamed (a teaser for Module 4's 'benchmark trap')"
+      ],
+      "sources": [
+        "https://medium.com/@hrk84ya/rag-in-2025-from-quick-fix-to-core-architecture-9a9eb0a42493",
+        "https://www.min.io/learn/retrieval-augmented-generation",
+        "https://www.lxt.ai/blog/llm-benchmarks/",
+        "https://arxiv.org/html/2503.05788v2"
+      ]
+    },
+    {
+      "id": "eng-m1-l3",
+      "order": 3,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "LEGO Bricks and the Desk: Tokens and the Context Window",
+      "summary": "The model doesn't read letters or words — it reads 'tokens', sub-word chunks. Tokens are the unit of cost, speed, and what fits in one request. The context window is the model's working memory: everything it can 'see' at once. Misunderstanding this is the #1 source of broken AI products and surprise bills.",
+      "metaphor_seed": "Tokens are LEGO bricks of language — words are snapped together from standard sub-word pieces, which is why the model can count bricks but not the studs on each brick (letters). The context window is the model's desk: it can only work with papers physically spread on it right now. A bigger desk (2 million tokens ≈ 15 novels) costs more to scan, and papers in the middle of a huge pile get glanced over.",
+      "case_study_seed": "Google's Gemini 1.5/2.5 long-context demos fed the model a 2-million-token context and found a single specific sentence hidden inside the 700,000-word text of 'Les Misérables' (the 'needle in a haystack' test) — while researchers documented the 'lost in the middle' effect where mid-document facts are recalled less reliably.",
+      "pm_angle": "Token economics IS the unit economics of an AI feature — you pay per token, forever, on every request. People assume the model 'remembers' past chats (it doesn't, unless you resend them) and expect perfect recall of a 500-page document. Knowing the limits of the desk lets you scope features that are actually buildable and affordable.",
+      "deep_sections": [
+        "Why models miscount the letters in 'DEEPSEEK': tokens vs characters",
+        "From 4K to 2M: the context-window arms race and what it cost",
+        "Quadratic attention and 'lost in the middle': why bigger isn't free or perfect"
+      ],
+      "sources": [
+        "https://www.ibm.com/think/topics/context-window",
+        "https://en.wikipedia.org/wiki/Context_window",
+        "https://codingscape.com/blog/llms-with-largest-context-windows",
+        "https://introl.com/blog/long-context-llm-infrastructure-million-token-windows-guide"
+      ]
+    },
+    {
+      "id": "eng-m1-l4",
+      "order": 4,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "A City Where Ideas Have Addresses: Embeddings and Meaning-as-Coordinates",
+      "summary": "Embeddings are how machines turn meaning into numbers — a list of coordinates that place a word, sentence, or document as a point in a 'meaning space' where similar things sit close together. This one trick powers search, recommendations, deduplication, and the retrieval inside every modern AI assistant.",
+      "metaphor_seed": "A vast city where every idea has a street address based purely on meaning. 'King' and 'queen' live on the same block; 'banana' is across town. To find things related to your question you don't read every building — you walk to your question's address and knock on the nearest doors. 'Similar = nearby' is the whole trick.",
+      "case_study_seed": "Spotify's use of embeddings for Discover Weekly: songs, artists, and listening sessions become vectors, so 'tracks near this one in meaning-space' become recommendations — the same nearest-neighbor principle that now powers enterprise search and AI customer support over company knowledge bases.",
+      "pm_angle": "When a vendor says 'our AI understands what you mean, not just keywords,' they mean embeddings. Semantic search, 'find similar', and the retrieval step of every RAG product all reduce to this. Understanding it lets you tell a real semantic-search feature from marketing fluff and reason about why it sometimes returns surprising matches.",
+      "deep_sections": [
+        "Vectors, cosine similarity, and 'nearest neighbor' in plain English",
+        "Vector databases (Pinecone, Weaviate, pgvector): the address book of meaning",
+        "Beyond text: embeddings for images, audio, and mixed media"
+      ],
+      "sources": [
+        "https://www.iguazio.com/glossary/llm-embeddings/",
+        "https://cloudthrill.ca/llm_embedding-explained",
+        "https://www.dremio.com/blog/how-llms-work-tokens-embeddings-and-transformers/",
+        "https://datasciencedojo.com/blog/embeddings-and-llm/"
+      ]
+    },
+    {
+      "id": "eng-m1-l5",
+      "order": 5,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Culinary School vs Cooking to Order: Training vs Inference",
+      "summary": "Building a model (training) and using it (inference) are two completely different worlds with different costs, timelines, and skills. Training is expensive, slow, and occasional; inference is the per-request cost you pay forever. The model's knowledge is frozen at a cutoff date — it does NOT learn from your chats in real time. A three-stage pipeline (pretrain → fine-tune → align) explains why a raw model and the polished assistant behave so differently.",
+      "metaphor_seed": "Training is the years a chef spends in culinary school absorbing thousands of recipes — slow, expensive, done before the restaurant opens. Inference is that chef cooking your dish to order: fast, repeated all night, limited to what they already learned. They can't taste a new ingredient tonight and permanently 'know' it tomorrow — that needs going back to school (retraining). Pretraining is general school; fine-tuning and RLHF are the finishing course in house style and manners.",
+      "case_study_seed": "OpenAI's InstructGPT (2022) established the now-standard three-stage recipe — pretrain, then supervised fine-tuning, then RLHF — and showed a 1.3B-parameter aligned model was preferred by humans over the raw 175B GPT-3, proving that post-training 'manners', not just raw size, is what makes a model feel helpful. This is the lineage behind every modern chat assistant.",
+      "pm_angle": "Confusing training and inference leads to disastrous product economics and the most common misconception of all: that the product is 'learning from users' automatically (it isn't — memory is engineered, not auto-magical). Knowing the difference tells you which costs are one-time vs recurring, and frames the central build decision you'll make in Module 6: prompt vs RAG vs fine-tune.",
+      "deep_sections": [
+        "The three stages: pretraining, supervised fine-tuning (SFT), and RLHF/RLAIF",
+        "Knowledge cutoff: why the model doesn't know about last week",
+        "'SFT imitates, RL optimizes': how manners are taught"
+      ],
+      "sources": [
+        "https://pytorch.org/blog/a-primer-on-llm-post-training/",
+        "https://magazine.sebastianraschka.com/p/state-of-llms-2025",
+        "https://home.mlops.community/public/blogs/pretraining-breaking-down-the-modern-llm-training-pipeline",
+        "https://arxiv.org/abs/2203.02155"
+      ]
+    },
+    {
+      "id": "eng-m1-l6",
+      "order": 6,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Student Who Never Leaves a Blank: Why Models Hallucinate",
+      "summary": "Hallucination — fluent, confident, plausible falsehood — is the biggest barrier to deploying LLMs in high-stakes work. The key 2025 insight is that it isn't a mysterious bug: it's the predictable result of how we train and grade models, rewarding confident guessing and punishing honest 'I don't know.' Sounding right and being right are different things.",
+      "metaphor_seed": "A brilliant student told the exam never penalizes wrong answers — only blanks. The rational move is to fill in a confident guess for every question. LLMs are trained and graded under exactly that incentive, so they learn to always produce a smooth, assured answer rather than ever writing 'I'm not sure.' The fluency is real; the certainty is theater.",
+      "case_study_seed": "Mata v. Avianca (2023): two New York lawyers used ChatGPT for legal research and filed a brief citing six entirely fabricated court cases — complete with fake quotes and citation numbers the model invented because they 'looked right.' A federal judge sanctioned them. The canonical real-world demonstration that hallucinations are confident, plausible, and dangerous — reinforced by OpenAI's 2025 'Why Language Models Hallucinate' paper.",
+      "pm_angle": "You must design UX and trust boundaries around the certainty that the model will sometimes be confidently wrong. This is where you decide what needs a human in the loop, where you show citations, and where the cost of a confident error is too high to ship without grounding (Module 2). A great AI PM treats hallucination as a designed-for constant, not a bug to wait out.",
+      "deep_sections": [
+        "OpenAI's exam-taking analogy: why guessing beats abstaining",
+        "The calibration paradox: well-calibrated and still confidently wrong",
+        "The mitigation toolkit preview: RAG, citations, tools, confidence thresholds, human review"
+      ],
+      "sources": [
+        "https://openai.com/index/why-language-models-hallucinate/",
+        "https://arxiv.org/html/2509.04664v1",
+        "https://www.lakera.ai/blog/guide-to-hallucinations-in-large-language-models",
+        "https://arize.com/blog/openais-santosh-vempala-explains-why-language-models-hallucinate/"
+      ]
+    },
+    {
+      "id": "eng-m1-l7",
+      "order": 7,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Stepping to the Whiteboard: Reasoning Models and Test-Time Compute",
+      "summary": "The biggest capability shift of 2024–2026 is the move from instant-answer models to 'reasoning' models that spend extra compute thinking step-by-step before responding. This dramatically improves math, coding, and planning — but costs more, takes longer, and isn't always worth it. Knowing when to reach for a slow reasoning model vs a fast one is a core engineering and product judgment call.",
+      "metaphor_seed": "A standard LLM is a quiz-show contestant blurting the first answer that comes to mind. A reasoning model is the same contestant allowed to step to a whiteboard, scribble the working, cross out dead ends, and only then give a final answer. The whiteboard time isn't free — seconds and dollars — but for hard problems it's the difference between a lucky guess and a worked-out solution.",
+      "case_study_seed": "DeepSeek-R1 (January 2025): an open-weight reasoning model that rivaled OpenAI's o1 on math and coding, trained largely via reinforcement learning rather than massive human-labeled reasoning data, showing its full chain-of-thought. Its release rattled markets (Nvidia's stock dropped sharply) and proved high-end reasoning could be far cheaper than assumed.",
+      "pm_angle": "Reasoning models directly trade latency and cost for quality. 'Should this feature use the slow expensive thinker or the fast cheap one?' is a product decision you'll make constantly — it shapes user experience and your bill. Overthinking simple tasks wastes money; underthinking hard ones ships wrong answers.",
+      "deep_sections": [
+        "Chain-of-thought: showing your work",
+        "System 1 vs System 2: fast intuition vs slow deliberation",
+        "Visible vs hidden reasoning, and the 'don't overthink it' tradeoff"
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Reasoning_model",
+        "https://huggingface.co/blog/Kseniase/testtimecompute",
+        "https://labs.adaline.ai/p/inside-reasoning-models-openai-o3",
+        "https://magazine.sebastianraschka.com/p/state-of-llms-2025"
+      ]
+    },
+    {
+      "id": "eng-m1-l8",
+      "order": 8,
+      "moduleId": "eng-m1",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Beyond Text: Multimodal Models (Vision, Voice, and Image Generation)",
+      "summary": "Modern models do not just read and write text — they see images, hear and speak, and generate pictures and video. The same 'predict the next chunk' idea extends to other kinds of data, hugely widening what AI products can do.",
+      "metaphor_seed": "A person who was once only a pen-pal (text only) and has now gained eyes, ears, and a voice — they can look at your photo, listen to your question, and sketch you a picture back. Same brain, far more senses.",
+      "case_study_seed": "OpenAI's GPT-4o and Google's Gemini live multimodal demos (2024-2025): real-time voice conversation, reading a screenshot, describing a live camera feed — plus image/video generators like Sora and Midjourney as real product surfaces.",
+      "pm_angle": "Multimodal unlocks whole product categories (document AI, voice agents, visual search) but each modality adds cost, latency, and new failure modes. Knowing what is reliable today versus a flashy demo lets you scope realistically.",
+      "deep_sections": [
+        "How images and audio become tokens too",
+        "Document AI and OCR as a product surface",
+        "Voice agents and image/video generation — what's production-ready"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI — Hello GPT-4o",
+          "url": "https://openai.com/index/hello-gpt-4o/"
+        }
+      ]
+    }
+  ]
+}

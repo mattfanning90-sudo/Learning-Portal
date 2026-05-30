@@ -1,0 +1,146 @@
+{
+  "moduleId": "prod-m6",
+  "trackId": "product",
+  "title": "Module 6 — Business & Engineering Edge of AI",
+  "goal": "The commercial realities that decide survival.",
+  "lessons": [
+    {
+      "id": "prod-m6-l1",
+      "order": 1,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Data as the Moat: Flywheels and What Actually Compounds",
+      "summary": "When any competitor can call the same foundation model and clone your feature in weeks, the feature itself is no longer defensible. What's left is what you accumulate — but a static dataset is NOT a durable moat. The real moat is a data flywheel: every user action generates signal that improves the model, which drives more usage, which generates more signal.",
+      "metaphor_seed": "A data moat is like a neighborhood coffee shop that remembers every regular's order. A new chain can copy the menu and decor overnight (the features), but can't copy ten years of knowing you take oat milk on Tuesdays and your kid likes the blueberry muffin. And crucially, the shop has to actually pay attention and remember (design the flywheel), not keep a dusty guestbook nobody reads (a static dataset).",
+      "case_study_seed": "Cursor (the AI code editor) as analyzed by NFX: as a whole team adopts it, the AI accumulates the team's codebase architecture, conventions, and project structure — switching to a rival means losing 'months of accumulated team knowledge embedded in the AI,' turning usage data plus workflow embedding into a compounding moat a feature-clone can't replicate.",
+      "pm_angle": "Technical-literacy angle: designing a flywheel is a technical product decision — you must understand how user actions are captured as training signal, how that signal feeds model improvement, and the consent and data-governance requirements. Building the loop (vs. a dead dataset) requires real fluency in how the system learns from usage.",
+      "deep_sections": [
+        "Why feature moats are dead and accumulation is the new defensibility",
+        "Static data decays vs. compounding flywheel data",
+        "NFX's six defensibilities and the motte-and-bailey strategy"
+      ],
+      "sources": [
+        "https://www.nfx.com/post/ai-defensibility",
+        "https://medium.com/@cenrunzhe/ai-killed-the-feature-moat-heres-what-actually-defends-your-saas-company-in-2026-9a5d3d20973b",
+        "https://www.rohitprabhakar.com/blog/market-of-one-data-flywheel-competitive-moat/",
+        "https://valueaddvc.com/blog/the-data-advantage-myth-why-proprietary-data-alone-wont-save-you"
+      ]
+    },
+    {
+      "id": "prod-m6-l2",
+      "order": 2,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Pricing AI Features: The New Gross-Margin Reality",
+      "summary": "In classic SaaS, serving one more customer costs almost nothing, enabling per-seat pricing and 80-90% margins. AI breaks this: every query has a real compute cost, so AI businesses often run at 50-60% gross margins. PMs must rethink both how they charge (toward usage, workflow, and outcome-based models) and how they protect margin.",
+      "metaphor_seed": "Old SaaS pricing was a gym membership: a flat monthly fee whether you show up or not, costing the gym nothing extra when you do. AI pricing is more like a law firm — every hour the AI 'works' costs you money, so you can bill by the hour (usage), by the case-task (workflow), or only when you win the case (outcome). Each step toward 'only when you win' is more attractive to the client but riskier for the firm.",
+      "case_study_seed": "Intercom's Fin AI support agent charges $0.99 per ticket it actually resolves — per problem solved, not per message or token. The canonical outcome-based pricing example from Bessemer's playbook, alongside EvenUp (per AI-generated legal demand letter) and Leena AI (priced on tickets auto-closed).",
+      "pm_angle": "Technical-literacy angle: pricing demands you model the fully-loaded cost per unit — tokens, embeddings, vector search, orchestration, monitoring — and price above a margin floor. Understanding token economics and what drives compute cost is a quantitative, technical skill, and unmonitored token costs can quietly erode margins by 6%+ if you don't track them.",
+      "deep_sections": [
+        "Why AI margins are structurally lower: real per-query cost-of-goods",
+        "The pricing ladder: per-seat to usage to workflow to outcome",
+        "Cost-plus modeling and the abstraction problem (customers think in problems, not tokens)"
+      ],
+      "sources": [
+        "https://www.bvp.com/atlas/the-ai-pricing-and-monetization-playbook",
+        "https://www.softwareseni.com/outcomes-based-pricing-and-ai-first-saas-gross-margin-economics-explained/",
+        "https://www.getmonetizely.com/articles/how-to-price-ai-services-in-2025-models-examples-and-strategy-for-saas-leaders",
+        "https://www.drivetrain.ai/post/unit-economics-of-ai-saas-companies-cfo-guide-for-managing-token-based-costs-and-margins"
+      ]
+    },
+    {
+      "id": "prod-m6-l3",
+      "order": 3,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Trust and Safety as a Product Concern: Hallucinations and Liability",
+      "summary": "When your product can confidently state something false (a hallucination) or produce biased output, that's a product, brand, and legal risk the PM owns — courts have already held companies liable for what their AI tells customers. Trust and safety becomes a first-class requirement, designed as guardrails at three layers: input, processing, and output.",
+      "metaphor_seed": "Guardrails are the bumpers in a bowling alley and the spell-checker on a press release. The AI is an eager intern who will happily send a customer a confident, totally made-up policy if you let them. You don't fire the intern — you put rules in place: check the facts before it goes out, never use that tone, never promise a refund we don't offer. Once that email leaves with your company's name on it, the company owns every word.",
+      "case_study_seed": "Moffatt v. Air Canada (2024, BC Civil Resolution Tribunal): Air Canada's chatbot hallucinated a bereavement-fare refund policy contradicting the airline's own website; the tribunal rejected the 'the chatbot is a separate legal entity' defense and held the airline liable for $812.02 — the landmark case establishing companies are accountable for their AI's output.",
+      "pm_angle": "Technical-literacy angle: you must understand the three guardrail layers (input filtering, processing constraints, output validation) and emerging techniques like constitutional/principle-based approaches and automated-reasoning verification well enough to specify them as requirements. Knowing where a hallucination can technically be caught lets you design defenses, not just hope.",
+      "deep_sections": [
+        "Hallucinations and the three guardrail layers",
+        "Constitutional/principle-based approaches and automated-reasoning verification",
+        "Legal liability: 'you own what your chatbot says'"
+      ],
+      "sources": [
+        "https://www.mccarthy.ca/en/insights/blogs/techlex/moffatt-v-air-canada-misrepresentation-ai-chatbot",
+        "https://aibusiness.com/nlp/air-canada-held-responsible-for-chatbot-s-hallucinations-",
+        "https://aws.amazon.com/blogs/aws/minimize-ai-hallucinations-and-deliver-up-to-99-verification-accuracy-with-automated-reasoning-checks-now-available/",
+        "https://www.wiz.io/academy/ai-security/ai-guardrails"
+      ]
+    },
+    {
+      "id": "prod-m6-l4",
+      "order": 4,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Leading Teams That Ship with Coding Agents",
+      "summary": "By 2026, AI coding agents write a large share of the code, changing what the whole team optimizes for. Engineers move from writing code to orchestrating agents and verifying output — including 'hallucination checks' (did the agent invent a fake library or break the logic?). PMs get back time lost to alignment meetings but take on a sharper duty: making sure the team ships the RIGHT things, because velocity only becomes value if pointed at validated needs.",
+      "metaphor_seed": "Managing an AI-native team is like running a newsroom where the junior reporters are incredibly fast AI writers. They draft articles in seconds but sometimes quote sources that don't exist. Your senior staff stop typing stories themselves and become editors — they set the style guide (AGENTS.md), fact-check every draft (the hallucination check), and decide which stories are worth running at all. You judge the newsroom not by word count but by how few errors slip into print, and whether you covered the stories readers cared about.",
+      "case_study_seed": "OpenAI's 'Building an AI-Native Engineering Team' guide: Cloudwalk turns specs into working code in minutes via Codex; Sansan uses agent review to catch race conditions and database-relation bugs humans miss; Cloudflare reports its 4-week rolling average of merge requests climbing from ~5,600/week to over 8,700/week as AI tooling adoption grew.",
+      "pm_angle": "Technical-literacy angle: you need to understand new artifacts like AGENTS.md (the instruction file telling agents your conventions and standards) and new metrics like 'defect-capture rate' over 'volume of commits.' Knowing that 'AGENTS.md tells agents HOW to build, but customer evidence tells the team WHAT to build' — and owning the latter — is the crux of the AI-native PM role.",
+      "deep_sections": [
+        "Engineers as agent-orchestrators and verifiers; the hallucination check in code review",
+        "AGENTS.md and new metrics (defect-capture rate over commit volume)",
+        "Emerging org structures like the 'shipyard team'"
+      ],
+      "sources": [
+        "https://developers.openai.com/codex/guides/build-ai-native-engineering-team",
+        "https://blog.buildbetter.ai/agents-md-complete-guide-for-engineering-teams-in-2026/",
+        "https://blog.cloudflare.com/internal-ai-engineering-stack/",
+        "https://optimumpartners.com/insight/engineering-management-2026-how-to-structure-an-ai-native-team/"
+      ]
+    },
+    {
+      "id": "prod-m6-l5",
+      "order": 5,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Capstone: The AI Product Leader's Operating Loop",
+      "summary": "This final lesson integrates the whole track into one continuous operating loop for an empowered AI product leader: set an insight-driven vision and strategy, run continuous discovery with the four risks, build with agents and validate with evals, design for probabilistic UX, price for real margins, guard against safety risk, and measure outcomes — then feed the learning back in. It's the full job, end to end.",
+      "metaphor_seed": "Conducting an orchestra where some musicians are human virtuosos (your trio and stakeholders) and some are powerful but literal-minded AI instruments (the models and agents). The conductor doesn't play every note — they hold the score (vision and strategy), cue each section at the right moment (discovery, build, evals, launch), listen for when something's off-key (outcomes and safety), and keep the whole thing moving as one piece of music rather than a pile of solos.",
+      "case_study_seed": "Synthesis across the track's flagship transformations and AI cases — Trainline and Datasite (operating model), Airbnb and Dropbox (discovery), Netflix and Apple (vision and strategy), Intercom's Fin and Cursor (AI business model), Air Canada (safety) — assembled as one decision framework an aspiring leader can apply to their own product.",
+      "pm_angle": "Technical-literacy angle: the capstone ties together every technical thread — instrumentation, A/B testing, model lifecycle, evals, token economics, guardrails, and agent orchestration — into the integrated judgment that lets a non-technical-by-background leader operate credibly as both a great PM and a great AI engineer's true partner.",
+      "deep_sections": [
+        "The end-to-end operating loop, stage by stage",
+        "Where the technical and product disciplines reinforce each other",
+        "Cagan's 2025-26 provocation: as AI absorbs the narrow 'Product Owner' role, real product judgment becomes the differentiator"
+      ],
+      "sources": [
+        "https://www.svpg.com/the-product-operating-model-an-introduction/",
+        "https://www.news.aakashg.com/p/teresa-torres-podcast",
+        "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete",
+        "https://www.productcompass.pm/p/transformed-product-operating-model-marty-cagan"
+      ]
+    },
+    {
+      "id": "prod-m6-l6",
+      "order": 6,
+      "moduleId": "prod-m6",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Getting to Users: Growth and Go-to-Market",
+      "summary": "A great product no one adopts still fails. Growth is the discipline of acquisition, activation, and retention — and product-led growth makes the product itself the engine that brings and keeps users.",
+      "metaphor_seed": "A brilliant restaurant down an unmarked alley. The food (product) is superb, but if no one finds the door (acquisition), feels welcome on the first visit (activation), or has a reason to return (retention), it closes. Growth builds the sign, the welcome, and the reason to come back.",
+      "case_study_seed": "Slack and Dropbox's product-led growth: the product spread inside companies through use and invitations rather than a traditional sales push — the canonical PLG flywheel (AARRR: acquisition, activation, retention, referral, revenue).",
+      "pm_angle": "Technical-literacy angle: growth loops are instrumented and measured — referral mechanics, activation milestones, and retention cohorts all depend on event tracking you must understand to optimise. PLG ties product design directly to distribution.",
+      "deep_sections": [
+        "The AARRR funnel: acquisition, activation, retention, referral, revenue",
+        "Product-led growth and viral/referral loops",
+        "Positioning: why the same product wins or loses on how it is framed"
+      ],
+      "sources": [
+        {
+          "label": "Reforge — growth loops",
+          "url": "https://www.reforge.com/"
+        }
+      ]
+    }
+  ]
+}

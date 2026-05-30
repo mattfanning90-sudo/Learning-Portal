@@ -1,0 +1,147 @@
+{
+  "moduleId": "eng-m5",
+  "trackId": "engineering",
+  "title": "Module 5 — Safety, Security & Governance",
+  "goal": "Ship AI that won’t make headlines for the wrong reasons.",
+  "lessons": [
+    {
+      "id": "eng-m5-l1",
+      "order": 1,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Eager Intern Who Can't Tell Whose Voice Is Whose: Prompt Injection",
+      "summary": "Prompt injection — malicious instructions hidden in the data a model reads — is OWASP's #1 LLM threat and has no foolproof fix, because it exploits the very way models follow instructions. It's especially dangerous for agents that take actions: a clever text trick becomes real-world damage. NIST called indirect prompt injection 'generative AI's greatest security flaw.'",
+      "metaphor_seed": "An LLM is an extremely literal, eager-to-please intern who can't tell the difference between their boss's instructions and a note slipped into the paperwork they were asked to read. Indirect prompt injection is a con artist mailing the intern a letter saying 'your boss says wire me the funds', and the intern, unable to tell whose voice is whose, just does it. The fix isn't a smarter intern; it's not giving the intern the keys to the safe.",
+      "case_study_seed": "EchoLeak (CVE-2025-32711), disclosed by Aim Security in June 2025, was the first real-world zero-click prompt-injection exploit in production: a single crafted email could make Microsoft 365 Copilot silently exfiltrate confidential data with NO user click. Alongside Perplexity's Comet browser being tricked into leaking emails and banking credentials via web-page injection — the canonical examples of why this threat is non-negotiable.",
+      "pm_angle": "The moment your AI feature reads any untrusted content (emails, web pages, documents) or takes any real action, prompt injection is your top risk — and there's no patch that makes it disappear. As a PM you must treat all external input as hostile and design the feature so a successful injection can't reach the safe. This reframes 'what can the agent touch?' as the central scoping question.",
+      "deep_sections": [
+        "Direct vs indirect injection",
+        "Why it can't be fully solved (it's how models work)",
+        "'Excessive agency': the link between permissions and blast radius"
+      ],
+      "sources": [
+        "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+        "https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-v2025.pdf",
+        "https://atlan.com/know/prompt-injection-attacks-ai-agents/",
+        "https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025"
+      ]
+    },
+    {
+      "id": "eng-m5-l2",
+      "order": 2,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Airport Security as Layers: Guardrails and Defense in Depth",
+      "summary": "A raw model will, asked the right way, leak secrets, follow malicious instructions, or take actions it shouldn't. Guardrails are the safety layers wrapped around the model — checking inputs and outputs and constraining what the system can do. No single layer is perfect, so you stack them. The OWASP LLM Top 10 is the shared vocabulary every AI engineer and PM needs.",
+      "metaphor_seed": "Guardrails are airport security as a layered system, not a single gate. A passport check at the door (input scanner for jailbreaks/PII), an X-ray of the bags (content classifier like Llama Guard), rules about which doors you may walk through (dialog-flow guardrails), and a final check before boarding (output validation). No single layer is perfect, so you stack them — and 'excessive agency' is simply not handing every passenger the keys to the cockpit.",
+      "case_study_seed": "Meta's LlamaFirewall (open-sourced 2025, arXiv 2505.03574) is a layered guardrail system combining a jailbreak-detection model, a prompt-injection alignment checker, and code-safety scanning — built specifically to secure autonomous agents against the OWASP-cataloged prompt-injection and excessive-agency risks.",
+      "pm_angle": "Guardrails are the difference between shipping confidently and shipping a headline. Understanding input vs output guardrails, and the principle that you layer them rather than trust any one, lets you define safety requirements for a feature and evaluate vendor claims. The most powerful pattern — self-correction loops where a bad output is caught and revised — is also a product-quality feature, not just a safety one.",
+      "deep_sections": [
+        "Input scanners vs output scanners",
+        "The OWASP LLM Top 10 in plain English",
+        "Self-correction loops as the strongest post-output safety pattern"
+      ],
+      "sources": [
+        "https://arxiv.org/pdf/2505.03574",
+        "https://aisecurityandsafety.org/en/guides/llm-guardrails/",
+        "https://aiworkflowlab.dev/article/llm-guardrails-production-defense-in-depth-safety-systems-nemo-guardrails-ai-openai",
+        "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+      ]
+    },
+    {
+      "id": "eng-m5-l3",
+      "order": 3,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Hiring Bank Robbers Before Opening Day: Red-Teaming",
+      "summary": "You can't trust a defense you haven't attacked. Red-teaming is deliberately trying to break your own AI — jailbreak it, extract dangerous capabilities, make it misbehave — before real adversaries or accidents do. A hard truth has emerged: under sustained automated attack, every frontier model eventually breaks. The question is how much pressure it withstands, not whether it's 'unbreakable.'",
+      "metaphor_seed": "Red-teaming is hiring professional bank robbers to break into your own vault before opening day. They don't try the front door once and leave; they probe for weeks, tunnel, bribe, and pick locks 200 times. The finding is never 'the vault is unbreakable' — it's 'it withstood X hours of expert attack', and that honest stress number is what tells you whether to open and what the published 'system card' reports to regulators and the public.",
+      "case_study_seed": "Anthropic's ~15-person frontier red team stress-tests Claude (bio, cyber, autonomous-systems misuse) with multi-attempt reinforcement-learning attack campaigns, documented in the 153-page Claude Opus 4.5 system card — contrasted with OpenAI's 55-page GPT-5 card, revealing two distinct measurement philosophies (multi-attempt campaigns vs single-attempt jailbreak resistance) for enterprise trust.",
+      "pm_angle": "System cards are how vendors disclose safety, and reading them critically is a procurement and trust skill. Knowing that 'it withstood sustained attack' is the honest claim — not 'it's safe' — helps you set realistic risk expectations, compare vendors' methodologies, and decide what your own feature needs before launch. Attack-success-rate over many attempts is the number that actually matters.",
+      "deep_sections": [
+        "Single-attempt vs multi-attempt attacks and attack-success-rate",
+        "System cards as public evidence (and how to read them)",
+        "Why persistent automated attacks beat static defenses"
+      ],
+      "sources": [
+        "https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety",
+        "https://venturebeat.com/security/anthropic-vs-openai-red-teaming-methods-reveal-different-security-priorities",
+        "https://fortune.com/2025/09/04/anthropic-red-team-pushes-ai-models-into-the-danger-zone-and-burnishes-companys-reputation-for-safety/",
+        "https://www.techbuddies.io/2025/12/27/red-teaming-llms-why-persistent-attacks-are-winning-the-ai-security-arms-race/"
+      ]
+    },
+    {
+      "id": "eng-m5-l4",
+      "order": 4,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Cameras Without Locks: Governance and Trust Boundaries for Agents",
+      "summary": "An agent that can edit files, run code, and call APIs can also be tricked or cause real damage at machine speed. Governance is the non-negotiable counterpart to autonomy — and the area most companies got wrong in 2026: they installed monitoring but forgot containment. The fix is least privilege, sandboxing, and human-in-the-loop approval for high-impact actions.",
+      "metaphor_seed": "Giving a new intern a key card. You don't hand them the master key on day one — you give them access to one floor (least privilege), put cameras up (monitoring), AND lock the server room so a mistake can't take everything down (containment). Many companies in 2026 installed the cameras but forgot to lock the doors — 'policies enforced by code, not vibes.'",
+      "case_study_seed": "The OWASP Agentic AI Top 10 and Microsoft's Agent Governance Toolkit (2026) codify four mandatory sandbox layers (network egress, filesystem boundaries, secrets scoping, config-file protection) after a wave of prompt-injection incidents. Fountain City's enterprise survey found ~88% of companies had a containment gap — monitoring agents without the ability to actually stop them — the canonical 'awareness without protection' illustration.",
+      "pm_angle": "Governance is where you decide blast radius: what an agent is allowed to touch and where a human must sign off (deploy, send money, modify production data). Human approval on high-impact actions breaks the automated attack chain — it's both a safety control and a product trust feature. The 88% containment gap is the mistake your roadmap must not repeat.",
+      "deep_sections": [
+        "Least privilege and allowlisting",
+        "The four sandbox layers",
+        "Human-in-the-loop approval as the chain-breaker",
+        "The monitoring-vs-containment gap"
+      ],
+      "sources": [
+        "https://fountaincity.tech/resources/blog/ai-agent-security-enterprise-guide/",
+        "https://iain.so/security-for-production-ai-agents-in-2026",
+        "https://www.mintmcp.com/blog/ai-agent-security",
+        "https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy"
+      ]
+    },
+    {
+      "id": "eng-m5-l5",
+      "order": 5,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Whose Values? Bias, Fairness, and Responsible AI",
+      "summary": "Models learn from human data, so they inherit human biases — and at scale those biases can cause real, discriminatory harm. Responsible AI is the practice of finding and reducing that harm before it reaches users.",
+      "metaphor_seed": "A mirror that does not just reflect society but amplifies it — if the data it learned from under-represents some people, the mirror quietly distorts in the same direction, and at scale that distortion becomes systemic.",
+      "case_study_seed": "Amazon's scrapped AI recruiting tool (2018) that penalised résumés containing the word 'women's', and the COMPAS criminal-risk-score controversy — canonical cases of biased training data producing discriminatory outcomes.",
+      "pm_angle": "Bias is a product, brand, legal, and ethical risk you own. You must decide where to measure fairness, what representativeness your data needs, and where a biased output is simply unacceptable. It is a requirement, not an afterthought.",
+      "deep_sections": [
+        "Where bias enters: data, labels, and feedback loops",
+        "Measuring fairness (and why definitions compete)",
+        "Mitigations: representative data, disparate-impact evals, human oversight"
+      ],
+      "sources": [
+        {
+          "label": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ]
+    },
+    {
+      "id": "eng-m5-l6",
+      "order": 6,
+      "moduleId": "eng-m5",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Rules of the Road: AI Regulation and Compliance",
+      "summary": "Shipping AI now means operating inside a fast-growing body of law — what data you may use, what you must disclose, and what you are liable for. Ignoring it is an existential product risk.",
+      "metaphor_seed": "Driving a powerful new vehicle onto public roads: it does not matter how fast your car is if you ignore speed limits, licensing, and who is liable in a crash. Regulation is the road law for AI, and it is being written right now.",
+      "case_study_seed": "The EU AI Act (phasing in from 2024-2026) with its risk-tier system banning some uses and heavily regulating high-risk ones; plus GDPR data-residency rules and the wave of copyright lawsuits over training data (e.g. NYT v. OpenAI).",
+      "pm_angle": "Regulation constrains what data you can use, what you must log and disclose, and which use cases are off-limits — directly shaping the roadmap. \"Move fast\" meets \"do not break the law\", and you must design for compliance from the start.",
+      "deep_sections": [
+        "EU AI Act risk tiers in plain English",
+        "GDPR, data residency, and the 'right to explanation'",
+        "Copyright and training data: the open legal questions"
+      ],
+      "sources": [
+        {
+          "label": "EU AI Act explorer",
+          "url": "https://artificialintelligenceact.eu/"
+        }
+      ]
+    }
+  ]
+}

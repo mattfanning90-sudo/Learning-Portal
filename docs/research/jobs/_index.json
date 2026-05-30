@@ -1,0 +1,106 @@
+[
+  {
+    "id": "eng-m1",
+    "trackId": "engineering",
+    "title": "Module 1 — What an LLM Actually Is",
+    "goal": "Build a rock-solid, jargon-free mental model of how a large language model works.",
+    "file": "docs/research/jobs/eng-m1.json",
+    "lessonCount": 7
+  },
+  {
+    "id": "eng-m2",
+    "trackId": "engineering",
+    "title": "Module 2 — Building Reliable AI Features",
+    "goal": "The five-technique builder’s toolkit for dependable AI features.",
+    "file": "docs/research/jobs/eng-m2.json",
+    "lessonCount": 6
+  },
+  {
+    "id": "eng-m3",
+    "trackId": "engineering",
+    "title": "Module 3 — Agents & Agentic Software Engineering",
+    "goal": "The defining shift of 2026: AI that acts, not just answers.",
+    "file": "docs/research/jobs/eng-m3.json",
+    "lessonCount": 7
+  },
+  {
+    "id": "eng-m4",
+    "trackId": "engineering",
+    "title": "Module 4 — Proving It Works: Evals & Observability",
+    "goal": "The discipline that separates shipped products from demos.",
+    "file": "docs/research/jobs/eng-m4.json",
+    "lessonCount": 6
+  },
+  {
+    "id": "eng-m5",
+    "trackId": "engineering",
+    "title": "Module 5 — Safety, Security & Governance",
+    "goal": "Ship AI that won’t make headlines for the wrong reasons.",
+    "file": "docs/research/jobs/eng-m5.json",
+    "lessonCount": 6
+  },
+  {
+    "id": "eng-m6",
+    "trackId": "engineering",
+    "title": "Module 6 — Production AI & LLMOps",
+    "goal": "Turn a prototype into a reliable, affordable, durable product.",
+    "file": "docs/research/jobs/eng-m6.json",
+    "lessonCount": 5
+  },
+  {
+    "id": "eng-m7",
+    "trackId": "engineering",
+    "title": "Module 7 — The Product Owner’s Edge",
+    "goal": "Step back and think like a Silicon Valley owner. (Flywheel is taught canonically in the Product track.)",
+    "file": "docs/research/jobs/eng-m7.json",
+    "lessonCount": 2
+  },
+  {
+    "id": "prod-m1",
+    "trackId": "product",
+    "title": "Module 1 — How Great Product Companies Work",
+    "goal": "The operating system of the best tech companies.",
+    "file": "docs/research/jobs/prod-m1.json",
+    "lessonCount": 5
+  },
+  {
+    "id": "prod-m2",
+    "trackId": "product",
+    "title": "Module 2 — Product Discovery",
+    "goal": "De-risk ideas cheaply before expensive engineering time.",
+    "file": "docs/research/jobs/prod-m2.json",
+    "lessonCount": 6
+  },
+  {
+    "id": "prod-m3",
+    "trackId": "product",
+    "title": "Module 3 — Vision, Strategy & Saying No",
+    "goal": "Set direction and make the ruthless trade-offs.",
+    "file": "docs/research/jobs/prod-m3.json",
+    "lessonCount": 6
+  },
+  {
+    "id": "prod-m4",
+    "trackId": "product",
+    "title": "Module 4 — Leading People",
+    "goal": "The human side — where most transformations fail.",
+    "file": "docs/research/jobs/prod-m4.json",
+    "lessonCount": 5
+  },
+  {
+    "id": "prod-m5",
+    "trackId": "product",
+    "title": "Module 5 — Managing AI Products",
+    "goal": "A different animal: probabilistic, not deterministic.",
+    "file": "docs/research/jobs/prod-m5.json",
+    "lessonCount": 5
+  },
+  {
+    "id": "prod-m6",
+    "trackId": "product",
+    "title": "Module 6 — Business & Engineering Edge of AI",
+    "goal": "The commercial realities that decide survival.",
+    "file": "docs/research/jobs/prod-m6.json",
+    "lessonCount": 6
+  }
+]

@@ -1,0 +1,123 @@
+{
+  "moduleId": "prod-m5",
+  "trackId": "product",
+  "title": "Module 5 — Managing AI Products",
+  "goal": "A different animal: probabilistic, not deterministic.",
+  "lessons": [
+    {
+      "id": "prod-m5-l1",
+      "order": 1,
+      "moduleId": "prod-m5",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "From Deterministic to Probabilistic: Why AI Is Different",
+      "summary": "Traditional software follows if/then rules — the same input always gives the same output. AI products are probabilistic: identical inputs can produce different outputs, and being occasionally wrong is expected behavior, not a bug. This single shift breaks the PM's usual toolkit for roadmaps, success metrics, and team composition.",
+      "metaphor_seed": "Traditional software is a vending machine: press B4, you always get the same chocolate bar. An AI product is a talented but slightly unpredictable junior chef — give them the same recipe twice and you get two slightly different dishes, usually great, occasionally salty. You manage a chef by tasting the food and giving feedback, not by scripting exact muscle movements.",
+      "case_study_seed": "Gartner/industry reporting through 2024-2025 that only ~48% of AI pilots reach production and at least 30% of gen-AI projects are abandoned after proof-of-concept — most often due to weak evaluation, governance, and integration rather than weak models. The 'pilot-to-production gap' that probabilistic-product discipline exists to close.",
+      "pm_angle": "Technical-literacy angle: this entire module IS the technical-literacy core for AI PMs. You must understand the model lifecycle — training, monitoring, drift, retraining — as ongoing roadmap work, and that you cannot guarantee accuracy by a deadline. The team now includes data scientists and ML engineers whose work you must understand to lead.",
+      "deep_sections": [
+        "Deterministic vs. probabilistic systems",
+        "Why delivery timelines for AI are non-linear and uncertain",
+        "Expanded success metrics: accuracy, fairness, explainability, trust alongside adoption"
+      ],
+      "sources": [
+        "https://www.productplan.com/learn/ai-product-management",
+        "https://erdeniztunch.medium.com/ai-native-product-management-what-actually-changed-in-2026-44685f4c9afc",
+        "https://productschool.com/blog/artificial-intelligence/guide-ai-product-manager",
+        "https://www.productledalliance.com/think-like-an-ai-pm-what-ai-first-products-change-for-pms/"
+      ]
+    },
+    {
+      "id": "prod-m5-l2",
+      "order": 2,
+      "moduleId": "prod-m5",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Evals as a PM Responsibility: Beyond the Vibe Check",
+      "summary": "Because AI output is probabilistic, the only way to know whether a change made the product better or worse is a systematic evaluation — an 'eval.' This became the defining AI-PM skill of 2025-26. It's a product-judgment task, not coding: you don't write eval code, but you own deciding what to measure, curating the test set, setting thresholds, and making the ship/no-ship call.",
+      "metaphor_seed": "An eval is the exam you write for your AI before letting it graduate into production. A vibe check is glancing at one homework answer and saying 'looks smart enough.' A real eval is a graded test bank of 100 questions with an answer key and a passing score — so when you swap in a new student (model or prompt), you can prove whether it actually got smarter or just got lucky.",
+      "case_study_seed": "The trip-planning AI agent cited by Aman Khan (Arize) in Lenny's Newsletter that booked a user flights to San Diego instead of San Francisco — a failure a proper eval set would have caught before launch. The canonical example of why PM-owned evals beat vibe checks.",
+      "pm_angle": "Technical-literacy angle: you need to understand the three eval approaches (human, code-based, LLM-as-a-judge) and their trade-offs well enough to choose. The recommended starting point — hand-label 50-100 real examples to learn what 'good' means, then automate — is a hands-on, semi-technical exercise every AI PM should be able to run.",
+      "deep_sections": [
+        "Vibe checks vs. rigorous evals",
+        "The three approaches: human, code-based, LLM-as-a-judge",
+        "The four-part LLM-judge framework (Aman Khan): role, context, goal, terminology"
+      ],
+      "sources": [
+        "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete",
+        "https://creatoreconomy.so/p/ai-skill-that-will-define-your-pm-career-aman-khan",
+        "https://www.productboard.com/blog/ai-evals-for-product-managers/",
+        "https://www.evidentlyai.com/llm-guide/llm-evaluation"
+      ]
+    },
+    {
+      "id": "prod-m5-l3",
+      "order": 3,
+      "moduleId": "prod-m5",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Probabilistic UX: Designing for Uncertainty and Graceful Failure",
+      "summary": "Classic UX assumes a predictable response to every action; AI UX must design for outputs that vary and can be wrong. Hide the uncertainty and users either over-trust a confident wrong answer or abandon the product after one bad experience. Good AI UX surfaces confidence, explains in plain language, gives override controls, and degrades gracefully.",
+      "metaphor_seed": "A good GPS that re-routes you doesn't silently teleport you onto a new road — it says 'I'm 80% sure this faster route avoids traffic,' shows the alternative, and lets you decline. Probabilistic UX builds that GPS for every AI feature: it tells you how sure it is, shows its reasoning, and always leaves your hands on the wheel.",
+      "case_study_seed": "GitHub Copilot's inline-suggestion design: code appears as low-commitment gray 'ghost text' the user accepts with Tab, rejects with Esc, cycles alternatives, or accepts word-by-word — a widely-studied pattern for presenting uncertain AI output as an easily-dismissable suggestion rather than a forced confident action.",
+      "pm_angle": "Technical-literacy angle: surfacing 'confidence' in the UI requires understanding what confidence the model can actually report and how reliable it is, and 'agentic' experiences (where the AI takes autonomous actions) demand you grasp what the agent can do, where it can fail, and where human-in-the-loop checkpoints are technically necessary.",
+      "deep_sections": [
+        "Confidence UI and plain-language explainability (microcopy)",
+        "Graceful degradation and elegant fallback states",
+        "Agentic Experience (AX): transparency and override controls for autonomous AI"
+      ],
+      "sources": [
+        "https://think.design/blog/what-ux-for-ai-products-must-solve-in-2025/",
+        "https://cocreate.consulting/field-notes/probabilistic-ux-design-patterns",
+        "https://wearenotch.com/blog/what-is-agentic-experience/",
+        "https://docs.github.com/en/copilot/concepts/completions/code-suggestions"
+      ]
+    },
+    {
+      "id": "prod-m5-l4",
+      "order": 4,
+      "moduleId": "prod-m5",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Build-Measure-Learn with Models: Experimentation at AI Speed",
+      "summary": "Coding agents and prototyping tools have collapsed the cost of building, so the bottleneck moved from 'can we build it?' to 'can we learn whether it's better?' The new advantage is learning speed: change ONE variable (prompt, model, or retrieval), measure with evals plus real-user A/B tests, and decide. Speed without discipline just lets you waste time faster.",
+      "metaphor_seed": "It's the scientific method, sped up. Old development was baking a cake, waiting a week for guests to eat it, and asking if they liked it. Now you can bake a hundred mini-cakes in an afternoon — but if you change the flour, sugar, and oven temperature all at once, you'll never know which change helped. Change one ingredient at a time, and keep a reliable taste-tester.",
+      "case_study_seed": "The 'Lean AI' weekly experiment cadence documented in 2025-26 practitioner playbooks, where teams use a stronger model (GPT-4-class or Claude) as an automated 'judge' to score cheaper production models — letting them iterate prompts and models in hours instead of waiting on human evaluation.",
+      "pm_angle": "Technical-literacy angle: 'change one variable' means understanding the levers — prompt, model, retrieval strategy — and what each does, so you can attribute a result. Using an LLM-as-a-judge as your measurement engine, calibrated against human review, is a technical workflow you should be able to reason about and direct.",
+      "deep_sections": [
+        "The Build-Measure-Learn loop adapted for probabilistic systems",
+        "LLM-as-a-judge as the fast, cheap 'Measure' engine",
+        "Coupling offline evals with online A/B tests and edge-case monitoring"
+      ],
+      "sources": [
+        "https://leanpivot.ai/blog/build-measure-learn-for-ai-products-the-experiment/",
+        "https://productschool.com/blog/artificial-intelligence/ai-experimentation-how-ai-pms-test-and-learn-faster",
+        "https://userpilot.com/blog/build-measure-learn/",
+        "https://www.getmaxim.ai/articles/building-ai-products-in-2025-a-practical-blueprint-for-speed-reliability-and-scale/"
+      ]
+    },
+    {
+      "id": "prod-m5-l5",
+      "order": 5,
+      "moduleId": "prod-m5",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "AI-Accelerated Discovery: Faster Tests, Same Discipline",
+      "summary": "The defining 2026 shift is that AI has collapsed the cost of prototyping and synthesis — tools like Figma Make, Lovable, Cursor, and Claude Code let a PM 'vibe code' a working prototype from a prompt in minutes, and AI can draft interview summaries and opportunity trees in seconds. But the human disciplines — talking to real customers, judging evidence, preserving empathy — become MORE valuable, not less.",
+      "metaphor_seed": "AI is like getting a power drill after years of using a hand screwdriver. The drill makes the repetitive work astonishingly fast, but it doesn't tell you WHERE to put the holes or whether you're building the right furniture at all. The carpenter's judgment — knowing what the customer actually needs — becomes the part that matters most, precisely because everyone now has the drill.",
+      "case_study_seed": "Teresa Torres building her first AI product live (covered in 2025-26 webinars and the Aakash Gupta podcast), publicly walking through how she used AI to speed synthesis and prototyping while deliberately keeping humans in the loop — and codifying a five-step discovery discipline (context engineering, orchestration, observability, evals, maintenance) specific to AI products. She notes AI summaries can miss 20-40% of important detail.",
+      "pm_angle": "Technical-literacy angle: this is the exact intersection of being an AI engineer and a PM. 'Vibe coding' a testable prototype is now a PM skill, and discovery for AI products adds genuinely technical disciplines — context engineering, orchestration, observability, evals, and the error-analysis loop where humans tag failures and then write automated checks.",
+      "deep_sections": [
+        "Vibe coding: building testable prototypes from plain English",
+        "What to keep human (Torres): synthesis review, judging disproof, deciding what matters",
+        "Discovery for AI products: the five-step discipline and the error-analysis loop"
+      ],
+      "sources": [
+        "https://www.news.aakashg.com/p/teresa-torres-podcast",
+        "https://productside.com/the-ai-product-management-workflows-2026/",
+        "https://www.institutepm.com/knowledge-hub/vibe-coding-for-product-managers",
+        "https://airfocus.com/resources/events/behind-the-build-teresa-torres-first-ai-product/"
+      ]
+    }
+  ]
+}
