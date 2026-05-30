@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m3",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 3 — Repeating Things",
+  "goal": "Do something many times with loops.",
+  "lessons": [
+    {
+      "id": "py-m3-l1",
+      "order": 1,
+      "moduleId": "py-m3",
+      "trackId": "python",
+      "language": "python",
+      "title": "while Loops",
+      "concept": "Repeat while a condition stays true; the danger of infinite loops.",
+      "challenge": {
+        "prompt": "Use a while loop to print the numbers 1, 2, 3 — each on its own line.",
+        "expectedOutput": "1\n2\n3",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m3-l2",
+      "order": 2,
+      "moduleId": "py-m3",
+      "trackId": "python",
+      "language": "python",
+      "title": "for Loops and range()",
+      "concept": "Loop a fixed number of times with for and range().",
+      "challenge": {
+        "prompt": "Use a for loop with range to print 0 1 2 3 4 — each on its own line.",
+        "expectedOutput": "0\n1\n2\n3\n4",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m3-l3",
+      "order": 3,
+      "moduleId": "py-m3",
+      "trackId": "python",
+      "language": "python",
+      "title": "Adding Things Up in a Loop",
+      "concept": "Use a running total (accumulator) inside a loop.",
+      "challenge": {
+        "prompt": "Use a loop to add up the numbers 1 to 5 and print the total.",
+        "expectedOutput": "15",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m3-l4",
+      "order": 4,
+      "moduleId": "py-m3",
+      "trackId": "python",
+      "language": "python",
+      "title": "break and continue",
+      "concept": "Stop a loop early with break; skip an iteration with continue.",
+      "challenge": {
+        "prompt": "Loop over 1 to 10. Stop the loop (break) when you reach 5. Print each number before stopping, one per line.",
+        "expectedOutput": "1\n2\n3\n4",
+        "starter": ""
+      }
+    }
+  ]
+}

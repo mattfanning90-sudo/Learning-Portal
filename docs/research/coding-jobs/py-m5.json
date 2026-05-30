@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m5",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 5 — Functions: Reusable Code",
+  "goal": "Package code so you can reuse it.",
+  "lessons": [
+    {
+      "id": "py-m5-l1",
+      "order": 1,
+      "moduleId": "py-m5",
+      "trackId": "python",
+      "language": "python",
+      "title": "Defining and Calling a Function",
+      "concept": "def to define, then call by name.",
+      "challenge": {
+        "prompt": "Define a function called greet that prints hi, then call it once.",
+        "expectedOutput": "hi",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m5-l2",
+      "order": 2,
+      "moduleId": "py-m5",
+      "trackId": "python",
+      "language": "python",
+      "title": "Inputs and Outputs: Arguments and return",
+      "concept": "Pass arguments in; return a value out.",
+      "challenge": {
+        "prompt": "Write a function add(a, b) that returns a + b. Print the result of add(2, 3).",
+        "expectedOutput": "5",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m5-l3",
+      "order": 3,
+      "moduleId": "py-m5",
+      "trackId": "python",
+      "language": "python",
+      "title": "Reuse and Not Repeating Yourself",
+      "concept": "Why functions reduce duplication (DRY).",
+      "challenge": {
+        "prompt": "Write a function square(n) that returns n times n. Print square(4).",
+        "expectedOutput": "16",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m5-l4",
+      "order": 4,
+      "moduleId": "py-m5",
+      "trackId": "python",
+      "language": "python",
+      "title": "Using Libraries: import",
+      "concept": "Bring in extra tools with import.",
+      "challenge": {
+        "prompt": "Import the math library and print the whole-number square root of 16.",
+        "expectedOutput": "4",
+        "starter": ""
+      }
+    }
+  ]
+}

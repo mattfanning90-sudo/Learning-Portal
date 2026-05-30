@@ -1,0 +1,51 @@
+{
+  "moduleId": "java-m1",
+  "trackId": "java",
+  "language": "java",
+  "title": "Module 1 — Java Basics",
+  "goal": "Write, structure, and run your first Java programs.",
+  "lessons": [
+    {
+      "id": "java-m1-l2",
+      "order": 2,
+      "moduleId": "java-m1",
+      "trackId": "java",
+      "language": "java",
+      "title": "Variables and Types",
+      "concept": "Java is typed: int, double, String, boolean. Declaring with a type.",
+      "challenge": {
+        "prompt": "Inside main, declare an int called x set to 9, then print x.",
+        "expectedOutput": "9",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    },
+    {
+      "id": "java-m1-l3",
+      "order": 3,
+      "moduleId": "java-m1",
+      "trackId": "java",
+      "language": "java",
+      "title": "Numbers and Math",
+      "concept": "int vs double, arithmetic, integer division gotcha.",
+      "challenge": {
+        "prompt": "Print the result of 8 * 5.",
+        "expectedOutput": "40",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    },
+    {
+      "id": "java-m1-l4",
+      "order": 4,
+      "moduleId": "java-m1",
+      "trackId": "java",
+      "language": "java",
+      "title": "Strings in Java",
+      "concept": "String type, concatenation with +.",
+      "challenge": {
+        "prompt": "Declare a String name set to Sam, then print: Hi, Sam",
+        "expectedOutput": "Hi, Sam",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    }
+  ]
+}

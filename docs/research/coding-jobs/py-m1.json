@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m1",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 1 — Getting Started",
+  "goal": "Write and run your first programs; store and show data.",
+  "lessons": [
+    {
+      "id": "py-m1-l2",
+      "order": 2,
+      "moduleId": "py-m1",
+      "trackId": "python",
+      "language": "python",
+      "title": "Variables: Giving Data a Name",
+      "concept": "A variable is a named box that holds a value you can reuse. Assignment with =, naming rules.",
+      "challenge": {
+        "prompt": "Create a variable called city holding the text Paris, then print: I love Paris",
+        "expectedOutput": "I love Paris",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m1-l3",
+      "order": 3,
+      "moduleId": "py-m1",
+      "trackId": "python",
+      "language": "python",
+      "title": "Numbers and Math",
+      "concept": "Integers and decimals; + - * / and the // and % operators.",
+      "challenge": {
+        "prompt": "Print the result of 7 multiplied by 6.",
+        "expectedOutput": "42",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m1-l4",
+      "order": 4,
+      "moduleId": "py-m1",
+      "trackId": "python",
+      "language": "python",
+      "title": "Strings: Working with Text",
+      "concept": "Joining text, f-strings, and that text lives in quotes.",
+      "challenge": {
+        "prompt": "Set name = 'Ada', then print: Hello, Ada!",
+        "expectedOutput": "Hello, Ada!",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m1-l5",
+      "order": 5,
+      "moduleId": "py-m1",
+      "trackId": "python",
+      "language": "python",
+      "title": "Comments and Fixing Your First Errors",
+      "concept": "Writing comments with #, and reading a Python error to fix a typo.",
+      "challenge": {
+        "prompt": "The starter code has a typo. Fix it so the program prints: fixed",
+        "expectedOutput": "fixed",
+        "starter": "prnt(\"fixed\")"
+      }
+    }
+  ]
+}

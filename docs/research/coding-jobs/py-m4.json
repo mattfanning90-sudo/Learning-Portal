@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m4",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 4 — Collections of Data",
+  "goal": "Store and work with many values at once.",
+  "lessons": [
+    {
+      "id": "py-m4-l1",
+      "order": 1,
+      "moduleId": "py-m4",
+      "trackId": "python",
+      "language": "python",
+      "title": "Lists",
+      "concept": "An ordered collection; indexing, append, len, sorted.",
+      "challenge": {
+        "prompt": "Make a list with the numbers 3, 1, 2 and print it sorted from smallest to largest.",
+        "expectedOutput": "[1, 2, 3]",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m4-l2",
+      "order": 2,
+      "moduleId": "py-m4",
+      "trackId": "python",
+      "language": "python",
+      "title": "Looping Over a List",
+      "concept": "Use for to visit each item in a list.",
+      "challenge": {
+        "prompt": "Given fruits = ['apple', 'pear'], print each fruit on its own line.",
+        "expectedOutput": "apple\npear",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m4-l3",
+      "order": 3,
+      "moduleId": "py-m4",
+      "trackId": "python",
+      "language": "python",
+      "title": "Dictionaries: Labelled Data",
+      "concept": "Key-value pairs; looking up by key.",
+      "challenge": {
+        "prompt": "Make a dictionary {'cat': 'meow'} and print the value stored under 'cat'.",
+        "expectedOutput": "meow",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m4-l4",
+      "order": 4,
+      "moduleId": "py-m4",
+      "trackId": "python",
+      "language": "python",
+      "title": "Putting Collections Together",
+      "concept": "Summing values, choosing the right collection.",
+      "challenge": {
+        "prompt": "Given prices = {'a': 2, 'b': 3}, print the total of all the values.",
+        "expectedOutput": "5",
+        "starter": ""
+      }
+    }
+  ]
+}

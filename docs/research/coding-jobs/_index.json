@@ -1,0 +1,74 @@
+[
+  {
+    "id": "py-m1",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 1 — Getting Started",
+    "goal": "Write and run your first programs; store and show data.",
+    "file": "docs/research/coding-jobs/py-m1.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "py-m2",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 2 — Making Decisions",
+    "goal": "Let your program choose what to do.",
+    "file": "docs/research/coding-jobs/py-m2.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "py-m3",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 3 — Repeating Things",
+    "goal": "Do something many times with loops.",
+    "file": "docs/research/coding-jobs/py-m3.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "py-m4",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 4 — Collections of Data",
+    "goal": "Store and work with many values at once.",
+    "file": "docs/research/coding-jobs/py-m4.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "py-m5",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 5 — Functions: Reusable Code",
+    "goal": "Package code so you can reuse it.",
+    "file": "docs/research/coding-jobs/py-m5.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "py-m6",
+    "trackId": "python",
+    "language": "python",
+    "title": "Module 6 — Python for Data & AI",
+    "goal": "Use Python the way an AI engineer starts to.",
+    "file": "docs/research/coding-jobs/py-m6.json",
+    "lessonCount": 4
+  },
+  {
+    "id": "java-m1",
+    "trackId": "java",
+    "language": "java",
+    "title": "Module 1 — Java Basics",
+    "goal": "Write, structure, and run your first Java programs.",
+    "file": "docs/research/coding-jobs/java-m1.json",
+    "lessonCount": 3
+  },
+  {
+    "id": "java-m2",
+    "trackId": "java",
+    "language": "java",
+    "title": "Module 2 — Decisions and Loops",
+    "goal": "Make Java choose and repeat.",
+    "file": "docs/research/coding-jobs/java-m2.json",
+    "lessonCount": 4
+  }
+]

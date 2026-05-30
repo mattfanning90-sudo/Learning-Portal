@@ -1,0 +1,65 @@
+{
+  "moduleId": "java-m2",
+  "trackId": "java",
+  "language": "java",
+  "title": "Module 2 — Decisions and Loops",
+  "goal": "Make Java choose and repeat.",
+  "lessons": [
+    {
+      "id": "java-m2-l1",
+      "order": 1,
+      "moduleId": "java-m2",
+      "trackId": "java",
+      "language": "java",
+      "title": "if and else",
+      "concept": "Conditionals in Java with braces.",
+      "challenge": {
+        "prompt": "Inside main, set int age = 20. Print adult if age >= 18, otherwise print minor.",
+        "expectedOutput": "adult",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    },
+    {
+      "id": "java-m2-l2",
+      "order": 2,
+      "moduleId": "java-m2",
+      "trackId": "java",
+      "language": "java",
+      "title": "Comparisons and Booleans",
+      "concept": "Comparison operators and boolean values.",
+      "challenge": {
+        "prompt": "Print whether 5 is greater than 2 (it should print true or false).",
+        "expectedOutput": "true",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    },
+    {
+      "id": "java-m2-l3",
+      "order": 3,
+      "moduleId": "java-m2",
+      "trackId": "java",
+      "language": "java",
+      "title": "while Loops",
+      "concept": "Repeat while a condition holds.",
+      "challenge": {
+        "prompt": "Use a while loop to print 1, 2, 3 — each on its own line.",
+        "expectedOutput": "1\n2\n3",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    },
+    {
+      "id": "java-m2-l4",
+      "order": 4,
+      "moduleId": "java-m2",
+      "trackId": "java",
+      "language": "java",
+      "title": "for Loops",
+      "concept": "The classic Java for loop.",
+      "challenge": {
+        "prompt": "Use a for loop to print 0 1 2 3 4 — each on its own line.",
+        "expectedOutput": "0\n1\n2\n3\n4",
+        "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}"
+      }
+    }
+  ]
+}

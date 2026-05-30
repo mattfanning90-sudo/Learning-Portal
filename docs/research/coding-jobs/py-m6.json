@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m6",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 6 — Python for Data & AI",
+  "goal": "Use Python the way an AI engineer starts to.",
+  "lessons": [
+    {
+      "id": "py-m6-l1",
+      "order": 1,
+      "moduleId": "py-m6",
+      "trackId": "python",
+      "language": "python",
+      "title": "Reading and Writing Files",
+      "concept": "open(), write, read; why programs persist data.",
+      "challenge": {
+        "prompt": "Write the text saved to a file, then read the file back and print its contents.",
+        "expectedOutput": "saved",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m6-l2",
+      "order": 2,
+      "moduleId": "py-m6",
+      "trackId": "python",
+      "language": "python",
+      "title": "The Standard Library",
+      "concept": "Batteries-included modules like datetime.",
+      "challenge": {
+        "prompt": "From the datetime library, create the date 1 January 2020 and print its year.",
+        "expectedOutput": "2020",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m6-l3",
+      "order": 3,
+      "moduleId": "py-m6",
+      "trackId": "python",
+      "language": "python",
+      "title": "A First Taste of an AI Function",
+      "concept": "A model is just a function: input in, prediction out (stand-in, no real API).",
+      "challenge": {
+        "prompt": "Write a function predict(text) that returns the text in UPPERCASE (a stand-in for a model). Print predict(\"ai\").",
+        "expectedOutput": "AI",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m6-l4",
+      "order": 4,
+      "moduleId": "py-m6",
+      "trackId": "python",
+      "language": "python",
+      "title": "Putting It All Together",
+      "concept": "Combine variables, a list, and a calculation in a mini-program.",
+      "challenge": {
+        "prompt": "Given scores = [10, 20, 30], compute and print the average.",
+        "expectedOutput": "20.0",
+        "starter": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "moduleId": "py-m2",
+  "trackId": "python",
+  "language": "python",
+  "title": "Module 2 — Making Decisions",
+  "goal": "Let your program choose what to do.",
+  "lessons": [
+    {
+      "id": "py-m2-l1",
+      "order": 1,
+      "moduleId": "py-m2",
+      "trackId": "python",
+      "language": "python",
+      "title": "True, False, and Comparisons",
+      "concept": "Booleans and comparison operators ==, !=, <, >, >=, <=.",
+      "challenge": {
+        "prompt": "Print whether 10 is greater than 3 (it should print True or False).",
+        "expectedOutput": "True",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m2-l2",
+      "order": 2,
+      "moduleId": "py-m2",
+      "trackId": "python",
+      "language": "python",
+      "title": "if and else",
+      "concept": "Run code only when a condition is true; else for the alternative.",
+      "challenge": {
+        "prompt": "Set age = 20. If age is 18 or more print adult, otherwise print minor.",
+        "expectedOutput": "adult",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m2-l3",
+      "order": 3,
+      "moduleId": "py-m2",
+      "trackId": "python",
+      "language": "python",
+      "title": "elif: Many Paths",
+      "concept": "Choosing among several options with elif.",
+      "challenge": {
+        "prompt": "Set score = 85. Print A if score >= 90, B if score >= 80, otherwise C.",
+        "expectedOutput": "B",
+        "starter": ""
+      }
+    },
+    {
+      "id": "py-m2-l4",
+      "order": 4,
+      "moduleId": "py-m2",
+      "trackId": "python",
+      "language": "python",
+      "title": "Combining Conditions: and, or, not",
+      "concept": "Build bigger conditions with and / or / not.",
+      "challenge": {
+        "prompt": "Set temp = 25 and sunny = True. Print beach if temp > 20 and sunny, else print home.",
+        "expectedOutput": "beach",
+        "starter": ""
+      }
+    }
+  ]
+}
