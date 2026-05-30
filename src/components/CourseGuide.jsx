@@ -16,6 +16,7 @@ export default function CourseGuide({ lesson }) {
   const sections = [
     { id: 'plain-english', label: 'In plain English' },
     { id: 'metaphor', label: 'Think of it like…' },
+    ...(lesson.diagram ? [{ id: 'diagram', label: 'Diagram' }] : []),
     ...(lesson.deepSections || []).map((s, i) => ({ id: `deep-${i}`, label: s.title })),
     ...(lesson.pmAngle ? [{ id: 'pm-angle', label: 'If you manage the product' }] : []),
     { id: 'case-study', label: 'Case study' },

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { lessons, tracks, braided, glossary } from './index.js'
+import { diagrams } from './diagrams.js'
 import { validateLesson } from '../lib/schema.js'
 
 describe('content registry', () => {
@@ -38,6 +39,13 @@ describe('content registry', () => {
     expect(stranded).toEqual([])
     // And no coding lesson is missing from the path entirely.
     expect(codingIds.filter((id) => braided.indexOf(id) === -1)).toEqual([])
+  })
+
+  it('every diagram overlay targets a real lesson and is attached', () => {
+    const orphans = Object.keys(diagrams).filter((id) => !lessons[id])
+    expect(orphans).toEqual([])
+    const attached = Object.keys(diagrams).filter((id) => lessons[id]?.diagram)
+    expect(attached.length).toBe(Object.keys(diagrams).length)
   })
 
   it('no unexplained jargon: every referenced glossary term is defined', () => {

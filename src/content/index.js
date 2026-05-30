@@ -59,6 +59,10 @@ for (const t of cloud.tracks) {
 }
 Object.assign(lessons, cloud.lessons)
 
+// ─── Visual diagrams (overlay) — attached to lessons by id ───
+import { diagrams } from './diagrams.js'
+for (const [id, diagram] of Object.entries(diagrams)) if (lessons[id]) lessons[id].diagram = diagram
+
 // Single merged glossary (AI/Product terms + coding terms + cloud terms).
 import baseGlossary from './glossary.js'
 export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}), ...(cloud.cloudGlossary || {}) }

@@ -37,5 +37,18 @@ export function validateLesson(L) {
       if (!t?.def) p.push(`keyTerms[${i}] missing def`)
     })
   }
+  // diagram is optional; when present it's an ordered list of steps, each a row of
+  // nodes. One step renders static; multiple steps drive the progressive step-through.
+  if (L?.diagram !== undefined) {
+    const steps = L.diagram?.steps
+    if (!Array.isArray(steps) || steps.length === 0) p.push('diagram has no steps')
+    else steps.forEach((s, i) => {
+      if (!Array.isArray(s?.nodes) || s.nodes.length === 0) p.push(`diagram steps[${i}] has no nodes`)
+      else s.nodes.forEach((n, j) => {
+        if (!n?.id) p.push(`diagram steps[${i}].nodes[${j}] missing id`)
+        if (!n?.label) p.push(`diagram steps[${i}].nodes[${j}] missing label`)
+      })
+    })
+  }
   return p
 }

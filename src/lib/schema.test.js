@@ -59,4 +59,32 @@ describe('validateLesson', () => {
     const { knowledgeCheck, ...noKC } = valid
     expect(validateLesson({ ...noKC, challenge: { language: 'python', prompt: 'x' } })).toContain('challenge missing expectedOutput')
   })
+
+  it('accepts a valid optional diagram', () => {
+    const withDiagram = {
+      ...valid,
+      diagram: {
+        title: 'Next-token loop', direction: 'vertical',
+        steps: [
+          { note: 'Input.', nodes: [{ id: 'p', label: 'Prompt' }] },
+          { note: 'Predict.', nodes: [{ id: 'm', label: 'Model', sub: 'plausibility engine' }] },
+        ],
+      },
+    }
+    expect(validateLesson(withDiagram)).toEqual([])
+  })
+
+  it('flags a diagram with no steps', () => {
+    expect(validateLesson({ ...valid, diagram: { title: 'x', steps: [] } })).toContain('diagram has no steps')
+  })
+
+  it('flags a diagram step with no nodes', () => {
+    const bad = { ...valid, diagram: { steps: [{ note: 'x', nodes: [] }] } }
+    expect(validateLesson(bad)).toContain('diagram steps[0] has no nodes')
+  })
+
+  it('flags a diagram node missing id or label', () => {
+    const bad = { ...valid, diagram: { steps: [{ nodes: [{ id: 'a' }] }] } }
+    expect(validateLesson(bad)).toContain('diagram steps[0].nodes[0] missing label')
+  })
 })

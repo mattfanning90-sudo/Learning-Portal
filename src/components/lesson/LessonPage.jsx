@@ -4,6 +4,7 @@ import { atlas } from '../../lib/atlas.js'
 import { useProgress } from '../../lib/useProgress.js'
 import CourseGuide from '../CourseGuide.jsx'
 import { PlainEnglish, MetaphorBox, DeepSection, PMBox, CaseStudyBox, Takeaways, KeyTerms } from './Boxes.jsx'
+import Diagram from './Diagram.jsx'
 import KnowledgeCheck from './KnowledgeCheck.jsx'
 import CodeChallenge from './CodeChallenge.jsx'
 import NotesPanel from './NotesPanel.jsx'
@@ -77,6 +78,7 @@ export default function LessonPage() {
 
           <PlainEnglish paras={lesson.plainEnglish} />
           <MetaphorBox metaphor={lesson.metaphor} />
+          {lesson.diagram && <Diagram diagram={lesson.diagram} trackId={lesson.trackId} />}
           {(lesson.deepSections || []).map((s, i) => (
             <DeepSection key={i} section={s} index={i} />
           ))}
