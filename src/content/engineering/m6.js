@@ -398,6 +398,12 @@ export default {
       "The gap between that demo and something you can put in front of customers is enormous, and it lives entirely in details nobody finds exciting. How do you chop your documents into pieces? How do you know if the system is actually retrieving the right pieces? What happens when the answer genuinely isn't in your documents — does the system say 'I don't know,' or does it confidently make something up?",
       "This is where most enterprise AI projects actually succeed or fail. A naive RAG pipeline hallucinates, slowly gets worse as your documents change, and gives no warning before it does. Production RAG is the discipline of measuring retrieval quality, keeping the search index fresh, and enforcing a hard rule that the model may only answer from what it actually found."
     ],
+    "keyTerms": [
+      {
+        "term": "embedding",
+        "def": "A numeric fingerprint of a piece of text's meaning, so the system can find passages that mean the same thing even when the words differ. `Re-embedding` means redoing that fingerprint when a document changes."
+      }
+    ],
     "metaphor": {
       "title": "🧭 Think of it like…",
       "body": [
@@ -411,7 +417,8 @@ export default {
         "teaser": "how you cut up documents quietly decides whether retrieval can work at all",
         "body": [
           "Models can't search a 200-page PDF directly, so you split documents into smaller pieces ('chunks') and store each so it can be found later. The naive approach cuts every N characters — but that blindly slices through the middle of sentences, tables, and ideas, leaving you with chunks that are half one thought and half another. Retrieve one of those and you've handed the model a fragment that makes no sense on its own.",
-          "Semantic chunking splits along meaning instead — at the boundaries between topics, sections, or complete ideas — so each chunk is a coherent, self-contained unit. The payoff is that when the system retrieves a chunk, it's retrieving a whole thought the model can actually use, not a severed fragment. It's unglamorous plumbing, but it's often the single biggest driver of whether a RAG system feels sharp or vague, because everything downstream depends on the quality of the pieces you created at the start."
+          "Semantic chunking splits along meaning instead — at the boundaries between topics, sections, or complete ideas — so each chunk is a coherent, self-contained unit. The payoff is that when the system retrieves a chunk, it's retrieving a whole thought the model can actually use, not a severed fragment. It's unglamorous plumbing, but it's often the single biggest driver of whether a RAG system feels sharp or vague, because everything downstream depends on the quality of the pieces you created at the start.",
+          "To actually match a question to a chunk, each chunk is turned into an embedding, the question is turned into one too, and the system returns the chunks whose meaning-numbers are closest to the question's — which is why two differently-worded questions about the same thing still find the same chunk."
         ]
       },
       {

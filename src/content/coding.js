@@ -1053,7 +1053,9 @@ const lessons = {
       "Often you want to combine many numbers into one — a sum, a count, a tally.",
       "The trick is a running total: a variable that grows as the loop runs.",
       "You start it at 0 before the loop. That is the empty starting point.",
-      "Each time around, you add the current number to it. When the loop ends, the total holds the answer."
+      "Each time around, you add the current number to it. When the loop ends, the total holds the answer.",
+      "The `[4, 3, 8]` is a list — just a few values in a row inside square brackets, which the loop walks through one at a time. You'll meet lists properly in the next module.",
+      "You can pass `print()` several things separated by commas, like `print(\"You spent\", total)`. Python prints them in order with a space between, and unlike `+` it happily mixes text and numbers."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -1256,6 +1258,17 @@ const lessons = {
           "`sorted(my_list)` hands you back a new, ordered list.",
           "Your original list is left untouched.",
           "That is useful: you can show a tidy version without losing the order you started with."
+        ]
+      },
+      {
+        "title": "The dot: asking a list to do something",
+        "teaser": "What `fruits.append()` really means",
+        "body": [
+          "`fruits.append(\"plum\")` means: tell the `fruits` list to add an item to itself.",
+          "The dot connects a value to an action that is built into it. Read it as 'fruits, do this'.",
+          "So `fruits.append(\"plum\")` is 'fruits, append plum'.",
+          "If `fruits` was `[\"apple\", \"pear\"]` before, it becomes `[\"apple\", \"pear\", \"plum\"]` after.",
+          "`.append` changes the list in place — the same list now holds one more item. That is different from `sorted()`, which leaves your list alone and returns a fresh copy."
         ]
       }
     ],
@@ -1563,6 +1576,7 @@ const lessons = {
         "body": [
           "Calling `sum(prices)` would try to add the keys, which are usually words.",
           "You want the numbers, so you pass `prices.values()`.",
+          "The `.values()` after `prices` is the dictionary doing a job for you — the dot means 'ask `prices` for its values', just like `.append()` asked a list to add an item.",
           "`sum(prices.values())` adds every value and gives you the total."
         ]
       },
@@ -2048,7 +2062,8 @@ const lessons = {
       "When your program ends, the values it held vanish.",
       "A file is how a program writes something down to keep.",
       "`open()` opens a file. You can write to it or read from it.",
-      "Write once, and the text stays on disk. Read it back later, even after the program restarts."
+      "Write once, and the text stays on disk. Read it back later, even after the program restarts.",
+      "In this in-browser playground each run starts fresh, so write and read the file in the same run. On a real computer the file would still be there tomorrow."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -2438,7 +2453,9 @@ const lessons = {
       "Like Python, a Java program runs instructions in order.",
       "Java's way to display text is `System.out.println()`. It means: print this line to the output.",
       "Java also needs some structure around your instruction: a class and a `main` method.",
-      "For now, treat that structure as a frame you write once. Your real instruction lives inside it."
+      "For now, treat that structure as a frame you write once. Your real instruction lives inside it.",
+      "Every instruction in Java ends with a semicolon `;`. It tells Java that one statement is finished, like a full stop ends a sentence.",
+      "The words `public static void` and `(String[] args)` are part of the required frame. You'll meet each later — for now, copy them exactly and focus on the line inside."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -2475,6 +2492,10 @@ const lessons = {
       {
         "term": "System.out.println()",
         "def": "Displays one line of text on the screen."
+      },
+      {
+        "term": ";",
+        "def": "A semicolon ends each Java statement, the way a full stop ends a sentence. Forgetting it is the most common beginner error."
       }
     ],
     "codeExamples": [
@@ -2740,6 +2761,7 @@ const lessons = {
       "You store it like any variable: `String name = \"Sam\";`.",
       "To join text together, use `+`. This is called concatenation.",
       "`\"Hi, \" + name` builds the single text `Hi, Sam`.",
+      "You can keep gluing with more `+` signs: `\"Welcome aboard, \" + name + \"!\"` joins three pieces in order. The quoted parts are literal text; `name` with no quotes is replaced by the value stored in it.",
       "Mind the spaces inside the quotes — Java glues exactly what you wrote."
     ],
     "metaphor": {

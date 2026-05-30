@@ -397,6 +397,12 @@ export default {
       "The reason this matters is that teams are very good at staying busy without making any difference. You can ship features all year, hit every deadline, and move no real metric. OKRs cut through that by insisting you name, up front, how you'll know if you succeeded — in numbers, not effort.",
       "In a healthy product model, OKRs are a dialogue. Leadership assigns the Objective — the problem worth solving — and the team proposes the Key Results, because the people closest to the work are best placed to say what success will measurably look like. It's a conversation, not a top-down dictation."
     ],
+    "keyTerms": [
+      {
+        "term": "stretch goal",
+        "def": "A target set deliberately high enough that you expect to fall short, so the team aims bigger than a safe goal."
+      }
+    ],
     "metaphor": {
       "title": "🧭 Think of it like…",
       "body": [
@@ -440,7 +446,8 @@ export default {
       "title": "John Doerr brings OKRs to a 40-person Google",
       "body": [
         "In 1999, venture capitalist John Doerr walked into a tiny, plan-less Google and taught the founders a goal-setting system he'd learned at Intel, where Andy Grove had invented it. Grove had famously used OKRs in \"Operation Crush,\" Intel's campaign to out-compete Motorola — by aligning the entire company on a few measurable objectives, Intel moved as one and won the microprocessor war.",
-        "Doerr's pitch, later written up in his book \"Measure What Matters,\" gave Google a way to scale focus from a startup with no business plan into one of the largest companies in history without losing direction. Google has run on OKRs ever since — setting ambitious objectives, expecting to hit only about 70% of stretch key results, and deliberately keeping them out of compensation so the goals stay honest and bold."
+        "Doerr's pitch, later written up in his book \"Measure What Matters,\" gave Google a way to scale focus from a startup with no business plan into one of the largest companies in history without losing direction. Google has run on OKRs ever since — setting ambitious objectives, expecting to hit only about 70% of stretch key results, and deliberately keeping them out of compensation so the goals stay honest and bold.",
+        "With stretch OKRs, hitting roughly 70% means you aimed correctly; consistently hitting 100% means your targets were too easy."
       ],
       "bridge": "Doerr's gift to Google wasn't a metric — it was the discipline of always asking \"how will we know, in numbers, if we actually succeeded?\" That question is the entire purpose of OKRs."
     },

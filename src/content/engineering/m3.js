@@ -417,6 +417,7 @@ export default {
     "plainEnglish": [
       "Claude Code, Devin, Codex, Jules, and SWE-agent are the names you'll encounter when you actually start using, buying, or competing with coding agents. They differ in model quality, but the difference that matters most day to day is architectural — how you work with them.",
       "There are two camps. Synchronous agents are like a co-pilot sitting in your terminal: you watch them work, redirect them, and approve steps in real time. Asynchronous agents are cloud workers: you hand them a task, they disappear to a remote machine, and they come back later with a finished pull request for you to inspect.",
+      "A `pull request` is a tidy bundle of proposed code changes packaged for a human to review and approve or reject before it goes live — which is exactly why async agents 'return a PR': they hand back something reviewable, not something already shipped.",
       "Choosing the wrong type for your workflow is a more expensive mistake than choosing a slightly less capable model. A synchronous tool forced into a fire-and-forget workflow wastes everyone's attention; an asynchronous tool used for work that needs constant steering produces confident garbage. Most strong teams in 2026 run one of each in parallel."
     ],
     "metaphor": {
@@ -523,7 +524,8 @@ export default {
       "coding-agent",
       "scaffolding",
       "swe-bench",
-      "programming-with-trust"
+      "programming-with-trust",
+      "pull-request"
     ],
     "sources": [
       {

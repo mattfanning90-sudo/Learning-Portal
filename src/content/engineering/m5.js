@@ -541,7 +541,14 @@ export default {
     "plainEnglish": [
       "A model has no values of its own. It learns patterns from data produced by people, and people — and the historical records they leave behind — are biased. So the model absorbs those biases and, because it operates at enormous scale, can spread them to millions of decisions faster than any human institution ever could.",
       "This is not a hypothetical or a fringe concern. Biased AI has denied people jobs, skewed criminal-justice decisions, and quietly disadvantaged whole groups — not because anyone wrote a rule to discriminate, but because the data carried the discrimination in. The harm is real even when the intent is absent.",
-      "Responsible AI is the discipline of catching that harm before it ships: deciding where fairness must be measured, what your data needs to represent, and where a biased output is simply unacceptable. It treats fairness as a requirement to engineer for, not a nice-to-have to apologise for later."
+      "Responsible AI is the discipline of catching that harm before it ships: deciding where fairness must be measured, what your data needs to represent, and where a biased output is simply unacceptable. It treats fairness as a requirement to engineer for, not a nice-to-have to apologise for later.",
+      "If repayment rates genuinely differ between two groups, a risk score tuned to be equally accurate for both cannot also produce equal approval rates for both — so you must choose which kind of fairness matters. That is why it is a values choice, not a maths result."
+    ],
+    "keyTerms": [
+      {
+        "term": "base rate",
+        "def": "How common the real outcome actually is within a group — for example, what fraction of one group truly repays a loan."
+      }
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",

@@ -14,6 +14,12 @@ export default {
       "The tempting answer is 'we have lots of data.' But a pile of data sitting in a warehouse is not a moat. Data ages, competitors can often buy or scrape something similar, and a static dataset just sits there. The real moat is a flywheel: every time a user does something, the product captures a signal, that signal improves the model, the better model attracts more users, and those users generate even more signal. The loop compounds.",
       "The job of a product leader, then, is not to 'collect data.' It is to design a loop where ordinary use of the product quietly teaches the product to be better — with the user's consent and the right data governance in place. A competitor can copy your screens. They cannot copy ten years of your loop turning."
     ],
+    "keyTerms": [
+      {
+        "term": "API",
+        "def": "A standard doorway that lets one piece of software request something from another. Here it means any company can send a question to a foundation model it doesn't own and get the answer back for a fee — so 'we use AI' is no longer special, because a rival can knock on the exact same door with a few lines of code."
+      }
+    ],
     "metaphor": {
       "title": "🧭 Think of it like…",
       "body": [

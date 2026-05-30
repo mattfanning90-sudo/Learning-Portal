@@ -14,6 +14,12 @@ export default {
       "AI products break that certainty. Give the same model the same question twice and you can get two different answers, both usually good, occasionally embarrassing. This isn't a defect to be fixed; it's how the technology fundamentally works. 'Mostly right' is the design target, not a failure.",
       "That single shift quietly breaks the PM's usual toolkit. You can't promise a fixed accuracy by a fixed date. Your success metrics need to grow beyond 'did it ship.' And your team now includes data scientists and ML engineers whose work you have to understand well enough to lead — even if you never write a line of their code."
     ],
+    "keyTerms": [
+      {
+        "term": "fine-tuning",
+        "def": "Taking a model that was already trained on broad, general data and giving it extra training on your own narrower examples, so it gets better at your specific task — like sending an experienced cook on a one-week course about just your restaurant's menu, rather than teaching them to cook from scratch."
+      }
+    ],
     "metaphor": {
       "title": "🧭 Think of it like…",
       "body": [

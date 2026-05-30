@@ -497,6 +497,20 @@ export default {
       "A real product manager is something else entirely. They have deep, hard-won knowledge in three areas: the customer (from talking to them constantly), the data (from actually reading it), and the business and industry (from understanding how the company makes money and who the competitors are). Armed with that, they own the two hardest risks any product faces — value and viability — and they have the judgment to decide what is genuinely worth building.",
       "The gap between these two is the single most important thing to understand about your own career. One is replaceable busywork. The other is the scarce, valuable judgment that actually moves a business."
     ],
+    "keyTerms": [
+      {
+        "term": "standup",
+        "def": "A short daily team meeting where each person says what they did, what they'll do next, and what's blocking them."
+      },
+      {
+        "term": "backlog grooming",
+        "def": "The routine of tidying and re-ranking the backlog — the to-do list of work items — so the most important things sit at the top."
+      },
+      {
+        "term": "Scrum",
+        "def": "A popular, structured way of organising software work in short repeating cycles. It defines the narrow 'Product Owner' role this lesson contrasts with real product leadership."
+      }
+    ],
     "metaphor": {
       "title": "🧭 Think of it like…",
       "body": [

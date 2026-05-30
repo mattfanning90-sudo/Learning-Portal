@@ -11,7 +11,14 @@ export default {
     "plainEnglish": [
       "There are two completely different activities hiding inside the word \"product.\" One is figuring out whether something is worth building at all — talking to customers, sketching, testing small ideas. That is discovery. The other is building the chosen thing reliably and well — writing the code, shipping it, keeping it stable. That is delivery.",
       "Most product failures are not failures of delivery. The team usually builds the thing competently. The disaster is that they built the wrong thing competently — months of solid engineering poured into something customers never wanted. Naming the two tracks separately is the first defence against that, because it makes \"should we?\" a real question instead of an afterthought.",
-      "The surprising part is that the best teams do not run these as two phases or two departments. They run both continuously, in parallel, with the same small cross-functional team. While engineers ship this week's work, the same group is already quietly testing next month's idea on a handful of real customers."
+      "The surprising part is that the best teams do not run these as two phases or two departments. They run both continuously, in parallel, with the same small cross-functional team. While engineers ship this week's work, the same group is already quietly testing next month's idea on a handful of real customers.",
+      "`Dual-track agile` just means running that incremental build process (delivery) alongside a parallel learning process (discovery) — two streams at once."
+    ],
+    "keyTerms": [
+      {
+        "term": "agile",
+        "def": "A way of building software in small, frequent increments with constant adjustment, instead of one big upfront plan."
+      }
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",

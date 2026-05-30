@@ -12,6 +12,7 @@ export default {
     "plainEnglish": [
       "When an AI feature works one minute and flakes out the next, our instinct is to blame the model and reach for a bigger, smarter one. But through 2025 and 2026 the people who build these systems for a living found that most failures are not the model thinking badly — they are the model being fed badly. It got the wrong documents, or far too many, or the right ones buried in the wrong place.",
       "Prompt engineering is the craft of writing one good instruction: the sentence or paragraph you type. Context engineering is the bigger job of curating EVERYTHING the model sees on each step — the instruction, plus the retrieved documents, the past conversation, the tool descriptions, the examples, and the order they all arrive in.",
+      "The `system prompt` is set once by the builder and silently added to every request (the consultant's standing instructions), while the `user prompt` is what the end-user types that turn; the model sees both stitched together, but only the builder controls the system one.",
       "Anthropic now calls context engineering 'effectively the #1 job of engineers building AI agents.' The model is only as good as the briefing you assemble for it, and assembling that briefing well is a real, learnable skill — not a magic phrase."
     ],
     "metaphor": {
@@ -143,6 +144,12 @@ export default {
       "An LLM only 'knows' what it happened to see during training, frozen at some cutoff date. Ask it about your company's refund policy, this quarter's prices, or a contract signed last week, and it will do what it always does — produce the most plausible-sounding text — which means it will confidently invent an answer. That is fine for brainstorming and dangerous for facts.",
       "Retrieval-Augmented Generation, or RAG, fixes this by giving the model an open book. At the moment a question comes in, the system searches your real documents, pulls out the few passages that actually matter, and hands them to the model along with the question. The model then answers from those passages — and can quote and cite them — instead of from hazy memory.",
       "RAG is the workhorse pattern behind almost every enterprise AI assistant: support bots, internal search, policy Q&A, 'chat with your docs.' And the part that decides whether it is trustworthy or a liability is rarely the model — it is the quality of the retrieval step that fetched the pages."
+    ],
+    "keyTerms": [
+      {
+        "term": "index",
+        "def": "(In retrieval) the pre-built, searchable copy of all your documents — chunked and turned into embeddings — that the system searches at question time. `Re-indexing` means rebuilding that copy so it reflects the latest documents, like re-shelving the library with the new editions."
+      }
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",

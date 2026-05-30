@@ -379,6 +379,7 @@ export default {
         "teaser": "distance and angle, not magic",
         "body": [
           "A 'vector' is just that list of coordinates — the address. Real embeddings live in hundreds or thousands of dimensions rather than the two of a street map, but the intuition holds: each piece of meaning is a point in a high-dimensional space. To compare two pieces of meaning, you measure how close their points are.",
+          "A `dimension` is just one more number in the address: a street map uses 2 (how far east, how far north), while an embedding uses hundreds so it can capture many independent shades of meaning at once — topic, tone, formality — too many to draw, but the same 'nearby means similar' idea.",
           "The most common measure is 'cosine similarity,' which compares the angle between two vectors rather than raw distance — pointing in the same direction means similar meaning, regardless of how 'long' each vector is. 'Nearest neighbor' search is simply: given my query's point, find the handful of points with the smallest angle to it. That's it. No reading, no understanding in the human sense — just geometry over numbers that happen to encode meaning."
         ]
       },
@@ -494,7 +495,14 @@ export default {
     "plainEnglish": [
       "There are two utterly different worlds in the life of a model. Training is when the model is built — it reads an enormous amount of text and slowly adjusts its internal numbers until it's good at predicting language. It's slow, eye-wateringly expensive, and happens occasionally. Inference is when you actually use the finished model to answer a request — fast, cheap per request, and happening millions of times a day.",
       "The most important consequence: the model's knowledge is frozen at a cutoff date. It does not learn from your conversations as you go. When a chat assistant seems to 'remember' something, that's a memory feature engineered on top — the underlying model is exactly as fixed as it was the moment training finished.",
-      "Finished assistants are built in three stages: pretraining (general 'schooling' on vast text), fine-tuning (a finishing course in being helpful and following instructions), and alignment (learning house style and manners). That pipeline is why a raw, just-pretrained model and the polished assistant you chat with behave so differently."
+      "Finished assistants are built in three stages: pretraining (general 'schooling' on vast text), fine-tuning (a finishing course in being helpful and following instructions), and alignment (learning house style and manners). That pipeline is why a raw, just-pretrained model and the polished assistant you chat with behave so differently.",
+      "A model's parameter count — the difference between a 1.3-billion and a 175-billion model — is a rough measure of its size and capacity, not a guarantee of better or more helpful answers; a smaller, well-finished model can beat a much larger raw one."
+    ],
+    "keyTerms": [
+      {
+        "term": "parameter",
+        "def": "One of the billions of internal numbers a model learns during training. More parameters roughly means more capacity to store patterns — loosely, what people mean by a 'bigger' model. It is a measure of size, not of how helpful or correct the model is."
+      }
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -753,7 +761,8 @@ export default {
     "plainEnglish": [
       "The biggest capability shift of 2024–2026 is the move from instant-answer models to 'reasoning' models. Instead of blurting the first plausible response, a reasoning model spends extra compute — extra thinking time — working through a problem step by step before it answers. This is called test-time compute: spending more effort at the moment of answering, not during training.",
       "The payoff is dramatic on the kinds of problems where one wrong step ruins everything: math, multi-step coding, logic, and planning. Letting the model 'show its working' and check itself turns a lucky guess into a worked-out solution far more often.",
-      "But it isn't free. Reasoning takes longer (seconds, sometimes much longer) and costs more (you pay for all that extra thinking). For a simple task, it's wasted money and a sluggish experience. Knowing when to reach for the slow, expensive thinker versus the fast, cheap responder is one of the central judgment calls in AI engineering and product."
+      "But it isn't free. Reasoning takes longer (seconds, sometimes much longer) and costs more (you pay for all that extra thinking). For a simple task, it's wasted money and a sluggish experience. Knowing when to reach for the slow, expensive thinker versus the fast, cheap responder is one of the central judgment calls in AI engineering and product.",
+      "Spending more test-time compute literally means the model generates many more words of intermediate working — its chain-of-thought — before the final answer; and because you pay per word (token) generated, more thinking is more tokens, which is more time and more money."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
