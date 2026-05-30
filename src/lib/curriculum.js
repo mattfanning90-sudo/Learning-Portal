@@ -34,5 +34,15 @@ export function buildCurriculum({ tracks, lessons, braided }) {
       return Math.round((ids.filter((lid) => completed[lid]).length / ids.length) * 100)
     },
     firstLesson: () => getLesson(braided[0]) || null,
+    // Up to 5 questions sampled evenly across a module's lessons, each tagged with its source lesson.
+    moduleQuiz(moduleId, max = 5) {
+      const m = getModule(moduleId)
+      if (!m) return []
+      const flat = m.lessonIds.flatMap((lid) =>
+        (getLesson(lid)?.knowledgeCheck || []).map((q) => ({ ...q, lessonId: lid, lessonTitle: getLesson(lid).title }))
+      )
+      if (flat.length <= max) return flat
+      return Array.from({ length: max }, (_, k) => flat[Math.floor((k * flat.length) / max)])
+    },
   }
 }

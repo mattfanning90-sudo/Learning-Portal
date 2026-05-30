@@ -11,6 +11,7 @@ export default function Dashboard() {
   const started = Object.keys(completed).length > 0 || !!resume
   const firstLesson = atlas.firstLesson()
   const noteCount = Object.keys(progress.allNotes()).length
+  const gateOn = progress.getSetting('gateComplete', false)
 
   // The lesson to surface: continue the resume lesson, or the first braided lesson.
   const recommend = resume ? (atlas.nextLesson(resume.id) || resume) : firstLesson
@@ -67,6 +68,38 @@ export default function Dashboard() {
           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 2 }}>note{noteCount === 1 ? '' : 's'} · open glossary →</div>
         </Link>
       </div>
+
+      {/* Settings + progress reassurance */}
+      <div style={{ marginTop: 16, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px', boxShadow: 'var(--shadow-sm)' }}>
+        <div className="label" style={{ color: 'var(--text-muted)', marginBottom: 12 }}>Settings</div>
+        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, cursor: 'pointer' }}>
+          <span>
+            <span style={{ fontSize: '0.92rem', fontWeight: 500, color: 'var(--text-primary)' }}>Require quiz answers before completing a lesson</span>
+            <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2 }}>When on, you must answer a lesson's knowledge check before you can mark it complete.</span>
+          </span>
+          <Toggle on={gateOn} onClick={() => progress.setSetting('gateComplete', !gateOn)} />
+        </label>
+        <div style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--border)', fontSize: '0.82rem', color: 'var(--green)' }}>
+          ✓ Your progress is saved automatically on this device.
+        </div>
+      </div>
     </div>
+  )
+}
+
+function Toggle({ on, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      role="switch"
+      aria-checked={on}
+      style={{
+        flexShrink: 0, width: 44, height: 26, borderRadius: 99, border: 'none', cursor: 'pointer', padding: 3,
+        background: on ? 'var(--accent)' : 'var(--border)', transition: 'background 0.15s',
+        display: 'flex', justifyContent: on ? 'flex-end' : 'flex-start',
+      }}
+    >
+      <span style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', boxShadow: 'var(--shadow-sm)' }} />
+    </button>
   )
 }

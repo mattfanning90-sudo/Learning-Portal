@@ -27,8 +27,12 @@ export default function LessonPage() {
   const next = atlas.nextLesson(lesson.id)
   const prev = atlas.prevLesson(lesson.id)
   const done = progress.isComplete(lesson.id)
+  const gate = progress.getSetting('gateComplete', false)
+  const answered = progress.lessonAnswered(lesson.id, lesson.knowledgeCheck?.length || 0)
+  const canComplete = done || !gate || answered
 
   const complete = () => {
+    if (!canComplete) return
     progress.setComplete(lesson.id, true)
     if (next) navigate(`/lesson/${next.id}`)
   }
@@ -74,7 +78,7 @@ export default function LessonPage() {
           {lesson.pmAngle && <PMBox pmAngle={lesson.pmAngle} trackId={lesson.trackId} />}
           <CaseStudyBox caseStudy={lesson.caseStudy} />
           <Takeaways items={lesson.takeaways} />
-          <KnowledgeCheck lessonId={lesson.id} questions={lesson.knowledgeCheck} />
+          <KnowledgeCheck key={lesson.id} lessonId={lesson.id} questions={lesson.knowledgeCheck} />
 
           {/* Notes + Go deeper */}
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -103,16 +107,26 @@ export default function LessonPage() {
             {prev ? (
               <Link to={`/lesson/${prev.id}`} style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textDecoration: 'none' }}>← {prev.title}</Link>
             ) : <span />}
-            <button
-              onClick={complete}
-              style={{
-                background: done ? 'var(--green)' : 'var(--accent)', color: '#fff', border: 'none',
-                fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 600, padding: '11px 24px',
-                borderRadius: 'var(--radius-md)', cursor: 'pointer',
-              }}
-            >
-              {done ? 'Completed ✓' : 'Mark complete'} {next ? '→' : ''}
-            </button>
+            <div style={{ textAlign: 'right' }}>
+              <button
+                onClick={complete}
+                disabled={!canComplete}
+                title={!canComplete ? 'Answer the questions below to mark this complete' : ''}
+                style={{
+                  background: done ? 'var(--green)' : canComplete ? 'var(--accent)' : 'var(--border)',
+                  color: canComplete ? '#fff' : 'var(--text-muted)', border: 'none',
+                  fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 600, padding: '11px 24px',
+                  borderRadius: 'var(--radius-md)', cursor: canComplete ? 'pointer' : 'not-allowed',
+                }}
+              >
+                {done ? 'Completed ✓' : 'Mark complete'} {next && canComplete ? '→' : ''}
+              </button>
+              {!canComplete && (
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: 6, maxWidth: '28ch' }}>
+                  Answer the ✦ knowledge check to mark complete — or turn this off in Dashboard settings.
+                </div>
+              )}
+            </div>
           </div>
         </main>
       </div>

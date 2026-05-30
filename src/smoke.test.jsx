@@ -67,4 +67,18 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     expect(html).toContain('The core idea')
     expect(html).toContain('Mark complete')
   })
+  it('dashboard shows the settings toggle and progress-saved note', () => {
+    const html = renderAt('/')
+    expect(html).toContain('Require quiz answers before completing a lesson')
+    expect(html).toContain('saved automatically on this device')
+  })
+  it('track page offers the module quiz', () => {
+    const html = renderAt('/track/engineering')
+    expect(html).toContain('Take the module quiz')
+  })
+  it('completion gate shows a hint when the setting is on and questions are unanswered', () => {
+    localStorage.setItem('atlas:v1:settings', JSON.stringify({ gateComplete: true }))
+    const html = renderAt('/lesson/eng-m1-l2')
+    expect(html).toContain('to mark complete')
+  })
 })

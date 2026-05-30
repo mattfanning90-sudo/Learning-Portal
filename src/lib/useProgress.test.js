@@ -29,4 +29,22 @@ describe('progress store', () => {
     store.saveQuiz('eng-m1-l1', { correct: true })
     expect(store.getQuiz('eng-m1-l1')).toEqual({ correct: true })
   })
+
+  it('reads and writes settings with a default', () => {
+    expect(store.getSetting('gateComplete', false)).toBe(false)
+    store.setSetting('gateComplete', true)
+    expect(store.getSetting('gateComplete', false)).toBe(true)
+  })
+
+  it('reports whether every question in a lesson is answered', () => {
+    expect(store.lessonAnswered('eng-m1-l1', 2)).toBe(false)
+    store.saveQuiz('eng-m1-l1', { 0: true })
+    expect(store.lessonAnswered('eng-m1-l1', 2)).toBe(false)
+    store.saveQuiz('eng-m1-l1', { 0: true, 1: false })
+    expect(store.lessonAnswered('eng-m1-l1', 2)).toBe(true)
+  })
+
+  it('treats a zero-question lesson as answered', () => {
+    expect(store.lessonAnswered('eng-m1-l9', 0)).toBe(true)
+  })
 })

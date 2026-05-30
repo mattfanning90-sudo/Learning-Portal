@@ -48,11 +48,19 @@ export const store = {
   },
   getResume: () => read('resume', null),
   setResume(id) { write('resume', id) },
+  getSetting: (key, fallback) => { const s = read('settings', {}); return key in s ? s[key] : fallback },
+  setSetting(key, val) { const s = read('settings', {}); s[key] = val; write('settings', s) },
+  // True when every question index 0..count-1 has a saved answer (count 0 = trivially answered).
+  lessonAnswered(id, count) {
+    const q = read('quiz', {})[id] || {}
+    for (let i = 0; i < count; i++) if (q[i] === undefined) return false
+    return true
+  },
 }
 
 // React hook: re-renders subscribed components whenever the store changes.
 const snapshot = () =>
-  `${localStorage.getItem(K('completed')) || ''}|${localStorage.getItem(K('notes')) || ''}|${localStorage.getItem(K('quiz')) || ''}|${localStorage.getItem(K('resume')) || ''}`
+  `${localStorage.getItem(K('completed')) || ''}|${localStorage.getItem(K('notes')) || ''}|${localStorage.getItem(K('quiz')) || ''}|${localStorage.getItem(K('resume')) || ''}|${localStorage.getItem(K('settings')) || ''}`
 
 export function useProgress() {
   useSyncExternalStore(subscribe, snapshot, snapshot)

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { atlas } from '../lib/atlas.js'
 import { useProgress } from '../lib/useProgress.js'
 import StatusBadge from './StatusBadge.jsx'
+import ModuleQuiz from './ModuleQuiz.jsx'
 
 /* A module on a track page: progress bar + expandable lesson list. */
 export default function ModuleCard({ module, index }) {
@@ -11,7 +12,9 @@ export default function ModuleCard({ module, index }) {
   const pct = atlas.moduleProgress(module.id, completed)
   const status = pct === 100 ? 'completed' : pct > 0 ? 'in-progress' : 'upcoming'
   const [open, setOpen] = useState(status === 'in-progress')
+  const [showQuiz, setShowQuiz] = useState(false)
   const active = status === 'in-progress'
+  const quizCount = atlas.moduleQuiz(module.id).length
 
   return (
     <article
@@ -70,6 +73,18 @@ export default function ModuleCard({ module, index }) {
               </Link>
             )
           })}
+        </div>
+      )}
+
+      {quizCount > 0 && (
+        <div style={{ marginTop: 12, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
+          <button
+            onClick={() => setShowQuiz((q) => !q)}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 600, color: 'var(--accent)' }}
+          >
+            🎯 {showQuiz ? 'Hide module quiz' : `Take the module quiz (${quizCount} questions)`}
+          </button>
+          {showQuiz && <ModuleQuiz moduleId={module.id} />}
         </div>
       )}
     </article>
