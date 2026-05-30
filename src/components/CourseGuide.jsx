@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import ProgressRing from './ProgressRing.jsx'
-import { atlas } from '../lib/atlas.js'
+import { atlas, accentOf } from '../lib/atlas.js'
 import { useProgress } from '../lib/useProgress.js'
 
 /* Floating sidebar: module progress, a lesson navigation menu for the current module,
@@ -9,7 +9,7 @@ export default function CourseGuide({ lesson }) {
   const progress = useProgress()
   const mod = atlas.getModule(lesson.moduleId)
   const track = atlas.getTrack(lesson.trackId)
-  const accent = track?.accentVar || 'var(--accent)'
+  const accent = accentOf(track)
   const completed = progress.getCompleted()
   const pct = atlas.moduleProgress(lesson.moduleId, completed)
 

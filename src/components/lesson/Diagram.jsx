@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { atlas } from '../../lib/atlas.js'
+import { atlas, accentOf } from '../../lib/atlas.js'
 
 // A diagram is an ordered list of steps; each step is a row of nodes plus the
 // sentence that explains it. One step renders static; multiple steps animate as a
@@ -13,7 +13,7 @@ const prefersReduced =
 
 export default function Diagram({ diagram, trackId }) {
   const steps = diagram?.steps || []
-  const accent = atlas.getTrack(trackId)?.accentVar || 'var(--accent)'
+  const accent = accentOf(atlas.getTrack(trackId))
   const horizontal = diagram?.direction === 'horizontal'
   const multi = steps.length > 1
   const stepThrough = multi && !prefersReduced

@@ -41,23 +41,23 @@ registerModule({ trackId: 'product', id: 'prod-m6', title: "Module 6 — Busines
 
 braided.push('eng-m1-l1', 'eng-m1-l2', 'eng-m1-l3', 'eng-m1-l4', 'eng-m1-l5', 'eng-m1-l6', 'eng-m1-l7', 'eng-m1-l8', 'prod-m1-l1', 'prod-m1-l2', 'prod-m1-l3', 'prod-m1-l4', 'prod-m1-l5', 'prod-m1-l6', 'eng-m2-l1', 'eng-m2-l2', 'eng-m2-l3', 'eng-m2-l4', 'eng-m2-l5', 'eng-m2-l6', 'prod-m2-l1', 'prod-m2-l2', 'prod-m2-l3', 'prod-m2-l4', 'prod-m2-l5', 'prod-m2-l6', 'eng-m3-l1', 'eng-m3-l2', 'eng-m3-l3', 'eng-m3-l4', 'eng-m3-l5', 'eng-m3-l6', 'eng-m3-l7', 'prod-m3-l1', 'prod-m3-l2', 'prod-m3-l3', 'prod-m3-l4', 'prod-m3-l5', 'prod-m3-l6', 'eng-m4-l1', 'eng-m4-l2', 'eng-m4-l3', 'eng-m4-l4', 'eng-m4-l5', 'eng-m4-l6', 'prod-m4-l1', 'prod-m4-l2', 'prod-m4-l3', 'prod-m4-l4', 'prod-m4-l5', 'eng-m5-l1', 'eng-m5-l2', 'eng-m5-l3', 'eng-m5-l4', 'eng-m5-l5', 'eng-m5-l6', 'prod-m5-l1', 'prod-m5-l2', 'prod-m5-l3', 'prod-m5-l4', 'prod-m5-l5', 'eng-m6-l1', 'eng-m6-l2', 'eng-m6-l3', 'eng-m6-l4', 'eng-m6-l5', 'prod-m6-l1', 'prod-m6-l2', 'prod-m6-l3', 'prod-m6-l4', 'prod-m6-l5', 'prod-m6-l6', 'eng-m7-l1', 'eng-m7-l2')
 
-// ─── Coding tracks (Python + Java) — merged from a self-contained module ───
-import coding from './coding.js'
-// Append the coding tracks (Python, then Java) to the braided order in track→module→lesson
-// order, so "Mark complete" advances through coding lessons too instead of dead-ending.
-for (const t of coding.tracks) {
-  tracks.push(t)
-  for (const m of t.modules) braided.push(...m.lessonIds)
+// ─── Self-contained extra tracks (Coding, Cloud) merged into the registry ───
+// Append each module's tracks + lessons and extend the braided order in
+// track→module→lesson order, so "Mark complete" advances through them in turn
+// instead of dead-ending.
+function mergeTrack(mod) {
+  for (const t of mod.tracks) {
+    tracks.push(t)
+    for (const m of t.modules) braided.push(...m.lessonIds)
+  }
+  Object.assign(lessons, mod.lessons)
 }
-Object.assign(lessons, coding.lessons)
 
-// ─── Cloud, AWS & FinOps track — merged from a self-contained module ───
+import coding from './coding.js'
+mergeTrack(coding)
+
 import cloud from './cloud.js'
-for (const t of cloud.tracks) {
-  tracks.push(t)
-  for (const m of t.modules) braided.push(...m.lessonIds)
-}
-Object.assign(lessons, cloud.lessons)
+mergeTrack(cloud)
 
 // ─── Visual diagrams (overlay) — attached to lessons by id ───
 import { diagrams } from './diagrams.js'

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { atlas } from '../lib/atlas.js'
+import { atlas, accentOf } from '../lib/atlas.js'
 import { useProgress } from '../lib/useProgress.js'
 import ProgressRing from './ProgressRing.jsx'
 
@@ -52,7 +52,7 @@ export default function Dashboard() {
         {atlas.tracks.map((t, i) => {
           const pct = atlas.trackProgress(t.id, completed)
           const total = t.modules.reduce((s, m) => s + m.lessonIds.length, 0)
-          const accent = t.accentVar || 'var(--accent)'
+          const accent = accentOf(t)
           return (
             <Link key={t.id} to={`/track/${t.id}`} style={{ textDecoration: 'none', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 20, boxShadow: 'var(--shadow-sm)', display: 'flex', gap: 14, alignItems: 'center' }}>
               <ProgressRing pct={pct} size={52} stroke={5} color={accent} />

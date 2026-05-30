@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { atlas } from '../lib/atlas.js'
+import { atlas, accentOf } from '../lib/atlas.js'
 import { useProgress } from '../lib/useProgress.js'
 import ProgressRing from './ProgressRing.jsx'
 import ModuleCard from './ModuleCard.jsx'
@@ -13,7 +13,7 @@ export default function TrackPage() {
   const pct = atlas.trackProgress(trackId, progress.getCompleted())
   const totalLessons = track.modules.reduce((s, m) => s + m.lessonIds.length, 0)
   const idx = atlas.tracks.findIndex((t) => t.id === trackId)
-  const accent = track.accentVar || 'var(--accent)'
+  const accent = accentOf(track)
 
   return (
     <div>
