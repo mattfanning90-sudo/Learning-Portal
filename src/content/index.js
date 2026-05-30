@@ -43,7 +43,12 @@ braided.push('eng-m1-l1', 'eng-m1-l2', 'eng-m1-l3', 'eng-m1-l4', 'eng-m1-l5', 'e
 
 // ─── Coding tracks (Python + Java) — merged from a self-contained module ───
 import coding from './coding.js'
-for (const t of coding.tracks) tracks.push(t)
+// Append the coding tracks (Python, then Java) to the braided order in track→module→lesson
+// order, so "Mark complete" advances through coding lessons too instead of dead-ending.
+for (const t of coding.tracks) {
+  tracks.push(t)
+  for (const m of t.modules) braided.push(...m.lessonIds)
+}
 Object.assign(lessons, coding.lessons)
 
 // Single merged glossary (AI/Product terms + coding terms).

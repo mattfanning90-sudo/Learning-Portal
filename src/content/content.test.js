@@ -22,12 +22,22 @@ describe('content registry', () => {
     expect(braided.filter((id) => !lessons[id])).toEqual([])
   })
 
-  it('every AI/Product lesson appears in the braided order exactly once', () => {
-    const aiProd = Object.values(lessons)
-      .filter((l) => l.trackId === 'engineering' || l.trackId === 'product')
-      .map((l) => l.id).sort()
-    expect([...braided].sort()).toEqual(aiProd)
+  it('every lesson — including coding tracks — appears in the braided order exactly once', () => {
+    const all = Object.values(lessons).map((l) => l.id).sort()
+    expect([...braided].sort()).toEqual(all)
     expect(new Set(braided).size).toBe(braided.length) // no duplicates
+  })
+
+  it('coding lessons advance to a next lesson (Mark complete has somewhere to go)', () => {
+    // Every coding lesson except the very last in the braided order must have a successor.
+    const last = braided[braided.length - 1]
+    const codingIds = Object.values(lessons)
+      .filter((l) => l.trackId === 'python' || l.trackId === 'java')
+      .map((l) => l.id)
+    const stranded = codingIds.filter((id) => id !== last && braided.indexOf(id) === braided.length - 1)
+    expect(stranded).toEqual([])
+    // And no coding lesson is missing from the path entirely.
+    expect(codingIds.filter((id) => braided.indexOf(id) === -1)).toEqual([])
   })
 
   it('no unexplained jargon: every referenced glossary term is defined', () => {
