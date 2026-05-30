@@ -75,6 +75,12 @@ a { color: inherit; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeLeft { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+/* Gentle breathing highlight for the current diagram step. --pulse is set inline to the track accent. */
+@keyframes diagramPulse {
+  0%, 100% { box-shadow: 0 4px 16px color-mix(in oklch, var(--pulse, var(--accent)) 14%, transparent); }
+  50%      { box-shadow: 0 6px 24px color-mix(in oklch, var(--pulse, var(--accent)) 30%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) { .diagram-pulse { animation: none !important; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
