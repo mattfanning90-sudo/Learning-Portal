@@ -36,7 +36,7 @@ const renderAt = (path) => {
 describe('app smoke test (whole tree mounts client-side)', () => {
   it('renders the dashboard', () => {
     const html = renderAt('/')
-    expect(html).toContain('Become a great AI engineer')
+    expect(html).toContain('genuinely fluent')
     expect(html).toContain('Atlas')
   })
   it('renders a track page', () => {

@@ -12,6 +12,7 @@ export default function Dashboard() {
   const firstLesson = atlas.firstLesson()
   const noteCount = Object.keys(progress.allNotes()).length
   const gateOn = progress.getSetting('gateComplete', false)
+  const trackCount = atlas.tracks.length
 
   // The lesson to surface: continue the resume lesson, or the first braided lesson.
   const recommend = resume ? (atlas.nextLesson(resume.id) || resume) : firstLesson
@@ -21,11 +22,11 @@ export default function Dashboard() {
       {/* Welcome */}
       <div style={{ marginBottom: 28, animation: 'fadeUp 0.5s ease both' }}>
         <div className="label" style={{ color: 'var(--accent)', marginBottom: 8 }}>Welcome to Atlas</div>
-        <h1 className="serif" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 10, maxWidth: '20ch' }}>
-          Become a great AI engineer and product leader.
+        <h1 className="serif" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 10, maxWidth: '24ch' }}>
+          From non-technical to genuinely fluent — in AI, product, code, and cloud.
         </h1>
         <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '64ch', lineHeight: 1.65 }}>
-          Two braided tracks, taught in plain English with a metaphor and a real case study in every lesson. No jargon left unexplained — start anywhere and pick up where you left off.
+          Atlas takes a curious, non-technical learner to real fluency across the modern software stack — how AI actually works, how great product teams operate, how to read and write code, and how to run and pay for it all in the cloud. Every lesson is plain English, with a metaphor and a real case study, and no jargon left unexplained. {trackCount} self-paced tracks — start anywhere, and pick up where you left off. Fluency now, builder later.
         </p>
       </div>
 
