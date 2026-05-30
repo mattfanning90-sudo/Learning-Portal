@@ -44,7 +44,10 @@ export default function LessonPage() {
   }
 
   return (
-    <div>
+    // Key the whole view on the lesson id so navigating between lessons remounts it —
+    // otherwise stateful children (the editable "Try it yourself" runner, the diagram)
+    // keep the previous lesson's state because React reuses the instances.
+    <div key={lesson.id}>
       {/* Hero */}
       <div style={{ background: 'var(--hero-grad)', padding: '38px 0 42px', position: 'relative', overflow: 'hidden' }}>
         <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }} />
