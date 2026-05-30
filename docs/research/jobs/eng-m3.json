@@ -1,0 +1,173 @@
+{
+  "moduleId": "eng-m3",
+  "trackId": "engineering",
+  "title": "Module 3 — Agents & Agentic Software Engineering",
+  "goal": "The defining shift of 2026: AI that acts, not just answers.",
+  "lessons": [
+    {
+      "id": "eng-m3-l1",
+      "order": 1,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Chef Who Cooks, Not Recites: What an Agent Is and the Agent Loop",
+      "summary": "An AI agent is simply a model that thinks, acts with a tool, observes the result, and repeats until done. Understand this one loop and every agent product and failure mode becomes reasonable instead of magic. Conflating 'agent' with 'chatbot' is the single biggest source of misplaced expectations.",
+      "metaphor_seed": "An agent is a chef working from a goal ('make dinner') instead of a fixed recipe. They look in the fridge (observe), decide to chop an onion (act with a tool), taste the result (observe again), and adjust — repeating until the dish is done. A chatbot just tells you a recipe; an agent actually cooks, burns things, and tries again.",
+      "case_study_seed": "The original ReAct paper (Princeton + Google, 2022) showed that an LLM answering questions while interleaving reasoning with live Wikipedia lookups beat models that only reasoned OR only acted — the empirical birth of the modern agent loop now used by Claude Code, Devin, and every coding agent. Pair with 'A Survey on Code Generation with LLM-based Agents' (arXiv 2508.00083) for the full taxonomy of autonomy, environment interaction, and collaboration.",
+      "pm_angle": "'Agent' is the most overloaded word in your stakeholders' vocabulary. Being able to say precisely 'it's a model in a Reason-Act-Observe loop with these tools and this stopping condition' lets you scope what's actually buildable, set honest expectations, and cut through vendor hype.",
+      "deep_sections": [
+        "The ReAct loop: Reason → Act → Observe → repeat",
+        "Plan-and-Execute vs reason-as-you-go",
+        "Agents vs workflows, and the 'done' signal",
+        "The agent taxonomy: autonomy, environment, collaboration"
+      ],
+      "sources": [
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "https://www.mindstudio.ai/blog/what-is-react-loop-ai-agent-reasoning",
+        "https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems",
+        "https://arxiv.org/abs/2508.00083"
+      ]
+    },
+    {
+      "id": "eng-m3-l2",
+      "order": 2,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Same Chef, Different Kitchen: The Agent-Computer Interface (ACI)",
+      "summary": "A surprising 2024 finding still dominates 2026 practice: the same model performs dramatically better or worse depending on how its tools are designed — not how smart the model is. The Agent-Computer Interface is to agents what UX is to humans, and it's the highest-leverage, lowest-cost skill in the field.",
+      "metaphor_seed": "Two people with identical cooking skill: one in a chaotic kitchen where knives are hidden and the oven has no labels, one in a clean kitchen with everything within reach and clearly marked. Same chef, wildly different dinners. The ACI is the kitchen layout you build for the AI — and a guardrail (you physically can't turn the oven past 250°C) prevents whole categories of disaster.",
+      "case_study_seed": "Princeton's SWE-agent (arXiv 2405.15793, NeurIPS 2024) coined 'ACI' and proved it: by wrapping a normal Linux shell in agent-friendly commands — a paged file viewer, a syntax-checking editor, concise search — researchers lifted the model from near-zero to 12.5% on SWE-bench with NO change to the model. The foundational 'tooling beats model tweaks' result.",
+      "pm_angle": "This maps directly onto a PM's instinct for good UX — except the 'user' is the AI. When an agent underperforms, the cheapest fix is usually better tools and clearer feedback, not a bigger model. Recognizing that reframes your improvement budget away from expensive model swaps toward high-leverage interface design.",
+      "deep_sections": [
+        "ACI as the AI's UX: simplicity, efficiency, error-prevention",
+        "Poka-yoke: making mistakes impossible by design",
+        "Worked example: a 100-line file viewer that beats raw 'cat'"
+      ],
+      "sources": [
+        "https://swe-agent.com/0.7/background/aci/",
+        "https://arxiv.org/abs/2405.15793",
+        "https://agentpatterns.ai/tool-engineering/agent-computer-interface/",
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+      ]
+    },
+    {
+      "id": "eng-m3-l3",
+      "order": 3,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Whiteboard That Fills Up: Context Engineering for Long-Running Agents",
+      "summary": "Agents fail less from 'being dumb' and more from drowning in their own history — 'context rot', where a model gets worse as its window fills. Context engineering (the 2026 successor to prompt engineering) is what lets agents run for hours or across whole codebases. It also reveals a profound insight: as codebases scale, READING code, not writing it, becomes the dominant bottleneck.",
+      "metaphor_seed": "An agent's context window is a single small whiteboard. Early on it's clear and useful; as it fills with scribbles the agent can't find what matters and starts making mistakes. Context engineering is the discipline of wiping the board down to essentials (compaction), keeping a tidy notebook beside it (memory), and only writing down what you need right now (just-in-time retrieval).",
+      "case_study_seed": "Anthropic's 'Claude plays Pokemon' agent stayed coherent across thousands of game steps and multiple context resets only because it kept self-generated notes (a map, goals, what it had tried) OUTSIDE the context window — a vivid demonstration that memory, not raw intelligence, unlocks long-horizon tasks. Pair with SWE-AGI/MoonBit (arXiv 2602.09447), whose spec-driven from-scratch construction shows code comprehension overtaking code generation as the real ceiling.",
+      "pm_angle": "Long-running agents are only as good as their memory discipline — the limiting factor on 'can this agent finish a big multi-hour task?' is rarely model IQ and usually context management. And the comprehension-bottleneck insight reframes where your engineering effort and review time should go as systems grow.",
+      "deep_sections": [
+        "Context rot and the finite attention budget",
+        "Compaction, external memory, and just-in-time retrieval",
+        "Why code READING is the dominant bottleneck at scale (SWE-AGI/MoonBit)",
+        "Anthropic's Memory for Managed Agents (April 2026): persistent, auditable, shareable"
+      ],
+      "sources": [
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "https://arxiv.org/abs/2602.09447",
+        "https://usewire.io/blog/anthropic-managed-agents-memory-context-engineering/",
+        "https://arxiv.org/pdf/2510.12635"
+      ]
+    },
+    {
+      "id": "eng-m3-l4",
+      "order": 4,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Hiring Help for Your House: Coding Agents in the Wild",
+      "summary": "Claude Code, Devin, Codex, Jules, and SWE-agent are the products you'll actually use, buy, or build against. The key distinction is architectural: synchronous 'co-pilot in your terminal' agents you steer in real time, versus asynchronous 'cloud worker that returns a pull request'. Picking the wrong tool for your workflow costs more than picking a slightly weaker model.",
+      "metaphor_seed": "Hiring help for your house. A synchronous agent like Claude Code is a contractor working beside you — you watch, redirect, and approve as they go. An asynchronous agent like Jules is a contractor you text a job to; they go to their workshop, do it, and come back with finished work to inspect. Same skill set, totally different management style — you pick based on how much you want to be in the room.",
+      "case_study_seed": "Cognition's Devin launch (March 2024) defined the autonomous-coding-agent market; by Q2 2026 the field matured into a benchmark matrix where Claude Code leads interactive SWE-bench Verified (~80.8%) while Codex leads autonomous Terminal-Bench — concrete proof that 'best agent' depends entirely on the job. Anchor with 'Toward Agentic SE Beyond Code' (arXiv 2510.19692), which surveys Jules, Codex, Devin, SWE-agent, AutoCodeRover, and Claude Code and frames the shift to 'programming with trust'.",
+      "pm_angle": "Tool selection is a real product and operations decision: synchronous vs asynchronous changes your team's workflow, review load, and where humans sit. Teams typically run two tools in parallel (interactive + long-running). Knowing the landscape lets you both choose tools and position your own product against them.",
+      "deep_sections": [
+        "Synchronous (autonomy OVER the process) vs asynchronous (autonomy FROM it)",
+        "The product landscape: Devin, SWE-agent, Claude Code, Codex, Jules",
+        "Why scaffolding/orchestration beats raw model score",
+        "'Programming with trust': vision, values, vocabulary"
+      ],
+      "sources": [
+        "https://www.digitalapplied.com/blog/claude-code-vs-codex-vs-jules-q2-2026-matrix",
+        "https://arxiv.org/abs/2510.19692",
+        "https://www.developersdigest.tech/blog/codex-vs-claude-code-april-2026",
+        "https://artificialanalysis.ai/agents/coding"
+      ]
+    },
+    {
+      "id": "eng-m3-l5",
+      "order": 5,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Self-Driving Levels for Code: The Autonomy Dial",
+      "summary": "Autonomy isn't binary — it's a dial, like self-driving car levels, that gives teams a shared vocabulary for how much rope to give an agent and where the human sits. The counterintuitive 2026 lesson: higher autonomy is NOT always better. Level 3 (conditional autonomy) is the recommended production default; pushing to L4/L5 without strong testing and isolation invites silent drift and human skill atrophy.",
+      "metaphor_seed": "Self-driving car levels for code. Level 1 is cruise control (you steer everything); Level 3 is a car that drives the highway while you stay alert and ready to grab the wheel; Level 5 is no steering wheel at all. Just as Level 5 cars aren't safe everywhere yet, Level 5 coding agents aren't safe on messy real codebases — putting 'a middle-schooler in the CEO chair' is a disaster.",
+      "case_study_seed": "Uber deployed FlakyGuard, a Level-4-style agent that autonomously identifies and fixes flaky tests off a backlog with no human assignment — bounded high autonomy that works precisely because the task is narrow and verifiable — contrasted with Cursor's million-line 'FastRender' multi-agent push at the L5 frontier.",
+      "pm_angle": "The autonomy level you choose IS a product decision: it sets where humans review, how fast you ship, and how much risk you carry. Higher isn't better — match autonomy to how clearly the task is defined, not to how capable the model is. This is the dial you'll tune for every agentic feature.",
+      "deep_sections": [
+        "L1 Assistive → L2 Pair → L3 Task Agent → L4 Teammate → L5 'avalanche'",
+        "The human role shift: Driver → Reviewer → Change Owner → Auditor → Consumer",
+        "Why L3 is the sensible default and the risks of over-autonomy"
+      ],
+      "sources": [
+        "https://www.swarmia.com/blog/five-levels-ai-agent-autonomy/",
+        "https://asdlc.io/concepts/levels-of-autonomy/",
+        "https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy",
+        "https://www.mindstudio.ai/blog/agentic-coding-levels-explained"
+      ]
+    },
+    {
+      "id": "eng-m3-l6",
+      "order": 6,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "From Hand-Drawn to CGI: The Agentic SDLC (A-SDLC)",
+      "summary": "The big-picture, organizational shift a Product Owner must own: the software lifecycle is being rebuilt around autonomous task execution between human checkpoints. Agents now participate in planning, coding, review, shipping, and operating — and the bottleneck moves from writing code to reviewing it. This is the bridge between the AI-engineering and product-leadership worlds.",
+      "metaphor_seed": "A film studio moving from hand-drawn animation to a CGI pipeline. The work doesn't disappear — it relocates. Fewer people draw each frame (write each line); more people become directors and reviewers who set intent, check the output, and catch the scene that 'renders correctly but tells the wrong story.' The bottleneck moves from production to review.",
+      "case_study_seed": "The 2026 arXiv survey 'Agentic Software Engineering: A Six-Layer Reference Architecture' (arXiv 2604.26275) documents the field-wide jump on SWE-bench Verified from 1.96% (Oct 2023) to 78.4% (Apr 2026), names the six-layer A-SDLC architecture, and identifies the 'economics of attention': as agents get cheaper, expert human REVIEW time becomes the binding constraint on shipping.",
+      "pm_angle": "This is the theme a PM must own end-to-end. It changes team structure, review economics, and what 'engineering work' even means — the Reviewer/Change-Owner becomes the new core role. If review is now your scarce resource, you plan capacity, tooling, and process around it, not around lines of code written.",
+      "deep_sections": [
+        "The six-layer reference architecture for agentic SE",
+        "From 'code generation' to 'delegated execution under supervision'",
+        "The 'economics of attention': review as the scarce resource",
+        "Five open problems: evaluation, governance, technical debt, skill redistribution, economics"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2604.26275",
+        "https://www.coderabbit.ai/guides/agentic-sdlc",
+        "https://www.augmentcode.com/guides/agentic-sdlc",
+        "https://www.cio.com/article/4134741/how-agentic-ai-will-reshape-engineering-workflows-in-2026.html"
+      ]
+    },
+    {
+      "id": "eng-m3-l7",
+      "order": 7,
+      "moduleId": "eng-m3",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Newsroom on a Breaking Story: Multi-Agent Systems",
+      "summary": "When single agents hit context and complexity limits, the next move is to split work across multiple specialized agents — an orchestrator that plans and delegates to workers, each with its own clean context. The upside is parallelism and separation of concerns; the brutal trade-off is roughly 15x the token cost. Knowing when it's worth it is the whole skill.",
+      "metaphor_seed": "A newsroom on a breaking story. The editor (orchestrator) doesn't chase every lead personally — they send three reporters (sub-agents) to different sources at once, each filling their own notebook, then weave the returned summaries into one article. Faster and deeper than one journalist doing it all, but you're now paying three salaries instead of one.",
+      "case_study_seed": "Anthropic's Research feature (April 2025) uses a lead agent that spawns parallel sub-agents, each with its own context window chasing one thread; it outperformed single-agent Claude Opus 4 by ~90.2% on internal evals — at roughly 15x the token cost. The canonical real example of the multi-agent power/price trade-off.",
+      "pm_angle": "Multi-agent is the most expensive architecture in your toolkit and the most over-applied. Understanding the 15x cost and the cases where it actually wins (broad, parallelizable research) lets you say no to it for simple or tightly-coupled tasks — and yes when the depth genuinely justifies the bill.",
+      "deep_sections": [
+        "Orchestrator-worker: lead plans, workers filter and condense",
+        "Why each sub-agent needs its own clean context",
+        "The ~15x cost and when NOT to use multi-agent"
+      ],
+      "sources": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system",
+        "https://blog.bytebytego.com/p/how-anthropic-built-a-multi-agent",
+        "https://theaiengineer.substack.com/p/how-anthropic-built-multi-agent-deep",
+        "https://www.zenml.io/llmops-database/building-a-multi-agent-research-system-for-complex-information-tasks"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "moduleId": "prod-m1",
+  "trackId": "product",
+  "title": "Module 1 — How Great Product Companies Work",
+  "goal": "The operating system of the best tech companies.",
+  "lessons": [
+    {
+      "id": "prod-m1-l2",
+      "order": 2,
+      "moduleId": "prod-m1",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Three Kinds of 'Product Team' (and Only One Is Real)",
+      "summary": "The same job title can mean three completely different things: a delivery team that just builds a backlog, a feature team handed a roadmap to execute, or an empowered team given problems to solve and trusted to find the answer. Knowing which kind you're on determines whether you do strategic work or just take orders.",
+      "metaphor_seed": "Getting from London to Edinburgh: a taxi driver who only follows your shouted turn-by-turn directions (delivery), a chauffeur given a fixed printed route they can't deviate from (feature team), or an expert local driver you simply tell 'get me there by 6pm, safely and cheaply' and trust to pick the route and dodge traffic (empowered).",
+      "case_study_seed": "Netflix's operating principle 'Lead with context, not control' — leaders give teams the problem, strategy, and context rather than telling them what to build. Cagan cites Netflix, Amazon, and Apple as proof that breakthrough products come from empowered missionary teams, not big budgets.",
+      "pm_angle": "Technical-literacy angle: the litmus test of empowerment is whether the team gets to decide HOW to solve the problem — which is an engineering decision as much as a product one. To lead an empowered team you must be technically literate enough to participate credibly in solution debates, not just translate requirements.",
+      "deep_sections": [
+        "Missionaries vs. mercenaries (John Doerr's phrase via Cagan)",
+        "Why empowered teams are small, stable, and own a problem space",
+        "Where accountability for value and viability actually sits in each model"
+      ],
+      "sources": [
+        "https://www.svpg.com/product-vs-feature-teams/",
+        "https://www.svpg.com/empowered-product-teams/",
+        "https://www.svpg.com/missionaries-vs-mercenaries/",
+        "https://wind4change.com/product-team-feature-team-difference-marty-cagan-inspired-empowered/"
+      ]
+    },
+    {
+      "id": "prod-m1-l3",
+      "order": 3,
+      "moduleId": "prod-m1",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Outcomes Over Output: The One Idea That Changes Everything",
+      "summary": "You don't exist to ship features — you exist to solve customer and business problems. Output is features shipped on time; outcome is a measurable change in behavior or business results. Internalizing only this one idea already makes you think differently from 90% of the industry.",
+      "metaphor_seed": "A personal trainer isn't paid for the number of push-ups they make you do (output) — they're paid because you actually get fitter, lose the weight, or run the marathon (outcome). 200 push-ups that leave you no healthier is pure output and zero outcome.",
+      "case_study_seed": "Amazon's 'Working Backwards' PR/FAQ process: teams write the customer-facing press release and FAQ before building anything, forcing them to define the outcome first and only build if it's compelling. Contrast with the 'feature factory' anti-pattern of celebrating launches regardless of whether any metric moved.",
+      "pm_angle": "Technical-literacy angle: outcomes are measured through instrumentation — the analytics and event-tracking that engineers build into the product. To own outcomes you need to understand how usage data is captured, what's technically feasible to measure, and why 'we shipped it' is only a bet until the metric moves.",
+      "deep_sections": [
+        "Why 'outcomes are hard' — and the cargo-cult trap of renaming a roadmap",
+        "How a shipped feature is a bet, not a result",
+        "The bridge from outcomes to OKRs"
+      ],
+      "sources": [
+        "https://www.svpg.com/outcomes-are-hard/",
+        "https://www.svpg.com/podcasts/outcomes-over-output-the-future-of-product-management/",
+        "https://www.svpg.com/team-objectives-overview/",
+        "https://workingbackwards.com/concepts/working-backwards-pr-faq-process/"
+      ]
+    },
+    {
+      "id": "prod-m1-l4",
+      "order": 4,
+      "moduleId": "prod-m1",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "The Product Trio: PM, Designer, and Engineers as One Unit",
+      "summary": "Great products come from three perspectives working together continuously, not from an assembly line of handoffs. The PM owns value and viability, the designer owns usability, and engineers own feasibility — and crucially, engineers belong in the room inventing solutions, not just receiving specs.",
+      "metaphor_seed": "Making a film: the director (PM) owns the vision and whether the story moves audiences and makes money; the cinematographer (designer) owns whether it looks right and is easy to follow; the effects and technical crew (engineers) own whether the ambitious shots are buildable. They must argue and invent together from day one, not receive a finished shot-list 'over the wall.'",
+      "case_study_seed": "Apple's iPhone: engineering's multi-touch feasibility breakthrough, Jony Ive's usability and industrial design, and Jobs's product/business vision were inseparable — hardware, software, and experience were co-discovered, not handed off. SVPG's archetype of tight trio collaboration.",
+      "pm_angle": "Technical-literacy angle: Cagan's line 'if you're just using your engineers to code, you're only getting about half their value.' To pull that other half out you must be able to discuss feasibility, trade-offs, and architecture well enough that engineers want you in their discovery conversations.",
+      "deep_sections": [
+        "Who owns which of the four risks",
+        "Why 'over the wall' handoffs produce expensive flops",
+        "How Teresa Torres popularized the 'trio' term Cagan described in INSPIRED"
+      ],
+      "sources": [
+        "https://www.producttalk.org/product-trio/",
+        "https://www.productcompass.pm/p/product-trio",
+        "https://www.producttalk.org/2018/12/engineers-and-discovery/",
+        "https://www.thegatedsignal.com/understanding-marty-cagans-product-model-empowering-teams-for-better-outcomes/"
+      ]
+    },
+    {
+      "id": "prod-m1-l5",
+      "order": 5,
+      "moduleId": "prod-m1",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Real PM vs. Product Management Theater",
+      "summary": "Most people with 'product owner' or even 'product manager' titles are administering a backlog and writing tickets — going through the motions Cagan calls 'product management theater.' A real PM has deep knowledge of the customer, the data, and the business, and owns the hardest risks: value and viability.",
+      "metaphor_seed": "A head chef versus a waiter: the real PM is the chef who tastes the food, knows the diners' palates, watches costs and suppliers, and decides what's worth cooking. The backlog administrator is a waiter relaying shouted orders to the kitchen — necessary motion, no judgment about whether the menu is any good. Theater is a waiter in a chef's hat who never touches the stove.",
+      "case_study_seed": "Almosafer (Saudi travel company): built genuine product-manager muscle from 2018 — continuous customer interviews, data analysis, rapid prototyping for regional needs — reaching 70%+ regional market share and a billion-dollar airline business, outcompeting global giants. Cagan's 'Product Management Theater' essay is the canonical critique of the fake version.",
+      "pm_angle": "Technical-literacy angle: 'deep knowledge of the data' means being able to query, read dashboards, and reason about what the numbers actually say — a quantitative, semi-technical skill. As AI automates ticket-writing busywork, this analytical judgment is exactly what separates a real PM from a theater PM.",
+      "deep_sections": [
+        "The three deep competencies: customer, data, business/industry",
+        "Why 'Product Owner' (a Scrum role) is not a Product Manager",
+        "Why the PM is not the boss of the trio"
+      ],
+      "sources": [
+        "https://www.svpg.com/product-management-theater/",
+        "https://www.svpg.com/product-manager-vs-product-owner/",
+        "https://www.cubthinktank.com/posts/video-lenny-pm-theatre",
+        "https://theproductvenn.substack.com/p/how-almosafers-product-transformation"
+      ]
+    },
+    {
+      "id": "prod-m1-l6",
+      "order": 6,
+      "moduleId": "prod-m1",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Reading the Data: Analytics Literacy for Product Leaders",
+      "summary": "The product model insists on 'deep knowledge of the data', but that is a learnable, semi-technical skill: reading an A/B test, knowing a funnel from a cohort, and telling a real signal from noise. Without it, 'data-driven' is just a slogan.",
+      "metaphor_seed": "A doctor reading a patient's chart. Anyone can see the numbers went up or down; a trained clinician knows which numbers matter, which are noise, and when a 'significant' change is real versus a fluke. Analytics literacy is that clinical eye for your product's vital signs.",
+      "case_study_seed": "Booking.com's famous experimentation culture — running over a thousand concurrent A/B tests and trusting statistically-significant results over executive opinion — versus the common trap of celebrating a metric bump that was just random noise.",
+      "pm_angle": "This IS the technical-literacy core for PMs: A/B testing and significance, funnels, cohorts, retention curves, and leading versus lagging indicators. You need not run the SQL, but you must read the dashboard and challenge a dubious result.",
+      "deep_sections": [
+        "A/B tests and statistical significance without the maths",
+        "Funnels, cohorts, and retention curves",
+        "Leading versus lagging indicators; vanity versus actionable metrics"
+      ],
+      "sources": [
+        {
+          "label": "Lenny's Newsletter — metrics & experimentation",
+          "url": "https://www.lennysnewsletter.com/"
+        }
+      ]
+    }
+  ]
+}

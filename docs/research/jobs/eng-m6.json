@@ -1,0 +1,121 @@
+{
+  "moduleId": "eng-m6",
+  "trackId": "engineering",
+  "title": "Module 6 — Production AI & LLMOps",
+  "goal": "Turn a prototype into a reliable, affordable, durable product.",
+  "lessons": [
+    {
+      "id": "eng-m6-l1",
+      "order": 1,
+      "moduleId": "eng-m6",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Sticky Note, Filing Cabinet, or Retraining: Prompt vs RAG vs Fine-Tuning",
+      "summary": "The single most consequential architecture decision in any AI product. Picking wrong wastes tens of thousands of dollars and weeks of time. The 2026 consensus: these aren't rivals but a stack — prompting to instruct, RAG to supply fresh facts, fine-tuning to bake in stable behavior and tone. Volatile knowledge goes in retrieval; stable behavior goes in fine-tuning; orchestration goes in the prompt.",
+      "metaphor_seed": "Hiring a new employee. Prompting is the sticky note you hand them for today's task. RAG is access to the company filing cabinet so they can look things up before answering. Fine-tuning is the months of on-the-job training that change how they instinctively think and speak. You wouldn't retrain an employee to tell them today's meeting time, and you wouldn't rely on a sticky note to teach them the company's entire way of working.",
+      "case_study_seed": "The widely-cited 2026 case of a startup that burned ~$20,000 fine-tuning a model for a task a better prompt solved for almost nothing (the 'AI Research to Reality' decision-framework essay) — a clean cautionary tale that fine-tuning is the expensive last resort, not the first move.",
+      "pm_angle": "This is the decision that determines an AI feature's cost, timeline, and maintainability — and it's a PM-level call, not just an engineering one. Knowing prompting takes hours, RAG takes days-to-weeks, and fine-tuning takes weeks plus thousands of dollars (and only pays off for stable behavior) lets you scope features realistically and avoid the $20k mistake.",
+      "deep_sections": [
+        "The 2026 rule: volatile→retrieval, stable→fine-tune, orchestration→prompt",
+        "Fine-tuning, LoRA, and parameter-efficient methods in plain English",
+        "Cost/time tradeoffs and when compliance forces RAG"
+      ],
+      "sources": [
+        "https://medium.com/ai-research-to-reality/i-watched-a-startup-burn-20k-on-fine-tuning-a-simple-prompt-fixed-it-6070afcbf341",
+        "https://www.news.aakashg.com/p/rag-vs-fine-tuning-vs-prompt-engineering",
+        "https://umesh-malik.com/blog/rag-vs-fine-tuning-llms-2026"
+      ]
+    },
+    {
+      "id": "eng-m6-l2",
+      "order": 2,
+      "moduleId": "eng-m6",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Triage Nurse: Model Selection and Routing",
+      "summary": "The biggest single lever on cost and latency in 2026 isn't squeezing one model — it's routing different requests to different models. Frontier models are overkill (and overpriced) for the bulk of real traffic, which is simple and repetitive. Route simple high-volume queries to small/cheap models, reserve frontier models for hard reasoning, and savings can exceed $150k/year at 100k queries/day.",
+      "metaphor_seed": "A hospital triage desk. You don't send every patient to the brain surgeon. A nurse handles the paper cuts, a GP handles common cases, and only genuinely hard cases reach the expensive specialist. Routing is the triage nurse for your AI traffic, and the surgeon's time (the frontier model) is your most expensive resource.",
+      "case_study_seed": "OpenAI's GPT-5 launch (2025) shipped with an automatic real-time router that decides per-message whether to use a fast cheap model or a slower deep-reasoning model — taking model routing out of the user's hands and validating routing as the default mass-market architecture, not a niche optimization.",
+      "pm_angle": "Model choice per request is a margin lever you control directly. Understanding the model mesh, distillation (a small student mimics a big teacher), and semantic caching (serve repeat questions for near-zero cost) lets you design features that stay profitable at scale — and lets you reason about the closed-vs-open-weight trade-off of capability versus control and data residency.",
+      "deep_sections": [
+        "The model-mesh pattern: classify, then route to the cheapest that works",
+        "Frontier vs small language models vs open-weight; distillation",
+        "Semantic caching for near-zero-cost repeats"
+      ],
+      "sources": [
+        "https://lucas8.com/small-language-models-vs-llms/",
+        "https://redis.io/blog/model-distillation-llm-guide/",
+        "https://www.silicondata.com/blog/llm-cost-per-token",
+        "https://www.aimagicx.com/blog/llm-api-pricing-comparison-2026"
+      ]
+    },
+    {
+      "id": "eng-m6-l3",
+      "order": 3,
+      "moduleId": "eng-m6",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Toll Bridge vs Taxi Meter: The Economics of Building with AI",
+      "summary": "Every AI feature has a per-use cost that scales with usage — alien to traditional software where serving one more user is nearly free. A product owner must understand gross margins, cost-per-task, and the relentless price war driving token costs down 100–1000x in a few years. Underpricing a usage-scaling feature can bankrupt a product; over-engineering against a cost that'll halve next quarter wastes effort.",
+      "metaphor_seed": "Traditional software is a toll bridge: huge cost to build, then almost free for each extra car. AI products are more like a taxi company: every single trip burns fuel (tokens). And the price of fuel is dropping fast and unpredictably, so you must price your rides to stay profitable today while betting that fuel gets cheaper tomorrow.",
+      "case_study_seed": "GitHub Copilot reportedly operated at a per-user loss in its early period — some power users cost far more in compute than the ~$10/month subscription — illustrating the unit-economics trap of usage-based costs under a flat fee, and why the industry moved toward usage-based and tiered pricing.",
+      "pm_angle": "This is the most directly PM-owned lesson in the track: variable cost-of-goods, gross margin, and pricing model (per-seat vs usage-based) must reconcile with usage-driven costs, or the product loses money on its best customers. The collapsing cost curve also means some optimizations aren't worth doing — a strategic judgment only a PM who understands the economics can make.",
+      "deep_sections": [
+        "Tokens as the unit of cost; time-to-first-token as the latency metric",
+        "Variable COGS, gross margin, and the price war",
+        "Batching, caching, and build-vs-buy / lock-in trade-offs"
+      ],
+      "sources": [
+        "https://www.tldl.io/resources/llm-api-pricing-2026",
+        "https://www.silicondata.com/blog/llm-cost-per-token",
+        "https://www.aimagicx.com/blog/llm-api-pricing-comparison-2026"
+      ]
+    },
+    {
+      "id": "eng-m6-l4",
+      "order": 4,
+      "moduleId": "eng-m6",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Open-Book Exam at Scale: RAG Done Right in Production",
+      "summary": "RAG is the workhorse of enterprise AI, but a naive pipeline still hallucinates and quietly degrades over time. The enormous maturity gap between a demo RAG and a production RAG lives in unglamorous details: how you split documents, how you measure retrieval quality, and whether the system knows when to say 'I don't know.' This is where most enterprise AI projects actually succeed or fail.",
+      "metaphor_seed": "RAG is an open-book exam. The model is a smart student who hasn't memorized your textbook. Chunking is how you tear the textbook into index cards; retrieval is how fast and accurately the student finds the right card; grounding is the rule that they may only write down what's on a card they found. A bad open-book exam is one where the cards are shuffled nonsense, so the student confidently invents answers anyway.",
+      "case_study_seed": "Air Canada's chatbot (2024) invented a bereavement-refund policy that didn't exist, and a tribunal held the airline liable for the bot's made-up answer — the canonical real-world example of an ungrounded assistant hallucinating and creating legal and brand liability, exactly the failure that grounding and 'no evidence, no answer' rules are designed to prevent.",
+      "pm_angle": "RAG quality is usually the difference between a trustworthy enterprise product and a legal liability — and the failure modes are invisible in a demo. Budgeting for golden-query test sets, retrieval-quality measurement, re-embedding pipelines, and 'no evidence, no answer' is a roadmap decision. Air Canada is the cautionary tale you cite when someone wants to skip grounding to ship faster.",
+      "deep_sections": [
+        "Chunking strategies and why semantic chunking helps",
+        "Golden-query test sets and reranking",
+        "The 'no evidence, no answer' clause",
+        "Retrieval drift and index hygiene"
+      ],
+      "sources": [
+        "https://weaviate.io/blog/chunking-strategies-for-rag",
+        "https://www.elysiate.com/blog/rag-systems-production-guide-chunking-retrieval-2025",
+        "https://unstructured.io/insights/rag-pipeline-challenges-from-data-ingestion-to-retrieval"
+      ]
+    },
+    {
+      "id": "eng-m6-l5",
+      "order": 5,
+      "moduleId": "eng-m6",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Body-Cam on a 30-Step Errand: Agent Reliability and Observability in Production",
+      "summary": "As products evolve from single prompts into multi-step agents, failure modes change entirely. There's no stack trace when an agent breaks after two minutes and 180 steps — not a single line failed; the reasoning went wrong. By 2026 observability is table stakes (~89% adoption, ~94% among production teams), and latency has become the #2 barrier as agents go customer-facing. You can't operate what you can't see.",
+      "metaphor_seed": "An AI agent is a new junior employee sent to complete a 30-step errand across town alone. If they come back empty-handed, 'I failed' tells you nothing. Observability is the body-cam and GPS log that lets you replay exactly where they got confused, took a wrong turn, or asked the wrong shop — so you can fix that one step instead of guessing.",
+      "case_study_seed": "Cursor's AI coding agent (2024–2025) became a flagship example of reliable agentic product engineering, instrumenting every accept/reject of a code suggestion both to debug agent behavior AND to feed its improvement loop — production-grade observability as a competitive necessity, not a nice-to-have. This also seeds the data flywheel of Module 7.",
+      "pm_angle": "Latency and reliability are now top barriers to shipping customer-facing agents, and both are PM-owned product qualities. Distinguishing a semantic failure (a confident HTTP-200 that's wrong) from a system failure, and tracking cost/latency at the feature level, tells you where the product is actually breaking and where the budget is draining — turning 'it sometimes fails' into a fixable, measured problem.",
+      "deep_sections": [
+        "Tracing every step, tool call, and intermediate reasoning",
+        "Semantic vs system failures: the confident HTTP-200",
+        "Latency, time-to-first-token, and feature-level cost tracking",
+        "Closing the loop: production trace → regression dataset"
+      ],
+      "sources": [
+        "https://www.langchain.com/state-of-agent-engineering",
+        "https://www.braintrust.dev/articles/agent-observability-complete-guide-2026",
+        "https://www.arthur.ai/column/agentic-ai-observability-playbook-2026"
+      ]
+    }
+  ]
+}

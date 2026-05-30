@@ -1,0 +1,146 @@
+{
+  "moduleId": "prod-m2",
+  "trackId": "product",
+  "title": "Module 2 — Product Discovery",
+  "goal": "De-risk ideas cheaply before expensive engineering time.",
+  "lessons": [
+    {
+      "id": "prod-m2-l1",
+      "order": 1,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Discovery vs. Delivery: Two Tracks, One Team",
+      "summary": "Deciding whether to build something at all (discovery) is a completely different activity from building it well (delivery), and the best teams run both continuously and in parallel — with the same people. Most product failures come not from building badly but from building the wrong thing well.",
+      "metaphor_seed": "Opening a restaurant: delivery is the kitchen running smoothly every night (reliable, repeatable, high quality); discovery is the chef quietly testing tomorrow's specials on a few regulars. The smart restaurant does both at once with the same crew — one that only runs the kitchen serves a stale menu, one that only experiments never feeds anyone.",
+      "case_study_seed": "Spotify's published 'Thoughtful Execution Framework,' which runs discovery (qualitative tests and instrumentation analysis of the sign-up flow) in parallel with delivery rather than guessing at features and shipping blindly.",
+      "pm_angle": "Technical-literacy angle: 'dual-track' does NOT mean a discovery team handing a spec to a delivery team — the lead engineer is in discovery so feasibility is considered from day one. You need enough technical fluency to keep that engineer engaged in the 'should we?' conversation, not just the 'how?'.",
+      "deep_sections": [
+        "What dual-track agile is — and the handoff trap Cagan warns about",
+        "How validated discovery feeds delivery, and usage data feeds back into discovery",
+        "Avoiding both 'ship junk fast' and 'analysis paralysis'"
+      ],
+      "sources": [
+        "https://www.svpg.com/dual-track-agile/",
+        "https://www.productplan.com/glossary/dual-track-agile",
+        "https://spotify.design/article/from-gut-to-plan-the-thoughtful-execution-framework",
+        "https://productschool.com/blog/skills/dual-track-agile"
+      ]
+    },
+    {
+      "id": "prod-m2-l2",
+      "order": 2,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "The Four Big Risks: How Every Idea Can Fail",
+      "summary": "Cagan's four big risks are the canonical checklist for what discovery must address before building: will customers buy/use it (value), can they figure it out (usability), can we build it (feasibility), and does it work for the business (viability). Naming them gives a team a shared language for 'what could make this fail, and have we tested it?'",
+      "metaphor_seed": "Before greenlighting a $200M blockbuster, a studio asks: will anyone buy a ticket (value), will the audience follow the plot (usability), can we film these stunts on budget (feasibility), and does the whole thing make money and fit our brand after marketing and theater cuts (viability). Skipping any one is how studios produce expensive flops.",
+      "case_study_seed": "CB Insights' widely-cited finding that 42% of startups fail from 'no market need' — value risk made concrete. Contrast with the SVPG-style coaching example of an HR-tech team that built AI candidate-ranking for six months before discovering HR managers distrusted the black-box output (a value-and-viability failure).",
+      "pm_angle": "Technical-literacy angle: feasibility risk is tested through engineering spikes and technical prototypes, and the most common imbalance is teams over-indexing on feasibility (engineers love technical spikes) while neglecting value and viability. You need to recognize that pattern and rebalance the team's attention.",
+      "deep_sections": [
+        "Which teammate owns which risk",
+        "Why teams over-test the easy risks (usability) and under-test the dangerous ones (value, viability)",
+        "Matching the test type to the risk"
+      ],
+      "sources": [
+        "https://www.svpg.com/four-big-risks/",
+        "https://roadmap.one/blog/posts/blog6-6-svpg-product-risks/",
+        "https://www.news.aakashg.com/p/how-to-identify-and-validate-product",
+        "https://internetgardener.substack.com/p/the-four-big-product-risks"
+      ]
+    },
+    {
+      "id": "prod-m2-l3",
+      "order": 3,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Continuous Discovery: A Weekly Habit, Not a Phase",
+      "summary": "Discovery is a weekly rhythm of customer contact, not a one-time project kickoff. Teresa Torres's definition: weekly touchpoints with customers, by the team building the product, running small research activities in pursuit of a desired outcome. This habit separates evidence-driven leaders from opinion-driven ones.",
+      "metaphor_seed": "The difference between cramming for one annual medical check-up versus wearing a fitness tracker every day. The annual physical is out of date the moment you leave the clinic; the daily tracker catches small changes early, builds a trend line, and lets you adjust this week — not next year.",
+      "case_study_seed": "Stack Overflow's platform team documented (July 2025) adopting continuous discovery — a steady weekly cadence of customer conversations to shape their platform roadmap — as a deliberate change from sporadic, ad-hoc research.",
+      "pm_angle": "Technical-literacy angle: the weekly loop pairs qualitative interviews with quantitative signal from product instrumentation. Knowing what your analytics can and can't tell you — and how to triangulate a customer story against the usage data — is a semi-technical skill that makes your interviews far sharper.",
+      "deep_sections": [
+        "Story-based interviewing: 'tell me about the last time you...' instead of opinions",
+        "The interview snapshot so learning accumulates instead of being lost",
+        "Research questions vs. the single interview question you actually ask"
+      ],
+      "sources": [
+        "https://www.producttalk.org/story-based-customer-interviews/",
+        "https://www.producttalk.org/interview-snapshot/",
+        "https://stackoverflow.blog/2025/07/23/building-better-platforms-with-continuous-discovery/",
+        "https://productschool.com/blog/product-fundamentals/continuous-discovery"
+      ]
+    },
+    {
+      "id": "prod-m2-l4",
+      "order": 4,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "The Opportunity Solution Tree: Mapping Outcomes to Ideas",
+      "summary": "The opportunity solution tree is Torres's signature visual: a single measurable outcome at the root, customer problems (opportunities) branching beneath it, multiple candidate solutions under each, and small assumption tests under those. It forces you to explore many problems and many solutions before committing — directly countering the PM's habit of falling for the first idea.",
+      "metaphor_seed": "A family tree, but for ideas: at the top sits your one true goal ('more people finish signing up'); branching beneath are the frustrations blocking it ('I don't trust giving my card,' 'the form is too long'); beneath each hang several possible fixes. You don't marry the first idea you meet — you survey the whole family and pick the most promising lineage.",
+      "case_study_seed": "Spotify uses OST-style discovery to drive 'improve user retention and engagement,' branching into opportunities like 'personalize the listening experience' and comparing multiple solutions (better discovery, personalized playlists) rather than shipping one feature on a hunch.",
+      "pm_angle": "Technical-literacy angle: the root of every tree is a metric your team can actually influence and instrument. Choosing a measurable, attributable outcome (vs. a vanity number) requires understanding how the product is instrumented and what counts as a clean signal — and in 2026, AI can help draft and maintain trees, but you must own which opportunities matter.",
+      "deep_sections": [
+        "The four layers: outcome, opportunities, solutions, assumption tests",
+        "Picking which branch to pursue (importance, size, fit to the outcome)",
+        "Keeping the tree a living map, not a one-time deliverable"
+      ],
+      "sources": [
+        "https://www.producttalk.org/opportunity-solution-trees/",
+        "https://amplitude.com/blog/opportunity-solution-tree",
+        "https://blog.logrocket.com/product-management/opportunity-solution-trees-definition-examples-how-to/",
+        "https://www.shortform.com/blog/teresa-torres-opportunity-solution-tree/"
+      ]
+    },
+    {
+      "id": "prod-m2-l5",
+      "order": 5,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Assumption Mapping: Find the One Belief That Could Sink You",
+      "summary": "Every idea rests on hidden beliefs that must be true for it to work. Assumption mapping drags those beliefs into the open and ranks them by importance versus evidence, so you test the one 'leap of faith' that would sink everything — rather than wasting time validating safe, obvious things.",
+      "metaphor_seed": "Before crossing a frozen lake you don't randomly tap the ice everywhere — you find the one spot in the middle where, if the ice is thin, you definitely fall through, and you tap that first. The 2x2 grid asks which beliefs are both load-bearing (you'll fall if wrong) and untested (you haven't tapped them yet).",
+      "case_study_seed": "Airbnb's founders' riskiest assumption was 'strangers will pay to sleep in another stranger's home.' Rather than build a full platform, they tested exactly that belief with a hacked-together site and air mattresses at a 2007 San Francisco design conference, and got three paying guests — validating the one leap of faith everything else depended on.",
+      "pm_angle": "Technical-literacy angle: assumptions span five categories including feasibility ('can we actually build this with our data and tech?') and ethical risk. You need enough technical judgment to spot which feasibility assumptions are genuine leaps of faith versus routine, and to know when an engineering spike is the right test.",
+      "deep_sections": [
+        "The five assumption categories: desirability, viability, feasibility, usability, ethical",
+        "The 2x2 map: importance vs. evidence, and the top-right 'leap of faith' zone",
+        "Riskiest Assumption Test (RAT) vs. MVP"
+      ],
+      "sources": [
+        "https://www.shortform.com/blog/product-discovery-process/",
+        "https://www.productcompass.pm/p/assumption-prioritization-canvas",
+        "https://maven.com/precoil/assumptions-mapping",
+        "https://clutch.co/resources/riskiest-assumption-test-vs-mvp-whats-the-difference"
+      ]
+    },
+    {
+      "id": "prod-m2-l6",
+      "order": 6,
+      "moduleId": "prod-m2",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Cheap Tests: Prototypes, Fake Doors, and Wizard of Oz",
+      "summary": "Once you know your riskiest assumption, the art is finding the cheapest, fastest way to test it without building the real thing. A menu of techniques — fake doors for demand, Wizard of Oz to fake automation with a human, concierge to deliver by hand — lets you generate evidence in days instead of betting months of engineering on a hunch.",
+      "metaphor_seed": "A movie trailer is a fake-door test (release it, watch if audiences get excited before committing to the full push). A chef-run tasting menu is a concierge test (hand-made, high-touch, to learn what diners love). A carnival fortune-teller machine secretly operated by a person is a Wizard of Oz — the customer thinks it's a magic box, but it's a human, proving demand before anyone builds the machine.",
+      "case_study_seed": "Dropbox's 2007-08 explainer-video test: instead of building the hard file-sync engineering first, they posted a short demo to test 'do people even feel this pain?' — the beta waitlist jumped from 5,000 to 75,000 overnight. (Alt: Zappos's Nick Swinmurn photographed shoes in local stores and only bought them after a customer ordered, testing 'will people buy shoes online?' before building any inventory system.)",
+      "pm_angle": "Technical-literacy angle: most of these tests need zero production code, which is exactly where a non-technical PM can be enormously effective. But you must understand the fidelity ladder — from clickable mockup to a real working slice — and which rung answers your specific question without over-investing engineering.",
+      "deep_sections": [
+        "Fake door, Wizard of Oz, concierge, smoke/landing-page tests",
+        "The prototype fidelity ladder",
+        "Matching test type to the specific risk and keeping the cost of being wrong low"
+      ],
+      "sources": [
+        "https://learningloop.io/plays/fake-door-testing",
+        "https://learningloop.io/plays/wizard-of-oz",
+        "https://kromatic.com/blog/concierge-vs-wizard-of-oz-test/",
+        "https://medium.com/@LoganTjm/how-uber-airbnb-dropbox-released-mvps-to-achieve-rapid-growth-d823ac6eaed5"
+      ]
+    }
+  ]
+}

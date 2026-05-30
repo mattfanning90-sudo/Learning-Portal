@@ -1,0 +1,144 @@
+{
+  "moduleId": "prod-m3",
+  "trackId": "product",
+  "title": "Module 3 — Vision, Strategy & Saying No",
+  "goal": "Set direction and make the ruthless trade-offs.",
+  "lessons": [
+    {
+      "id": "prod-m3-l1",
+      "order": 1,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Product Vision: The Inspiring Future You're Creating",
+      "summary": "A vision is a 5-10 year picture of how customers' lives get better, and it's the single most powerful alignment tool a leader has. Without it, every team optimizes locally and the company ships a pile of disconnected features. Vision inspires and recruits; strategy and management execute.",
+      "metaphor_seed": "A product vision is the architect's finished painting of a cathedral pinned up on the construction site. No concrete is poured yet, but every stonemason, electrician, and glazier can look up, see the same spires, and decide for themselves how their piece fits — without the architect standing over each one giving orders.",
+      "case_study_seed": "Amazon's 'Working Backwards': before building Kindle, AWS, and Alexa, teams wrote a fictional press release and FAQ describing the finished product from the customer's point of view, then engineered backward — documented by ex-Amazon execs Colin Bryar and Bill Carr in 'Working Backwards.'",
+      "pm_angle": "Technical-literacy angle: a credible vision is anchored to what enabling technology is about to make possible. To paint a future engineers find believable rather than fantastical, you need a working sense of the tech trajectory — what's near-term feasible versus science fiction.",
+      "deep_sections": [
+        "Vision vs. mission vs. strategy",
+        "Customer-improvement framing vs. company-benefit framing",
+        "Vision as a recruiting and alignment magnet"
+      ],
+      "sources": [
+        "https://www.svpg.com/vision-vs-strategy/",
+        "https://www.svpg.com/product-vision-vs-mission/",
+        "https://www.mindtheproduct.com/product-vision-and-strategy-marty-cagan-on-the-product-experience-part-1-of-2/",
+        "https://workingbackwards.com/concepts/working-backwards-pr-faq-process/"
+      ]
+    },
+    {
+      "id": "prod-m3-l2",
+      "order": 2,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Insight-Driven Strategy: Choosing Which Problems to Solve",
+      "summary": "Strategy is where most companies fail. Its output is not a feature list but a short, prioritized set of the most critical problems to solve to advance the vision — chosen from genuine insights mined from data, customers, enabling technology, and industry change. Insight is what separates great companies from busy ones.",
+      "metaphor_seed": "Strategy is a doctor's diagnosis, not the pharmacy receipt. A weak team hands you a bag of ten medications and hopes something works; a great team runs the tests, finds the one root cause that explains your symptoms (the insight), and treats that — leaving the other nine bottles on the shelf on purpose.",
+      "case_study_seed": "Netflix's data-driven strategy: viewing-completion data drove the decision to greenlight 'House of Cards,' and algorithmic per-member artwork selection was validated through hundreds of randomized A/B tests measuring lifts in click-through and play-starts — insight turned directly into strategic bets.",
+      "pm_angle": "Technical-literacy angle: two of the four insight sources are quantitative data and enabling technology. Mining a real insight from data means understanding A/B testing, statistical confidence, and what your event data actually supports — and spotting which new technical capability has just unlocked a problem worth solving.",
+      "deep_sections": [
+        "The four sources of insight",
+        "Strategy as the link from vision to quarterly team objectives",
+        "10x thinking vs. 10% incremental thinking"
+      ],
+      "sources": [
+        "https://www.svpg.com/product-strategy-insights/",
+        "https://www.svpg.com/changing-how-you-decide-which-problems-to-solve/",
+        "https://blog.surveyheart.com/2025/09/23/netflixs-data-driven-content-strategy-a-case-study-in-customer-centric-innovation/",
+        "https://www.uladshauchenka.com/p/case-study-datadriven-product-strategy"
+      ]
+    },
+    {
+      "id": "prod-m3-l3",
+      "order": 3,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Ruthless Focus: The Power of Saying No",
+      "summary": "Strategy is mostly about what you choose NOT to do. A roadmap stuffed with good ideas guarantees mediocrity everywhere; the highest-leverage act of leadership is deciding what to cut and defending those cuts against disappointed stakeholders. Focus is what lets a few bets get the attention needed to win.",
+      "metaphor_seed": "Focus is a gardener pruning a fruit tree. Cutting off perfectly healthy, blossoming branches feels brutal — but leave them all and the tree spreads its energy thin into hundreds of tiny, sour fruit. Prune to a few branches and you get a smaller number of large, sweet apples. The pruning is the point.",
+      "case_study_seed": "Steve Jobs returning to a near-bankrupt Apple in 1997: he drew a 2x2 grid (Consumer/Pro x Desktop/Portable), killed roughly 70% of the bloated product line, and committed to four products. 'Innovation is saying no to 1,000 things.' That focus underpinned Apple's recovery.",
+      "pm_angle": "Technical-literacy angle: saying no credibly means understanding the engineering opportunity cost — every 'yes' consumes finite team capacity and adds long-term maintenance and complexity (technical debt). Knowing what a feature truly costs to build and keep alive lets you defend cuts with substance, not just instinct.",
+      "deep_sections": [
+        "Why priority is singular by nature — you can't have five top priorities",
+        "Killing projects and sunsetting features as a leadership skill",
+        "Opportunity cost: every yes is a hidden no"
+      ],
+      "sources": [
+        "https://airfocus.com/blog/celebrate-no-and-prioritize-ruthlessly/",
+        "https://www.cnbc.com/2018/10/02/steve-jobs-heres-what-most-people-get-wrong-about-focus.html",
+        "https://fortune.com/2024/10/14/5-priorities-steve-jobs-bob-iger-success-leadership/"
+      ]
+    },
+    {
+      "id": "prod-m3-l4",
+      "order": 4,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "OKRs: Measuring Impact, Not Activity",
+      "summary": "OKRs (Objectives and Key Results) force the question 'did the metric we care about actually move?' An Objective is an inspirational qualitative 'what'; Key Results are the measurable outcomes that prove you got there. In the product model, leaders assign the objective (the problem) and teams propose the key results (the measures) — a dialogue, not a top-down dictation.",
+      "metaphor_seed": "OKRs are a fitness goal, not a gym-attendance log. 'Go to the gym 4 times a week' is an output you can hit all year while staying unhealthy. 'Lower resting heart rate to 60 bpm and run 5km without stopping' is an outcome — it doesn't care how you train, only whether your body actually changed.",
+      "case_study_seed": "John Doerr introducing OKRs to a tiny Google in 1999, carried from Intel where Andy Grove invented them and used 'Operation Crush' to out-compete Motorola. Google has used OKRs ever since to scale from a startup with no business plan — the canonical origin story from Doerr's 'Measure What Matters.'",
+      "pm_angle": "Technical-literacy angle: a good key result is only as trustworthy as the instrumentation behind it. You need to know whether a metric is a leading or lagging indicator, whether it can be cleanly measured, and how to avoid disguising a task list as key results — all of which require understanding how the data is collected.",
+      "deep_sections": [
+        "Objective (inspirational what) vs. key results (measurable how-we'll-know)",
+        "Cascading direction without cascading tasks",
+        "Common failure modes: too many OKRs, task lists in disguise, tying to compensation"
+      ],
+      "sources": [
+        "https://www.whatmatters.com/faqs/outputs-vs-outcome-okr",
+        "https://productschool.com/blog/product-strategy/product-okrs",
+        "https://www.svpg.com/team-objectives-empowerment/",
+        "https://www.betterworks.com/magazine/keys-okr-success-qa-john-doerr"
+      ]
+    },
+    {
+      "id": "prod-m3-l5",
+      "order": 5,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Prioritization Frameworks: Defensible Trade-offs Under Constraints",
+      "summary": "Even after strategy and OKRs, you face more good ideas than capacity. Frameworks like RICE turn subjective 'I feel like we should build X' arguments into structured, comparable scores that align stakeholders. The key is matching the framework to the decision type and treating the number as an input to judgment, not a verdict.",
+      "metaphor_seed": "A prioritization framework is the nutrition label on packaged food. It won't decide dinner for you, but by forcing every option onto the same axes — calories, protein, sugar — it stops you being seduced by the prettiest box and lets you compare a steak and a candy bar honestly.",
+      "case_study_seed": "Intercom created and popularized the RICE scoring model (Reach x Impact x Confidence / Effort) internally to decide roadmap items, then published it — it's since become one of the most widely adopted prioritization methods in product management.",
+      "pm_angle": "Technical-literacy angle: the 'Effort' in RICE is an engineering estimate, and the quality of your whole prioritization depends on it being realistic. You need enough technical literacy to pressure-test effort estimates, understand why they're uncertain, and recognize when a 'small' feature hides large architectural cost.",
+      "deep_sections": [
+        "RICE, ICE, Cost of Delay / WSJF, and the Kano model",
+        "Confidence as an explicit scored variable to fight overconfidence",
+        "Why frameworks inform judgment but don't replace it (garbage in, garbage out)"
+      ],
+      "sources": [
+        "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/",
+        "https://www.productplan.com/glossary/rice-scoring-model",
+        "https://productschool.com/blog/product-fundamentals/ultimate-guide-product-prioritization",
+        "https://www.productleadership.com/blog/product-prioritization-frameworks/"
+      ]
+    },
+    {
+      "id": "prod-m3-l6",
+      "order": 6,
+      "moduleId": "prod-m3",
+      "trackId": "product",
+      "estMinutes": 9,
+      "title": "Roadmaps vs. Outcomes: Planning Honestly for Uncertainty",
+      "summary": "Traditional timeline/Gantt roadmaps are treated as contracts but they're fiction — dates slip, features underperform, markets shift, and broken promises erode trust. The 2026 best practice is the outcome-based Now-Next-Later roadmap, where certainty is high for what you're building now and deliberately fuzzy further out.",
+      "metaphor_seed": "An outcome roadmap is a weather forecast, not a train timetable. Tomorrow's forecast is precise and you plan around it; next week is 'probably rain'; the 10-day outlook is just 'cooler trend.' Demanding day-1 exactness for day 10 is fooling yourself — and a roadmap should be honest about fading certainty.",
+      "case_study_seed": "Intercom popularized the Now-Next-Later roadmap (invented by Janna Bastow, ProdPad co-founder, in 2012), abandoning rigid quarterly Gantt commitments for three confidence-based horizons — now standard across modern product organizations.",
+      "pm_angle": "Technical-literacy angle: the reason far-out dates are fiction is partly that software estimates grow exponentially less reliable with distance and discovery, especially for novel or AI work where you may train a model for weeks only to find accuracy falls short. Understanding why engineering can't promise distant dates lets you set honest expectations.",
+      "deep_sections": [
+        "Now = committed solutions, Next = problems/opportunities, Later = target outcomes",
+        "Why feature/timeline roadmaps are 'false contracts' (Torres)",
+        "Managing the sales-wants-dates vs. product-needs-flexibility tension"
+      ],
+      "sources": [
+        "https://www.producttalk.org/product-roadmaps/",
+        "https://www.aakashg.com/now-next-later-roadmap/",
+        "https://www.hustlebadger.com/what-do-product-teams-do/product-roadmap-examples/"
+      ]
+    }
+  ]
+}

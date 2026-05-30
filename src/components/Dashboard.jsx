@@ -1,0 +1,72 @@
+import { Link } from 'react-router-dom'
+import { atlas } from '../lib/atlas.js'
+import { useProgress } from '../lib/useProgress.js'
+import ProgressRing from './ProgressRing.jsx'
+
+export default function Dashboard() {
+  const progress = useProgress()
+  const completed = progress.getCompleted()
+  const resumeId = progress.getResume()
+  const resume = resumeId ? atlas.getLesson(resumeId) : null
+  const started = Object.keys(completed).length > 0 || !!resume
+  const firstLesson = atlas.firstLesson()
+  const noteCount = Object.keys(progress.allNotes()).length
+
+  // The lesson to surface: continue the resume lesson, or the first braided lesson.
+  const recommend = resume ? (atlas.nextLesson(resume.id) || resume) : firstLesson
+
+  return (
+    <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', padding: '40px 32px 80px' }}>
+      {/* Welcome */}
+      <div style={{ marginBottom: 28, animation: 'fadeUp 0.5s ease both' }}>
+        <div className="label" style={{ color: 'var(--accent)', marginBottom: 8 }}>Welcome to Atlas</div>
+        <h1 className="serif" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: 10, maxWidth: '20ch' }}>
+          Become a great AI engineer and product leader.
+        </h1>
+        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '64ch', lineHeight: 1.65 }}>
+          Two braided tracks, taught in plain English with a metaphor and a real case study in every lesson. No jargon left unexplained — start anywhere and pick up where you left off.
+        </p>
+      </div>
+
+      {/* Continue / start banner */}
+      {recommend && (
+        <div style={{ background: 'var(--hero-grad)', borderRadius: 'var(--radius-lg)', padding: '24px 26px', position: 'relative', overflow: 'hidden', marginBottom: 24 }}>
+          <div aria-hidden style={{ position: 'absolute', right: -30, top: -30, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)', opacity: 0.18 }} />
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+            <div>
+              <div className="label" style={{ color: 'oklch(0.82 0.10 30)', marginBottom: 6 }}>{started ? 'Continue where you left off' : 'Start here'}</div>
+              <div className="serif" style={{ fontSize: '1.3rem', color: '#fff', marginBottom: 4 }}>{recommend.title}</div>
+              <div style={{ fontSize: '0.8rem', color: 'oklch(0.72 0.02 250)' }}>{atlas.getTrack(recommend.trackId)?.title} · ~{recommend.estMinutes || 8} min</div>
+            </div>
+            <Link to={`/lesson/${recommend.id}`} style={{ background: 'var(--accent)', color: '#fff', padding: '13px 26px', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none', flexShrink: 0 }}>
+              {started ? 'Resume →' : 'Begin →'}
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Track cards + notes */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+        {atlas.tracks.map((t) => {
+          const pct = atlas.trackProgress(t.id, completed)
+          const total = t.modules.reduce((s, m) => s + m.lessonIds.length, 0)
+          return (
+            <Link key={t.id} to={`/track/${t.id}`} style={{ textDecoration: 'none', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 20, boxShadow: 'var(--shadow-sm)', display: 'flex', gap: 14, alignItems: 'center' }}>
+              <ProgressRing pct={pct} size={52} stroke={5} />
+              <div style={{ minWidth: 0 }}>
+                <div className="label" style={{ color: t.id === 'engineering' ? 'var(--accent)' : 'var(--blue)', marginBottom: 4 }}>{t.id === 'engineering' ? 'Track 01' : 'Track 02'}</div>
+                <div className="serif" style={{ fontSize: '1.1rem', lineHeight: 1.2 }}>{t.title}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 4 }}>{pct}% · {total} lessons</div>
+              </div>
+            </Link>
+          )
+        })}
+        <Link to="/glossary" style={{ textDecoration: 'none', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 20, boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div className="label" style={{ color: 'var(--text-muted)', marginBottom: 6 }}>Your notes</div>
+          <div className="serif" style={{ fontSize: '1.6rem' }}>{noteCount}</div>
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 2 }}>note{noteCount === 1 ? '' : 's'} · open glossary →</div>
+        </Link>
+      </div>
+    </div>
+  )
+}

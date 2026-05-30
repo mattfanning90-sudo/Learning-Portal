@@ -1,0 +1,147 @@
+{
+  "moduleId": "eng-m2",
+  "trackId": "engineering",
+  "title": "Module 2 — Building Reliable AI Features",
+  "goal": "The five-technique builder’s toolkit for dependable AI features.",
+  "lessons": [
+    {
+      "id": "eng-m2-l1",
+      "order": 1,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Chief of Staff: Prompt Engineering and Context Engineering",
+      "summary": "Most agent failures in 2025–2026 aren't model failures — they're context failures: the model was given the wrong information, too much, or in the wrong order. Prompt engineering is writing one good instruction; context engineering is curating EVERYTHING the model sees at each step. Anthropic now calls it 'effectively the #1 job of engineers building AI agents.'",
+      "metaphor_seed": "The model is a brilliant new consultant with total amnesia who starts every meeting with a blank mind. Prompt engineering is writing them one clear instruction. Context engineering is preparing their entire briefing folder before the meeting: which three documents, in what order, what notes from last time, what tools on the desk. A genius handed a messy 500-page folder performs worse than one handed a tight two-pager. Your job is the great chief-of-staff who prepares that folder.",
+      "case_study_seed": "Anthropic's October 2025 engineering essay 'Effective context engineering for AI agents' codified this industry-wide shift, drawing on how Claude Code and internal agents are built (just-in-time retrieval, compaction, NOTES.md note-taking, sub-agents). It became the reference text practitioners cite for why context engineering replaced prompt engineering as the central skill.",
+      "pm_angle": "This is the single biggest lever on whether a feature feels reliable or flaky — and it costs real money: every wasted token is latency and dollars. When a feature is 'almost good but inconsistent,' the fix is almost always better context, not a smarter model. Knowing that saves you from expensive model-upgrade goose chases.",
+      "deep_sections": [
+        "'The smallest set of high-signal tokens': the core maxim",
+        "Context rot and 'lost in the middle': why more context can hurt",
+        "System-prompt 'altitude' and structuring with sections/tags"
+      ],
+      "sources": [
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "https://neo4j.com/blog/agentic-ai/context-engineering-vs-prompt-engineering/",
+        "https://mem0.ai/blog/context-engineering-ai-agents-guide",
+        "https://www.deepset.ai/blog/context-engineering-the-next-frontier-beyond-prompt-engineering"
+      ]
+    },
+    {
+      "id": "eng-m2-l2",
+      "order": 2,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Open-Book Exam: Retrieval-Augmented Generation (RAG)",
+      "summary": "LLMs only 'know' what they saw in training and will confidently invent facts about your company's documents, prices, or policies. RAG fetches the relevant, current documents at question time and hands them to the model so answers are grounded in real, citable sources. It is the workhorse pattern behind almost every enterprise AI assistant — and retrieval quality usually decides whether it's trustworthy or a liability.",
+      "metaphor_seed": "RAG is an open-book exam instead of a closed-book one. A closed-book LLM answers from fuzzy memory and bluffs when unsure. RAG lets it walk in, look up the exact relevant pages, and answer with the book open, quoting the page. The catch: the answer is only as good as the librarian who fetched the pages. Grab the wrong book and the student confidently gives a wrong answer from the wrong page — which is why retrieval quality and reranking matter so much.",
+      "case_study_seed": "A widely-cited 2025 security finding showed the dark side of poor retrieval hygiene: just FIVE carefully crafted poisoned documents inserted into a knowledge base could manipulate a RAG system's answers about 90% of the time ('RAG poisoning'). A vivid demonstration that WHAT you retrieve is as important as the model you use.",
+      "pm_angle": "RAG is how you ship an AI feature over private or fast-changing data without it making things up — and it's the answer to most 'can the AI know about our stuff?' requests. But a demo RAG and a production RAG are worlds apart; the gap lives in unglamorous details (chunking, reranking, 'no evidence, no answer'). Budget for that gap or your launch becomes a liability.",
+      "deep_sections": [
+        "Chunking, embeddings, and vector search: how documents get found",
+        "Hybrid search and rerankers: getting the BEST evidence on top",
+        "Groundedness, citations, and the 'no evidence, no answer' rule",
+        "Knowledge freshness and Corrective RAG (CRAG)"
+      ],
+      "sources": [
+        "https://arxiv.org/abs/2501.07391",
+        "https://www.edenai.co/post/the-2025-guide-to-retrieval-augmented-generation-rag",
+        "https://medium.com/@meeran03/building-production-ready-rag-systems-best-practices-and-latest-tools-581cae9518e7",
+        "https://www.mdpi.com/2078-2489/17/1/54"
+      ]
+    },
+    {
+      "id": "eng-m2-l3",
+      "order": 3,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Phone and the Buttons: Tool Use, Function Calling, and MCP",
+      "summary": "A pure LLM can only produce text — it can't check the weather, query your database, send an email, or book a flight. Tool use (function calling) lets the model decide to call real software and use the results, turning a text generator into something that takes action. MCP, an open standard from Anthropic now under the Linux Foundation, standardizes how models discover and use tools so you build an integration once, not N×M times.",
+      "metaphor_seed": "The LLM is a smart but housebound office worker who can only write notes. Function calling gives them a phone and labeled buttons: 'call the warehouse', 'look up a customer', 'send the email'. They read the situation, press the right button, read the answer, and continue. MCP is the standard wall socket and plug shape: instead of every tool needing a custom adapter for every model, everyone agrees on one plug — exactly why power outlets (and now MCP) let an ecosystem flourish.",
+      "case_study_seed": "Anthropic launched MCP in November 2024; through 2025 it was adopted by OpenAI and Google, grew to 10,000+ public servers, and at the end of 2025 was donated to the new Agentic AI Foundation under the Linux Foundation (co-founded with Block and OpenAI, backed by AWS, Google, Microsoft, Cloudflare, Bloomberg) — a rare case of fierce competitors standardizing on one protocol, like USB or HTTP.",
+      "pm_angle": "Tools are what turn 'a chatbot' into 'a product that does real work', and they're the foundation of every AI agent in Module 5. The flip side: every tool you grant is a new permission and a new risk surface (Module 7). Tool design — small, distinct, unambiguous tools — is a product decision with direct reliability consequences.",
+      "deep_sections": [
+        "Function calling: how the model asks your code to run something",
+        "MCP and the N×M integration problem",
+        "Good tool design: small, distinct, token-efficient, always-loaded vs discovered"
+      ],
+      "sources": [
+        "https://blog.bytebytego.com/p/connecting-llms-to-the-real-world",
+        "https://www.descope.com/learn/post/mcp",
+        "https://datasciencedojo.com/blog/guide-to-model-context-protocol/",
+        "https://obot.ai/resources/learning-center/mcp-vs-function-calling/"
+      ]
+    },
+    {
+      "id": "eng-m2-l4",
+      "order": 4,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Form With Guide Rails: Structured Output",
+      "summary": "If an LLM's answer feeds into other software (a database, an API, a UI), you need it in a strict, predictable format like JSON — not a chatty paragraph. Naively asking for JSON fails 5–20% of the time with missing fields or extra text, silently breaking downstream code. Reliable structured output is what makes LLMs safe to wire into real systems — but valid format is NOT correct content.",
+      "metaphor_seed": "Imagine hiring someone to fill out a tax form. 'Just write me the answer' gets a rambling letter you can't file. A blank form with labeled boxes (JSON schema) is much better. Constrained decoding is a form with a physical guide rail that won't let the pen leave the box or skip a field — they literally can't fill it out wrong. But the trap: a perfectly completed form can still have the WRONG numbers in the boxes. Correct format does not mean true content.",
+      "case_study_seed": "OpenAI shipped Structured Outputs with strict JSON Schema mode in 2024–2025; a production write-up reported cutting post-processing errors from 32% down to 0.4% after switching to constrained JSON decoding. Gartner predicts 95% of enterprise LLM deployments will use constrained decoding by 2027.",
+      "pm_angle": "Structured output is the 'default contract' between the AI and the rest of your app — it's what lets an AI feature plug into existing systems instead of living in a chat box. The load-bearing lesson for a PM: 'the JSON was valid' is not 'the answer was right', so you still need evals (Module 4) on the content, not just the shape.",
+      "deep_sections": [
+        "Four generations of reliability: asking nicely → function calling → native schema → constrained decoding",
+        "Constrained decoding: making invalid output literally impossible",
+        "Schema design and the syntactic-vs-semantic trap"
+      ],
+      "sources": [
+        "https://tianpan.co/blog/2025-10-29-structured-outputs-llm-production",
+        "https://g360technologies.com/structured-outputs-are-becoming-the-default-contract-for-llm-integrations/",
+        "https://arxiv.org/pdf/2501.10868",
+        "https://rotascale.com/blog/structured-output-isnt-reliable-output/"
+      ]
+    },
+    {
+      "id": "eng-m2-l5",
+      "order": 5,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "The Desk and the Filing Cabinet: Memory Across Turns and Sessions",
+      "summary": "LLMs are stateless — by default they forget everything when a conversation ends, and within a long conversation they run out of room. To build products that feel personal and handle long, multi-step work, you must engineer memory: what to keep, what to summarize, what to store for next time, and what to forget. This separates a goldfish chatbot from an assistant that remembers you.",
+      "metaphor_seed": "The context window is a small desk. Everything you're actively working on must fit; once it's full, papers fall off the edge and are lost. Short-term memory is what's on the desk now. Long-term memory is the filing cabinet behind you — you can't see it directly, so you (or the agent) must deliberately file important things away and pull the right folder back onto the desk when needed. A good assistant keeps a running handover note so even if the desk gets cleared, it rebuilds context in seconds.",
+      "case_study_seed": "Amazon launched Bedrock AgentCore Memory in 2025 as managed infrastructure splitting short-term (in-session) and long-term (cross-session preferences and insights) memory for production agents — a concrete sign that 'memory' graduated from research idea to commercial platform. Startups like Mem0 built their whole product around being the memory layer for AI agents.",
+      "pm_angle": "Customers expect the product to 'remember' them, but memory is engineered, not free — and what you store has privacy, cost, and accuracy consequences. Deciding what to remember, summarize, and forget is a product decision that shapes both the experience and the bill, and it directly enables the long-running agents of Module 5.",
+      "deep_sections": [
+        "Short-term vs long-term memory",
+        "Compaction, structured note-taking (NOTES.md), and just-in-time retrieval",
+        "Forgetting policies and memory-as-tools"
+      ],
+      "sources": [
+        "https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-memory-building-context-aware-agents/",
+        "https://arxiv.org/abs/2601.01885",
+        "https://weaviate.io/blog/context-engineering",
+        "https://mem0.ai/blog/context-engineering-ai-agents-guide"
+      ]
+    },
+    {
+      "id": "eng-m2-l6",
+      "order": 6,
+      "moduleId": "eng-m2",
+      "trackId": "engineering",
+      "estMinutes": 9,
+      "title": "Assembly Line vs Handyman: Multi-Step Chains and Workflows",
+      "summary": "Real tasks rarely finish in one model call — they need multiple steps: plan, retrieve, call a tool, check, revise, repeat. Chaining these steps, and deciding when to follow a fixed script versus let the model loop freely, is how you tackle complex work. But every extra step compounds error and cost, so choosing the simplest architecture that works is one of the most important design calls of 2025–2026.",
+      "metaphor_seed": "A single LLM call is one swing of a hammer. A chain is a fixed recipe — step 1, 2, 3 — like an assembly line: reliable but rigid. An agent is a handyman you send into a house with a toolbox and a goal ('fix the leak'), trusting them to figure out the steps — powerful, but they might wander. The design question is: when do you actually need the flexible handyman versus the predictable assembly line?",
+      "case_study_seed": "June 2025's public clash: Cognition (makers of Devin) published 'Don't Build Multi-Agents', warning that splitting work across agents fractures context, while Anthropic published 'How we built our multi-agent research system' explaining when parallel sub-agents DO win. The lesson is that both essays largely agreed underneath the opposing headlines: architecture is a tradeoff, not a religion.",
+      "pm_angle": "More steps and more agents mean more cost, more latency, and more ways to fail — but also more capability. Knowing that a fixed pipeline is cheaper and more debuggable than a free-roaming agent helps you push back on over-engineering and scope features to the simplest thing that works. This is the conceptual on-ramp to the full agents module.",
+      "deep_sections": [
+        "Chains/pipelines vs agents vs sub-agents",
+        "Error compounding and the cost of every extra step",
+        "The single-vs-multi-agent debate without the ideology"
+      ],
+      "sources": [
+        "https://news.smol.ai/issues/25-06-13-cognition-vs-anthropic",
+        "https://www.philschmid.de/single-vs-multi-agents",
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "https://arxiv.org/pdf/2604.02460"
+      ]
+    }
+  ]
+}
