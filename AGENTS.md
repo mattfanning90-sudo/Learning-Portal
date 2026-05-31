@@ -25,6 +25,9 @@ npm run build    # static bundle in ./dist (chunked: app/vendor/clerk/content)
 npm run preview  # serve the production build (verify with this, not the dev server — see Gotchas)
 npm start        # production server: server/index.js serves ./dist + the /api routes
 npm test         # vitest: unit + content-validation + render smoke (must stay green)
+npm run lint     # eslint (flat config) — 0 errors required
+npm run typecheck# tsc checkJs over the pure logic layer (jsconfig.json)
+npm run format   # prettier
 ```
 
 Progress/notes/quiz/challenge results persist in `localStorage`; with the optional API
@@ -158,6 +161,18 @@ Two hosts, both deploy from the working tree (independent of git):
   (`npm install puppeteer-core --no-save`, executablePath
   `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`) against `npm run preview`.
   This is how the Wandbox runner, the diagram animation, and deploys were verified end-to-end.
+
+## Quality gates & CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs **lint → typecheck → test → build** on every
+push/PR — keep all green. Other guardrails in place:
+- **ESLint** (flat config) + **Prettier**; **JSDoc + `checkJs`** (`jsconfig.json`, types in `src/lib/types.js`).
+- **`<ErrorBoundary>`** (top-level, in `main.jsx`) shows a fallback instead of white-screening on a render error.
+- **Server hardening**: `helmet` headers + `express-rate-limit` on `/api` + a final JSON error handler.
+- **Route code-splitting** (`React.lazy` + Suspense in `App.jsx`).
+- **Accessibility**: WCAG-AA (axe-clean) — contrast tokens, `:focus-visible`, skip-link, `<main>` landmark, ARIA.
+- **Optional observability**: env-gated Sentry + PostHog (`src/lib/observability.js`), off unless configured —
+  turn on via `docs/CHECKLIST-production.md`.
 
 ## Gotchas (these cost real time — read them)
 
