@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
 import './index.css'
 import App from './App.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -16,8 +17,10 @@ const tree = (
 // Without a Clerk key (e.g. local dev), boot the app unauthenticated so nothing breaks.
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {clerkKey
-      ? <ClerkProvider publishableKey={clerkKey} afterSignOutUrl="/">{tree}</ClerkProvider>
-      : tree}
+    <ErrorBoundary>
+      {clerkKey
+        ? <ClerkProvider publishableKey={clerkKey} afterSignOutUrl="/">{tree}</ClerkProvider>
+        : tree}
+    </ErrorBoundary>
   </StrictMode>,
 )
