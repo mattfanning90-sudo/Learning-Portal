@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true,
+    "allowJs": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "strict": false,
+    "types": ["vite/client"]
+  },
+  "//": "checkJs is scoped to the pure logic layer (high value, zero JSX/prop-type noise). Component- and test-level checkJs would need prop typedefs across the UI — a deliberate follow-up.",
+  "include": [
+    "src/lib/curriculum.js",
+    "src/lib/schema.js",
+    "src/lib/mergeProgress.js",
+    "src/lib/checkChallenge.js",
+    "src/lib/diagnoseAttempt.js",
+    "src/lib/runCode.js",
+    "src/lib/sync.js",
+    "src/lib/useProgress.js",
+    "src/lib/types.js"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,5 +1,9 @@
 // Returns an array of human-readable problems; an empty array means the lesson is valid.
 // This is the safety net for mass content authoring: every lesson must pass before commit.
+/**
+ * @param {Partial<import('./types.js').Lesson>} L
+ * @returns {string[]} human-readable problems; empty means valid
+ */
 export function validateLesson(L) {
   const p = []
   const need = ['id', 'trackId', 'moduleId', 'title', 'coreIdea']
