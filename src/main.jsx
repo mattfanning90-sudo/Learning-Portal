@@ -5,6 +5,10 @@ import { ClerkProvider } from '@clerk/clerk-react'
 import './index.css'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import { initObservability } from './lib/observability.js'
+
+// Error tracking + analytics — no-ops unless their env vars are set (see CHECKLIST).
+initObservability()
 
 const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 

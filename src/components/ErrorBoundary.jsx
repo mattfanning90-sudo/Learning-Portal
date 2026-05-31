@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { captureError } from '../lib/observability.js'
 
 /* Top-level guard: if any view throws while rendering, show a calm fallback instead
    of a blank white screen. Progress lives in localStorage, so a reload recovers. */
@@ -10,8 +11,8 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    // Surface for logs / future error tracking (Sentry hook goes here).
     console.error('Atlas render error:', error, info?.componentStack)
+    captureError(error, info?.componentStack) // reports to Sentry when configured
   }
 
   render() {
