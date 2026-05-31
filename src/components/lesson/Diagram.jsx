@@ -65,7 +65,7 @@ export default function Diagram({ diagram, trackId }) {
       tabIndex={stepThrough ? 0 : undefined}
       onKeyDown={onKey}
       aria-label={stepThrough ? `${diagram.title || 'Diagram'} — step-through, use arrow keys` : diagram.title}
-      style={{ margin: '8px 0 18px', outline: 'none' }}
+      style={{ margin: '8px 0 18px' }}
     >
       <div className="label" style={{ color: accent, margin: '8px 0 10px' }}>◆ {diagram.title || 'Diagram'}</div>
       <div

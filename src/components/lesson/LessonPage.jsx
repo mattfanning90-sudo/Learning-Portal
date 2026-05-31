@@ -73,7 +73,7 @@ export default function LessonPage() {
       <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', padding: '32px 32px 80px', display: 'flex', gap: 32, alignItems: 'flex-start' }}>
         <CourseGuide lesson={lesson} />
 
-        <main style={{ flex: 1, minWidth: 0, animation: 'fadeUp 0.5s ease both' }}>
+        <div style={{ flex: 1, minWidth: 0, animation: 'fadeUp 0.5s ease both' }}>
           <div style={{ color: 'var(--accent)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>The core idea</div>
           <h2 className="serif" style={{ fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', lineHeight: 1.22, letterSpacing: '-0.01em', margin: '8px 0 22px' }}>
             <Inline text={lesson.coreIdea} />
@@ -146,7 +146,7 @@ export default function LessonPage() {
               )}
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   )

@@ -21,21 +21,21 @@ export default function Header() {
     <header style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 100 }}>
       <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', padding: '0 32px', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="oklch(0.52 0.19 30)" /><path d="M7 7h4.5a3 3 0 0 1 0 6H7V7z" fill="#fff" opacity="0.9" /><path d="M11 13h.5a2.5 2.5 0 0 1 0 5H7v-5h4z" fill="#fff" opacity="0.6" /></svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect width="22" height="22" rx="6" fill="oklch(0.52 0.19 30)" /><path d="M7 7h4.5a3 3 0 0 1 0 6H7V7z" fill="#fff" opacity="0.9" /><path d="M11 13h.5a2.5 2.5 0 0 1 0 5H7v-5h4z" fill="#fff" opacity="0.6" /></svg>
           <span className="serif" style={{ fontSize: '1.05rem', letterSpacing: '-0.01em' }}>Atlas</span>
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <nav style={{ display: 'flex', gap: 4 }} className="atlas-nav-desktop">
+          <nav aria-label="Main" style={{ display: 'flex', gap: 4 }} className="atlas-nav-desktop">
             {LINKS.map((l) => <NavLink key={l.to} to={l.to} end={l.end} style={linkStyle}>{l.label}</NavLink>)}
           </nav>
           <AuthControls />
-          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" className="atlas-nav-toggle" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.3rem' }}>≡</button>
+          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open} aria-controls="mobile-nav" className="atlas-nav-toggle" style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.3rem' }}>≡</button>
         </div>
       </div>
 
       {open && (
-        <nav className="atlas-nav-mobile" style={{ borderTop: '1px solid var(--border)', padding: '8px 16px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <nav id="mobile-nav" aria-label="Main" className="atlas-nav-mobile" style={{ borderTop: '1px solid var(--border)', padding: '8px 16px', display: 'flex', flexDirection: 'column', gap: 4 }}>
           {LINKS.map((l) => <NavLink key={l.to} to={l.to} end={l.end} onClick={() => setOpen(false)} style={linkStyle}>{l.label}</NavLink>)}
         </nav>
       )}

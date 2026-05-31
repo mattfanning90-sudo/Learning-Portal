@@ -19,17 +19,23 @@ function RouteFallback() {
 export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      {/* Skip link: onClick (not raw href) so HashRouter doesn't treat #main as a route. */}
+      <a href="#main" className="skip-link" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus() }}>
+        Skip to content
+      </a>
       {clerkEnabled && <ProgressSync />}
       <Header />
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/track/:trackId" element={<TrackPage />} />
-          <Route path="/lesson/:lessonId" element={<LessonPage />} />
-          <Route path="/glossary" element={<Glossary />} />
-          <Route path="*" element={<Dashboard />} />
-        </Routes>
-      </Suspense>
+      <main id="main" tabIndex={-1} style={{ outline: 'none' }}>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/track/:trackId" element={<TrackPage />} />
+            <Route path="/lesson/:lessonId" element={<LessonPage />} />
+            <Route path="/glossary" element={<Glossary />} />
+            <Route path="*" element={<Dashboard />} />
+          </Routes>
+        </Suspense>
+      </main>
     </div>
   )
 }
