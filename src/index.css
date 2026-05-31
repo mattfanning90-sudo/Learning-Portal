@@ -80,6 +80,7 @@ a { color: inherit; }
   0%, 100% { box-shadow: 0 4px 16px color-mix(in oklch, var(--pulse, var(--accent)) 14%, transparent); }
   50%      { box-shadow: 0 6px 24px color-mix(in oklch, var(--pulse, var(--accent)) 30%, transparent); }
 }
+.diagram-pulse { animation: diagramPulse 2.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .diagram-pulse { animation: none !important; } }
 
 @media (prefers-reduced-motion: reduce) {

@@ -161,7 +161,6 @@ function Node({ node, active, pulse, accent, compact }) {
           : 'linear-gradient(180deg, var(--surface-raised), var(--surface))',
         transform: active ? 'translateY(-2px)' : 'none',
         boxShadow: active ? `0 4px 16px color-mix(in oklch, ${accent} 16%, transparent)` : 'var(--shadow-sm)',
-        animation: pulse ? 'diagramPulse 2.6s ease-in-out infinite' : undefined,
         transition: `transform .35s ${EASE}, border-color .3s ease, box-shadow .35s ease, background .3s ease`,
       }}
     >
@@ -176,6 +175,10 @@ function Node({ node, active, pulse, accent, compact }) {
 
 function Connector({ horizontal, lit, accent, label }) {
   const color = lit ? accent : 'var(--border)'
+  // Arrowhead: a CSS triangle pointing right (horizontal) or down (vertical).
+  const head = horizontal
+    ? { borderTop: '5px solid transparent', borderBottom: '5px solid transparent', borderLeft: `6px solid ${color}` }
+    : { borderLeft: '5px solid transparent', borderRight: '5px solid transparent', borderTop: `6px solid ${color}` }
   return (
     <div style={{ display: 'flex', flexDirection: horizontal ? 'row' : 'column', alignItems: 'center', justifyContent: 'center', gap: 4, padding: horizontal ? '0 10px' : '8px 0' }}>
       <div style={{ display: 'flex', flexDirection: horizontal ? 'row' : 'column', alignItems: 'center' }}>
@@ -190,14 +193,8 @@ function Connector({ horizontal, lit, accent, label }) {
         <span
           aria-hidden
           style={{
-            width: 0, height: 0, marginTop: horizontal ? 0 : -1, marginLeft: horizontal ? -1 : 0,
-            borderLeft: `${horizontal ? 0 : 5}px solid transparent`,
-            borderRight: `${horizontal ? 0 : 5}px solid transparent`,
-            borderTop: horizontal ? '5px solid transparent' : `6px solid ${color}`,
-            borderBottom: horizontal ? '5px solid transparent' : 0,
-            borderLeftWidth: horizontal ? 6 : undefined,
-            borderLeftColor: horizontal ? color : undefined,
-            borderLeftStyle: horizontal ? 'solid' : undefined,
+            width: 0, height: 0, ...head,
+            marginTop: horizontal ? 0 : -1, marginLeft: horizontal ? -1 : 0,
             opacity: lit ? 1 : 0, transition: `opacity .3s ease ${lit ? '.2s' : '0s'}`,
           }}
         />
@@ -207,12 +204,12 @@ function Connector({ horizontal, lit, accent, label }) {
   )
 }
 
+const baseBtn = { fontFamily: 'inherit', fontWeight: 600, borderRadius: 'var(--radius-sm)' }
 const primaryBtn = (accent) => ({
-  fontFamily: 'inherit', fontSize: '0.8rem', fontWeight: 600, padding: '8px 18px', borderRadius: 'var(--radius-sm)',
-  border: 'none', cursor: 'pointer', background: accent, color: '#fff',
+  ...baseBtn, fontSize: '0.8rem', padding: '8px 18px', border: 'none', cursor: 'pointer', background: accent, color: '#fff',
 })
 const ghostBtn = (disabled) => ({
-  fontFamily: 'inherit', fontSize: '0.95rem', fontWeight: 600, lineHeight: 1, width: 36, height: 34, borderRadius: 'var(--radius-sm)',
+  ...baseBtn, fontSize: '0.95rem', lineHeight: 1, width: 36, height: 34,
   border: '1px solid var(--border)', cursor: disabled ? 'not-allowed' : 'pointer',
   background: 'var(--surface)', color: disabled ? 'var(--text-muted)' : 'var(--text-secondary)', opacity: disabled ? 0.5 : 1,
 })
