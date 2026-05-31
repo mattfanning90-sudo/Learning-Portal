@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { store } from '../../lib/useProgress.js'
 
-/* A personal note per lesson, saved to localStorage (debounced). */
+/* A personal note per lesson, saved to localStorage (debounced).
+   LessonPage remounts this per lesson (keyed on lesson.id), so the initial
+   useState already loads the right note — no reset effect needed. */
 export default function NotesPanel({ lessonId }) {
   const [text, setText] = useState(() => store.getNote(lessonId))
   const [saved, setSaved] = useState(false)
   const timer = useRef(null)
-
-  // Reset when navigating between lessons.
-  useEffect(() => { setText(store.getNote(lessonId)) }, [lessonId])
 
   const onChange = (e) => {
     const v = e.target.value

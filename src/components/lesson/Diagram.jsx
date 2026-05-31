@@ -26,8 +26,7 @@ export default function Diagram({ diagram, trackId }) {
 
   // Auto-advance while playing.
   useEffect(() => {
-    if (!playing) return undefined
-    if (idx >= steps.length - 1) { setPlaying(false); return undefined }
+    if (!playing || idx >= steps.length - 1) return undefined // at the end: stop scheduling (button shows Replay via playing && !atEnd)
     timer.current = setTimeout(() => setIdx((i) => Math.min(i + 1, steps.length - 1)), 1150)
     return () => clearTimeout(timer.current)
   }, [playing, idx, steps.length])
@@ -133,7 +132,7 @@ export default function Diagram({ diagram, trackId }) {
               ))}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              {playing
+              {playing && !atEnd
                 ? <button onClick={pause} style={primaryBtn(accent)} aria-label="Pause">❚❚&nbsp; Pause</button>
                 : <button onClick={play} style={primaryBtn(accent)} aria-label={atEnd ? 'Replay' : 'Play'}>▶&nbsp; {atEnd ? 'Replay' : 'Play'}</button>}
               <button onClick={() => go(-1)} disabled={idx === 0} style={ghostBtn(idx === 0)} aria-label="Previous step">←</button>

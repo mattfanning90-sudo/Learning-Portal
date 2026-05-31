@@ -77,7 +77,7 @@ export default function Dashboard() {
         <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, cursor: 'pointer' }}>
           <span>
             <span style={{ fontSize: '0.92rem', fontWeight: 500, color: 'var(--text-primary)' }}>Require quiz answers before completing a lesson</span>
-            <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2 }}>When on, you must answer a lesson's knowledge check before you can mark it complete.</span>
+            <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2 }}>When on, you must answer a lesson’s knowledge check before you can mark it complete.</span>
           </span>
           <Toggle on={gateOn} onClick={() => progress.setSetting('gateComplete', !gateOn)} />
         </label>

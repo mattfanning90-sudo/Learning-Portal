@@ -1,0 +1,7 @@
+dist
+node_modules
+coverage
+docs/research
+# Generated/large content data — not hand-formatted
+src/content/coding.js
+src/content/cloud.js

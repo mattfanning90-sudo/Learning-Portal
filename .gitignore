@@ -16,3 +16,11 @@ dist/
 
 # Netlify
 .netlify/
+
+# Secrets (also covered by global gitignore — keep here so it is repo-portable)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
