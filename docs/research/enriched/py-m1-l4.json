@@ -1,0 +1,188 @@
+{
+  "id": "py-m1-l4",
+  "trackId": "python",
+  "moduleId": "py-m1",
+  "order": 4,
+  "estMinutes": 12,
+  "title": "Strings: Working with Text",
+  "coreIdea": "Text lives inside quotes, and an f-string lets you drop variables straight into a sentence.",
+  "plainEnglish": [
+    "Any text in code is a string, and it must sit inside quotes.",
+    "You can join strings together with `+`, like `\"Hello, \" + name`.",
+    "Joining gets clumsy fast. An f-string is the cleaner way.",
+    "Put an `f` before the quotes, then write `{name}` to drop a variable right inside the sentence.",
+    "The quotes are just markers — Python strips them off and keeps only the text between them.",
+    "An f-string is evaluated the moment that line runs, so `{ }` always shows the variable's value at that exact point.",
+    "Single quotes `'...'` and double quotes `\"...\"` mean the same thing; pick whichever lets you avoid escaping a quote inside your text."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "An f-string is a fill-in-the-blanks form.",
+      "You write the sentence with a blank: `Hello, {name}!`.",
+      "Python fills the blank with whatever `name` holds."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two ways to build a sentence",
+      "teaser": "gluing with `+` vs. filling with an f-string",
+      "body": [
+        "With `+` you must add the spaces and quotes yourself: `\"Hello, \" + name + \"!\"`.",
+        "An f-string reads like the finished sentence: `f\"Hello, {name}!\"`.",
+        "The `{ }` is a window into the string — whatever is inside gets calculated and slotted in.",
+        "You can even put numbers in: `f\"{name} is {age}\"` works without converting anything."
+      ]
+    },
+    {
+      "title": "Why `+` blows up but f-strings don't",
+      "teaser": "the type rule that catches every beginner",
+      "body": [
+        "The `+` sign means two different things depending on what's on each side.",
+        "Between two numbers, `+` adds: `2 + 2` is `4`.",
+        "Between two strings, `+` glues: `\"2\" + \"2\"` is `\"22\"`.",
+        "But Python refuses to mix the two. `\"Age: \" + 36` raises a `TypeError` — it won't guess whether you meant text or maths.",
+        "With `+` you have to convert the number first: `\"Age: \" + str(36)`.",
+        "An f-string skips that chore. Inside `{ }` Python automatically turns the value into text, so `f\"Age: {36}\"` just works.",
+        "That automatic conversion is why f-strings are the recommended way to mix words and numbers."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "string",
+      "def": "A piece of text, written inside quotation marks."
+    },
+    {
+      "term": "f-string",
+      "def": "A string starting with `f` that lets you insert variables using `{ }`."
+    },
+    {
+      "term": "concatenation",
+      "def": "Joining strings end to end with the `+` sign."
+    },
+    {
+      "term": "TypeError",
+      "def": "Python's complaint when you combine things that don't fit together, like adding a number to a string with `+`."
+    },
+    {
+      "term": "str()",
+      "def": "A built-in tool that turns a value into its text form, so `str(36)` gives the string `\"36\"`."
+    },
+    {
+      "term": "placeholder",
+      "def": "The `{ }` slot inside an f-string that Python replaces with a value when the line runs."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Joining with + — you supply the space yourself",
+      "runnable": true,
+      "source": "first = \"Grace\"\nlast = \"Hopper\"\nprint(first + \" \" + last)"
+    },
+    {
+      "language": "python",
+      "caption": "The same idea with an f-string — cleaner, and numbers work too",
+      "runnable": true,
+      "source": "name = \"Ada\"\nage = 36\nprint(f\"{name} is {age} today.\")"
+    },
+    {
+      "language": "python",
+      "caption": "An f-string can do the maths inside the { } too",
+      "runnable": true,
+      "source": "price = 4\nquantity = 3\nprint(f\"Total: {price * quantity} dollars\")"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Set name = 'Ada', then print: Hello, Ada!",
+    "starter": "",
+    "expectedOutput": "Hello, Ada!",
+    "check": "equals",
+    "hint": "Use an f-string: print(f\"Hello, {name}!\")."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `f\"{name} is {age}\"` produce when `name = \"Ada\"` and `age = 36`?",
+      "options": [
+        { "text": "The literal text {name} is {age}", "correct": false },
+        { "text": "Ada is 36", "correct": true },
+        { "text": "An error, because you can't mix a name and a number", "correct": false }
+      ],
+      "feedback": "Right. The f-string fills each `{ }` with the variable's value, and it turns the number 36 into text for you — so you get 'Ada is 36'."
+    },
+    {
+      "q": "Why does `\"Age: \" + 36` raise an error, while `f\"Age: {36}\"` works fine?",
+      "options": [
+        { "text": "`+` won't glue text to a number, but an f-string converts the number to text automatically", "correct": true },
+        { "text": "f-strings are faster, so Python allows them but blocks `+`", "correct": false },
+        { "text": "The number 36 is too large to add to a string", "correct": false }
+      ],
+      "feedback": "Exactly. `+` refuses to mix a string and a number (a TypeError), so you'd need `str(36)`. Inside an f-string, the `{ }` handles that conversion for you."
+    },
+    {
+      "q": "Which line correctly greets the value stored in `name` using an f-string?",
+      "options": [
+        { "text": "print(\"Hello, {name}!\")", "correct": false },
+        { "text": "print(f\"Hello, {name}!\")", "correct": true },
+        { "text": "print(f\"Hello, name!\")", "correct": false }
+      ],
+      "feedback": "Correct. You need both the `f` before the quotes and the variable inside `{ }`. Without the `f`, Python prints the braces literally; without the braces, it prints the word 'name'."
+    }
+  ],
+  "caseStudy": {
+    "title": "\"Hi Ada, your order shipped\" — emails built from f-strings",
+    "body": [
+      "Companies like Shopify send millions of order and shipping emails that greet you by name.",
+      "Shopify is a Canadian e-commerce platform that powers online stores for millions of businesses worldwide.",
+      "Nobody writes those emails one by one. A single template holds blanks for the customer's name, the order number, and the tracking link.",
+      "When your order ships, the program fills each blank with your details — exactly what an f-string does with `{name}`.",
+      "The same one-template-many-blanks idea is built into Shopify's `Liquid` templating language, where `{{ customer.name }}` plays the role that `{name}` plays in a Python f-string.",
+      "One template plus your data equals a message that reads as if it were written just for you."
+    ],
+    "bridge": "Every personalised message you receive is a string with your name slotted in."
+  },
+  "diagram": {
+    "title": "How an f-string fills the blanks",
+    "direction": "horizontal",
+    "steps": [
+      {
+        "note": "You start with a sentence that has blanks marked by { }.",
+        "nodes": [
+          { "id": "tmpl", "label": "f\"Hello, {name}!\"", "sub": "the template" }
+        ]
+      },
+      {
+        "note": "Python looks up what each variable holds.",
+        "nodes": [
+          { "id": "tmpl2", "label": "f\"Hello, {name}!\"", "sub": "template" },
+          { "id": "var", "label": "name = \"Ada\"", "sub": "the value" }
+        ]
+      },
+      {
+        "note": "It slots the value in and hands back the finished text.",
+        "nodes": [
+          { "id": "out", "label": "Hello, Ada!", "sub": "the result" }
+        ]
+      }
+    ]
+  },
+  "takeaways": [
+    "Text is a string and must sit inside quotes.",
+    "`+` joins strings, but you must add the spaces yourself.",
+    "An f-string (`f\"...\"`) drops variables straight into a sentence with `{ }`.",
+    "`+` won't mix text and numbers, but an f-string converts numbers to text for you."
+  ],
+  "glossaryTerms": [
+    "string",
+    "f-string",
+    "concatenation"
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Formatted string literals",
+      "url": "https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals"
+    }
+  ]
+}

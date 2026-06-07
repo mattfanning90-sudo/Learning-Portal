@@ -1,0 +1,194 @@
+{
+  "id": "py-m1-l2",
+  "trackId": "python",
+  "moduleId": "py-m1",
+  "order": 2,
+  "estMinutes": 11,
+  "title": "Variables: Giving Data a Name",
+  "coreIdea": "A variable is a named box that holds a value so you can reuse it by name.",
+  "plainEnglish": [
+    "A variable is a name you attach to a piece of data.",
+    "You create one with `=`, like `city = \"Paris\"`.",
+    "The name on the left, the value on the right. The `=` means \"store this\".",
+    "After that, typing `city` gives you back `\"Paris\"`. No need to repeat the value.",
+    "Change the box once, and every line that uses the name updates with it.",
+    "Behind the scenes, the value lives somewhere in your computer's memory, and the name is really a label pointing at it.",
+    "So a variable does not copy the data around — it just remembers where to find it.",
+    "Python reads each line top to bottom, so a name only exists after the line that creates it has run."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A variable is a labelled jar on a shelf.",
+      "You write `city` on the label and drop `Paris` inside.",
+      "Later you just ask for the `city` jar — you do not have to remember what is in it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Naming rules — what is allowed",
+      "teaser": "letters, numbers, underscores — and no starting with a digit",
+      "body": [
+        "A name can use letters, numbers, and the underscore `_`.",
+        "It cannot start with a number, and it cannot contain spaces.",
+        "So `top_city` is fine; `2city` and `top city` are not.",
+        "Names are case-sensitive: `City` and `city` are two different boxes."
+      ]
+    },
+    {
+      "title": "You can change what is in the box",
+      "teaser": "a variable can be reassigned at any time",
+      "body": [
+        "Assignment is not permanent. You can point a name at a new value later.",
+        "`city = \"Paris\"` then `city = \"Tokyo\"` leaves `city` holding `\"Tokyo\"`.",
+        "Python simply forgets the old value and remembers the new one."
+      ]
+    },
+    {
+      "title": "The name is a label, not the box itself",
+      "teaser": "why two names can point at the same value",
+      "body": [
+        "In Python, `=` does not pour a copy of the data into a jar.",
+        "It sticks a name-tag onto a value that already lives in memory.",
+        "So `a = \"Paris\"` then `b = a` gives you two tags — `a` and `b` — both pointing at the same `\"Paris\"`.",
+        "This is why naming is cheap: you are moving sticky labels, not hauling data around.",
+        "Reassigning `a = \"Tokyo\"` just peels the `a` tag off `\"Paris\"` and sticks it on `\"Tokyo\"`. The `b` tag does not move, so `b` still reads `\"Paris\"`.",
+        "Use a clear, descriptive name — `unit_price`, not `x` — because the name is the only clue a future reader gets about what the value means."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "variable",
+      "def": "A name that holds a value you can reuse."
+    },
+    {
+      "term": "=",
+      "def": "The assignment sign: store the value on the right under the name on the left."
+    },
+    {
+      "term": "value",
+      "def": "The actual data stored, such as the text `Paris`."
+    },
+    {
+      "term": "assignment",
+      "def": "The act of attaching a name to a value using `=`."
+    },
+    {
+      "term": "reassignment",
+      "def": "Pointing an existing name at a new value, which replaces what it held before."
+    },
+    {
+      "term": "case-sensitive",
+      "def": "Treating upper and lower case as different, so `City` and `city` are separate names."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Store once, use twice — then try changing the value",
+      "runnable": true,
+      "source": "city = \"Paris\"\nprint(city)\nprint(\"I love \" + city)"
+    },
+    {
+      "language": "python",
+      "caption": "Reassign a name and watch the value change",
+      "runnable": true,
+      "source": "city = \"Paris\"\nprint(city)\ncity = \"Tokyo\"\nprint(city)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Create a variable called city holding the text Paris, then print: I love Paris",
+    "starter": "",
+    "expectedOutput": "I love Paris",
+    "check": "equals",
+    "hint": "Set city = \"Paris\", then print it together with the text \"I love \"."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Which of these is a valid Python variable name?",
+      "options": [
+        { "text": "2city", "correct": false },
+        { "text": "top city", "correct": false },
+        { "text": "top_city", "correct": true },
+        { "text": "top-city", "correct": false }
+      ],
+      "feedback": "A name can use letters, numbers, and underscores, but it cannot start with a digit, contain a space, or use a hyphen. Only `top_city` follows all the rules."
+    },
+    {
+      "q": "After running `city = \"Paris\"` and then `city = \"Tokyo\"`, what does `print(city)` show?",
+      "options": [
+        { "text": "Paris", "correct": false },
+        { "text": "Tokyo", "correct": true },
+        { "text": "Paris Tokyo", "correct": false },
+        { "text": "an error", "correct": false }
+      ],
+      "feedback": "Reassignment replaces the old value. Python forgets `\"Paris\"` and remembers `\"Tokyo\"`, so `print(city)` shows Tokyo."
+    },
+    {
+      "q": "Python treats names as case-sensitive. What does that mean for `City` and `city`?",
+      "options": [
+        { "text": "They are the same variable", "correct": false },
+        { "text": "They are two different variables", "correct": true },
+        { "text": "`City` is not allowed", "correct": false },
+        { "text": "Python converts both to lowercase", "correct": false }
+      ],
+      "feedback": "Case-sensitive means upper and lower case count as different. `City` and `city` are two separate boxes that hold their own values."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a shopping cart remembers your total",
+    "body": [
+      "When you add an item on Amazon, the price is stored in a variable like `total`.",
+      "Add another item, and the program updates that same `total` by reassigning it to the new sum.",
+      "The checkout page never recalculates from scratch — it just reads the box.",
+      "Amazon's checkout, built in part on its Java and Python services, leans on exactly this idea: a running total held in a named field, updated as you add or remove items.",
+      "Because the name stays the same while the value changes, the page that displays your total never needs to know how the number got there — it just reads `total` again and shows the latest figure."
+    ],
+    "bridge": "Naming a value once and reusing it is exactly what you did with `city`."
+  },
+  "diagram": {
+    "title": "What happens when you reassign a variable",
+    "direction": "vertical",
+    "steps": [
+      {
+        "note": "You create the name and point it at a value.",
+        "nodes": [
+          { "id": "name1", "label": "city", "sub": "the label" },
+          { "id": "val1", "label": "\"Paris\"", "sub": "the value in memory" }
+        ]
+      },
+      {
+        "note": "Reassigning peels the label off and sticks it on a new value.",
+        "nodes": [
+          { "id": "name2", "label": "city", "sub": "same label" },
+          { "id": "val2", "label": "\"Tokyo\"", "sub": "new value in memory" }
+        ]
+      },
+      {
+        "note": "Now every line that reads the name sees the new value.",
+        "nodes": [
+          { "id": "read", "label": "print(city)", "sub": "reads the label" },
+          { "id": "out", "label": "Tokyo", "sub": "the output" }
+        ]
+      }
+    ]
+  },
+  "takeaways": [
+    "A variable is a name attached to a value.",
+    "Create one with `=`: name on the left, value on the right.",
+    "Reuse the value by typing its name; change the box once and every use updates."
+  ],
+  "glossaryTerms": [
+    "variable",
+    "assignment",
+    "value"
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Variables and assignment",
+      "url": "https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator"
+    }
+  ]
+}

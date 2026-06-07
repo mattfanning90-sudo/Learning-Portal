@@ -6,12 +6,13 @@ export default {
     "trackId": "engineering",
     "moduleId": "eng-m1",
     "order": 1,
-    "estMinutes": 8,
+    "estMinutes": 9,
     "title": "The Improv Actor: Next-Token Prediction",
     "coreIdea": "A language model predicts the next chunk of text — nothing more.",
     "plainEnglish": [
       "An LLM is not a thinking machine or a database of facts. It is a statistical engine that predicts the most likely next piece of text, one chunk at a time, over and over.",
-      "Almost every strength (its fluency) and every flaw (inventing facts, giving different answers to the same question) follows from this single mechanism."
+      "Almost every strength (its fluency) and every flaw (inventing facts, giving different answers to the same question) follows from this single mechanism.",
+      "Those chunks are called tokens, and a token is usually a fragment of a word — not a whole word — which quietly explains some of the model's stranger failures."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -36,6 +37,15 @@ export default {
           "\"Temperature\" is a setting that controls how adventurously the model picks. Low temperature makes it choose the single safest next chunk every time — repetitive but predictable. High temperature lets it take more risks — more creative, but more likely to wander.",
           "This is why you can ask the exact same question twice and get two different answers. It is a feature of how it works, not a malfunction."
         ]
+      },
+      {
+        "title": "Tokens aren't words — and that explains the weird mistakes",
+        "teaser": "why a genius model can miscount the r's in \"strawberry\"",
+        "body": [
+          "The \"chunks\" the model predicts are called `tokens`, and a token is usually a fragment of a word, not a whole word. The text `tokenization` might be split into `token` + `ization`; a single emoji might be several tokens.",
+          "The model never sees raw letters — it sees these pre-chunked pieces. So when you ask \"how many `r`s are in `strawberry`?\", it is reasoning over chunks like `straw` + `berry`, not over the individual letters, and it often miscounts. This is a famous, well-documented failure that frustrated users for years.",
+          "The lesson for a builder: the model's view of text is coarser than yours. Tasks that need exact character-level work — counting letters, reversing strings, strict formatting — are exactly where a confident answer is most likely to be wrong, and where you should reach for a tool instead of trusting the model."
+        ]
       }
     ],
     "pmAngle": {
@@ -47,15 +57,17 @@ export default {
     "caseStudy": {
       "title": "ChatGPT reaches 100 million users in two months",
       "body": [
-        "When ChatGPT launched in November 2022, the model underneath it had been trained on one deceptively simple goal: predict the next chunk of text. Nothing about \"being correct\" or \"telling the truth\" was in that goal.",
-        "It still became the fastest-growing consumer app in history at the time, because predicting text well enough, at a large enough scale, produces something that feels like it understands you."
+        "When ChatGPT launched in November 2022, the model underneath it (a fine-tuned version of GPT-3.5) had been trained on one deceptively simple goal: predict the next chunk of text. Nothing about \"being correct\" or \"telling the truth\" was in that goal.",
+        "It still became the fastest-growing consumer app in history at the time — UBS analysts estimated it hit roughly 100 million monthly users by January 2023, about two months after launch, beating the prior records held by TikTok and Instagram. It got there because predicting text well enough, at a large enough scale, produces something that feels like it understands you.",
+        "The flip side showed up almost immediately. In early 2023 a US lawyer used ChatGPT to draft a court filing and it confidently invented six legal cases that did not exist, citations and all; a federal judge sanctioned the lawyers in June 2023. The same machinery that wowed 100 million people also fabricated case law — because it was only ever predicting plausible text, not verifying it."
       ],
       "bridge": "Next-token prediction at scale produced something that feels like understanding — without ever being designed to be true. Hold onto that gap; the rest of the track is about closing it."
     },
     "takeaways": [
       "Generating fluent text is mostly solved; being correct is a separate, harder problem.",
       "Getting different answers to the same question is expected behaviour, not a bug.",
-      "\"It sounds confident\" tells you nothing about whether it is right."
+      "\"It sounds confident\" tells you nothing about whether it is right.",
+      "The model predicts tokens (word fragments), not letters — so character-level tasks are a known weak spot."
     ],
     "knowledgeCheck": [
       {
@@ -75,6 +87,56 @@ export default {
           }
         ],
         "feedback": "Exactly — it is a plausibility engine. Almost everything else about LLMs follows from that one idea."
+      },
+      {
+        "q": "You ask the model to count the letter \"r\" in \"strawberry\" and it gets it wrong. Why does this happen?",
+        "options": [
+          {
+            "text": "The model is broken and needs to be restarted",
+            "correct": false
+          },
+          {
+            "text": "It predicts tokens (word fragments), not individual letters, so character-level counting is unreliable",
+            "correct": true
+          },
+          {
+            "text": "The word \"strawberry\" was missing from its training data",
+            "correct": false
+          }
+        ],
+        "feedback": "Right — the model reads text as chunks like `straw` + `berry`, never as raw letters, so exact letter-counting is a known weak spot. Use a tool for character-level work."
+      },
+      {
+        "q": "You ask the exact same question twice and get two different answers. What's going on?",
+        "options": [
+          {
+            "text": "Expected behaviour — the model samples from a range of plausible next tokens, and temperature controls how adventurous that pick is",
+            "correct": true
+          },
+          {
+            "text": "A serious bug — a correct model must always give the identical answer",
+            "correct": false
+          },
+          {
+            "text": "The model secretly remembers your last session and is contradicting itself",
+            "correct": false
+          }
+        ],
+        "feedback": "Correct — variation is a feature of how sampling works, not a malfunction. Lowering temperature makes answers more repeatable but never guarantees identical truth."
+      }
+    ],
+    "keyTerms": [
+      {
+        "term": "token",
+        "def": "The unit of text a model actually reads and predicts. A token is usually a fragment of a word (like `straw` or `ization`), not a whole word — the model never sees raw individual letters."
+      },
+      {
+        "term": "temperature",
+        "def": "A setting that controls how adventurously the model picks the next token. Low temperature = safe and repetitive; high temperature = more creative but more prone to wander."
+      },
+      {
+        "term": "inference",
+        "def": "The act of actually running a trained model to generate text in response to your prompt — as opposed to training, which is the earlier, one-time process of building the model."
       }
     ],
     "glossaryTerms": [

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { store } from '../../lib/useProgress.js'
+import { Inline } from './CollapsibleSection.jsx'
 
 /* Dark editorial card matching the hero. One or more questions; instant feedback. */
 export default function KnowledgeCheck({ lessonId, questions }) {
@@ -48,7 +49,7 @@ function Question({ q, lessonId, index, total }) {
         </div>
       )}
       <div className="serif" style={{ fontSize: '1.12rem', color: '#fff', margin: '4px 0 14px', lineHeight: 1.3 }}>
-        {q.q}
+        <Inline text={q.q} />
       </div>
       {q.options.map((o, oi) => {
         const isPicked = picked === oi
@@ -72,7 +73,7 @@ function Question({ q, lessonId, index, total }) {
               color: reveal ? '#fff' : 'oklch(0.85 0.015 250)',
             }}
           >
-            {o.text}
+            <Inline text={o.text} />
             {reveal && <span style={{ float: 'right', color: 'oklch(0.78 0.14 155)' }}>✓</span>}
             {wrongPick && <span style={{ float: 'right', color: 'oklch(0.75 0.16 25)' }}>✗</span>}
           </button>
@@ -86,7 +87,7 @@ function Question({ q, lessonId, index, total }) {
           }}
         >
           {gotIt ? '💡 ' : 'Not quite — '}
-          {q.feedback}
+          <Inline text={q.feedback} />
         </div>
       )}
     </div>

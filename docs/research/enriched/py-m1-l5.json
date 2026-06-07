@@ -1,0 +1,192 @@
+{
+  "id": "py-m1-l5",
+  "trackId": "python",
+  "moduleId": "py-m1",
+  "order": 5,
+  "estMinutes": 11,
+  "title": "Comments and Fixing Your First Errors",
+  "coreIdea": "A `#` writes a note Python ignores, and a Python error tells you exactly where to look.",
+  "plainEnglish": [
+    "A comment is a note for humans. Start the line with `#` and Python skips it.",
+    "Comments explain why your code does something. They never run.",
+    "When code does break, Python does not crash silently — it prints an error.",
+    "The error names the problem and points at the line. It is a clue, not a scolding.",
+    "Python reads your file from top to bottom, one line at a time.",
+    "The moment it hits a line it cannot understand, it stops and prints the error for that line.",
+    "So an error always points at the first thing that went wrong — fix that, and any errors below it may simply vanish."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A comment is a sticky note in the margin of a recipe.",
+      "The cook reads the steps and ignores your notes.",
+      "An error is the cook stopping to say: \"line 1 — I don't know the word `prnt`.\""
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Reading an error message",
+      "teaser": "the last line names the problem",
+      "body": [
+        "Errors look scary, but read the bottom line first.",
+        "A typo like `prnt(\"hi\")` gives: `NameError: name 'prnt' is not defined`.",
+        "Python even adds a hint: `Did you mean: 'print'?`.",
+        "It is telling you a name it does not recognise — almost always a spelling slip. Fix the spelling and run again."
+      ]
+    },
+    {
+      "title": "The two flavours of error: syntax vs. runtime",
+      "teaser": "broken grammar vs. a step that fails",
+      "body": [
+        "Errors come in two kinds, and knowing which one you have tells you where to look.",
+        "A `SyntaxError` means Python could not even read your line as valid Python — like a sentence with no full stop.",
+        "Forgetting the closing quote in `print(\"hi)` is a syntax error: Python catches it before running anything.",
+        "A runtime error is different — the line looked fine, but something went wrong while it ran.",
+        "`NameError` is a runtime error: `print(name)` reads as valid Python, but it only fails once Python looks for `name` and cannot find it.",
+        "Rule of thumb: a `SyntaxError` is a typing slip in the line itself; most other errors mean the line is fine but the world is not what you assumed."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "comment",
+      "def": "A note in code starting with `#`; Python ignores it."
+    },
+    {
+      "term": "error",
+      "def": "A message Python prints when it cannot run a line."
+    },
+    {
+      "term": "NameError",
+      "def": "The error for using a name Python does not recognise — often a typo."
+    },
+    {
+      "term": "SyntaxError",
+      "def": "The error when a line breaks Python's grammar rules, like a missing quote or bracket; Python catches it before running the code."
+    },
+    {
+      "term": "traceback",
+      "def": "The block of text Python prints when an error happens; it lists the file and line so you can trace back to the cause."
+    },
+    {
+      "term": "debugging",
+      "def": "Finding and fixing the cause of an error or wrong result in your code."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "The comment is skipped; only the print runs",
+      "runnable": true,
+      "source": "# This line is a note for humans. Python ignores it.\nprint(\"Comments are skipped.\")"
+    },
+    {
+      "language": "python",
+      "caption": "A comment can sit at the end of a line too — everything after `#` is ignored",
+      "runnable": true,
+      "source": "print(\"Hello\")  # this note explains the line, but never runs"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "The starter code has a typo. Fix it so the program prints: fixed",
+    "starter": "prnt(\"fixed\")",
+    "expectedOutput": "fixed",
+    "check": "equals",
+    "hint": "`prnt` is misspelled — it should be `print`."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does Python do with a line that starts with `#`?",
+      "options": [
+        { "text": "Runs it as code, like any other line", "correct": false },
+        { "text": "Ignores it — it is a comment for humans", "correct": true },
+        { "text": "Prints it to the screen", "correct": false }
+      ],
+      "feedback": "A `#` starts a comment. Python skips the line entirely; it is a note for the people reading the code, not an instruction."
+    },
+    {
+      "q": "You run `prnt(\"hi\")` and see `NameError: name 'prnt' is not defined`. What is the most likely cause?",
+      "options": [
+        { "text": "Your computer is out of memory", "correct": false },
+        { "text": "Python is broken and needs reinstalling", "correct": false },
+        { "text": "A typo — `prnt` should be `print`", "correct": true }
+      ],
+      "feedback": "A `NameError` means Python met a name it does not recognise. Almost always that is a spelling slip — here `prnt` should be `print`."
+    },
+    {
+      "q": "When should you read first in an error message?",
+      "options": [
+        { "text": "The last line — it names the actual problem", "correct": true },
+        { "text": "The first line — the rest is just noise", "correct": false },
+        { "text": "None of it — errors are random and unfixable", "correct": false }
+      ],
+      "feedback": "The bottom line of the traceback names the problem (like `NameError`) and the line it happened on. Start there, then fix the named cause."
+    }
+  ],
+  "diagram": {
+    "title": "How Python reaches an error",
+    "direction": "vertical",
+    "steps": [
+      {
+        "note": "Python reads your file from the top, one line at a time.",
+        "nodes": [
+          { "id": "read", "label": "Read next line", "sub": "top to bottom" }
+        ]
+      },
+      {
+        "note": "It checks: can it understand and run this line?",
+        "nodes": [
+          { "id": "ok", "label": "Line runs", "sub": "move to next line" },
+          { "id": "fail", "label": "Line fails", "sub": "stop here" }
+        ]
+      },
+      {
+        "note": "On failure it prints a traceback — read the last line.",
+        "nodes": [
+          { "id": "trace", "label": "Print error", "sub": "names the problem + line" }
+        ]
+      },
+      {
+        "note": "Fix the named cause, then run again.",
+        "nodes": [
+          { "id": "fix", "label": "Fix the line", "sub": "e.g. correct the spelling" }
+        ]
+      }
+    ]
+  },
+  "caseStudy": {
+    "title": "The bug that cost a spacecraft",
+    "body": [
+      "In 1962, NASA launched Mariner 1, a probe meant to fly past Venus.",
+      "Less than five minutes after lift-off it veered off course, and range safety officers destroyed it over the Atlantic.",
+      "An official NASA review traced the failure in part to a mistake in the guidance equations that had been hand-transcribed into the software.",
+      "A missing notation — famously described as a missing overbar (a line written above a symbol) — meant the code used raw, jittery radar data instead of smoothed values, and the rocket chased the noise.",
+      "There was no error message: the code ran perfectly and did the wrong thing, costing about $18 million in 1962 dollars.",
+      "Modern languages like Python flip this on its head: a typo like `prnt` stops the program and prints a clear `NameError` instead of silently misbehaving.",
+      "The mistake costs you seconds of reading, not a spacecraft."
+    ],
+    "bridge": "Reading the error and fixing the spelling is the everyday skill that catches mistakes early."
+  },
+  "takeaways": [
+    "A `#` starts a comment — a human note Python ignores.",
+    "Errors are clues: read the last line, it names the problem and the place.",
+    "A `NameError` usually means a typo in a name like `print`.",
+    "A `SyntaxError` means the line itself breaks Python's grammar — like a missing quote or bracket.",
+    "Python stops at the first broken line, so fix that one first and re-run."
+  ],
+  "glossaryTerms": [
+    "comment",
+    "error",
+    "name-error",
+    "syntax-error",
+    "traceback",
+    "debugging"
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Errors and Exceptions",
+      "url": "https://docs.python.org/3/tutorial/errors.html"
+    }
+  ]
+}

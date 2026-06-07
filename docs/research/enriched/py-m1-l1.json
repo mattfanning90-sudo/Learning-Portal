@@ -1,0 +1,178 @@
+{
+  "id": "py-m1-l1",
+  "trackId": "python",
+  "moduleId": "py-m1",
+  "order": 1,
+  "estMinutes": 10,
+  "title": "Your First Program: Making Python Speak",
+  "coreIdea": "A program is a list of instructions. `print()` makes Python say something.",
+  "plainEnglish": [
+    "Code is a list of instructions for a computer.",
+    "It runs them one line at a time, top to bottom.",
+    "The first instruction everyone learns is `print()`. It displays a piece of text. Run it, and you have written your first program.",
+    "Behind the scenes, a program called the Python interpreter reads your file one line at a time.",
+    "It translates each line into steps the machine can do, then carries them out immediately.",
+    "Nothing is hidden or magic — the computer only ever does exactly what your lines say, in the exact order you wrote them."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a very literal cook with no common sense.",
+      "You write a recipe. They do exactly what each line says — nothing more.",
+      "`print()` is you telling that cook to call out the name of the dish so the kitchen hears it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the quotation marks matter",
+      "teaser": "quotes tell Python \"this part is just text\"",
+      "body": [
+        "The text inside the quotes is called a string.",
+        "The quotes tell Python: treat this as text to show, not as a command to run.",
+        "Leave the quotes off, and Python tries to run your words as instructions. It does not recognise them, so it stops with an error."
+      ]
+    },
+    {
+      "title": "What actually happens when you press Run",
+      "teaser": "the interpreter reads, translates, then acts — line by line",
+      "body": [
+        "Your code is just text in a file. The computer cannot act on text directly.",
+        "A program called the Python interpreter reads your file from top to bottom.",
+        "For each line, it works out what you meant — this step is called parsing — and then performs the action.",
+        "When it reaches `print(\"Hello\")`, it does two things in order: it evaluates what is inside the brackets, then sends that text to the screen.",
+        "Because it works strictly top to bottom, the order of your lines is the order of the output. Swap two `print()` lines and the output swaps too.",
+        "This is why a single typo stops everything: the interpreter reaches a line it cannot parse, gives up on that line, and reports an error instead of guessing."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "program",
+      "def": "A list of instructions a computer runs in order."
+    },
+    {
+      "term": "print()",
+      "def": "Tells Python to display text on the screen."
+    },
+    {
+      "term": "string",
+      "def": "A piece of text, written inside quotation marks."
+    },
+    {
+      "term": "interpreter",
+      "def": "The program that reads your Python code line by line and carries out each instruction."
+    },
+    {
+      "term": "syntax",
+      "def": "The grammar rules of a language — for example, that strings need quotes and `print` needs round brackets."
+    },
+    {
+      "term": "argument",
+      "def": "The value you put inside the brackets of `print()` — the thing you are asking it to display."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Run this — then change the words and run again",
+      "runnable": true,
+      "source": "print(\"Hello, world!\")\nprint(\"Python is running right here in your browser.\")"
+    },
+    {
+      "language": "python",
+      "caption": "Lines run top to bottom — watch the order of the output",
+      "runnable": true,
+      "source": "print(\"First line\")\nprint(\"Second line\")\nprint(\"Third line\")"
+    }
+  ],
+  "caseStudy": {
+    "title": "\"Hello, world!\" — the line that starts every programmer",
+    "body": [
+      "In 1972, Brian Kernighan wrote a Bell Labs tutorial for the B programming language, and used a tiny program that printed the words \"Hello, world!\".",
+      "He carried it into the 1978 book \"The C Programming Language\", co-written with Dennis Ritchie — the most influential programming book ever published.",
+      "From there it stuck. Today it is the traditional first program in almost every language, from Python to JavaScript to Rust.",
+      "Every engineer at Google, Netflix, or OpenAI started exactly where you just did — one instruction, run in order."
+    ],
+    "bridge": "You took the same first step as every professional developer alive: an instruction, run in order."
+  },
+  "diagram": {
+    "title": "What happens when you run `print(\"Hello, world!\")`",
+    "direction": "vertical",
+    "steps": [
+      {
+        "note": "You write a line of code as plain text.",
+        "nodes": [
+          { "id": "code", "label": "print(\"Hello, world!\")", "sub": "your line of text" }
+        ]
+      },
+      {
+        "note": "The interpreter reads the line and works out what you mean.",
+        "nodes": [
+          { "id": "interp", "label": "Python interpreter", "sub": "reads + parses the line" }
+        ]
+      },
+      {
+        "note": "It evaluates the string inside the brackets, then sends it to the screen.",
+        "nodes": [
+          { "id": "out", "label": "Hello, world!", "sub": "appears in the output" }
+        ]
+      }
+    ]
+  },
+  "takeaways": [
+    "A program runs your instructions top to bottom.",
+    "`print()` displays text; the text goes in quotes.",
+    "Forgetting the quotes is the most common first error — and it is harmless."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In what order does Python run the lines of your program?",
+      "options": [
+        { "text": "Top to bottom, one line at a time", "correct": true },
+        { "text": "Bottom to top", "correct": false },
+        { "text": "In a random order each time", "correct": false },
+        { "text": "All lines at the same instant", "correct": false }
+      ],
+      "feedback": "Python runs strictly top to bottom, one line at a time. The order of your lines is the order of the output."
+    },
+    {
+      "q": "Why does the text inside `print(\"...\")` need quotation marks?",
+      "options": [
+        { "text": "The quotes tell Python to treat it as text to display, not a command to run", "correct": true },
+        { "text": "The quotes make the text appear in bold", "correct": false },
+        { "text": "Quotes are only there for decoration and can be left off", "correct": false },
+        { "text": "Quotes tell Python to run the words as instructions", "correct": false }
+      ],
+      "feedback": "Quotes mark a string — text to show as-is. Without them, Python tries to run your words as commands and stops with an error."
+    },
+    {
+      "q": "What does the Python interpreter do?",
+      "options": [
+        { "text": "Reads your code line by line and carries out each instruction", "correct": true },
+        { "text": "Stores your files in the cloud", "correct": false },
+        { "text": "Designs the look of your web page", "correct": false },
+        { "text": "Translates your code into Spanish", "correct": false }
+      ],
+      "feedback": "The interpreter is the program that reads your Python code from top to bottom and performs each instruction it understands."
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Your turn. Write a program that greets the world.",
+    "starter": "",
+    "expectedOutput": "Hello, world!",
+    "check": "equals",
+    "hint": "Use print(), and put the text inside quotes."
+  },
+  "glossaryTerms": [
+    "program",
+    "print",
+    "string"
+  ],
+  "sources": [
+    {
+      "label": "Python docs — print()",
+      "url": "https://docs.python.org/3/library/functions.html#print"
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "id": "py-m1-l3",
+  "trackId": "python",
+  "moduleId": "py-m1",
+  "order": 3,
+  "estMinutes": 12,
+  "title": "Numbers and Math",
+  "coreIdea": "Python does arithmetic with `+ - * /`, plus `//` for whole division and `%` for the remainder.",
+  "plainEnglish": [
+    "Python is a calculator that never makes a mistake.",
+    "Whole numbers like `42` are integers. Numbers with a dot like `3.75` are decimals.",
+    "Use `+` to add, `-` to subtract, `*` to multiply, `/` to divide.",
+    "`/` always gives a decimal. `//` gives only the whole part, and `%` gives the leftover.",
+    "Python follows the same order of operations you learned in school: it does `*` and `/` before `+` and `-`.",
+    "If you want a different order, wrap the part you want first in round brackets `()`.",
+    "Behind the scenes, an integer and a float are two different types, and mixing them in `/` always produces a float."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of sharing 17 sweets between 5 children.",
+      "`//` tells you each child gets 3.",
+      "`%` tells you 2 sweets are left in the bowl."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why two kinds of division",
+      "teaser": "`/` gives the full answer, `//` and `%` split it in two",
+      "body": [
+        "`17 / 5` is `3.4` — the exact answer, as a decimal.",
+        "`17 // 5` is `3` — how many whole 5s fit inside 17.",
+        "`17 % 5` is `2` — what is left over after taking those out.",
+        "`%` is called modulo. It is how programs check if a number is even: `n % 2` is `0` for even numbers."
+      ]
+    },
+    {
+      "title": "Order of operations and the float trap",
+      "teaser": "Brackets win, and `/` quietly turns whole numbers into decimals",
+      "body": [
+        "Python evaluates `*` and `/` before `+` and `-`, just like maths class.",
+        "So `2 + 3 * 4` is `14`, not `20` — the multiplication happens first.",
+        "Wrap a part in brackets to force it first: `(2 + 3) * 4` is `20`.",
+        "Here is the surprise: `10 / 2` is `5.0`, not `5`. The `/` operator always returns a float, even when the division is exact.",
+        "If you truly want a whole number back, use `//`: `10 // 2` is `5`.",
+        "Floats also can't always be exact. `0.1 + 0.2` prints `0.30000000000000004` because the computer stores decimals in binary, which can't represent every fraction perfectly.",
+        "That tiny error is normal and shared by almost every language — when exact money matters, programmers reach for special tools like Python's `decimal` module instead of plain floats."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "integer",
+      "def": "A whole number, with no decimal point, like `42`."
+    },
+    {
+      "term": "float",
+      "def": "A number with a decimal point, like `3.75`."
+    },
+    {
+      "term": "//",
+      "def": "Whole-number division: the answer without the fractional part."
+    },
+    {
+      "term": "%",
+      "def": "Modulo: the remainder left after dividing."
+    },
+    {
+      "term": "operator",
+      "def": "A symbol that does something to numbers, like `+` for add or `*` for multiply."
+    },
+    {
+      "term": "order of operations",
+      "def": "The fixed rule for which calculation happens first: brackets, then `*` and `/`, then `+` and `-`."
+    },
+    {
+      "term": "type",
+      "def": "The kind of value something is. `7` has type integer; `7.0` has type float. The type decides how Python treats it."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "The four basic operators — notice `/` gives a decimal",
+      "runnable": true,
+      "source": "print(2 + 3)\nprint(10 - 4)\nprint(6 * 7)\nprint(15 / 4)"
+    },
+    {
+      "language": "python",
+      "caption": "Whole division and remainder, side by side",
+      "runnable": true,
+      "source": "print(17 // 5)\nprint(17 % 5)"
+    },
+    {
+      "language": "python",
+      "caption": "Brackets change the answer — Python does `*` before `+`",
+      "runnable": true,
+      "source": "print(2 + 3 * 4)\nprint((2 + 3) * 4)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Print the result of 7 multiplied by 6.",
+    "starter": "",
+    "expectedOutput": "42",
+    "check": "equals",
+    "hint": "Use the `*` operator inside print(), like print(7 * 6)."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `17 % 5` give you?",
+      "options": [
+        { "text": "3 — how many whole 5s fit in 17", "correct": false },
+        { "text": "2 — the remainder left after dividing", "correct": true },
+        { "text": "3.4 — the exact decimal answer", "correct": false }
+      ],
+      "feedback": "Right. `%` is modulo: it hands back what is left over. `17 // 5` would give the 3, and `17 / 5` would give the 3.4."
+    },
+    {
+      "q": "What does Python print for `2 + 3 * 4`?",
+      "options": [
+        { "text": "20, because it reads left to right", "correct": false },
+        { "text": "14, because `*` happens before `+`", "correct": true },
+        { "text": "24, because it multiplies everything", "correct": false }
+      ],
+      "feedback": "Correct. Multiplication runs first, so `3 * 4` is 12, then `2 + 12` is 14. Use brackets like `(2 + 3) * 4` if you want the addition first."
+    },
+    {
+      "q": "What is the result, and its type, of `10 / 2` in Python?",
+      "options": [
+        { "text": "`5`, an integer", "correct": false },
+        { "text": "`5.0`, a float — because `/` always returns a decimal", "correct": true },
+        { "text": "An error, because the division is exact", "correct": false }
+      ],
+      "feedback": "Exactly. The `/` operator always returns a float, even when it divides evenly. Use `//` (here `10 // 2`) if you want the integer `5`."
+    }
+  ],
+  "diagram": {
+    "title": "How Python reads `2 + 3 * 4`",
+    "direction": "vertical",
+    "caption": "Multiplication binds tighter than addition, so it resolves first — left-to-right is not the rule.",
+    "steps": [
+      {
+        "note": "Python starts with the whole expression you typed.",
+        "nodes": [
+          { "id": "expr", "label": "2 + 3 * 4", "sub": "the full expression" }
+        ]
+      },
+      {
+        "note": "It finds the highest-priority operator first: `*` beats `+`.",
+        "nodes": [
+          { "id": "mul", "label": "3 * 4", "sub": "resolved to 12" }
+        ]
+      },
+      {
+        "note": "Now only the addition is left, so it runs that.",
+        "nodes": [
+          { "id": "add", "label": "2 + 12", "sub": "the addition" }
+        ]
+      },
+      {
+        "note": "The final value is 14 — not 20.",
+        "nodes": [
+          { "id": "result", "label": "14", "sub": "the answer", "accent": true }
+        ]
+      }
+    ]
+  },
+  "caseStudy": {
+    "title": "The modulo trick behind a clock",
+    "body": [
+      "A 24-hour clock turns 25 o'clock back into 1 o'clock.",
+      "Computers do this with `25 % 24`, which is `1`.",
+      "The same `%` wraps minutes, schedules events, and rotates colours in games.",
+      "Spotify uses this idea to shuffle and loop a playlist: when the playing index reaches the end of the list, `index % length` snaps it back to the start so the music wraps around to song 1.",
+      "The same trick decides which server handles your request: many systems hash a user id and take it modulo the number of servers, so traffic spreads evenly and always lands on a valid machine."
+    ],
+    "bridge": "The remainder operator you just met powers everything that has to loop back around."
+  },
+  "takeaways": [
+    "`+ - * /` do the everyday arithmetic; `/` always returns a decimal.",
+    "`//` keeps only the whole part of a division.",
+    "`%` returns the remainder — useful for even/odd and wrap-around.",
+    "Python does `*` and `/` before `+` and `-`; use brackets `()` to change the order."
+  ],
+  "glossaryTerms": [
+    "integer",
+    "float",
+    "operator",
+    "modulo"
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Numbers",
+      "url": "https://docs.python.org/3/tutorial/introduction.html#numbers"
+    }
+  ]
+}

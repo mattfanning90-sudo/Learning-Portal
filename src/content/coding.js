@@ -6,13 +6,16 @@ const lessons = {
     "trackId": "python",
     "moduleId": "py-m1",
     "order": 1,
-    "estMinutes": 8,
+    "estMinutes": 10,
     "title": "Your First Program: Making Python Speak",
     "coreIdea": "A program is a list of instructions. `print()` makes Python say something.",
     "plainEnglish": [
       "Code is a list of instructions for a computer.",
       "It runs them one line at a time, top to bottom.",
-      "The first instruction everyone learns is `print()`. It displays a piece of text. Run it, and you have written your first program."
+      "The first instruction everyone learns is `print()`. It displays a piece of text. Run it, and you have written your first program.",
+      "Behind the scenes, a program called the Python interpreter reads your file one line at a time.",
+      "It translates each line into steps the machine can do, then carries them out immediately.",
+      "Nothing is hidden or magic — the computer only ever does exactly what your lines say, in the exact order you wrote them."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -31,6 +34,18 @@ const lessons = {
           "The quotes tell Python: treat this as text to show, not as a command to run.",
           "Leave the quotes off, and Python tries to run your words as instructions. It does not recognise them, so it stops with an error."
         ]
+      },
+      {
+        "title": "What actually happens when you press Run",
+        "teaser": "the interpreter reads, translates, then acts — line by line",
+        "body": [
+          "Your code is just text in a file. The computer cannot act on text directly.",
+          "A program called the Python interpreter reads your file from top to bottom.",
+          "For each line, it works out what you meant — this step is called parsing — and then performs the action.",
+          "When it reaches `print(\"Hello\")`, it does two things in order: it evaluates what is inside the brackets, then sends that text to the screen.",
+          "Because it works strictly top to bottom, the order of your lines is the order of the output. Swap two `print()` lines and the output swaps too.",
+          "This is why a single typo stops everything: the interpreter reaches a line it cannot parse, gives up on that line, and reports an error instead of guessing."
+        ]
       }
     ],
     "keyTerms": [
@@ -45,6 +60,18 @@ const lessons = {
       {
         "term": "string",
         "def": "A piece of text, written inside quotation marks."
+      },
+      {
+        "term": "interpreter",
+        "def": "The program that reads your Python code line by line and carries out each instruction."
+      },
+      {
+        "term": "syntax",
+        "def": "The grammar rules of a language — for example, that strings need quotes and `print` needs round brackets."
+      },
+      {
+        "term": "argument",
+        "def": "The value you put inside the brackets of `print()` — the thing you are asking it to display."
       }
     ],
     "codeExamples": [
@@ -53,14 +80,21 @@ const lessons = {
         "caption": "Run this — then change the words and run again",
         "runnable": true,
         "source": "print(\"Hello, world!\")\nprint(\"Python is running right here in your browser.\")"
+      },
+      {
+        "language": "python",
+        "caption": "Lines run top to bottom — watch the order of the output",
+        "runnable": true,
+        "source": "print(\"First line\")\nprint(\"Second line\")\nprint(\"Third line\")"
       }
     ],
     "caseStudy": {
       "title": "\"Hello, world!\" — the line that starts every programmer",
       "body": [
-        "In 1972, a Bell Labs tutorial taught a new language by printing the words \"Hello, world!\".",
-        "It stuck. Today it is the traditional first program in almost every language.",
-        "Every engineer at Google, Netflix, or OpenAI started exactly where you just did."
+        "In 1972, Brian Kernighan wrote a Bell Labs tutorial for the B programming language, and used a tiny program that printed the words \"Hello, world!\".",
+        "He carried it into the 1978 book \"The C Programming Language\", co-written with Dennis Ritchie — the most influential programming book ever published.",
+        "From there it stuck. Today it is the traditional first program in almost every language, from Python to JavaScript to Rust.",
+        "Every engineer at Google, Netflix, or OpenAI started exactly where you just did — one instruction, run in order."
       ],
       "bridge": "You took the same first step as every professional developer alive: an instruction, run in order."
     },
@@ -68,6 +102,74 @@ const lessons = {
       "A program runs your instructions top to bottom.",
       "`print()` displays text; the text goes in quotes.",
       "Forgetting the quotes is the most common first error — and it is harmless."
+    ],
+    "knowledgeCheck": [
+      {
+        "q": "In what order does Python run the lines of your program?",
+        "options": [
+          {
+            "text": "Top to bottom, one line at a time",
+            "correct": true
+          },
+          {
+            "text": "Bottom to top",
+            "correct": false
+          },
+          {
+            "text": "In a random order each time",
+            "correct": false
+          },
+          {
+            "text": "All lines at the same instant",
+            "correct": false
+          }
+        ],
+        "feedback": "Python runs strictly top to bottom, one line at a time. The order of your lines is the order of the output."
+      },
+      {
+        "q": "Why does the text inside `print(\"...\")` need quotation marks?",
+        "options": [
+          {
+            "text": "The quotes tell Python to treat it as text to display, not a command to run",
+            "correct": true
+          },
+          {
+            "text": "The quotes make the text appear in bold",
+            "correct": false
+          },
+          {
+            "text": "Quotes are only there for decoration and can be left off",
+            "correct": false
+          },
+          {
+            "text": "Quotes tell Python to run the words as instructions",
+            "correct": false
+          }
+        ],
+        "feedback": "Quotes mark a string — text to show as-is. Without them, Python tries to run your words as commands and stops with an error."
+      },
+      {
+        "q": "What does the Python interpreter do?",
+        "options": [
+          {
+            "text": "Reads your code line by line and carries out each instruction",
+            "correct": true
+          },
+          {
+            "text": "Stores your files in the cloud",
+            "correct": false
+          },
+          {
+            "text": "Designs the look of your web page",
+            "correct": false
+          },
+          {
+            "text": "Translates your code into Spanish",
+            "correct": false
+          }
+        ],
+        "feedback": "The interpreter is the program that reads your Python code from top to bottom and performs each instruction it understands."
+      }
     ],
     "challenge": {
       "language": "python",
@@ -94,7 +196,7 @@ const lessons = {
     "trackId": "python",
     "moduleId": "py-m1",
     "order": 2,
-    "estMinutes": 8,
+    "estMinutes": 11,
     "title": "Variables: Giving Data a Name",
     "coreIdea": "A variable is a named box that holds a value so you can reuse it by name.",
     "plainEnglish": [
@@ -102,7 +204,10 @@ const lessons = {
       "You create one with `=`, like `city = \"Paris\"`.",
       "The name on the left, the value on the right. The `=` means \"store this\".",
       "After that, typing `city` gives you back `\"Paris\"`. No need to repeat the value.",
-      "Change the box once, and every line that uses the name updates with it."
+      "Change the box once, and every line that uses the name updates with it.",
+      "Behind the scenes, the value lives somewhere in your computer's memory, and the name is really a label pointing at it.",
+      "So a variable does not copy the data around — it just remembers where to find it.",
+      "Python reads each line top to bottom, so a name only exists after the line that creates it has run."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -131,6 +236,18 @@ const lessons = {
           "`city = \"Paris\"` then `city = \"Tokyo\"` leaves `city` holding `\"Tokyo\"`.",
           "Python simply forgets the old value and remembers the new one."
         ]
+      },
+      {
+        "title": "The name is a label, not the box itself",
+        "teaser": "why two names can point at the same value",
+        "body": [
+          "In Python, `=` does not pour a copy of the data into a jar.",
+          "It sticks a name-tag onto a value that already lives in memory.",
+          "So `a = \"Paris\"` then `b = a` gives you two tags — `a` and `b` — both pointing at the same `\"Paris\"`.",
+          "This is why naming is cheap: you are moving sticky labels, not hauling data around.",
+          "Reassigning `a = \"Tokyo\"` just peels the `a` tag off `\"Paris\"` and sticks it on `\"Tokyo\"`. The `b` tag does not move, so `b` still reads `\"Paris\"`.",
+          "Use a clear, descriptive name — `unit_price`, not `x` — because the name is the only clue a future reader gets about what the value means."
+        ]
       }
     ],
     "keyTerms": [
@@ -145,6 +262,18 @@ const lessons = {
       {
         "term": "value",
         "def": "The actual data stored, such as the text `Paris`."
+      },
+      {
+        "term": "assignment",
+        "def": "The act of attaching a name to a value using `=`."
+      },
+      {
+        "term": "reassignment",
+        "def": "Pointing an existing name at a new value, which replaces what it held before."
+      },
+      {
+        "term": "case-sensitive",
+        "def": "Treating upper and lower case as different, so `City` and `city` are separate names."
       }
     ],
     "codeExamples": [
@@ -153,6 +282,12 @@ const lessons = {
         "caption": "Store once, use twice — then try changing the value",
         "runnable": true,
         "source": "city = \"Paris\"\nprint(city)\nprint(\"I love \" + city)"
+      },
+      {
+        "language": "python",
+        "caption": "Reassign a name and watch the value change",
+        "runnable": true,
+        "source": "city = \"Paris\"\nprint(city)\ncity = \"Tokyo\"\nprint(city)"
       }
     ],
     "challenge": {
@@ -163,12 +298,82 @@ const lessons = {
       "check": "equals",
       "hint": "Set city = \"Paris\", then print it together with the text \"I love \"."
     },
+    "knowledgeCheck": [
+      {
+        "q": "Which of these is a valid Python variable name?",
+        "options": [
+          {
+            "text": "2city",
+            "correct": false
+          },
+          {
+            "text": "top city",
+            "correct": false
+          },
+          {
+            "text": "top_city",
+            "correct": true
+          },
+          {
+            "text": "top-city",
+            "correct": false
+          }
+        ],
+        "feedback": "A name can use letters, numbers, and underscores, but it cannot start with a digit, contain a space, or use a hyphen. Only `top_city` follows all the rules."
+      },
+      {
+        "q": "After running `city = \"Paris\"` and then `city = \"Tokyo\"`, what does `print(city)` show?",
+        "options": [
+          {
+            "text": "Paris",
+            "correct": false
+          },
+          {
+            "text": "Tokyo",
+            "correct": true
+          },
+          {
+            "text": "Paris Tokyo",
+            "correct": false
+          },
+          {
+            "text": "an error",
+            "correct": false
+          }
+        ],
+        "feedback": "Reassignment replaces the old value. Python forgets `\"Paris\"` and remembers `\"Tokyo\"`, so `print(city)` shows Tokyo."
+      },
+      {
+        "q": "Python treats names as case-sensitive. What does that mean for `City` and `city`?",
+        "options": [
+          {
+            "text": "They are the same variable",
+            "correct": false
+          },
+          {
+            "text": "They are two different variables",
+            "correct": true
+          },
+          {
+            "text": "`City` is not allowed",
+            "correct": false
+          },
+          {
+            "text": "Python converts both to lowercase",
+            "correct": false
+          }
+        ],
+        "feedback": "Case-sensitive means upper and lower case count as different. `City` and `city` are two separate boxes that hold their own values."
+      }
+    ],
     "caseStudy": {
       "title": "How a shopping cart remembers your total",
       "body": [
         "When you add an item on Amazon, the price is stored in a variable like `total`.",
-        "Add another item, and the program updates that same `total`.",
-        "The checkout page never recalculates from scratch — it just reads the box."
+        "Add another item, and the program updates that same `total` by reassigning it to the new sum.",
+        "The checkout page never recalculates from scratch — it just reads the box.",
+        "Amazon's checkout, built in part on its Java and Python services, leans on exactly this idea: a running total held in a named field, updated as you add or remove items.",
+        "Because the name stays the same while the value changes, the page that displays your total never needs to know how the number got there — it just reads `total` again and shows the latest figure."
       ],
       "bridge": "Naming a value once and reusing it is exactly what you did with `city`."
     },
@@ -194,14 +399,17 @@ const lessons = {
     "trackId": "python",
     "moduleId": "py-m1",
     "order": 3,
-    "estMinutes": 9,
+    "estMinutes": 12,
     "title": "Numbers and Math",
     "coreIdea": "Python does arithmetic with `+ - * /`, plus `//` for whole division and `%` for the remainder.",
     "plainEnglish": [
       "Python is a calculator that never makes a mistake.",
       "Whole numbers like `42` are integers. Numbers with a dot like `3.75` are decimals.",
       "Use `+` to add, `-` to subtract, `*` to multiply, `/` to divide.",
-      "`/` always gives a decimal. `//` gives only the whole part, and `%` gives the leftover."
+      "`/` always gives a decimal. `//` gives only the whole part, and `%` gives the leftover.",
+      "Python follows the same order of operations you learned in school: it does `*` and `/` before `+` and `-`.",
+      "If you want a different order, wrap the part you want first in round brackets `()`.",
+      "Behind the scenes, an integer and a float are two different types, and mixing them in `/` always produces a float."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -221,6 +429,19 @@ const lessons = {
           "`17 % 5` is `2` — what is left over after taking those out.",
           "`%` is called modulo. It is how programs check if a number is even: `n % 2` is `0` for even numbers."
         ]
+      },
+      {
+        "title": "Order of operations and the float trap",
+        "teaser": "Brackets win, and `/` quietly turns whole numbers into decimals",
+        "body": [
+          "Python evaluates `*` and `/` before `+` and `-`, just like maths class.",
+          "So `2 + 3 * 4` is `14`, not `20` — the multiplication happens first.",
+          "Wrap a part in brackets to force it first: `(2 + 3) * 4` is `20`.",
+          "Here is the surprise: `10 / 2` is `5.0`, not `5`. The `/` operator always returns a float, even when the division is exact.",
+          "If you truly want a whole number back, use `//`: `10 // 2` is `5`.",
+          "Floats also can't always be exact. `0.1 + 0.2` prints `0.30000000000000004` because the computer stores decimals in binary, which can't represent every fraction perfectly.",
+          "That tiny error is normal and shared by almost every language — when exact money matters, programmers reach for special tools like Python's `decimal` module instead of plain floats."
+        ]
       }
     ],
     "keyTerms": [
@@ -239,6 +460,18 @@ const lessons = {
       {
         "term": "%",
         "def": "Modulo: the remainder left after dividing."
+      },
+      {
+        "term": "operator",
+        "def": "A symbol that does something to numbers, like `+` for add or `*` for multiply."
+      },
+      {
+        "term": "order of operations",
+        "def": "The fixed rule for which calculation happens first: brackets, then `*` and `/`, then `+` and `-`."
+      },
+      {
+        "term": "type",
+        "def": "The kind of value something is. `7` has type integer; `7.0` has type float. The type decides how Python treats it."
       }
     ],
     "codeExamples": [
@@ -253,6 +486,12 @@ const lessons = {
         "caption": "Whole division and remainder, side by side",
         "runnable": true,
         "source": "print(17 // 5)\nprint(17 % 5)"
+      },
+      {
+        "language": "python",
+        "caption": "Brackets change the answer — Python does `*` before `+`",
+        "runnable": true,
+        "source": "print(2 + 3 * 4)\nprint((2 + 3) * 4)"
       }
     ],
     "challenge": {
@@ -263,19 +502,78 @@ const lessons = {
       "check": "equals",
       "hint": "Use the `*` operator inside print(), like print(7 * 6)."
     },
+    "knowledgeCheck": [
+      {
+        "q": "What does `17 % 5` give you?",
+        "options": [
+          {
+            "text": "3 — how many whole 5s fit in 17",
+            "correct": false
+          },
+          {
+            "text": "2 — the remainder left after dividing",
+            "correct": true
+          },
+          {
+            "text": "3.4 — the exact decimal answer",
+            "correct": false
+          }
+        ],
+        "feedback": "Right. `%` is modulo: it hands back what is left over. `17 // 5` would give the 3, and `17 / 5` would give the 3.4."
+      },
+      {
+        "q": "What does Python print for `2 + 3 * 4`?",
+        "options": [
+          {
+            "text": "20, because it reads left to right",
+            "correct": false
+          },
+          {
+            "text": "14, because `*` happens before `+`",
+            "correct": true
+          },
+          {
+            "text": "24, because it multiplies everything",
+            "correct": false
+          }
+        ],
+        "feedback": "Correct. Multiplication runs first, so `3 * 4` is 12, then `2 + 12` is 14. Use brackets like `(2 + 3) * 4` if you want the addition first."
+      },
+      {
+        "q": "What is the result, and its type, of `10 / 2` in Python?",
+        "options": [
+          {
+            "text": "`5`, an integer",
+            "correct": false
+          },
+          {
+            "text": "`5.0`, a float — because `/` always returns a decimal",
+            "correct": true
+          },
+          {
+            "text": "An error, because the division is exact",
+            "correct": false
+          }
+        ],
+        "feedback": "Exactly. The `/` operator always returns a float, even when it divides evenly. Use `//` (here `10 // 2`) if you want the integer `5`."
+      }
+    ],
     "caseStudy": {
       "title": "The modulo trick behind a clock",
       "body": [
         "A 24-hour clock turns 25 o'clock back into 1 o'clock.",
         "Computers do this with `25 % 24`, which is `1`.",
-        "The same `%` wraps minutes, schedules events, and rotates colours in games."
+        "The same `%` wraps minutes, schedules events, and rotates colours in games.",
+        "Spotify uses this idea to shuffle and loop a playlist: when the playing index reaches the end of the list, `index % length` snaps it back to the start so the music wraps around to song 1.",
+        "The same trick decides which server handles your request: many systems hash a user id and take it modulo the number of servers, so traffic spreads evenly and always lands on a valid machine."
       ],
       "bridge": "The remainder operator you just met powers everything that has to loop back around."
     },
     "takeaways": [
       "`+ - * /` do the everyday arithmetic; `/` always returns a decimal.",
       "`//` keeps only the whole part of a division.",
-      "`%` returns the remainder — useful for even/odd and wrap-around."
+      "`%` returns the remainder — useful for even/odd and wrap-around.",
+      "Python does `*` and `/` before `+` and `-`; use brackets `()` to change the order."
     ],
     "glossaryTerms": [
       "integer",
@@ -295,14 +593,17 @@ const lessons = {
     "trackId": "python",
     "moduleId": "py-m1",
     "order": 4,
-    "estMinutes": 9,
+    "estMinutes": 12,
     "title": "Strings: Working with Text",
     "coreIdea": "Text lives inside quotes, and an f-string lets you drop variables straight into a sentence.",
     "plainEnglish": [
       "Any text in code is a string, and it must sit inside quotes.",
       "You can join strings together with `+`, like `\"Hello, \" + name`.",
       "Joining gets clumsy fast. An f-string is the cleaner way.",
-      "Put an `f` before the quotes, then write `{name}` to drop a variable right inside the sentence."
+      "Put an `f` before the quotes, then write `{name}` to drop a variable right inside the sentence.",
+      "The quotes are just markers — Python strips them off and keeps only the text between them.",
+      "An f-string is evaluated the moment that line runs, so `{ }` always shows the variable's value at that exact point.",
+      "Single quotes `'...'` and double quotes `\"...\"` mean the same thing; pick whichever lets you avoid escaping a quote inside your text."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -322,6 +623,19 @@ const lessons = {
           "The `{ }` is a window into the string — whatever is inside gets calculated and slotted in.",
           "You can even put numbers in: `f\"{name} is {age}\"` works without converting anything."
         ]
+      },
+      {
+        "title": "Why `+` blows up but f-strings don't",
+        "teaser": "the type rule that catches every beginner",
+        "body": [
+          "The `+` sign means two different things depending on what's on each side.",
+          "Between two numbers, `+` adds: `2 + 2` is `4`.",
+          "Between two strings, `+` glues: `\"2\" + \"2\"` is `\"22\"`.",
+          "But Python refuses to mix the two. `\"Age: \" + 36` raises a `TypeError` — it won't guess whether you meant text or maths.",
+          "With `+` you have to convert the number first: `\"Age: \" + str(36)`.",
+          "An f-string skips that chore. Inside `{ }` Python automatically turns the value into text, so `f\"Age: {36}\"` just works.",
+          "That automatic conversion is why f-strings are the recommended way to mix words and numbers."
+        ]
       }
     ],
     "keyTerms": [
@@ -336,6 +650,18 @@ const lessons = {
       {
         "term": "concatenation",
         "def": "Joining strings end to end with the `+` sign."
+      },
+      {
+        "term": "TypeError",
+        "def": "Python's complaint when you combine things that don't fit together, like adding a number to a string with `+`."
+      },
+      {
+        "term": "str()",
+        "def": "A built-in tool that turns a value into its text form, so `str(36)` gives the string `\"36\"`."
+      },
+      {
+        "term": "placeholder",
+        "def": "The `{ }` slot inside an f-string that Python replaces with a value when the line runs."
       }
     ],
     "codeExamples": [
@@ -350,6 +676,12 @@ const lessons = {
         "caption": "The same idea with an f-string — cleaner, and numbers work too",
         "runnable": true,
         "source": "name = \"Ada\"\nage = 36\nprint(f\"{name} is {age} today.\")"
+      },
+      {
+        "language": "python",
+        "caption": "An f-string can do the maths inside the { } too",
+        "runnable": true,
+        "source": "price = 4\nquantity = 3\nprint(f\"Total: {price * quantity} dollars\")"
       }
     ],
     "challenge": {
@@ -360,19 +692,79 @@ const lessons = {
       "check": "equals",
       "hint": "Use an f-string: print(f\"Hello, {name}!\")."
     },
+    "knowledgeCheck": [
+      {
+        "q": "What does `f\"{name} is {age}\"` produce when `name = \"Ada\"` and `age = 36`?",
+        "options": [
+          {
+            "text": "The literal text {name} is {age}",
+            "correct": false
+          },
+          {
+            "text": "Ada is 36",
+            "correct": true
+          },
+          {
+            "text": "An error, because you can't mix a name and a number",
+            "correct": false
+          }
+        ],
+        "feedback": "Right. The f-string fills each `{ }` with the variable's value, and it turns the number 36 into text for you — so you get 'Ada is 36'."
+      },
+      {
+        "q": "Why does `\"Age: \" + 36` raise an error, while `f\"Age: {36}\"` works fine?",
+        "options": [
+          {
+            "text": "`+` won't glue text to a number, but an f-string converts the number to text automatically",
+            "correct": true
+          },
+          {
+            "text": "f-strings are faster, so Python allows them but blocks `+`",
+            "correct": false
+          },
+          {
+            "text": "The number 36 is too large to add to a string",
+            "correct": false
+          }
+        ],
+        "feedback": "Exactly. `+` refuses to mix a string and a number (a TypeError), so you'd need `str(36)`. Inside an f-string, the `{ }` handles that conversion for you."
+      },
+      {
+        "q": "Which line correctly greets the value stored in `name` using an f-string?",
+        "options": [
+          {
+            "text": "print(\"Hello, {name}!\")",
+            "correct": false
+          },
+          {
+            "text": "print(f\"Hello, {name}!\")",
+            "correct": true
+          },
+          {
+            "text": "print(f\"Hello, name!\")",
+            "correct": false
+          }
+        ],
+        "feedback": "Correct. You need both the `f` before the quotes and the variable inside `{ }`. Without the `f`, Python prints the braces literally; without the braces, it prints the word 'name'."
+      }
+    ],
     "caseStudy": {
       "title": "\"Hi Ada, your order shipped\" — emails built from f-strings",
       "body": [
-        "Companies like Shopify send millions of emails that greet you by name.",
-        "Nobody writes them one by one. A template holds a blank for the customer's name.",
-        "The program fills that blank — exactly what an f-string does with `{name}`."
+        "Companies like Shopify send millions of order and shipping emails that greet you by name.",
+        "Shopify is a Canadian e-commerce platform that powers online stores for millions of businesses worldwide.",
+        "Nobody writes those emails one by one. A single template holds blanks for the customer's name, the order number, and the tracking link.",
+        "When your order ships, the program fills each blank with your details — exactly what an f-string does with `{name}`.",
+        "The same one-template-many-blanks idea is built into Shopify's `Liquid` templating language, where `{{ customer.name }}` plays the role that `{name}` plays in a Python f-string.",
+        "One template plus your data equals a message that reads as if it were written just for you."
       ],
       "bridge": "Every personalised message you receive is a string with your name slotted in."
     },
     "takeaways": [
       "Text is a string and must sit inside quotes.",
       "`+` joins strings, but you must add the spaces yourself.",
-      "An f-string (`f\"...\"`) drops variables straight into a sentence with `{ }`."
+      "An f-string (`f\"...\"`) drops variables straight into a sentence with `{ }`.",
+      "`+` won't mix text and numbers, but an f-string converts numbers to text for you."
     ],
     "glossaryTerms": [
       "string",
@@ -391,14 +783,17 @@ const lessons = {
     "trackId": "python",
     "moduleId": "py-m1",
     "order": 5,
-    "estMinutes": 8,
+    "estMinutes": 11,
     "title": "Comments and Fixing Your First Errors",
     "coreIdea": "A `#` writes a note Python ignores, and a Python error tells you exactly where to look.",
     "plainEnglish": [
       "A comment is a note for humans. Start the line with `#` and Python skips it.",
       "Comments explain why your code does something. They never run.",
       "When code does break, Python does not crash silently — it prints an error.",
-      "The error names the problem and points at the line. It is a clue, not a scolding."
+      "The error names the problem and points at the line. It is a clue, not a scolding.",
+      "Python reads your file from top to bottom, one line at a time.",
+      "The moment it hits a line it cannot understand, it stops and prints the error for that line.",
+      "So an error always points at the first thing that went wrong — fix that, and any errors below it may simply vanish."
     ],
     "metaphor": {
       "title": "🧭 Think of it like…",
@@ -418,6 +813,18 @@ const lessons = {
           "Python even adds a hint: `Did you mean: 'print'?`.",
           "It is telling you a name it does not recognise — almost always a spelling slip. Fix the spelling and run again."
         ]
+      },
+      {
+        "title": "The two flavours of error: syntax vs. runtime",
+        "teaser": "broken grammar vs. a step that fails",
+        "body": [
+          "Errors come in two kinds, and knowing which one you have tells you where to look.",
+          "A `SyntaxError` means Python could not even read your line as valid Python — like a sentence with no full stop.",
+          "Forgetting the closing quote in `print(\"hi)` is a syntax error: Python catches it before running anything.",
+          "A runtime error is different — the line looked fine, but something went wrong while it ran.",
+          "`NameError` is a runtime error: `print(name)` reads as valid Python, but it only fails once Python looks for `name` and cannot find it.",
+          "Rule of thumb: a `SyntaxError` is a typing slip in the line itself; most other errors mean the line is fine but the world is not what you assumed."
+        ]
       }
     ],
     "keyTerms": [
@@ -432,6 +839,18 @@ const lessons = {
       {
         "term": "NameError",
         "def": "The error for using a name Python does not recognise — often a typo."
+      },
+      {
+        "term": "SyntaxError",
+        "def": "The error when a line breaks Python's grammar rules, like a missing quote or bracket; Python catches it before running the code."
+      },
+      {
+        "term": "traceback",
+        "def": "The block of text Python prints when an error happens; it lists the file and line so you can trace back to the cause."
+      },
+      {
+        "term": "debugging",
+        "def": "Finding and fixing the cause of an error or wrong result in your code."
       }
     ],
     "codeExamples": [
@@ -440,6 +859,12 @@ const lessons = {
         "caption": "The comment is skipped; only the print runs",
         "runnable": true,
         "source": "# This line is a note for humans. Python ignores it.\nprint(\"Comments are skipped.\")"
+      },
+      {
+        "language": "python",
+        "caption": "A comment can sit at the end of a line too — everything after `#` is ignored",
+        "runnable": true,
+        "source": "print(\"Hello\")  # this note explains the line, but never runs"
       }
     ],
     "challenge": {
@@ -450,19 +875,81 @@ const lessons = {
       "check": "equals",
       "hint": "`prnt` is misspelled — it should be `print`."
     },
+    "knowledgeCheck": [
+      {
+        "q": "What does Python do with a line that starts with `#`?",
+        "options": [
+          {
+            "text": "Runs it as code, like any other line",
+            "correct": false
+          },
+          {
+            "text": "Ignores it — it is a comment for humans",
+            "correct": true
+          },
+          {
+            "text": "Prints it to the screen",
+            "correct": false
+          }
+        ],
+        "feedback": "A `#` starts a comment. Python skips the line entirely; it is a note for the people reading the code, not an instruction."
+      },
+      {
+        "q": "You run `prnt(\"hi\")` and see `NameError: name 'prnt' is not defined`. What is the most likely cause?",
+        "options": [
+          {
+            "text": "Your computer is out of memory",
+            "correct": false
+          },
+          {
+            "text": "Python is broken and needs reinstalling",
+            "correct": false
+          },
+          {
+            "text": "A typo — `prnt` should be `print`",
+            "correct": true
+          }
+        ],
+        "feedback": "A `NameError` means Python met a name it does not recognise. Almost always that is a spelling slip — here `prnt` should be `print`."
+      },
+      {
+        "q": "When should you read first in an error message?",
+        "options": [
+          {
+            "text": "The last line — it names the actual problem",
+            "correct": true
+          },
+          {
+            "text": "The first line — the rest is just noise",
+            "correct": false
+          },
+          {
+            "text": "None of it — errors are random and unfixable",
+            "correct": false
+          }
+        ],
+        "feedback": "The bottom line of the traceback names the problem (like `NameError`) and the line it happened on. Start there, then fix the named cause."
+      }
+    ],
     "caseStudy": {
       "title": "The bug that cost a spacecraft",
       "body": [
-        "In 1962, NASA's Mariner 1 was lost partly to a single wrong character in its guidance code.",
-        "A tiny typo, no error message — and a rocket veered off course.",
-        "Modern languages like Python print a clear error instead, so a typo costs you seconds, not millions."
+        "In 1962, NASA launched Mariner 1, a probe meant to fly past Venus.",
+        "Less than five minutes after lift-off it veered off course, and range safety officers destroyed it over the Atlantic.",
+        "An official NASA review traced the failure in part to a mistake in the guidance equations that had been hand-transcribed into the software.",
+        "A missing notation — famously described as a missing overbar (a line written above a symbol) — meant the code used raw, jittery radar data instead of smoothed values, and the rocket chased the noise.",
+        "There was no error message: the code ran perfectly and did the wrong thing, costing about $18 million in 1962 dollars.",
+        "Modern languages like Python flip this on its head: a typo like `prnt` stops the program and prints a clear `NameError` instead of silently misbehaving.",
+        "The mistake costs you seconds of reading, not a spacecraft."
       ],
       "bridge": "Reading the error and fixing the spelling is the everyday skill that catches mistakes early."
     },
     "takeaways": [
       "A `#` starts a comment — a human note Python ignores.",
       "Errors are clues: read the last line, it names the problem and the place.",
-      "A `NameError` usually means a typo in a name like `print`."
+      "A `NameError` usually means a typo in a name like `print`.",
+      "A `SyntaxError` means the line itself breaks Python's grammar — like a missing quote or bracket.",
+      "Python stops at the first broken line, so fix that one first and re-run."
     ],
     "glossaryTerms": [
       "comment",
