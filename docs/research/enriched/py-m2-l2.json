@@ -1,0 +1,190 @@
+{
+  "id": "py-m2-l2",
+  "trackId": "python",
+  "moduleId": "py-m2",
+  "order": 2,
+  "estMinutes": 12,
+  "title": "if and else",
+  "coreIdea": "`if` runs code only when a condition is `True`; `else` covers every other case.",
+  "plainEnglish": [
+    "So far your code ran every line, top to bottom, no matter what.",
+    "`if` lets you guard a block: it runs only when a condition is `True`.",
+    "`else` is the fallback — it runs when the condition is `False`.",
+    "You write a question after `if`, end the line with a colon, then indent the code that depends on it.",
+    "That indent is how Python knows which lines belong to the `if`.",
+    "Under the hood, Python first works out the condition into a single yes-or-no value — `True` or `False`.",
+    "Then it picks exactly one path: the `if` block runs, or the `else` block runs, never both.",
+    "After the chosen block finishes, Python carries on with the un-indented lines below as normal."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a bouncer at a door checking IDs.",
+      "`if` you are old enough, you go in.",
+      "`else`, you are turned away. One door, two outcomes."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The colon and the indent",
+      "teaser": "Python uses spacing, not brackets",
+      "body": [
+        "The `if` line ends in a colon `:`. That colon means \"here comes a block\".",
+        "The lines inside the block are indented — usually four spaces.",
+        "Python reads the indent to know which lines run only when the condition is true.",
+        "When the indent stops, the block is over."
+      ]
+    },
+    {
+      "title": "Why is the condition just True or False?",
+      "teaser": "The hidden yes/no behind every if",
+      "body": [
+        "Before Python decides anything, it boils your condition down to one value.",
+        "That value is always a `boolean` — either `True` or `False`, nothing in between.",
+        "So `temperature > 25` is not really a question to Python; it is a calculation that returns `True` or `False`.",
+        "You can see this for yourself: type `print(10 > 3)` and Python prints `True`.",
+        "A common pitfall is mixing up `=` and `==` inside a condition.",
+        "A single `=` means \"assign this value\" — it stores something in a variable.",
+        "A double `==` means \"are these equal?\" — that is the comparison you want in an `if`.",
+        "Writing `if age = 18:` is a mistake; Python raises a `SyntaxError`. You almost always meant `if age == 18:`.",
+        "Another quiet trap: order matters. `>=` means \"greater than or equal to\", but `=>` is not valid Python at all."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "if",
+      "def": "Runs the indented code only when its condition is `True`."
+    },
+    {
+      "term": "else",
+      "def": "Runs when the `if` condition was `False` — the catch-all alternative."
+    },
+    {
+      "term": "condition",
+      "def": "The yes-or-no question after `if` that decides whether the block runs."
+    },
+    {
+      "term": "indent",
+      "def": "The leading spaces that mark which lines belong to a block."
+    },
+    {
+      "term": "boolean",
+      "def": "A value that is either `True` or `False` — the result a condition turns into."
+    },
+    {
+      "term": "comparison operator",
+      "def": "A symbol like `>`, `>=`, or `==` that compares two values and gives back `True` or `False`."
+    },
+    {
+      "term": "==",
+      "def": "Asks \"are these two values equal?\". Different from `=`, which stores a value in a variable."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Change the temperature and watch the message switch",
+      "runnable": true,
+      "source": "temperature = 30\nif temperature > 25:\n    print(\"It is hot\")\nelse:\n    print(\"It is mild\")"
+    },
+    {
+      "language": "python",
+      "caption": "A condition is just a value: see the True for yourself",
+      "runnable": true,
+      "source": "age = 20\nprint(age >= 18)\nif age >= 18:\n    print(\"adult\")"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Set age = 20. If age is 18 or more print adult, otherwise print minor.",
+    "starter": "",
+    "expectedOutput": "adult",
+    "check": "equals",
+    "hint": "Use `if age >= 18:` then an `else:`. Indent each `print` four spaces."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does Python work out the condition into before it decides which block to run?",
+      "options": [
+        {
+          "text": "A single boolean — either `True` or `False`",
+          "correct": true
+        },
+        {
+          "text": "The text of the condition, printed to the screen",
+          "correct": false
+        },
+        {
+          "text": "Both blocks at once, then it merges them",
+          "correct": false
+        }
+      ],
+      "feedback": "Python evaluates the condition down to one boolean value, `True` or `False`. Then it runs exactly one path: the `if` block or the `else` block, never both."
+    },
+    {
+      "q": "You write `if age = 18:` and Python refuses to run. Why?",
+      "options": [
+        {
+          "text": "A single `=` assigns a value; a condition needs `==` to compare. This is a `SyntaxError`.",
+          "correct": true
+        },
+        {
+          "text": "`18` is too small a number to compare against",
+          "correct": false
+        },
+        {
+          "text": "`if` cannot be used with the variable `age`",
+          "correct": false
+        }
+      ],
+      "feedback": "`=` means \"store this value\", while `==` means \"are these equal?\". Inside an `if` you want the comparison, so write `if age == 18:`."
+    },
+    {
+      "q": "In an `if` / `else`, what tells Python which lines belong inside each block?",
+      "options": [
+        {
+          "text": "The indent — the leading spaces under the colon",
+          "correct": true
+        },
+        {
+          "text": "Curly brackets `{ }` around the lines",
+          "correct": false
+        },
+        {
+          "text": "A semicolon `;` at the end of every line",
+          "correct": false
+        }
+      ],
+      "feedback": "Python has no brackets here. The colon opens the block and the indent marks which lines are inside it. When the indent stops, the block is over."
+    }
+  ],
+  "caseStudy": {
+    "title": "How Netflix decides what to autoplay next",
+    "body": [
+      "When an episode ends, Netflix checks a setting before doing anything: is autoplay of the next episode switched on for this profile?",
+      "`if` that setting is on, the player loads the next episode and starts a short countdown so you can cancel.",
+      "`else`, it stops and shows a post-play screen — including the \"Are you still watching?\" prompt that appears after several episodes in a row.",
+      "Netflix added a profile setting in 2020 letting people turn autoplay off, after viewers complained it played episodes without asking.",
+      "So the same `if` / `else` fork is wired directly to a real toggle a user controls — one boolean deciding one of two outcomes."
+    ],
+    "bridge": "A single `if` / `else` is the fork in the road behind countless everyday app decisions."
+  },
+  "takeaways": [
+    "`if` runs a block only when its condition is `True`.",
+    "`else` handles the `False` case.",
+    "The colon and the indent tell Python which lines belong together.",
+    "A condition always becomes a single boolean — `True` or `False` — before Python picks a path.",
+    "Use `==` to compare; `=` only stores a value."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — if statements",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#if-statements"
+    },
+    {
+      "label": "Python docs — comparisons",
+      "url": "https://docs.python.org/3/library/stdtypes.html#comparisons"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "id": "py-m3-l4",
+  "trackId": "python",
+  "moduleId": "py-m3",
+  "order": 4,
+  "estMinutes": 12,
+  "title": "break and continue",
+  "coreIdea": "`break` stops a loop early; `continue` skips the rest of one pass and jumps to the next.",
+  "plainEnglish": [
+    "Sometimes you do not want a loop to run all the way through.",
+    "`break` ends the loop immediately — Python leaves it and moves on.",
+    "`continue` is gentler: it skips the rest of this one pass, then keeps looping.",
+    "Both are used inside an `if`, so they only fire when a condition is met.",
+    "Under the hood, a `for` loop pulls one value at a time from a source like `range(1, 6)`.",
+    "`continue` jumps straight back to that 'pull the next value' step, skipping any code below it in the loop.",
+    "`break` throws the whole pulling process away — Python stops asking for the next value at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Reading a list of names out loud.",
+      "`break` is finding the name you wanted and stopping — done, walk away.",
+      "`continue` is skipping a name you don't care about, then reading on."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "break leaves; continue skips",
+      "teaser": "one ends the loop, one ends just this pass",
+      "body": [
+        "When Python hits `break`, the whole loop is over. Nothing after it in the loop runs.",
+        "When Python hits `continue`, only the current pass is cut short. The loop starts its next pass right away.",
+        "Both live inside an `if`, so they trigger only on the case you choose — like 'stop when you reach 5'.",
+        "Reach for `break` to quit early once you've found what you need. Reach for `continue` to ignore some items but keep going."
+      ]
+    },
+    {
+      "title": "The pitfall: continue can skip the line that ends the loop",
+      "teaser": "why a continue inside a while loop sometimes hangs forever",
+      "body": [
+        "`continue` does not just skip one print line — it skips *every* line below it in the loop body for that pass.",
+        "In a `for` loop this is usually safe, because the `for` automatically grabs the next value for you.",
+        "But a `while` loop is different: it keeps going as long as its condition is `True`, and *you* have to change the value yourself.",
+        "Imagine `i = 0` and `while i < 5:`, where you only do `i = i + 1` at the bottom of the loop.",
+        "If a `continue` fires before that line, the `i = i + 1` is skipped, so `i` never changes.",
+        "Now the condition `i < 5` is always `True`, and the loop runs forever — this is called an infinite loop.",
+        "The fix is to update your counter *before* the `continue`, or to prefer a `for` loop with `range()` when you can."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "break",
+      "def": "Stops the loop right away and exits it."
+    },
+    {
+      "term": "continue",
+      "def": "Skips the rest of the current pass and starts the next one."
+    },
+    {
+      "term": "iteration",
+      "def": "One single pass through the loop — one trip around, handling one item."
+    },
+    {
+      "term": "loop body",
+      "def": "The indented lines under the loop that run on each pass."
+    },
+    {
+      "term": "infinite loop",
+      "def": "A loop whose stop condition never becomes false, so it runs forever and never ends on its own."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "break stops early; continue skips one number",
+      "runnable": true,
+      "source": "for n in range(1, 6):\n    if n == 3:\n        continue\n    print(n)"
+    },
+    {
+      "language": "python",
+      "caption": "break out of a loop once you find the first even number",
+      "runnable": true,
+      "source": "for n in [7, 3, 9, 4, 5, 8]:\n    if n % 2 == 0:\n        print(\"first even:\", n)\n        break"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Loop over 1 to 10. Stop the loop (break) when you reach 5. Print each number before stopping, one per line.",
+    "starter": "",
+    "expectedOutput": "1\n2\n3\n4",
+    "check": "equals",
+    "hint": "Loop over `range(1, 11)`; if the number equals 5, `break` before printing it."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Inside a `for` loop, Python reaches a `continue`. What happens next?",
+      "options": [
+        { "text": "The whole loop ends and nothing else in it runs.", "correct": false },
+        { "text": "The rest of this pass is skipped and the loop moves to the next item.", "correct": true },
+        { "text": "Python restarts the loop from the very first item again.", "correct": false },
+        { "text": "The program crashes with an error.", "correct": false }
+      ],
+      "feedback": "`continue` only cuts short the current pass. The loop then grabs the next item and keeps going — it does not end the loop or start over."
+    },
+    {
+      "q": "You loop over a list of names to find the first one that starts with 'A', then stop. Which statement do you use to stop?",
+      "options": [
+        { "text": "`break`, because you want to leave the loop as soon as you find it.", "correct": true },
+        { "text": "`continue`, because you want to skip the rest of the names.", "correct": false },
+        { "text": "`print`, because printing ends the loop.", "correct": false },
+        { "text": "Neither — loops always run to the end no matter what.", "correct": false }
+      ],
+      "feedback": "`break` exits the loop immediately once you've found what you need, so you don't waste time checking the remaining names."
+    },
+    {
+      "q": "Why can a `continue` inside a `while` loop accidentally cause an infinite loop?",
+      "options": [
+        { "text": "Because `continue` secretly resets every variable to zero.", "correct": false },
+        { "text": "Because `while` loops are not allowed to use `continue` at all.", "correct": false },
+        { "text": "Because `continue` can skip the line that updates the counter, so the stop condition never becomes false.", "correct": true },
+        { "text": "Because `continue` doubles the loop's speed until it overflows.", "correct": false }
+      ],
+      "feedback": "`continue` skips every line below it for that pass. If the line that changes your counter sits below it, the counter never updates and the condition stays `True` forever."
+    }
+  ],
+  "caseStudy": {
+    "title": "How search engines stop early",
+    "body": [
+      "A search engine like Google does not always scan every page it has indexed before showing you results.",
+      "It works through candidate pages and, once it has gathered enough strong matches to fill the first results page, it can `break` out and return them fast.",
+      "This early-exit idea has a name in computer science: 'short-circuiting' — stop as soon as the answer is settled.",
+      "It also uses `continue`-style skipping: a quick, cheap filter throws out pages that obviously don't fit (wrong language, spam, blocked), without running the slow, expensive ranking on them.",
+      "Skipping the junk early and stopping once you have enough is how a search can feel instant across billions of pages."
+    ],
+    "bridge": "`break` to quit once you're done, `continue` to skip what doesn't fit — control that makes loops fast and smart."
+  },
+  "takeaways": [
+    "`break` ends the whole loop on the spot.",
+    "`continue` skips just the current pass and keeps going.",
+    "Both sit inside an `if`, so they fire only when your condition is met.",
+    "Watch out: a `continue` in a `while` loop can skip your counter update and loop forever."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — break and continue",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops"
+    }
+  ]
+}

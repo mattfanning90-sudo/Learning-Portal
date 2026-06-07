@@ -1,0 +1,167 @@
+{
+  "id": "py-m6-l1",
+  "trackId": "python",
+  "moduleId": "py-m6",
+  "order": 1,
+  "estMinutes": 14,
+  "title": "Reading and Writing Files",
+  "coreIdea": "A program forgets everything when it stops; saving to a file lets it remember.",
+  "plainEnglish": [
+    "When your program ends, the values it held vanish.",
+    "A file is how a program writes something down to keep.",
+    "`open()` opens a file. You can write to it or read from it.",
+    "Write once, and the text stays on disk. Read it back later, even after the program restarts.",
+    "In this in-browser playground each run starts fresh, so write and read the file in the same run. On a real computer the file would still be there tomorrow.",
+    "Under the hood, your computer has two kinds of memory. RAM is fast but temporary — it is wiped clean when the program ends. Disk is slower but permanent — it survives a restart.",
+    "Variables live in RAM. Writing to a file copies their value onto disk, which is why it lasts.",
+    "`open()` does not hand you the text directly. It hands you a file object — a small helper you call `.write()` and `.read()` on to move text between your program and the disk."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Variables are like notes you hold in your hand.",
+      "When you leave the room, those notes are gone.",
+      "A file is a notebook on the desk. You write it down, close it, and it is still there tomorrow."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What \"w\" and \"r\" mean",
+      "teaser": "the second argument is the mode",
+      "body": [
+        "`open(\"note.txt\", \"w\")` opens the file for writing. The `\"w\"` means write.",
+        "Writing replaces whatever was there before — it starts the file fresh.",
+        "`open(\"note.txt\", \"r\")` opens it for reading. The `\"r\"` means read.",
+        "Get the mode wrong and Python will not let you do the other thing."
+      ]
+    },
+    {
+      "title": "Why `with` is the safe way",
+      "teaser": "it closes the file for you",
+      "body": [
+        "An open file needs to be closed, or the text may not finish saving.",
+        "The line `with open(...) as f:` opens the file and gives it the name `f`.",
+        "When the indented block ends, Python closes the file automatically.",
+        "This is the habit professionals use, so you never forget to close."
+      ]
+    },
+    {
+      "title": "\"w\" erases — when you want \"a\" instead",
+      "teaser": "the surprise that deletes your data",
+      "body": [
+        "Here is the pitfall that catches every beginner once.",
+        "`open(name, \"w\")` does not add to the file — it empties it first.",
+        "So if you open an existing diary in `\"w\"` mode, everything already inside is gone the instant you open it, even before you write a single word.",
+        "When you want to keep the old text and tack new text onto the end, use `\"a\"` for append instead.",
+        "`open(\"diary.txt\", \"a\")` opens the file and points at the very end, so `f.write(...)` adds without erasing.",
+        "Why does `\"w\"` behave this way? Because \"write\" means \"this is now the file's content\", not \"add to it\". The mode is a promise about what the whole file should look like when you are done.",
+        "Rule of thumb: `\"w\"` for a fresh start, `\"a\"` to keep history (like a log), `\"r\"` to just look."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "file",
+      "def": "A place on disk where a program saves text to keep it."
+    },
+    {
+      "term": "open()",
+      "def": "Opens a file so you can read from it or write to it."
+    },
+    {
+      "term": "mode",
+      "def": "The setting that says what you want to do: \"w\" to write, \"r\" to read."
+    },
+    {
+      "term": "with",
+      "def": "A safe way to open a file that closes it for you when the block ends."
+    },
+    {
+      "term": "file object",
+      "def": "The helper that open() hands back; you call .write() and .read() on it to move text to and from the disk."
+    },
+    {
+      "term": "append mode (\"a\")",
+      "def": "A mode that opens a file and adds new text at the end without erasing what's already there."
+    },
+    {
+      "term": "disk",
+      "def": "The permanent storage that keeps your files even after the computer is switched off, unlike memory which is wiped."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Write a line, then read it straight back",
+      "runnable": true,
+      "source": "with open(\"diary.txt\", \"w\") as f:\n    f.write(\"Today I learned files.\")\n\nwith open(\"diary.txt\", \"r\") as f:\n    print(f.read())"
+    },
+    {
+      "language": "python",
+      "caption": "Append adds to the end instead of erasing",
+      "runnable": true,
+      "source": "with open(\"log.txt\", \"w\") as f:\n    f.write(\"line one\\n\")\n\nwith open(\"log.txt\", \"a\") as f:\n    f.write(\"line two\\n\")\n\nwith open(\"log.txt\", \"r\") as f:\n    print(f.read())"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Write the text saved to a file, then read the file back and print its contents.",
+    "expectedOutput": "saved",
+    "starter": "",
+    "check": "equals",
+    "hint": "Use open(name, \"w\") to write \"saved\", then open(name, \"r\") and print(f.read())."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "You run `open(\"notes.txt\", \"w\")` on a file that already has text in it. What happens to the old text?",
+      "options": [
+        { "text": "It is erased — \"w\" starts the file fresh.", "correct": true },
+        { "text": "The new text is added after the old text.", "correct": false },
+        { "text": "Python raises an error because the file is not empty.", "correct": false }
+      ],
+      "feedback": "\"w\" (write) empties the file the moment you open it, before you write anything. To keep the old text and add to it, use \"a\" (append)."
+    },
+    {
+      "q": "Why do professionals prefer `with open(...) as f:` over opening a file by hand?",
+      "options": [
+        { "text": "It closes the file for you when the block ends, so you never forget.", "correct": true },
+        { "text": "It makes the file load faster.", "correct": false },
+        { "text": "It lets you skip choosing a mode like \"w\" or \"r\".", "correct": false }
+      ],
+      "feedback": "`with` automatically closes the file when the indented block finishes. An unclosed file may not finish saving its text, so this habit prevents lost data."
+    },
+    {
+      "q": "Your program sets `score = 100` in a variable, then ends. Tomorrow the score is gone. Why?",
+      "options": [
+        { "text": "The variable lived in memory (RAM), which is wiped when the program stops; it was never written to disk.", "correct": true },
+        { "text": "Python deletes all variables named `score` for security.", "correct": false },
+        { "text": "Numbers cannot be remembered, only text can.", "correct": false }
+      ],
+      "feedback": "Variables live in fast but temporary memory. To survive a restart, the value must be copied onto disk with a file (or a database) using something like `f.write(str(score))`."
+    }
+  ],
+  "caseStudy": {
+    "title": "How Spotify remembers your playlists",
+    "body": [
+      "Close the Spotify app and your playlists are still there when you return.",
+      "That is because they are written to storage, not held in memory.",
+      "On your phone, Spotify saves data in a local database file (it uses SQLite, a file-based database) so your library and recently played list load instantly, even offline.",
+      "The master copy lives on Spotify's servers too, so the same playlists appear when you sign in on a different device.",
+      "Every app that remembers anything — notes, scores, settings — saves it to a file or database first.",
+      "A database is really just a clever set of files with rules for searching them fast; the same write-it-down-then-read-it-back idea sits underneath."
+    ],
+    "bridge": "You just did the same thing at the smallest scale: write it down, read it back, remember it."
+  },
+  "takeaways": [
+    "Programs forget when they stop; files let them remember.",
+    "`open()` with `\"w\"` writes; with `\"r\"` reads.",
+    "`\"w\"` erases the file first; use `\"a\"` to add without erasing.",
+    "Use `with open(...)` so the file closes itself safely."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Reading and Writing Files",
+      "url": "https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files"
+    }
+  ]
+}

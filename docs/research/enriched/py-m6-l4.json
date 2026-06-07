@@ -1,0 +1,157 @@
+{
+  "id": "py-m6-l4",
+  "trackId": "python",
+  "moduleId": "py-m6",
+  "order": 4,
+  "estMinutes": 12,
+  "title": "Putting It All Together",
+  "coreIdea": "Real programs combine variables, lists, and calculations into one small machine.",
+  "plainEnglish": [
+    "Each idea you have learned is a building block.",
+    "A real program snaps several blocks together.",
+    "Here we store numbers in a list, add them up, and divide to get an average.",
+    "Add up with `sum()`, count with `len()`, divide — that is an average.",
+    "Under the hood, Python reads your lines from top to bottom, one at a time.",
+    "Each line leaves a result behind in a variable, and the next line picks it up.",
+    "So `total` has to be calculated before the division can use it — order matters."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "One brick is not a wall.",
+      "A program is the wall: many simple bricks placed in order.",
+      "Variables, a list, and a calculation stacked together do something useful."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "sum() and len(), the two helpers",
+      "teaser": "total over count is an average",
+      "body": [
+        "`sum(scores)` adds every number in the list together.",
+        "`len(scores)` counts how many numbers are in the list.",
+        "Divide the total by the count and you have the average.",
+        "Notice the answer is `20.0`, not `20`. Division in Python always gives a decimal."
+      ]
+    },
+    {
+      "title": "Why the answer ends in .0 — and the trap of an empty list",
+      "teaser": "the / operator, and dividing by zero",
+      "body": [
+        "Python has two divide signs, and they behave differently.",
+        "The single slash `/` is 'true division' — it always returns a decimal, even when the numbers divide evenly.",
+        "That is why `60 / 3` gives `20.0` and not `20`. The `.0` is Python telling you the result is a decimal number, called a `float`.",
+        "There is also a double slash `//` called 'floor division', which throws away the decimal part and keeps a whole number.",
+        "Now the trap: an average needs you to divide by the count.",
+        "If the list is empty, the count is `0`, and dividing by zero is impossible.",
+        "Python stops the program and shows `ZeroDivisionError`.",
+        "Real apps guard against this by checking `if len(scores) > 0` before dividing — never assume a list has anything in it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "list",
+      "def": "An ordered collection of values, written inside square brackets."
+    },
+    {
+      "term": "sum()",
+      "def": "Adds together all the numbers in a list."
+    },
+    {
+      "term": "len()",
+      "def": "Counts how many items are in a list."
+    },
+    {
+      "term": "average",
+      "def": "The total divided by the count."
+    },
+    {
+      "term": "float",
+      "def": "A number with a decimal point, like 20.0 or 3.5, as opposed to a whole number."
+    },
+    {
+      "term": "variable",
+      "def": "A named box that holds a value so you can use it again later by its name."
+    },
+    {
+      "term": "ZeroDivisionError",
+      "def": "The error Python shows when you try to divide by zero, which has no answer."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Combine a list and a calculation",
+      "runnable": true,
+      "source": "prices = [4, 6, 8, 2]\ntotal = sum(prices)\ncount = len(prices)\nprint(total / count)"
+    },
+    {
+      "language": "python",
+      "caption": "Same three blocks, with friendly labels in the output",
+      "runnable": true,
+      "source": "scores = [10, 20, 30]\ntotal = sum(scores)\ncount = len(scores)\nprint(\"Total:\", total)\nprint(\"Count:\", count)\nprint(\"Average:\", total / count)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Given scores = [10, 20, 30], compute and print the average.",
+    "expectedOutput": "20.0",
+    "starter": "",
+    "check": "equals",
+    "hint": "Average is sum(scores) divided by len(scores) — then print it."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `len([10, 20, 30])` return?",
+      "options": [
+        { "text": "3", "correct": true },
+        { "text": "60", "correct": false },
+        { "text": "20.0", "correct": false }
+      ],
+      "feedback": "`len()` counts how many items are in the list. There are three numbers, so it returns 3 — not their total."
+    },
+    {
+      "q": "Why does `sum([10, 20, 30]) / len([10, 20, 30])` print `20.0` and not `20`?",
+      "options": [
+        { "text": "Because the single slash `/` always gives a decimal (a float) in Python", "correct": true },
+        { "text": "Because `sum()` rounds the answer up", "correct": false },
+        { "text": "Because the list has three items", "correct": false }
+      ],
+      "feedback": "The `/` operator is true division and always returns a float, so even an even result shows a trailing `.0`."
+    },
+    {
+      "q": "What happens if you try to compute the average of an empty list with `sum(items) / len(items)`?",
+      "options": [
+        { "text": "Python raises a ZeroDivisionError because the count is 0", "correct": true },
+        { "text": "Python returns 0.0", "correct": false },
+        { "text": "Python returns an empty list", "correct": false }
+      ],
+      "feedback": "An empty list has length 0, and dividing by zero is impossible, so Python stops with a ZeroDivisionError. Guard with `if len(items) > 0` first."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a fitness app shows your weekly average",
+    "body": [
+      "Apps like Strava store each run as a record, including its pace and distance.",
+      "For a weekly summary, the app gathers that week's runs into a list of numbers — one pace per run.",
+      "To show your average pace, it sums those numbers and divides by how many runs there were.",
+      "It is the same three blocks you just used: a list, a sum from `sum()`, and a division by a count from `len()`.",
+      "If you had a rest week with no runs, the list is empty — so the app must skip the divide, or it would hit a ZeroDivisionError and crash that screen.",
+      "That is why a 'no activity this week' message exists: it is the empty-list guard, shown to you as friendly text."
+    ],
+    "bridge": "You combined variables, a list, and a calculation — the core of nearly every program ever written."
+  },
+  "takeaways": [
+    "Programs combine simple blocks into something useful.",
+    "`sum()` totals a list; `len()` counts it.",
+    "Total divided by count gives the average — and Python returns a decimal (`float`).",
+    "Always guard against an empty list before dividing, or you get a ZeroDivisionError."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Built-in Functions",
+      "url": "https://docs.python.org/3/library/functions.html"
+    }
+  ]
+}

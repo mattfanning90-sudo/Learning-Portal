@@ -1,0 +1,156 @@
+{
+  "id": "py-m6-l2",
+  "trackId": "python",
+  "moduleId": "py-m6",
+  "order": 2,
+  "estMinutes": 12,
+  "title": "The Standard Library",
+  "coreIdea": "Python ships with ready-made tools you can use just by importing them.",
+  "plainEnglish": [
+    "You do not have to build everything from scratch.",
+    "Python comes with a big set of free tools called the standard library.",
+    "Each tool is a module you bring in with `import`.",
+    "`datetime` handles dates. `math` handles numbers. `random` picks random things. They are already installed.",
+    "When you write `import math`, Python finds the module's code, runs it once, and hands you a name you can use.",
+    "After that first load, the module is cached in memory — so importing it again in the same program is basically free.",
+    "Nothing gets downloaded from the internet. These tools live on your machine the moment Python is installed."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine buying a kitchen that already has every tool in the drawers.",
+      "You do not forge your own whisk — you just open the drawer.",
+      "`import datetime` is opening the drawer marked \"dates\"."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two ways to import",
+      "teaser": "the whole module, or just one piece",
+      "body": [
+        "`import datetime` brings in the whole module. Then you write `datetime.date(...)`.",
+        "`from datetime import date` brings in just the `date` piece. Then you write `date(...)`.",
+        "Both work. The second is shorter when you only need one thing.",
+        "\"Batteries included\" is the phrase Python uses for this: the useful parts come in the box."
+      ]
+    },
+    {
+      "title": "Where does Python find a module?",
+      "teaser": "the import system, and the trap of naming your own file `math.py`",
+      "body": [
+        "When you run `import math`, Python does not magically know where `math` lives.",
+        "It searches a list of folders, in order, until it finds a match.",
+        "That list is stored in `sys.path`. The very first place it looks is the folder your own script is in.",
+        "This is a classic beginner trap. If you name your own file `random.py` and then write `import random`, Python finds YOUR file first.",
+        "Your file does not have the real tools inside it, so you get a confusing error like `module 'random' has no attribute 'randint'`.",
+        "The fix is simple: never name your own file the same as a standard library module.",
+        "There is one more subtlety worth knowing. The first time a module is imported, Python runs all of its top-level code.",
+        "After that, the loaded module is stored in `sys.modules`, a cache. A second `import` of the same module just reuses the cached copy instead of running it again."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "standard library",
+      "def": "The big set of tools that comes built into Python."
+    },
+    {
+      "term": "module",
+      "def": "A bundle of related tools you bring in with `import`."
+    },
+    {
+      "term": "import",
+      "def": "The keyword that loads a module so you can use it."
+    },
+    {
+      "term": "datetime",
+      "def": "The built-in module for working with dates and times."
+    },
+    {
+      "term": "batteries included",
+      "def": "Python's slogan meaning the most useful tools already come in the box, ready to use."
+    },
+    {
+      "term": "sys.path",
+      "def": "The ordered list of folders Python searches through to find a module you import."
+    },
+    {
+      "term": "attribute",
+      "def": "A named thing that lives inside a module or object, reached with a dot — like the `sqrt` in `math.sqrt`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Borrow tools instead of building them",
+      "runnable": true,
+      "source": "import math\nfrom datetime import date\n\nprint(math.sqrt(81))\nprint(date(2020, 7, 15))"
+    },
+    {
+      "language": "python",
+      "caption": "Three different drawers, three different jobs",
+      "runnable": true,
+      "source": "import math\nimport random\n\nrandom.seed(7)\nprint(math.floor(3.9))\nprint(random.randint(1, 6))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "From the datetime library, create the date 1 January 2020 and print its year.",
+    "expectedOutput": "2020",
+    "starter": "",
+    "check": "equals",
+    "hint": "Use from datetime import date, build date(2020, 1, 1), then print its .year."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `from datetime import date` do that plain `import datetime` does not?",
+      "options": [
+        { "text": "It lets you write `date(...)` directly, without the `datetime.` prefix.", "correct": true },
+        { "text": "It downloads the datetime module from the internet first.", "correct": false },
+        { "text": "It makes the date calculations run faster.", "correct": false }
+      ],
+      "feedback": "`from datetime import date` pulls just the `date` piece into your code, so you can call it by its short name. Plain `import datetime` brings in the whole module, and you reach the date with `datetime.date(...)`."
+    },
+    {
+      "q": "You save a file called `random.py` and inside it write `import random`. Why does it break?",
+      "options": [
+        { "text": "Python searches your own folder first and finds your file instead of the real `random` module.", "correct": true },
+        { "text": "You are not allowed to use the word `import` in a file named after a module.", "correct": false },
+        { "text": "The real `random` module was never installed with Python.", "correct": false }
+      ],
+      "feedback": "Python's search path looks in your script's own folder first. Your `random.py` shadows the real one, so the genuine tools like `randint` are missing. The fix: rename your file."
+    },
+    {
+      "q": "What does \"batteries included\" mean for the standard library?",
+      "options": [
+        { "text": "The most useful tools ship with Python already, with no separate download.", "correct": true },
+        { "text": "Python needs an external battery pack to run modules.", "correct": false },
+        { "text": "Every module must be turned on before the program starts.", "correct": false }
+      ],
+      "feedback": "\"Batteries included\" is Python's way of saying the common tools — dates, math, random, files — come in the box and are ready the moment Python is installed."
+    }
+  ],
+  "caseStudy": {
+    "title": "Instagram runs on Python's batteries",
+    "body": [
+      "Instagram is one of the largest Python applications in the world, serving billions of users from a Django backend.",
+      "Its engineers lean heavily on the standard library for everyday tasks like dates, files, and collections.",
+      "When Instagram's team wrote a well-known engineering blog post about scaling, a big theme was leaning on Python's mature, built-in tooling rather than rewriting it.",
+      "They even used the standard `gc` (garbage collection) module to tune memory and squeeze more performance out of each server.",
+      "Reaching for built-in tools instead of reinventing them is how real teams move fast and keep code easy to trust."
+    ],
+    "bridge": "You just reached into the same toolbox a billion-user app uses every day."
+  },
+  "takeaways": [
+    "Python comes with a huge standard library, already installed.",
+    "`import` loads a module so you can use its tools.",
+    "`datetime` gives you dates without any extra setup.",
+    "Never name your own file after a standard library module, or it will shadow the real one."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — The Python Standard Library",
+      "url": "https://docs.python.org/3/library/index.html"
+    }
+  ]
+}

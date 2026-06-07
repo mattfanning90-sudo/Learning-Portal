@@ -1,0 +1,169 @@
+{
+  "id": "java-m2-l4",
+  "trackId": "java",
+  "moduleId": "java-m2",
+  "order": 4,
+  "estMinutes": 14,
+  "title": "for Loops",
+  "coreIdea": "A `for` loop packs the start, the check, and the change of a counting loop onto one tidy line.",
+  "plainEnglish": [
+    "A `for` loop does the same job as a `while` loop.",
+    "It just keeps all three loop parts together in one place.",
+    "You write the start, the condition, and the change, separated by semicolons.",
+    "Java runs the block once for each value of the counter.",
+    "It is the go-to loop whenever you are counting.",
+    "Under the hood, Java is not doing anything magic — it runs the three parts in a fixed order, over and over.",
+    "First the start runs one time, then the condition is tested, and if it is true the block runs, then the change runs, then the condition is tested again.",
+    "Keeping all three parts on one line means you can see the whole loop at a glance, so it is harder to forget to move the counter forward and get stuck looping forever."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a microwave timer.",
+      "You set the start (60 seconds), the stop point (0), and the tick (down by one).",
+      "Then it counts on its own — a `for` loop bundles those same three settings into one line."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Reading the three parts",
+      "teaser": "start ; condition ; change — all in the brackets",
+      "body": [
+        "`for (int i = 0; i < 5; i++)` has three pieces split by semicolons.",
+        "`int i = 0` runs once at the start.",
+        "`i < 5` is checked before every pass.",
+        "`i++` runs after each pass — it is shorthand for `i = i + 1`."
+      ]
+    },
+    {
+      "title": "Why programmers count from 0",
+      "teaser": "0, 1, 2, 3, 4 is five numbers",
+      "body": [
+        "`for (int i = 0; i < 5; i++)` runs five times.",
+        "It uses the values 0, 1, 2, 3, 4 — note it stops before 5.",
+        "Starting at 0 is a long-standing habit in code, especially with lists.",
+        "Count the numbers: 0 through 4 is exactly five passes."
+      ]
+    },
+    {
+      "title": "The order the three parts run in",
+      "teaser": "Why the change happens at the bottom, not the top",
+      "body": [
+        "People often assume the three parts run left to right on every pass — they do not.",
+        "Java runs the start (`int i = 0`) exactly once, before anything else.",
+        "Then it loops this cycle: check the condition, run the block, run the change.",
+        "So the change (`i++`) actually happens after the block, even though you wrote it in the middle of the line.",
+        "This is why the very first pass uses the start value — on pass one, `i` is still 0, not 1.",
+        "A common pitfall is forgetting the change part: leave out `i++` and `i` never moves, the condition stays true, and the loop runs forever.",
+        "A loop that never ends is called an infinite loop, and it will hang your program until you stop it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "for",
+      "def": "A loop that keeps its start, condition, and change on one line."
+    },
+    {
+      "term": "i++",
+      "def": "Shorthand for i = i + 1 — adds one to the counter."
+    },
+    {
+      "term": "i < 5",
+      "def": "The condition: keep looping while i is less than 5."
+    },
+    {
+      "term": "counter",
+      "def": "The variable a loop uses to keep track of where it is."
+    },
+    {
+      "term": "iteration",
+      "def": "One full pass through the loop's block — five iterations means the block ran five times."
+    },
+    {
+      "term": "infinite loop",
+      "def": "A loop whose condition never becomes false, so it runs forever and hangs the program."
+    },
+    {
+      "term": "i--",
+      "def": "Shorthand for i = i - 1 — subtracts one from the counter, used to count down."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Prints a 5-line countdown using a for loop",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 5; i > 0; i--) {\n            System.out.println(i);\n        }\n        System.out.println(\"go\");\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "Adds up 1 through 5 with a running total",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int total = 0;\n        for (int i = 1; i <= 5; i++) {\n            total = total + i;\n        }\n        System.out.println(total);\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Use a for loop to print 0 1 2 3 4 — each on its own line.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "0\n1\n2\n3\n4",
+    "check": "equals",
+    "hint": "Write for (int i = 0; i < 5; i++) and print i inside the braces."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "How many times does `for (int i = 0; i < 5; i++)` run its block?",
+      "options": [
+        { "text": "Four times", "correct": false },
+        { "text": "Five times", "correct": true },
+        { "text": "Six times", "correct": false }
+      ],
+      "feedback": "It uses the values 0, 1, 2, 3, 4 and stops before 5 — that is exactly five passes."
+    },
+    {
+      "q": "In a `for` loop, when does the change part (like `i++`) run?",
+      "options": [
+        { "text": "Once, before the loop starts", "correct": false },
+        { "text": "After the block runs, on each pass", "correct": true },
+        { "text": "Only when the condition is false", "correct": false }
+      ],
+      "feedback": "The start runs once. Then each pass is: check the condition, run the block, then run the change."
+    },
+    {
+      "q": "What happens if you forget the change part and `i` never moves?",
+      "options": [
+        { "text": "The loop runs forever as an infinite loop", "correct": true },
+        { "text": "Java skips the loop entirely", "correct": false },
+        { "text": "The loop runs exactly once and stops", "correct": false }
+      ],
+      "feedback": "With no change, the condition stays true forever, so the loop never ends — that is an infinite loop."
+    }
+  ],
+  "caseStudy": {
+    "title": "The loop behind every slideshow",
+    "body": [
+      "When a photo app builds a slideshow, it has a fixed set of images.",
+      "It uses a `for` loop: for each photo from the first to the last, show it.",
+      "The counter walks through the photos one at a time, in order.",
+      "Say there are 12 photos stored in order, numbered 0 through 11.",
+      "The app writes `for (int i = 0; i < 12; i++)` and shows photo number `i` each pass.",
+      "Because the counter starts at 0 and stops before 12, it lands on every photo exactly once.",
+      "This is also why the counter starts at 0 — in Java, the first item in a list of photos is item number 0, not 1."
+    ],
+    "bridge": "Whenever there is a known number of things to step through, a `for` loop is the natural fit — just like the one you wrote."
+  },
+  "takeaways": [
+    "A `for` loop bundles start, condition, and change onto one line.",
+    "`i++` is the usual way to step the counter forward.",
+    "It is the standard choice when you know how many times to repeat.",
+    "The start runs once; then it checks, runs the block, and changes — in that order.",
+    "Forget the change and you get an infinite loop that never stops."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — The for Statement",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html"
+    }
+  ]
+}

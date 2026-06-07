@@ -1,0 +1,160 @@
+{
+  "id": "py-m6-l3",
+  "trackId": "python",
+  "moduleId": "py-m6",
+  "order": 3,
+  "estMinutes": 12,
+  "title": "A First Taste of an AI Function",
+  "coreIdea": "An AI model is, at heart, a function: text goes in, a prediction comes out.",
+  "plainEnglish": [
+    "AI can feel like magic. Under the hood, it has a familiar shape.",
+    "A model takes an input and returns an output. That is a function.",
+    "You give it text; it gives back a prediction.",
+    "We will fake the model with a simple function so you can see the shape clearly — no real AI needed.",
+    "What changes between our fake and a real one is only the middle part.",
+    "Our function does one tiny step; a real model runs billions of calculations.",
+    "But the doorway is identical: something goes in one end and an answer comes out the other.",
+    "Once that shape clicks, every AI tool you ever call feels like an old friend."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a vending machine.",
+      "You put something in the slot; something comes out the bottom.",
+      "A model is the same: input in, prediction out. Today our \"model\" just shouts the text back in capitals."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why call it a stand-in",
+      "teaser": "same shape, no real intelligence",
+      "body": [
+        "A real model like the one behind ChatGPT takes text and returns text.",
+        "Our `predict(text)` does that too — it just uses `.upper()` instead of billions of calculations.",
+        "The point is the interface: one input, one returned answer.",
+        "Once you can call a function and use its result, calling a real AI model later works exactly the same way."
+      ]
+    },
+    {
+      "title": "What actually happens when you call predict()",
+      "teaser": "the line that runs, the value that returns",
+      "body": [
+        "When Python reaches `predict(\"hello\")`, it pauses your current line.",
+        "It jumps inside the function and runs its code with `text` set to `\"hello\"`.",
+        "The moment it hits `return`, the function stops and hands the value back.",
+        "That returned value drops into the exact spot where you called it — as if you had typed `\"HELLO\"` there yourself.",
+        "A common pitfall trips up beginners here: `print` inside a function is not the same as `return`.",
+        "`print` only shows text on screen; it gives nothing back for your code to reuse.",
+        "If `predict` used `print(text.upper())` instead of `return text.upper()`, then `result = predict(\"hello\")` would leave `result` empty (the special value `None`).",
+        "Rule of thumb: use `return` when other code needs the answer, and `print` only when a human needs to read it.",
+        "Real AI libraries always `return` the prediction, so you can store it, check it, or pass it on."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "function",
+      "def": "A reusable block of code that takes an input and returns an output."
+    },
+    {
+      "term": "predict()",
+      "def": "Our pretend model: text goes in, an answer comes back."
+    },
+    {
+      "term": "return",
+      "def": "Sends a value back out of a function to whoever called it."
+    },
+    {
+      "term": ".upper()",
+      "def": "Turns a string into UPPERCASE letters."
+    },
+    {
+      "term": "argument",
+      "def": "The actual value you hand to a function when you call it — here, the text in the brackets."
+    },
+    {
+      "term": "parameter",
+      "def": "The named slot inside the function that receives the argument — here, the word `text`."
+    },
+    {
+      "term": "None",
+      "def": "Python's word for 'nothing here' — what a function gives back when it has no `return`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "A tiny \"model\" that returns a prediction",
+      "runnable": true,
+      "source": "def predict(text):\n    return text.upper()\n\nprint(predict(\"hello\"))\nprint(predict(\"models are functions\"))"
+    },
+    {
+      "language": "python",
+      "caption": "Storing the prediction first, then using it — because return hands a value back",
+      "runnable": true,
+      "source": "def predict(text):\n    return text.upper()\n\nresult = predict(\"ai is a function\")\nprint(result)\nprint(\"Length:\", len(result))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Write a function predict(text) that returns the text in UPPERCASE (a stand-in for a model). Print predict(\"ai\").",
+    "expectedOutput": "AI",
+    "starter": "",
+    "check": "equals",
+    "hint": "Define predict(text) that returns text.upper(), then print(predict(\"ai\"))."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In `predict(\"hello\")`, what is `\"hello\"` called?",
+      "options": [
+        { "text": "The argument — the value you hand to the function", "correct": true },
+        { "text": "The return value the function gives back", "correct": false },
+        { "text": "The name of the function", "correct": false }
+      ],
+      "feedback": "`\"hello\"` is the argument: the actual value you pass in. The function receives it through its parameter `text` and returns a result."
+    },
+    {
+      "q": "If `predict` used `print(text.upper())` instead of `return text.upper()`, what would `result = predict(\"hi\")` store in `result`?",
+      "options": [
+        { "text": "`None` — print shows text but hands nothing back", "correct": true },
+        { "text": "`\"HI\"` — print and return do the same thing", "correct": false },
+        { "text": "An error, because functions must use return", "correct": false }
+      ],
+      "feedback": "`print` only displays text; it returns nothing, so `result` becomes `None`. Use `return` when other code needs the answer."
+    },
+    {
+      "q": "Why do we say an AI model is 'a function'?",
+      "options": [
+        { "text": "It takes an input and returns an output — the same shape as a function", "correct": true },
+        { "text": "Because it is written in Python like our `predict`", "correct": false },
+        { "text": "Because it never makes mistakes", "correct": false }
+      ],
+      "feedback": "The key idea is the shape: input in, prediction out. A real model is far more capable inside, but you call it the same simple way."
+    }
+  ],
+  "caseStudy": {
+    "title": "Calling GPT is calling a function",
+    "body": [
+      "When engineers use OpenAI's API, they call something like `client.responses.create(model=\"gpt-4o\", input=\"...\")`.",
+      "Your text goes in as the `input` argument; a predicted response object comes back, and you read the text from it — the exact shape you just built.",
+      "Behind that one call, OpenAI's servers run a model with hundreds of billions of internal numbers to produce the answer.",
+      "Yet from your code's point of view it is still one call in, one value returned.",
+      "The same pattern shows up everywhere: Anthropic's Claude API uses `client.messages.create(...)`, and Google's Gemini uses `model.generate_content(...)`.",
+      "Different companies, different names — identical idea: pass text, receive a prediction.",
+      "The real model is vastly more capable, but the way you talk to it is this simple."
+    ],
+    "bridge": "You wrote a function that takes input and returns a prediction. That is how every AI model is used."
+  },
+  "takeaways": [
+    "A model is a function: input in, prediction out.",
+    "`return` hands the answer back to the caller.",
+    "`print` shows text; `return` gives a value your code can reuse.",
+    "Master calling functions and you can call real AI models the same way."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Defining Functions",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions"
+    }
+  ]
+}

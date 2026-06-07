@@ -1,0 +1,152 @@
+{
+  "id": "py-m2-l3",
+  "trackId": "python",
+  "moduleId": "py-m2",
+  "order": 3,
+  "estMinutes": 12,
+  "title": "elif: Many Paths",
+  "coreIdea": "`elif` lets you check several conditions in order and pick the first one that fits.",
+  "plainEnglish": [
+    "`if` / `else` gives you two paths. Real choices often have more.",
+    "`elif` (short for \"else if\") adds extra conditions in the middle.",
+    "Python checks them top to bottom and stops at the first one that is `True`.",
+    "Everything below that point is skipped.",
+    "A final `else` catches anything that matched none of them.",
+    "Think of the whole `if` / `elif` / `else` group as one decision, not separate questions.",
+    "Under the hood, each `elif` test only runs if every test above it already failed.",
+    "That is why order is not just tidy — it changes which branch actually fires."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture grading a test against a checklist, top to bottom.",
+      "\"90 or above? That's an A.\" If not, slide down: \"80 or above? A B.\"",
+      "The first box you can tick wins, and you stop checking."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Order matters — most specific first",
+      "teaser": "Python takes the first match and stops",
+      "body": [
+        "Python tests each condition from top to bottom.",
+        "The moment one is `True`, it runs that block and skips the rest.",
+        "So put the highest bar first. A score of 95 should hit the A check before it ever reaches B.",
+        "If you wrote the looser test first, the strict one below it would never get a turn."
+      ]
+    },
+    {
+      "title": "elif vs. a stack of separate ifs",
+      "teaser": "They look alike but behave very differently",
+      "body": [
+        "A common pitfall is writing several plain `if` statements instead of one `if` / `elif` chain.",
+        "With separate `if` blocks, Python checks every single one — none of them know about the others.",
+        "So a score of 95 could match `if score >= 90`, AND `if score >= 80`, AND `if score >= 70`.",
+        "You would print three grades instead of one.",
+        "`elif` ties the tests together into a single chain, so only one branch can ever run.",
+        "Rule of thumb: if the conditions are mutually exclusive — only one should win — use `elif`, not a pile of `if`s."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "elif",
+      "def": "\"Else if\" — an extra condition checked only if the ones above were `False`."
+    },
+    {
+      "term": "branch",
+      "def": "One path of an if / elif / else — only one branch ever runs."
+    },
+    {
+      "term": "order of checks",
+      "def": "`elif` conditions are tested top to bottom; the first `True` one wins."
+    },
+    {
+      "term": "condition",
+      "def": "A test that comes out `True` or `False`, like `score >= 90`, that decides whether a branch runs."
+    },
+    {
+      "term": "mutually exclusive",
+      "def": "Only one option can be true at a time — like a grade being an A or a B, never both."
+    },
+    {
+      "term": "chain",
+      "def": "An `if` joined to its `elif` and `else` as one linked decision, where exactly one branch fires."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Only the first matching branch runs",
+      "runnable": true,
+      "source": "hour = 14\nif hour < 12:\n    print(\"Good morning\")\nelif hour < 18:\n    print(\"Good afternoon\")\nelse:\n    print(\"Good evening\")"
+    },
+    {
+      "language": "python",
+      "caption": "Same value, one tidy path: 95 stops at the very first match",
+      "runnable": true,
+      "source": "score = 95\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelse:\n    print(\"F\")"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Set score = 85. Print A if score >= 90, B if score >= 80, otherwise C.",
+    "starter": "",
+    "expectedOutput": "B",
+    "check": "equals",
+    "hint": "Use `if score >= 90:`, then `elif score >= 80:`, then `else:`."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In an `if` / `elif` / `else` chain, how many branches run for a given value?",
+      "options": [
+        { "text": "Exactly one — the first whose condition is `True`.", "correct": true },
+        { "text": "Every branch whose condition is `True`.", "correct": false },
+        { "text": "All of them, top to bottom.", "correct": false }
+      ],
+      "feedback": "Python stops at the first `True` condition and skips the rest, so only one branch ever runs."
+    },
+    {
+      "q": "Given `score = 95`, why should the `score >= 90` check come before `score >= 80`?",
+      "options": [
+        { "text": "Because Python takes the first match and stops, so the looser test would grab 95 first if it came first.", "correct": true },
+        { "text": "Because `elif` only works in alphabetical order.", "correct": false },
+        { "text": "Because Python runs the checks from the bottom up.", "correct": false }
+      ],
+      "feedback": "Put the strictest condition first. If `score >= 80` came first, 95 would match it and never reach the A check."
+    },
+    {
+      "q": "What is the difference between three separate `if` statements and one `if` / `elif` chain?",
+      "options": [
+        { "text": "Separate `if`s are each checked independently, so more than one can run; an `elif` chain runs only one branch.", "correct": true },
+        { "text": "There is no difference — they behave identically.", "correct": false },
+        { "text": "Separate `if`s are faster but can never both be `True`.", "correct": false }
+      ],
+      "feedback": "Plain `if`s don't know about each other, so several can fire. `elif` links them so exactly one branch wins."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a tax calculator picks your bracket",
+    "body": [
+      "Income tax uses bands: one rate up to a threshold, a higher rate above it, and so on.",
+      "Australia's resident income-tax scale works this way, with bands like the tax-free zone up to $18,200, then 16%, then 30%, then 37%, then 45% for the highest earners.",
+      "Payroll software walks these brackets in order with `elif`, top to bottom.",
+      "It stops at the first band your income falls into and applies that rate.",
+      "Because the bands are mutually exclusive, only one branch ever runs for a given income — exactly what `elif` guarantees.",
+      "Get the order wrong, and a high earner could be taxed at the lowest rate by mistake."
+    ],
+    "bridge": "`elif` is exactly how programs route a single value down one of many tidy paths."
+  },
+  "takeaways": [
+    "`elif` adds more conditions between `if` and `else`.",
+    "Python runs only the first branch that is `True`.",
+    "Put the strictest condition first so it gets checked first.",
+    "Use one `elif` chain, not a stack of separate `if`s, when only one path should win."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — if statements",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#if-statements"
+    }
+  ]
+}

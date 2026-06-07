@@ -1,0 +1,164 @@
+{
+  "id": "py-m4-l2",
+  "trackId": "python",
+  "moduleId": "py-m4",
+  "order": 2,
+  "estMinutes": 12,
+  "title": "Looping Over a List",
+  "coreIdea": "A `for` loop visits each item in a list, one at a time.",
+  "plainEnglish": [
+    "You rarely want to handle a list item by item by hand.",
+    "A `for` loop does it for you: it walks through the list, one item at a time.",
+    "You pick a name for the current item — say `fruit` — and Python fills it in on each pass.",
+    "The indented lines run once for every item in the list.",
+    "Under the hood, Python does not jump straight to position 5 or 10.",
+    "It asks the list for its next item, runs the body, then asks for the next, and so on until there are no items left.",
+    "This is why the loop always moves forward through the list and never skips ahead on its own."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine handing out flyers to a queue of people.",
+      "You step to the next person, give them a flyer, then move on.",
+      "The loop is you walking the queue; each `fruit` is the person in front of you right now."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The loop variable is just a temporary name",
+      "teaser": "`for fruit in fruits` — you choose the word `fruit`",
+      "body": [
+        "In `for fruit in fruits:`, the word `fruit` is a name you invent.",
+        "On the first pass it holds `'apple'`, on the next it holds `'pear'`.",
+        "Pick a name that reads well. `for item in items:` is fine; `for f in fruits:` works too."
+      ]
+    },
+    {
+      "title": "Indentation decides what repeats",
+      "teaser": "indented lines run each time; the rest runs once",
+      "body": [
+        "The lines indented under the `for` line are the body of the loop.",
+        "They run once for each item.",
+        "Lines that are not indented run only once, after the loop is finished."
+      ]
+    },
+    {
+      "title": "The loop variable lingers after the loop ends",
+      "teaser": "what is `fruit` once the loop is done?",
+      "body": [
+        "A common surprise: the loop variable does not vanish when the loop finishes.",
+        "After `for fruit in ['apple', 'pear']:` ends, `fruit` still exists and holds `'pear'` — the last item it saw.",
+        "Python does not reset or delete it for you.",
+        "This trips people up when they reuse a name like `n` or `item` later in the same program and forget it is still holding the final value.",
+        "If you only need the loop variable inside the loop, just do not use it afterwards.",
+        "One more pitfall: do not change the size of a list while you loop over it. Adding or removing items mid-loop can make Python skip items or visit some twice."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "for loop",
+      "def": "A way to run the same code once for each item in a collection."
+    },
+    {
+      "term": "loop variable",
+      "def": "The temporary name that holds the current item on each pass."
+    },
+    {
+      "term": "iterate",
+      "def": "To go through a collection one item at a time."
+    },
+    {
+      "term": "loop body",
+      "def": "The indented lines under the `for` line — the code that repeats once per item."
+    },
+    {
+      "term": "iteration",
+      "def": "One single pass through the loop body, handling one item."
+    },
+    {
+      "term": "accumulator",
+      "def": "A variable you set before the loop and update each pass, like `total`, to build up a running result."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Visit each name and greet it",
+      "runnable": true,
+      "source": "names = [\"Ada\", \"Alan\", \"Grace\"]\nfor name in names:\n    print(\"Hello, \" + name)"
+    },
+    {
+      "language": "python",
+      "caption": "Add up a list by looping",
+      "runnable": true,
+      "source": "numbers = [10, 20, 30]\ntotal = 0\nfor n in numbers:\n    total = total + n\nprint(total)"
+    },
+    {
+      "language": "python",
+      "caption": "The loop variable still holds the last item afterwards",
+      "runnable": true,
+      "source": "fruits = [\"apple\", \"pear\"]\nfor fruit in fruits:\n    print(fruit)\nprint(\"last seen:\", fruit)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Given fruits = ['apple', 'pear'], print each fruit on its own line.",
+    "starter": "",
+    "expectedOutput": "apple\npear",
+    "check": "equals",
+    "hint": "Loop with `for fruit in fruits:` and `print(fruit)` on the indented line."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In `for fruit in fruits:`, what is `fruit`?",
+      "options": [
+        { "text": "The whole list, copied", "correct": false },
+        { "text": "A name that holds the current item on each pass", "correct": true },
+        { "text": "A built-in Python keyword you must spell exactly", "correct": false }
+      ],
+      "feedback": "`fruit` is a name you invent. On each pass Python fills it with the current item from the list."
+    },
+    {
+      "q": "Which lines run once per item in the list?",
+      "options": [
+        { "text": "The indented lines under the `for` line", "correct": true },
+        { "text": "Every line in the whole program", "correct": false },
+        { "text": "Only the `for` line itself", "correct": false }
+      ],
+      "feedback": "The indented loop body repeats once per item. Unindented lines run once, after the loop finishes."
+    },
+    {
+      "q": "After `for n in [10, 20, 30]:` finishes, what does `n` hold?",
+      "options": [
+        { "text": "Nothing — Python deletes `n` when the loop ends", "correct": false },
+        { "text": "`30`, the last item the loop saw", "correct": true },
+        { "text": "`10`, the first item the loop saw", "correct": false }
+      ],
+      "feedback": "The loop variable lingers after the loop. It keeps the last value it was given — here, `30`."
+    }
+  ],
+  "caseStudy": {
+    "title": "How an email blast reaches everyone",
+    "body": [
+      "A newsletter tool like Mailchimp holds a list of subscribers.",
+      "To send a campaign, it loops over that list and sends one personalised email per person.",
+      "On each pass the loop variable holds one subscriber, so the tool can drop their first name into the greeting and their address into the 'to' field.",
+      "Mailchimp routinely sends campaigns to lists of millions of contacts this way.",
+      "One loop, a million recipients — no copy-pasting required."
+    ],
+    "bridge": "Printing each fruit on its own line is the same move as sending each subscriber their own email."
+  },
+  "takeaways": [
+    "A `for` loop runs your code once per item.",
+    "The loop variable holds the current item each pass.",
+    "Indented lines repeat; unindented lines run once at the end.",
+    "The loop variable still holds the last item after the loop finishes."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — for statements",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#for-statements"
+    }
+  ]
+}

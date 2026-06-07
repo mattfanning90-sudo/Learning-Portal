@@ -1,0 +1,171 @@
+{
+  "id": "py-m2-l1",
+  "trackId": "python",
+  "moduleId": "py-m2",
+  "order": 1,
+  "estMinutes": 11,
+  "title": "True, False, and Comparisons",
+  "coreIdea": "Python can answer yes-or-no questions, and the answer is always `True` or `False`.",
+  "plainEnglish": [
+    "Some questions have only two answers: yes or no.",
+    "In code, yes is `True` and no is `False`. These are called booleans.",
+    "You ask a question by comparing two things, like `10 > 3`.",
+    "Python checks the comparison and hands back `True` or `False`.",
+    "That single answer is what later lets your program decide what to do.",
+    "Under the hood, `True` and `False` are not just words — they are real values Python can store, print, and pass around, exactly like a number.",
+    "When Python sees a comparison like `10 > 3`, it evaluates the whole thing down to one of those two values before doing anything else with it.",
+    "So `10 > 3` is not a command — it is an expression that becomes `True`, the same way `2 + 2` becomes `4`."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine a light switch. It is either on or off — never half-on.",
+      "A boolean is that switch: `True` (on) or `False` (off).",
+      "A comparison like `10 > 3` is you flicking the switch and reading where it lands."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The six comparison operators",
+      "teaser": "equal, not-equal, and the four size checks",
+      "body": [
+        "`==` asks \"are these the same?\" Note the two equals signs.",
+        "`!=` asks \"are these different?\"",
+        "`>` and `<` ask \"is the left bigger / smaller?\"",
+        "`>=` and `<=` add \"or equal to\".",
+        "Each one returns a single boolean: `True` or `False`."
+      ]
+    },
+    {
+      "title": "Why == is doubled",
+      "teaser": "one = stores, two == compares",
+      "body": [
+        "A single `=` means \"put this value into a variable\". It stores.",
+        "A double `==` means \"are these two things equal?\". It asks.",
+        "Mixing them up is the most common beginner slip — and a good one to learn early."
+      ]
+    },
+    {
+      "title": "Comparisons across types: a quiet trap",
+      "teaser": "why \"5\" == 5 is False",
+      "body": [
+        "Python is strict about what kind of value it is comparing.",
+        "The number `5` and the text `\"5\"` look the same to your eye, but to Python they are different types.",
+        "A number is a quantity; text in quotes is a string — a sequence of characters.",
+        "So `5 == \"5\"` returns `False`, because the two values are not the same kind of thing.",
+        "This bites beginners when they read input from a user.",
+        "Text typed at a keyboard arrives as a string, so `input() == 5` is always `False` until you convert it with `int()`.",
+        "The fix is to make both sides the same type first, for example `int(typed_text) == 5`.",
+        "Rule of thumb: before you compare, make sure both sides are the same kind of value."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "boolean",
+      "def": "A value that is either `True` or `False` — nothing else."
+    },
+    {
+      "term": "True / False",
+      "def": "Python's two boolean values. Capital T and F, no quotes."
+    },
+    {
+      "term": "comparison operator",
+      "def": "A symbol like `>` or `==` that compares two values and returns a boolean."
+    },
+    {
+      "term": "==",
+      "def": "Asks whether two values are equal. Two equals signs, not one."
+    },
+    {
+      "term": "expression",
+      "def": "Any piece of code that Python works out into a single value, like `2 + 2` becoming `4` or `10 > 3` becoming `True`."
+    },
+    {
+      "term": "type",
+      "def": "The kind of value something is, such as a number (`int`) or text (`str`). Python compares the kind, not just the look."
+    },
+    {
+      "term": "string",
+      "def": "Text wrapped in quotes, like `\"5\"`. A string of characters is not the same as the number `5`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Each line asks a question and prints the answer",
+      "runnable": true,
+      "source": "print(10 > 3)\nprint(5 == 5)\nprint(7 != 7)\nprint(2 <= 2)"
+    },
+    {
+      "language": "python",
+      "caption": "Same-looking values, different types — so they are not equal",
+      "runnable": true,
+      "source": "print(5 == 5)\nprint(5 == \"5\")"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Print whether 10 is greater than 3 (it should print True or False).",
+    "starter": "",
+    "expectedOutput": "True",
+    "check": "equals",
+    "hint": "Put the comparison `10 > 3` straight inside `print()` — no quotes."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `7 != 7` evaluate to?",
+      "options": [
+        { "text": "`True`", "correct": false },
+        { "text": "`False`", "correct": true },
+        { "text": "`7`", "correct": false },
+        { "text": "An error", "correct": false }
+      ],
+      "feedback": "`!=` means \"are these different?\" Since 7 and 7 are the same, the answer is `False`."
+    },
+    {
+      "q": "Which symbol asks whether two values are equal?",
+      "options": [
+        { "text": "`=`", "correct": false },
+        { "text": "`==`", "correct": true },
+        { "text": "`!=`", "correct": false },
+        { "text": "`=>`", "correct": false }
+      ],
+      "feedback": "A double `==` compares two values. A single `=` stores a value into a variable instead."
+    },
+    {
+      "q": "What does `5 == \"5\"` return?",
+      "options": [
+        { "text": "`True`, because they look the same", "correct": false },
+        { "text": "`False`, because a number and a string are different types", "correct": true },
+        { "text": "`5`", "correct": false },
+        { "text": "An error, because you cannot compare them", "correct": false }
+      ],
+      "feedback": "The number `5` and the text `\"5\"` are different kinds of value, so Python says they are not equal: `False`."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a login form knows you typed the wrong password",
+    "body": [
+      "When you sign in to Gmail, the server does not store your raw password.",
+      "It stores a scrambled fingerprint of it, made by a one-way function called a hash.",
+      "When you type your password, the server scrambles what you typed the same way, then compares the two fingerprints.",
+      "That check is one boolean: do the fingerprints match, `True` or `False`?",
+      "If `False`, you see \"wrong password\". If `True`, you are let in.",
+      "Comparing fingerprints instead of raw text is why a leaked database still does not hand attackers your actual password."
+    ],
+    "bridge": "Every \"access granted\" or \"access denied\" you have ever seen began with a single comparison returning `True` or `False`."
+  },
+  "takeaways": [
+    "A boolean is either `True` or `False`.",
+    "Comparisons like `10 > 3` return a boolean.",
+    "Use `==` to compare, and `=` to store — they are different.",
+    "Comparing different types, like `5 == \"5\"`, gives `False` — make both sides the same kind of value first."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Comparisons",
+      "url": "https://docs.python.org/3/library/stdtypes.html#comparisons"
+    }
+  ]
+}

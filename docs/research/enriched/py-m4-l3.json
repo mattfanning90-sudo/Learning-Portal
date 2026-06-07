@@ -1,0 +1,167 @@
+{
+  "id": "py-m4-l3",
+  "trackId": "python",
+  "moduleId": "py-m4",
+  "order": 3,
+  "estMinutes": 14,
+  "title": "Dictionaries: Labelled Data",
+  "coreIdea": "A dictionary stores values under labels, so you look things up by name instead of by position.",
+  "plainEnglish": [
+    "A list finds things by position. A dictionary finds things by label.",
+    "Each entry is a pair: a key (the label) and a value (what it holds).",
+    "You write it with curly braces: `{'cat': 'meow'}`.",
+    "To get a value, you ask for its key: `sounds['cat']` gives you `'meow'`.",
+    "Under the hood, Python does not scan every entry one by one.",
+    "It runs the key through a quick maths trick called hashing to jump almost straight to the slot where the value lives.",
+    "That is why a lookup stays fast even when the dictionary holds a million entries."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A dictionary is a real dictionary.",
+      "You do not flip to page 412; you look up the word.",
+      "The word is the key, the definition is the value."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Keys must be unique",
+      "teaser": "one label points to one value",
+      "body": [
+        "Each key can appear only once.",
+        "If you assign to a key that already exists, you overwrite its value.",
+        "That is exactly what you want: one label, one answer."
+      ]
+    },
+    {
+      "title": "Square brackets for lookup, even though you built it with curly braces",
+      "teaser": "`{ }` to create, `[ ]` to fetch",
+      "body": [
+        "You create the dictionary with curly braces: `{'cat': 'meow'}`.",
+        "But to fetch a value you use square brackets with the key: `sounds['cat']`.",
+        "Two different brackets, two different jobs."
+      ]
+    },
+    {
+      "title": "Asking for a key that isn't there",
+      "teaser": "`[ ]` crashes, `.get()` stays calm",
+      "body": [
+        "If you ask for a key that does not exist, `sounds['fox']` raises a `KeyError` and stops your program.",
+        "A `KeyError` is Python's way of saying 'there is no such label here'.",
+        "To avoid the crash, use `.get()` instead: `sounds.get('fox')` returns `None` when the key is missing.",
+        "You can even supply a fallback: `sounds.get('fox', 'unknown')` returns `'unknown'` instead of `None`.",
+        "This is why `.get()` is the safer choice when you are not certain the key is present."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "dictionary",
+      "def": "A collection of key-value pairs, written inside curly braces."
+    },
+    {
+      "term": "key",
+      "def": "The label you use to look up a value."
+    },
+    {
+      "term": "value",
+      "def": "The thing stored under a key."
+    },
+    {
+      "term": "key-value pair",
+      "def": "One label joined to one piece of data, like `'cat'` joined to `'meow'`."
+    },
+    {
+      "term": "KeyError",
+      "def": "The error Python raises when you ask for a key the dictionary does not have."
+    },
+    {
+      "term": "hashing",
+      "def": "A quick maths trick that turns a key into a number, so Python can jump near-straight to where its value is stored instead of searching one by one."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Look up a value by its key",
+      "runnable": true,
+      "source": "sounds = {\"cat\": \"meow\", \"dog\": \"woof\"}\nprint(sounds[\"dog\"])"
+    },
+    {
+      "language": "python",
+      "caption": "Add a new pair, then read it back",
+      "runnable": true,
+      "source": "ages = {\"Ada\": 36}\nages[\"Grace\"] = 45\nprint(ages[\"Grace\"])"
+    },
+    {
+      "language": "python",
+      "caption": "Use .get() with a fallback so a missing key doesn't crash",
+      "runnable": true,
+      "source": "sounds = {\"cat\": \"meow\", \"dog\": \"woof\"}\nprint(sounds.get(\"fox\", \"unknown\"))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Make a dictionary {'cat': 'meow'} and print the value stored under 'cat'.",
+    "starter": "",
+    "expectedOutput": "meow",
+    "check": "equals",
+    "hint": "Build it with `{'cat': 'meow'}`, then print `the_dict['cat']`."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Given `sounds = {'cat': 'meow', 'dog': 'woof'}`, what does `sounds['dog']` give you?",
+      "options": [
+        { "text": "'woof'", "correct": true },
+        { "text": "'dog'", "correct": false },
+        { "text": "1 (its position in the dictionary)", "correct": false },
+        { "text": "'meow'", "correct": false }
+      ],
+      "feedback": "You fetch a value by its key. The key `'dog'` points to the value `'woof'`, so you get `'woof'` back — not the key, and not a position number."
+    },
+    {
+      "q": "You run `sounds['fox']` but `'fox'` is not a key in the dictionary. What happens?",
+      "options": [
+        { "text": "Python raises a KeyError and stops the program", "correct": true },
+        { "text": "Python returns an empty string", "correct": false },
+        { "text": "Python adds 'fox' with an empty value", "correct": false },
+        { "text": "Python returns the first value in the dictionary", "correct": false }
+      ],
+      "feedback": "Looking up a missing key with square brackets raises a KeyError. To avoid the crash, use `.get('fox')`, which returns `None` instead."
+    },
+    {
+      "q": "Starting from `ages = {'Ada': 36}`, what does `ages['Ada'] = 40` do?",
+      "options": [
+        { "text": "It overwrites the value for 'Ada', so it becomes 40", "correct": true },
+        { "text": "It adds a second 'Ada' entry, keeping both 36 and 40", "correct": false },
+        { "text": "It raises an error because 'Ada' already exists", "correct": false },
+        { "text": "It leaves the dictionary unchanged", "correct": false }
+      ],
+      "feedback": "Keys are unique. Assigning to a key that already exists overwrites its value, so `ages` becomes `{'Ada': 40}` — one label, one value."
+    }
+  ],
+  "caseStudy": {
+    "title": "Your phone's contacts app",
+    "body": [
+      "Your contacts are a dictionary: a name points to a number.",
+      "You do not scroll to position 240 — you look up 'Mum'.",
+      "The name is the key; the phone number is the value.",
+      "This is also why typing a name into the search bar feels instant.",
+      "The app does not read every contact in turn; it jumps to the match the way a dictionary jumps to a key.",
+      "If you save a new number under a name you already have, it overwrites the old one — exactly like assigning to an existing key."
+    ],
+    "bridge": "Looking up `'cat'` to get `'meow'` is the same move as tapping a name to get a number."
+  },
+  "takeaways": [
+    "A dictionary stores key-value pairs in `{ }`.",
+    "You fetch a value by its key: `d['key']`.",
+    "Each key is unique — one label, one value.",
+    "A missing key in `[ ]` raises a `KeyError`; use `.get()` for a safe fallback."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Dictionaries",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html#dictionaries"
+    }
+  ]
+}

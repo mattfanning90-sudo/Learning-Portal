@@ -1,0 +1,155 @@
+{
+  "id": "py-m3-l2",
+  "trackId": "python",
+  "moduleId": "py-m3",
+  "order": 2,
+  "estMinutes": 12,
+  "title": "for Loops and range()",
+  "coreIdea": "A `for` loop repeats a fixed number of times, and `range()` gives it the numbers to count through.",
+  "plainEnglish": [
+    "A `while` loop repeats until something changes. A `for` loop repeats a set number of times.",
+    "`range()` hands the loop a sequence of numbers to walk through, one at a time.",
+    "`range(5)` means the numbers 0, 1, 2, 3, 4 — it starts at 0 and stops before 5.",
+    "Each time around, the loop variable holds the next number. No counter to manage yourself.",
+    "Under the hood, `range()` does not build the whole list of numbers up front. It hands them out one at a time, only when the loop asks for the next one.",
+    "That is why `range(1000000)` is instant — Python is not storing a million numbers, just remembering where to start, where to stop, and how big each step is.",
+    "The `for` loop and `range()` are a team: `range()` is the source of values, and `for` is the machine that pulls one value out on every pass."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Climbing a set of stairs that is already built.",
+      "`range()` lays down the steps for you: 0, 1, 2, 3, 4.",
+      "The `for` loop just walks up them, one step per repeat — no risk of climbing forever."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why range starts at 0 and stops early",
+      "teaser": "range(5) gives five numbers: 0 to 4",
+      "body": [
+        "`range(5)` produces 0, 1, 2, 3, 4. That is five numbers — but it never reaches 5.",
+        "The number you pass is the count, not the last value. It marks where to stop.",
+        "Starting at 0 feels odd at first, but it is how programmers everywhere count.",
+        "Need a different start? `range(2, 6)` gives 2, 3, 4, 5 — start at 2, stop before 6."
+      ]
+    },
+    {
+      "title": "range can skip — and count backwards",
+      "teaser": "A third number is the step size",
+      "body": [
+        "`range()` can take a third number, called the step. It is how far to jump between values.",
+        "`range(0, 10, 2)` gives 0, 2, 4, 6, 8 — it counts up by 2 each time, so it skips the odd numbers.",
+        "Leave the step out and it is 1 by default. That is why plain `range(5)` counts 0, 1, 2, 3, 4.",
+        "A negative step counts down. `range(5, 0, -1)` gives 5, 4, 3, 2, 1 — start at 5, stop before 0, step back by 1.",
+        "Here is the classic trap: the stop value is still excluded when counting down. `range(5, 0, -1)` never reaches 0, just like `range(5)` never reaches 5.",
+        "This is one rule that holds in every direction: the start is included, the stop is not."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "for loop",
+      "def": "Repeats once for each item in a sequence."
+    },
+    {
+      "term": "range()",
+      "def": "Builds a sequence of numbers for a loop to count through."
+    },
+    {
+      "term": "loop variable",
+      "def": "The name that holds the current item on each pass."
+    },
+    {
+      "term": "iteration",
+      "def": "One single pass through the loop — one trip around the cycle."
+    },
+    {
+      "term": "step",
+      "def": "The optional third number in `range()` — how far to jump between values."
+    },
+    {
+      "term": "lazy evaluation",
+      "def": "Producing values one at a time only when asked, instead of building them all up front."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "range(2, 6) — start at 2, stop before 6",
+      "runnable": true,
+      "source": "for n in range(2, 6):\n    print(n)"
+    },
+    {
+      "language": "python",
+      "caption": "range(0, 10, 2) — count up by 2, skipping the odd numbers",
+      "runnable": true,
+      "source": "for n in range(0, 10, 2):\n    print(n)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Use a for loop with range to print 0 1 2 3 4 — each on its own line.",
+    "starter": "",
+    "expectedOutput": "0\n1\n2\n3\n4",
+    "check": "equals",
+    "hint": "`range(5)` already gives you 0 through 4 — loop over it and print each number."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What numbers does `range(3)` produce?",
+      "options": [
+        { "text": "0, 1, 2", "correct": true },
+        { "text": "1, 2, 3", "correct": false },
+        { "text": "0, 1, 2, 3", "correct": false },
+        { "text": "3", "correct": false }
+      ],
+      "feedback": "`range(3)` starts at 0 and stops before 3, giving 0, 1, 2 — three numbers in total."
+    },
+    {
+      "q": "How many times does the body of `for i in range(2, 7):` run?",
+      "options": [
+        { "text": "5 times", "correct": true },
+        { "text": "7 times", "correct": false },
+        { "text": "6 times", "correct": false },
+        { "text": "2 times", "correct": false }
+      ],
+      "feedback": "It counts 2, 3, 4, 5, 6 — start at 2, stop before 7. That is 5 values, so the body runs 5 times."
+    },
+    {
+      "q": "What does `range(10, 0, -2)` count through?",
+      "options": [
+        { "text": "10, 8, 6, 4, 2", "correct": true },
+        { "text": "10, 8, 6, 4, 2, 0", "correct": false },
+        { "text": "0, 2, 4, 6, 8, 10", "correct": false },
+        { "text": "10, 9, 8, 7, 6, 5, 4, 3, 2, 1", "correct": false }
+      ],
+      "feedback": "The step is -2, so it counts down by 2 from 10. The stop value 0 is excluded, just like always — so it ends at 2, not 0."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a spreadsheet fills 1,000 rows",
+    "body": [
+      "When a tool processes a list — 1,000 customers, say — it does not write the code 1,000 times.",
+      "It writes a `for` loop once and lets `range()` count through every row.",
+      "Take a real example: a payroll system at month's end. It loops over each employee record, calculates tax, and writes one payslip per pass.",
+      "If the company hires 200 more people, nobody touches the loop. The same code now runs 1,200 times instead of 1,000.",
+      "Because `range()` hands out numbers lazily, a loop over a million rows uses almost no extra memory — Python never holds all million numbers at once.",
+      "Change 1,000 to a million and the same three lines still work."
+    ],
+    "bridge": "A `for` loop is how one short instruction does a job thousands of times over."
+  },
+  "takeaways": [
+    "A `for` loop repeats a fixed number of times.",
+    "`range(5)` gives 0, 1, 2, 3, 4 — it stops before the number you pass.",
+    "The loop variable holds the current number each time around.",
+    "`range()` can take a third number, the step, to skip values or count backwards.",
+    "`range()` is lazy — it hands out numbers one at a time, so even huge ranges cost almost no memory."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — range()",
+      "url": "https://docs.python.org/3/library/functions.html#func-range"
+    }
+  ]
+}

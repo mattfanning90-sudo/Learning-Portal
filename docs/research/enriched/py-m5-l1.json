@@ -1,0 +1,158 @@
+{
+  "id": "py-m5-l1",
+  "trackId": "python",
+  "moduleId": "py-m5",
+  "order": 1,
+  "estMinutes": 12,
+  "title": "Defining and Calling a Function",
+  "coreIdea": "A function is a named block of code; `def` defines it, and using its name runs it.",
+  "plainEnglish": [
+    "A function is a chunk of code you give a name.",
+    "You write it once with `def`, then run it later by calling its name.",
+    "Defining a function does not run it. Calling it does.",
+    "This lets you write a set of steps once and trigger them whenever you want.",
+    "Under the hood, Python stores the function as an object in memory, just like it stores a number or a string in a variable.",
+    "The name `greet` is really a label that points at that stored block of code.",
+    "When you write `greet()`, the parentheses are the signal that says \"run the thing this name points to, right now.\""
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a button on a microwave labelled \"Popcorn\".",
+      "Someone set up what that button does once.",
+      "After that, anyone just presses it — they do not rebuild the settings every time."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Defining is not the same as calling",
+      "teaser": "writing the function vs. actually running it",
+      "body": [
+        "`def greet():` tells Python: here is a recipe called `greet`.",
+        "Python reads it, remembers it, and moves on. Nothing prints yet.",
+        "The function only runs when you write its name with parentheses: `greet()`.",
+        "A common beginner surprise: you define a function, run the file, and nothing happens — because you never called it."
+      ]
+    },
+    {
+      "title": "The shape of a definition",
+      "teaser": "def, a name, parentheses, a colon, and an indented body",
+      "body": [
+        "Start with `def`, then a name you choose, then `()` and a `:`.",
+        "The lines that belong to the function are indented underneath.",
+        "Indentation is how Python knows where the function starts and ends."
+      ]
+    },
+    {
+      "title": "The name and the parentheses do two different jobs",
+      "teaser": "why `greet` alone does nothing, but `greet()` runs the code",
+      "body": [
+        "Writing the name on its own — just `greet` — only points at the function. It does not run it.",
+        "The parentheses `()` are the part that actually triggers the code to run. People call this 'invoking' or 'calling'.",
+        "This is a real and common bug: someone writes `greet` instead of `greet()` and wonders why nothing happens.",
+        "Python does not warn you. The line `greet` is valid — it just evaluates the function and throws the result away, so it looks like nothing happened.",
+        "Tip to remember it: a name with no parentheses is like reading the recipe; a name with parentheses is like cooking it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "function",
+      "def": "A named block of code you can run whenever you want."
+    },
+    {
+      "term": "def",
+      "def": "The keyword that defines a new function."
+    },
+    {
+      "term": "call",
+      "def": "Running a function by writing its name followed by ()."
+    },
+    {
+      "term": "body",
+      "def": "The indented lines underneath the def line — the actual steps the function runs."
+    },
+    {
+      "term": "indentation",
+      "def": "The blank space at the start of a line; in Python it shows which lines belong inside the function."
+    },
+    {
+      "term": "parentheses",
+      "def": "The round brackets () after a function name; writing them is what tells Python to run the function."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Define once, call twice — the second call is free",
+      "runnable": true,
+      "source": "def greet():\n    print(\"Welcome!\")\n\ngreet()\ngreet()"
+    },
+    {
+      "language": "python",
+      "caption": "The name alone does nothing — only the parentheses run it",
+      "runnable": true,
+      "source": "def greet():\n    print(\"Welcome!\")\n\ngreet\nprint(\"Still here, nothing printed above\")\ngreet()"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Define a function called greet that prints hi, then call it once.",
+    "starter": "",
+    "expectedOutput": "hi",
+    "check": "equals",
+    "hint": "Write the function with def greet():, indent print(\"hi\") underneath, then call greet() on its own line."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "You write `def greet():` with `print(\"hi\")` indented underneath, then run the file. Nothing prints. Why?",
+      "options": [
+        { "text": "You defined the function but never called it with greet()", "correct": true },
+        { "text": "Python ran the function but hid the output", "correct": false },
+        { "text": "The function name greet is not allowed in Python", "correct": false }
+      ],
+      "feedback": "Defining a function only stores it. You have to call it — write greet() on its own line — to actually run the code inside."
+    },
+    {
+      "q": "What is the difference between writing `greet` and writing `greet()`?",
+      "options": [
+        { "text": "greet just points at the function; greet() actually runs it", "correct": true },
+        { "text": "There is no difference; both run the function", "correct": false },
+        { "text": "greet runs the function and greet() defines it", "correct": false }
+      ],
+      "feedback": "The parentheses do the work. `greet` alone just refers to the function; `greet()` calls it and runs the code inside."
+    },
+    {
+      "q": "In Python, how does the language know which lines belong inside a function?",
+      "options": [
+        { "text": "The lines are indented underneath the def line", "correct": true },
+        { "text": "The lines are wrapped in curly braces { }", "correct": false },
+        { "text": "The lines each end with the word end", "correct": false }
+      ],
+      "feedback": "Python uses indentation. The indented lines under `def greet():` form the function's body. Curly braces are used by other languages like Java, not Python."
+    }
+  ],
+  "caseStudy": {
+    "title": "Instagram's \"like\" button is one function, called billions of times",
+    "body": [
+      "When you tap the heart on a photo, the same block of code runs every time.",
+      "Engineers wrote that \"record a like\" logic once, inside a function.",
+      "It is then called for every user, on every post — Instagram has reported over 4.2 billion likes per day.",
+      "Nobody rewrites the like logic for each tap; the function name is just called again and again.",
+      "This is why functions matter at scale: one definition, fixed and tested in a single place, can serve billions of calls."
+    ],
+    "bridge": "Define a useful action once, call it as often as you need — that is exactly what you just did with greet()."
+  },
+  "takeaways": [
+    "`def` defines a function; the indented lines are its body.",
+    "Defining a function does not run it.",
+    "Calling it by name — `greet()` — is what makes it run.",
+    "The parentheses are the part that triggers the code; the name alone does nothing."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Defining Functions",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions"
+    }
+  ]
+}

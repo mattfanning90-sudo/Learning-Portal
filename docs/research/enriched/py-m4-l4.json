@@ -1,0 +1,168 @@
+{
+  "id": "py-m4-l4",
+  "trackId": "python",
+  "moduleId": "py-m4",
+  "order": 4,
+  "estMinutes": 14,
+  "title": "Putting Collections Together",
+  "coreIdea": "Once data is in a collection, tools like `sum()` and `.values()` do the heavy lifting for you.",
+  "plainEnglish": [
+    "You now have two collections: lists for ordered items, dictionaries for labelled ones.",
+    "Often you want a single answer out of them — like a total.",
+    "A dictionary's `.values()` hands you just the values.",
+    "`sum()` then adds them all up in one step. No loop needed.",
+    "Under the hood, `sum()` still walks through every value one at a time — it just hides that loop inside a single, tested function so you don't have to write it.",
+    "This is the real win of built-in tools: less code to write means fewer places for a typo to creep in.",
+    "Python calls these one-at-a-time walks 'iterating', and most collections know how to be iterated over."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A dictionary of prices is a basket of tagged items.",
+      "`.values()` tips out just the price tags.",
+      "`sum()` is the till that adds them into one total."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "sum() needs values, not the whole dictionary",
+      "teaser": "feed it the prices, not the labels",
+      "body": [
+        "Calling `sum(prices)` would try to add the keys, which are usually words.",
+        "You want the numbers, so you pass `prices.values()`.",
+        "The `.values()` after `prices` is the dictionary doing a job for you — the dot means 'ask `prices` for its values', just like `.append()` asked a list to add an item.",
+        "`sum(prices.values())` adds every value and gives you the total."
+      ]
+    },
+    {
+      "title": "Choosing the right collection",
+      "teaser": "order matters? list. labels matter? dictionary.",
+      "body": [
+        "If position matters — a queue, a ranking — reach for a list.",
+        "If you look things up by name — prices, settings, scores by player — reach for a dictionary.",
+        "Picking the right one makes the rest of your code simpler."
+      ]
+    },
+    {
+      "title": "Why sum() can choke — and how to keep it happy",
+      "teaser": "one stray word turns a total into an error",
+      "body": [
+        "`sum()` only knows how to add numbers together.",
+        "If even one value is text — say a price was stored as `\"6\"` with quotes instead of `6` — Python stops and raises a `TypeError`.",
+        "The message reads something like `unsupported operand type(s) for +: 'int' and 'str'`, which is Python's way of saying 'I can't add a number and a word'.",
+        "This is a common pitfall when numbers arrive from a web form or a file, because that data usually shows up as text by default.",
+        "The fix is to make sure every value is a real number before summing — for example, convert text like `\"6\"` to the number `6` with `int()` first.",
+        "There is also a quiet detail worth knowing: `sum()` starts its running total at `0` by default, so `sum([])` on an empty collection returns `0`, not an error.",
+        "That default start value is why an empty cart cleanly shows a total of `0` instead of crashing."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": ".values()",
+      "def": "Gives you just the values from a dictionary, without their keys."
+    },
+    {
+      "term": "sum()",
+      "def": "Adds up all the numbers in a collection and returns the total."
+    },
+    {
+      "term": "iterate",
+      "def": "To go through a collection one item at a time. `sum()` iterates over the values for you behind the scenes."
+    },
+    {
+      "term": "TypeError",
+      "def": "Python's complaint when you mix incompatible types — like trying to add a number and a word together."
+    },
+    {
+      "term": "int()",
+      "def": "Turns text that looks like a whole number, such as `\"6\"`, into the actual number `6` you can do maths with."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Total a dictionary's values in one step",
+      "runnable": true,
+      "source": "prices = {\"coffee\": 4, \"cake\": 6}\nprint(sum(prices.values()))"
+    },
+    {
+      "language": "python",
+      "caption": "sum() works on a plain list too",
+      "runnable": true,
+      "source": "scores = [10, 20, 30]\nprint(sum(scores))"
+    },
+    {
+      "language": "python",
+      "caption": "An empty collection totals to 0, not an error",
+      "runnable": true,
+      "source": "empty_cart = {}\nprint(sum(empty_cart.values()))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Given prices = {'a': 2, 'b': 3}, print the total of all the values.",
+    "starter": "",
+    "expectedOutput": "5",
+    "check": "equals",
+    "hint": "Use `sum(prices.values())` to add up every value."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "You have `prices = {\"tea\": 3, \"scone\": 5}`. How do you print the total cost?",
+      "options": [
+        { "text": "print(sum(prices.values()))", "correct": true },
+        { "text": "print(sum(prices))", "correct": false },
+        { "text": "print(prices.sum())", "correct": false }
+      ],
+      "feedback": "`sum(prices.values())` adds the numbers. `sum(prices)` would try to add the keys (words), and dictionaries have no `.sum()` method."
+    },
+    {
+      "q": "What does `sum([])` return when the list is empty?",
+      "options": [
+        { "text": "0", "correct": true },
+        { "text": "An error, because there is nothing to add", "correct": false },
+        { "text": "An empty list `[]`", "correct": false }
+      ],
+      "feedback": "`sum()` starts its running total at `0`, so an empty collection cleanly returns `0` rather than crashing."
+    },
+    {
+      "q": "One value in your dictionary is the text `\"6\"` (with quotes) instead of the number `6`. What happens when you call `sum()` on the values?",
+      "options": [
+        { "text": "Python raises a TypeError because it can't add a number and a word", "correct": true },
+        { "text": "Python quietly skips the text value and totals the rest", "correct": false },
+        { "text": "Python turns the text into a number automatically and adds it", "correct": false }
+      ],
+      "feedback": "`sum()` only adds numbers. Mixing in text like `\"6\"` raises a TypeError. Convert it first with `int(\"6\")` to get the number `6`."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a checkout shows your total",
+    "body": [
+      "An online cart, like Amazon's, stores items and their prices.",
+      "To show the total, it sums all the price values.",
+      "Same pattern, whether the cart has two items or two hundred.",
+      "When you remove the last item, the cart becomes empty — and because `sum()` of nothing is `0`, the page shows a clean $0.00 instead of breaking.",
+      "Prices typed into a web form arrive as text, so the checkout converts each one to a number before summing — skipping that step is exactly what triggers a TypeError.",
+      "The shipping estimate, loyalty points, and tax line all use the same trick: take the values, hand them to `sum()`, show one number."
+    ],
+    "bridge": "Summing `{'a': 2, 'b': 3}` to get `5` is exactly what a checkout does to your basket."
+  },
+  "takeaways": [
+    "`.values()` pulls just the values out of a dictionary.",
+    "`sum()` adds a collection of numbers in one step.",
+    "`sum()` of an empty collection is `0`, not an error.",
+    "Mixing text into the numbers raises a TypeError — convert with `int()` first.",
+    "Use a list for order, a dictionary for labels."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — sum()",
+      "url": "https://docs.python.org/3/library/functions.html#sum"
+    },
+    {
+      "label": "Python docs — dict.values()",
+      "url": "https://docs.python.org/3/library/stdtypes.html#dict.values"
+    }
+  ]
+}

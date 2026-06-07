@@ -1,0 +1,154 @@
+{
+  "id": "py-m3-l3",
+  "trackId": "python",
+  "moduleId": "py-m3",
+  "order": 3,
+  "estMinutes": 12,
+  "title": "Adding Things Up in a Loop",
+  "coreIdea": "Keep a running total in a variable, and add to it on every pass through the loop.",
+  "plainEnglish": [
+    "Often you want to combine many numbers into one — a sum, a count, a tally.",
+    "The trick is a running total: a variable that grows as the loop runs.",
+    "You start it at 0 before the loop. That is the empty starting point.",
+    "Each time around, you add the current number to it. When the loop ends, the total holds the answer.",
+    "The `[4, 3, 8]` is a list — just a few values in a row inside square brackets, which the loop walks through one at a time. You'll meet lists properly in the next module.",
+    "You can pass `print()` several things separated by commas, like `print(\"You spent\", total)`. Python prints them in order with a space between, and unlike `+` it happily mixes text and numbers.",
+    "Here is what is happening under the hood. The name `total` is a label that points at a number in memory.",
+    "When Python runs `total = total + price`, it first works out the right side — the old number plus the price — and only then moves the `total` label onto that brand-new number.",
+    "So the loop does not magically remember anything. It just keeps overwriting one variable with a slightly bigger value, again and again, until the list runs out."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A shopping basket at the checkout.",
+      "It starts empty (0). Each item beeps and adds to the running total.",
+      "When the last item is scanned, the total on the screen is your answer."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why you start the total at 0",
+      "teaser": "the accumulator needs an empty starting point",
+      "body": [
+        "A variable that builds up a result is called an accumulator.",
+        "It must exist before the loop, or there is nothing to add to.",
+        "You start it at 0 because adding a number to 0 just gives that number — a clean, empty start.",
+        "Each pass runs `total = total + n`, which means: take the old total and grow it by `n`."
+      ]
+    },
+    {
+      "title": "Two classic mistakes: resetting inside, and forgetting to start",
+      "teaser": "where the line is placed changes everything",
+      "body": [
+        "The single most common bug here is putting `total = 0` in the wrong place.",
+        "If you write `total = 0` *inside* the loop, it resets to 0 on every single pass.",
+        "Then each pass throws away the previous work, and at the end `total` only holds the last number — not the sum.",
+        "The fix is indentation: `total = 0` must sit to the left of the loop body, so it runs once, before the loop starts.",
+        "The opposite mistake is leaving the line out entirely. If `total` was never created, the first `total = total + n` fails because Python has no old `total` to read.",
+        "Python stops and shows `NameError: name 'total' is not defined` — its way of saying you used a label that points at nothing.",
+        "So the rule is simple: create the accumulator once, before the loop, and grow it inside.",
+        "This same shape powers a count too. To count items instead of summing them, start `count = 0` and run `count = count + 1` each pass — you are accumulating ones instead of prices."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "running total",
+      "def": "A variable that grows as a loop adds to it."
+    },
+    {
+      "term": "accumulator",
+      "def": "The variable that collects a result across the loop."
+    },
+    {
+      "term": "total = total + n",
+      "def": "Replaces the total with itself plus the new number."
+    },
+    {
+      "term": "initialise",
+      "def": "To give a variable its first value before you use it — here, setting `total = 0` before the loop."
+    },
+    {
+      "term": "NameError",
+      "def": "Python's error when you use a variable name that was never given a value, like adding to a `total` that does not exist yet."
+    },
+    {
+      "term": "+= (plus-equals)",
+      "def": "A shorthand: `total += n` means exactly the same as `total = total + n`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Add up three prices in a basket",
+      "runnable": true,
+      "source": "total = 0\nfor price in [4, 3, 8]:\n    total = total + price\nprint(\"You spent\", total)"
+    },
+    {
+      "language": "python",
+      "caption": "Same idea with the `+=` shorthand",
+      "runnable": true,
+      "source": "total = 0\nfor price in [4, 3, 8]:\n    total += price\nprint(\"You spent\", total)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Use a loop to add up the numbers 1 to 5 and print the total.",
+    "starter": "",
+    "expectedOutput": "15",
+    "check": "equals",
+    "hint": "Start `total` at 0, loop over `range(1, 6)`, add each number to `total`, then print it."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Where should the line `total = 0` go so the loop sums correctly?",
+      "options": [
+        { "text": "Before the loop, so it runs once as the empty starting point.", "correct": true },
+        { "text": "Inside the loop body, so it refreshes on every pass.", "correct": false },
+        { "text": "After the loop, just before you print the total.", "correct": false }
+      ],
+      "feedback": "Create the accumulator once, before the loop. Putting `total = 0` inside the loop resets it every pass, so only the last number survives."
+    },
+    {
+      "q": "After this loop, what does `total` hold?\n\n`total = 0`\n`for n in [2, 5, 1]:`\n    `total = total + n`",
+      "options": [
+        { "text": "8 — each number is added to the running total.", "correct": true },
+        { "text": "1 — the last number replaces the total.", "correct": false },
+        { "text": "0 — the total never changes.", "correct": false }
+      ],
+      "feedback": "Each pass grows the total: 0+2 is 2, then 2+5 is 7, then 7+1 is 8."
+    },
+    {
+      "q": "What does `total += price` mean?",
+      "options": [
+        { "text": "Exactly the same as `total = total + price`.", "correct": true },
+        { "text": "It prints `price` and leaves `total` unchanged.", "correct": false },
+        { "text": "It sets `total` equal to `price`, replacing the old value.", "correct": false }
+      ],
+      "feedback": "`+=` is just shorthand for 'add this on top of what's already there', identical to `total = total + price`."
+    }
+  ],
+  "caseStudy": {
+    "title": "Every shopping cart total online",
+    "body": [
+      "When you check out at Amazon, your cart's subtotal starts at zero.",
+      "For each line item in the cart, the code adds that item's price (times its quantity) onto a running total.",
+      "That accumulator is built one item at a time — the exact pattern in this lesson.",
+      "Then the same idea stacks up: a second accumulator adds the tax on each item, a third sums the shipping, and the order total is just those running totals combined.",
+      "The grand total you finally pay is not stored anywhere in advance — it is recomputed by accumulating line by line every time your cart changes."
+    ],
+    "bridge": "Start at 0, add on each pass — the same pattern behind every total you have ever paid online."
+  },
+  "takeaways": [
+    "Start the total at 0 before the loop.",
+    "Add the current number to it on every pass.",
+    "When the loop ends, the variable holds the full total.",
+    "Putting `total = 0` inside the loop is the classic bug — it resets every pass."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — The for statement",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#for-statements"
+    }
+  ]
+}

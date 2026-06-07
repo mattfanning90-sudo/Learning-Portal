@@ -1,0 +1,184 @@
+{
+  "id": "py-m4-l1",
+  "trackId": "python",
+  "moduleId": "py-m4",
+  "order": 1,
+  "estMinutes": 12,
+  "title": "Lists",
+  "coreIdea": "A list holds many values in order, inside square brackets.",
+  "plainEnglish": [
+    "So far, a name has held one value. A list lets one name hold many.",
+    "You write a list with square brackets and commas: `[3, 1, 2]`.",
+    "The order is kept exactly as you wrote it.",
+    "Lists come with handy tools: `len()` counts the items, `.append()` adds one, and `sorted()` returns a tidy, ordered copy.",
+    "Under the hood, the name `scores` does not hold the list itself — it holds a label pointing at the list in memory.",
+    "That is why two names can point at the same list: change it through one name, and the other sees the change too.",
+    "A list can grow or shrink at any time, and it can even hold a mix of types, like `[1, \"two\", 3.0]` — though keeping one type is usually clearer."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A list is a shopping list on a single line.",
+      "Each item sits in its own spot, in the order you wrote them.",
+      "You can count the items, add one to the end, or copy it out neatly sorted."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Counting from zero: indexing",
+      "teaser": "the first item is number 0, not 1",
+      "body": [
+        "Each item has a position number, called an index.",
+        "Python counts from `0`, so the first item is `list[0]` and the second is `list[1]`.",
+        "It feels odd at first, but every serious language does it this way. You will get used to it fast."
+      ]
+    },
+    {
+      "title": "sorted() makes a copy — it does not change the original",
+      "teaser": "your list stays as it was",
+      "body": [
+        "`sorted(my_list)` hands you back a new, ordered list.",
+        "Your original list is left untouched.",
+        "That is useful: you can show a tidy version without losing the order you started with."
+      ]
+    },
+    {
+      "title": "The dot: asking a list to do something",
+      "teaser": "What `fruits.append()` really means",
+      "body": [
+        "`fruits.append(\"plum\")` means: tell the `fruits` list to add an item to itself.",
+        "The dot connects a value to an action that is built into it. Read it as 'fruits, do this'.",
+        "So `fruits.append(\"plum\")` is 'fruits, append plum'.",
+        "If `fruits` was `[\"apple\", \"pear\"]` before, it becomes `[\"apple\", \"pear\", \"plum\"]` after.",
+        "`.append` changes the list in place — the same list now holds one more item. That is different from `sorted()`, which leaves your list alone and returns a fresh copy."
+      ]
+    },
+    {
+      "title": "Two names, one list: the shared-label trap",
+      "teaser": "why a copy that isn't a copy can bite you",
+      "body": [
+        "A list name is a label, not a box. It points at the list rather than holding it.",
+        "So `b = a` does not make a second list. It makes a second label pointing at the *same* list.",
+        "Now `a.append(99)` changes the one shared list — and `b` shows the `99` too, because `b` was never separate.",
+        "This surprises almost every beginner. They expected `b` to be a snapshot of `a`, and it isn't.",
+        "When you truly want an independent copy, ask for one: `b = a.copy()` (or `b = list(a)`).",
+        "A handy rule of thumb: if you wrote `=` between two list names and expected a copy, you probably got a shared label instead.",
+        "This is also why `.append()` is described as changing the list 'in place' — there is only ever one list, and every label pointing at it sees the change."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "list",
+      "def": "An ordered collection of values, written inside square brackets."
+    },
+    {
+      "term": "index",
+      "def": "The position of an item, counted from 0."
+    },
+    {
+      "term": "sorted()",
+      "def": "Returns a new list with the items in order, smallest to largest."
+    },
+    {
+      "term": "len()",
+      "def": "Counts how many items are in a list."
+    },
+    {
+      "term": "in place",
+      "def": "A change that edits the existing list itself, rather than building a fresh copy."
+    },
+    {
+      "term": "method",
+      "def": "An action that belongs to a value and is called with a dot, like `fruits.append(...)`."
+    },
+    {
+      "term": "element",
+      "def": "A single item stored inside a list."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "A list keeps order — and tools work on the whole thing",
+      "runnable": true,
+      "source": "scores = [3, 1, 2]\nprint(scores)\nprint(len(scores))\nprint(sorted(scores))"
+    },
+    {
+      "language": "python",
+      "caption": "Pick one item by its index, then add a new one",
+      "runnable": true,
+      "source": "fruits = [\"apple\", \"pear\"]\nprint(fruits[0])\nfruits.append(\"plum\")\nprint(fruits)"
+    },
+    {
+      "language": "python",
+      "caption": "Two names, one list: changing one changes both",
+      "runnable": true,
+      "source": "a = [1, 2]\nb = a\na.append(3)\nprint(a)\nprint(b)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Make a list with the numbers 3, 1, 2 and print it sorted from smallest to largest.",
+    "starter": "",
+    "expectedOutput": "[1, 2, 3]",
+    "check": "equals",
+    "hint": "Put the numbers in `[ ]`, then print `sorted(...)` of that list."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Given `colors = [\"red\", \"green\", \"blue\"]`, what does `colors[1]` give you?",
+      "options": [
+        { "text": "\"red\"", "correct": false },
+        { "text": "\"green\"", "correct": true },
+        { "text": "\"blue\"", "correct": false },
+        { "text": "An error, because lists start at 1", "correct": false }
+      ],
+      "feedback": "Indexing starts at 0, so `colors[0]` is \"red\" and `colors[1]` is the second item, \"green\"."
+    },
+    {
+      "q": "You run `tidy = sorted(nums)`. What happens to the original `nums`?",
+      "options": [
+        { "text": "It is left unchanged; `sorted()` returns a new ordered list", "correct": true },
+        { "text": "It is sorted in place and `tidy` is just another name for it", "correct": false },
+        { "text": "It is emptied, with all items moved into `tidy`", "correct": false },
+        { "text": "It is deleted to save memory", "correct": false }
+      ],
+      "feedback": "`sorted()` builds and returns a fresh ordered copy. Your original list stays exactly as it was."
+    },
+    {
+      "q": "After `a = [1, 2]`, `b = a`, then `a.append(3)`, what does `print(b)` show?",
+      "options": [
+        { "text": "[1, 2]", "correct": false },
+        { "text": "[1, 2, 3]", "correct": true },
+        { "text": "[3]", "correct": false },
+        { "text": "An error", "correct": false }
+      ],
+      "feedback": "`b = a` makes a second label for the same list, not a copy. So appending through `a` also shows up in `b`: [1, 2, 3]."
+    }
+  ],
+  "caseStudy": {
+    "title": "Spotify's queue is a list",
+    "body": [
+      "When you line up songs in Spotify, you are building a list.",
+      "Each song has a position, and the order is what plays next — the song at index 0 plays first.",
+      "Tapping 'Add to queue' is an `.append()`: the song joins the end, leaving the order so far untouched.",
+      "Skipping a track removes the item at the front, so the next one shifts up to play.",
+      "Shuffle hands you a reordered version of the same songs, much like `sorted()` returns a freshly ordered copy.",
+      "Spotify even shows you the count of upcoming songs — that count is a `len()` of the queue."
+    ],
+    "bridge": "The `[3, 1, 2]` you just sorted is the same idea that powers a music queue."
+  },
+  "takeaways": [
+    "A list holds many values in order, inside `[ ]`.",
+    "Items are numbered from `0` — the first is index `0`.",
+    "`sorted()` gives you a tidy copy; `len()` counts; `.append()` adds.",
+    "A list name is a label, not a box: `b = a` shares one list, so use `a.copy()` for a real copy."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Lists",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html#more-on-lists"
+    }
+  ]
+}

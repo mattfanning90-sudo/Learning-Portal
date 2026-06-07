@@ -1,0 +1,154 @@
+{
+  "id": "py-m2-l4",
+  "trackId": "python",
+  "moduleId": "py-m2",
+  "order": 4,
+  "estMinutes": 13,
+  "title": "Combining Conditions: and, or, not",
+  "coreIdea": "`and`, `or`, and `not` glue small questions into one bigger yes-or-no question.",
+  "plainEnglish": [
+    "One condition is often not enough. Real rules combine several.",
+    "`and` is true only when both sides are true.",
+    "`or` is true when at least one side is true.",
+    "`not` flips a boolean — `True` becomes `False`, and the reverse.",
+    "With these three, you can express almost any rule you can say out loud.",
+    "Under the hood, Python reads each side as either `True` or `False`, then collapses the whole line down to one of those two values.",
+    "Python checks the parts left to right and stops the moment it already knows the answer — it does not waste effort finishing a question it has already settled.",
+    "`not` binds tightest, then `and`, then `or` — so `not` grabs the value right beside it before `and` or `or` get their turn."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A nightclub: you get in only if you are on the list `and` over 18.",
+      "Happy hour applies if it is Friday `or` Saturday.",
+      "`not` raining means: bring no umbrella."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "and vs or, in one breath",
+      "teaser": "and is strict; or is generous",
+      "body": [
+        "`and` is the strict one: every part must be `True`, or the whole thing is `False`.",
+        "`or` is the generous one: just one `True` part makes the whole thing `True`.",
+        "`not` simply reverses whatever boolean follows it.",
+        "You can combine them, and use brackets `()` to make the grouping clear."
+      ]
+    },
+    {
+      "title": "Short-circuiting: Python stops early",
+      "teaser": "why the right side sometimes never runs",
+      "body": [
+        "Python is lazy on purpose. It reads `and` / `or` left to right and quits the moment the answer is locked in.",
+        "For `and`, if the left side is already `False`, the whole thing must be `False`. So Python never even looks at the right side.",
+        "For `or`, if the left side is already `True`, the whole thing must be `True`. Again, the right side is skipped.",
+        "This is called short-circuit evaluation.",
+        "It is not just a speed trick — it lets you put a cheap, safe check first to guard a riskier one second.",
+        "Example: `if user is not None and user.is_admin:` — if `user` is `None`, Python stops, so it never tries to read `.is_admin` on nothing and never crashes.",
+        "Common pitfall: people swap the order and write `if user.is_admin and user is not None:`. Now the guard runs too late, and the line can crash on the first half.",
+        "Rule of thumb: put the check that protects against an error on the left side of `and`."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "and",
+      "def": "`True` only when both conditions are `True`."
+    },
+    {
+      "term": "or",
+      "def": "`True` when at least one condition is `True`."
+    },
+    {
+      "term": "not",
+      "def": "Flips a boolean: `not True` is `False`."
+    },
+    {
+      "term": "short-circuit evaluation",
+      "def": "When Python stops checking the rest of an `and`/`or` because the answer is already decided."
+    },
+    {
+      "term": "operator precedence",
+      "def": "The fixed order Python uses to decide which part runs first: `not`, then `and`, then `or`."
+    },
+    {
+      "term": "boolean expression",
+      "def": "Any piece of code that boils down to a single `True` or `False`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Both must be true for and; either works for or",
+      "runnable": true,
+      "source": "age = 25\nmember = True\nprint(age > 18 and member)\nprint(age > 100 or member)\nprint(not member)"
+    },
+    {
+      "language": "python",
+      "caption": "not binds tighter than and — brackets make order obvious",
+      "runnable": true,
+      "source": "raining = True\nweekend = False\nprint(not raining and weekend)\nprint(not (raining and weekend))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Set temp = 25 and sunny = True. Print beach if temp > 20 and sunny, else print home.",
+    "starter": "",
+    "expectedOutput": "beach",
+    "check": "equals",
+    "hint": "Combine the two checks with `and`: `if temp > 20 and sunny:`."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `True and False` evaluate to?",
+      "options": [
+        { "text": "`True`", "correct": false },
+        { "text": "`False`", "correct": true },
+        { "text": "It causes an error", "correct": false }
+      ],
+      "feedback": "`and` needs both sides to be `True`. One `False` side makes the whole thing `False`."
+    },
+    {
+      "q": "In `x or y`, when is the result `True`?",
+      "options": [
+        { "text": "Only when both `x` and `y` are `True`", "correct": false },
+        { "text": "When at least one of `x` or `y` is `True`", "correct": true },
+        { "text": "Only when both `x` and `y` are `False`", "correct": false }
+      ],
+      "feedback": "`or` is the generous one: just one `True` side is enough to make the whole expression `True`."
+    },
+    {
+      "q": "Why does `user is not None and user.name` not crash when `user` is `None`?",
+      "options": [
+        { "text": "Python guesses a default value for `user.name`", "correct": false },
+        { "text": "Short-circuiting: the left side is `False`, so Python skips the right side", "correct": true },
+        { "text": "`and` always ignores the right side", "correct": false }
+      ],
+      "feedback": "With `and`, a `False` left side decides the answer, so Python never runs `user.name`. That is short-circuit evaluation protecting you."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a spam filter decides to block an email",
+    "body": [
+      "Gmail's spam filter weighs hundreds of signals on every message at once.",
+      "Each signal is a small yes-or-no check: does the link point to a known-bad domain? Is the sender's address spoofed? Has the sender failed authentication checks like SPF or DKIM?",
+      "A message is far more likely to be quarantined when several risky signals line up: a suspicious link `and` an unknown sender, `or` a sender who is `not` in your contacts and `not` someone you have ever replied to.",
+      "Filters lean on short-circuit-style logic too: a cheap, certain check (this exact address is on a global blocklist) is tested first, so the expensive machine-learning checks only run when they are still needed.",
+      "Google reports its filters block more than 99.9% of spam, phishing, and malware from reaching inboxes — the result of combining many small conditions into one clear verdict."
+    ],
+    "bridge": "`and`, `or`, and `not` are the words that turn a pile of small checks into one decision."
+  },
+  "takeaways": [
+    "`and` needs both sides true; `or` needs just one.",
+    "`not` flips a boolean to its opposite.",
+    "Combine them to express real-world rules in code.",
+    "Python short-circuits: it stops as soon as the answer is certain.",
+    "Order matters — `not` binds tightest, then `and`, then `or`; use `()` to be sure."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Boolean operations",
+      "url": "https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not"
+    }
+  ]
+}

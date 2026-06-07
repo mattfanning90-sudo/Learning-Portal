@@ -1,0 +1,163 @@
+{
+  "id": "py-m5-l2",
+  "trackId": "python",
+  "moduleId": "py-m5",
+  "order": 2,
+  "estMinutes": 15,
+  "title": "Inputs and Outputs: Arguments and return",
+  "coreIdea": "Arguments pass information into a function; `return` hands a result back out.",
+  "plainEnglish": [
+    "Most functions take in some information and give back a result.",
+    "The information you pass in is called an argument.",
+    "The result the function hands back is created with `return`.",
+    "Think of it as a machine: you feed something in, you get something out.",
+    "Under the hood, each argument is copied into a parameter when the call starts.",
+    "The moment Python reaches a `return`, the function stops immediately and that value travels back to wherever the call happened.",
+    "If a function never reaches a `return`, Python quietly hands back a special value called `None`."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a vending machine.",
+      "You put in money and a code — those are the inputs.",
+      "It hands you a snack — that is the return value."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "print() shows; return gives back",
+      "teaser": "they look similar but do very different jobs",
+      "body": [
+        "`print()` displays text on the screen for a human to read.",
+        "`return` hands a value back to the code that called the function.",
+        "A returned value can be stored in a variable, added to something, or printed later.",
+        "If a function only prints and never returns, you cannot do further math with its result."
+      ]
+    },
+    {
+      "title": "Parameters vs. arguments",
+      "teaser": "the names in the def vs. the values you pass in",
+      "body": [
+        "In `def add(a, b):`, the `a` and `b` are parameters — placeholders.",
+        "In `add(2, 3)`, the `2` and `3` are arguments — the real values.",
+        "When the function runs, `a` becomes `2` and `b` becomes `3`."
+      ]
+    },
+    {
+      "title": "return ends the function on the spot",
+      "teaser": "any code after a return that runs never executes",
+      "body": [
+        "`return` does two things at once: it hands a value back, and it stops the function right there.",
+        "Lines written after a `return` that runs are simply skipped — they never execute.",
+        "This is useful for an early exit: you can `return` as soon as you have your answer.",
+        "If your function reaches its last line without hitting any `return`, Python automatically returns `None`.",
+        "`None` is Python's word for nothing — an empty seat where a value would normally sit.",
+        "A classic beginner trap is writing `print(a + b)` inside the function instead of `return a + b`.",
+        "It looks right because you see the number on screen, but the caller gets `None` back and the math falls apart."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "argument",
+      "def": "A value you pass into a function when you call it."
+    },
+    {
+      "term": "parameter",
+      "def": "A named placeholder in the function definition that receives an argument."
+    },
+    {
+      "term": "return",
+      "def": "Hands a result back to the code that called the function."
+    },
+    {
+      "term": "return value",
+      "def": "The actual result a function gives back — the thing you can store in a variable or use in more math."
+    },
+    {
+      "term": "None",
+      "def": "Python's built-in value for nothing; what a function hands back if it never reaches a `return`."
+    },
+    {
+      "term": "function call",
+      "def": "Writing a function's name followed by parentheses, like `add(2, 3)`, to actually run it."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "The function returns a value; we capture it in a variable",
+      "runnable": true,
+      "source": "def add(a, b):\n    return a + b\n\ntotal = add(10, 5)\nprint(total)"
+    },
+    {
+      "language": "python",
+      "caption": "A function with no return hands back None",
+      "runnable": true,
+      "source": "def show(x):\n    print(x)\n\nresult = show(7)\nprint(result)"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Write a function add(a, b) that returns a + b. Print the result of add(2, 3).",
+    "starter": "",
+    "expectedOutput": "5",
+    "check": "equals",
+    "hint": "Inside the function use return a + b, then print(add(2, 3))."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In `def add(a, b):` followed by the call `add(2, 3)`, which are the arguments?",
+      "options": [
+        { "text": "`a` and `b`", "correct": false },
+        { "text": "`2` and `3`", "correct": true },
+        { "text": "`add`", "correct": false },
+        { "text": "`def`", "correct": false }
+      ],
+      "feedback": "`2` and `3` are the arguments — the real values you pass in. `a` and `b` are the parameters, the placeholders that receive them."
+    },
+    {
+      "q": "A function only does `print(a + b)` inside and has no `return`. What does the calling code get back from it?",
+      "options": [
+        { "text": "The sum of `a` and `b`", "correct": false },
+        { "text": "`None`", "correct": true },
+        { "text": "The text it printed", "correct": false },
+        { "text": "An error", "correct": false }
+      ],
+      "feedback": "Printing shows text on screen but does not hand a value back. With no `return`, the function gives back `None` — Python's word for nothing."
+    },
+    {
+      "q": "What happens to a line of code written right after a `return` that runs?",
+      "options": [
+        { "text": "It runs first, then the return happens", "correct": false },
+        { "text": "It never runs, because `return` ends the function immediately", "correct": true },
+        { "text": "It runs twice", "correct": false },
+        { "text": "It causes a syntax error", "correct": false }
+      ],
+      "feedback": "`return` stops the function on the spot and hands its value back. Any line after a return that runs is simply skipped."
+    }
+  ],
+  "caseStudy": {
+    "title": "Google Sheets' SUM is a function with arguments and a return",
+    "body": [
+      "When you type =SUM(B2, B3) in a spreadsheet, you pass two arguments in: the cell references B2 and B3.",
+      "SUM reads the numbers in those cells, adds them, and returns one number to the cell holding the formula.",
+      "That returned number is a real value, not just text on screen — you can feed it straight into another formula, like =SUM(B2, B3) * 1.1 to add 10% tax.",
+      "If SUM merely displayed the total without returning it, you could never chain it into bigger calculations, and spreadsheets would be far less powerful.",
+      "Behind the scenes, that is the same idea as add(2, 3): arguments go in, one value comes back out, ready to reuse."
+    ],
+    "bridge": "You just built your own tiny SUM: arguments in, a returned answer out — a value you can store and reuse, not just print."
+  },
+  "takeaways": [
+    "Arguments carry information into a function.",
+    "`return` hands a result back out.",
+    "`return` is different from `print()` — one gives back a value, the other just shows text.",
+    "`return` also ends the function immediately; a function with no `return` hands back `None`."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — More on Defining Functions",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions"
+    }
+  ]
+}

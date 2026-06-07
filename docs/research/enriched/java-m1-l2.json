@@ -1,0 +1,174 @@
+{
+  "id": "java-m1-l2",
+  "trackId": "java",
+  "moduleId": "java-m1",
+  "order": 2,
+  "estMinutes": 14,
+  "title": "Variables and Types",
+  "coreIdea": "A variable is a labelled box that holds a value, and in Java you must say what type of value goes in it.",
+  "plainEnglish": [
+    "A variable is a named place to store a value so you can use it later.",
+    "Java is a typed language. Before you store a value, you say what kind it is.",
+    "An `int` holds whole numbers. A `double` holds decimals. A `String` holds text. A `boolean` holds true or false.",
+    "You declare a variable by writing the type, then the name, then the value: `int x = 9;`.",
+    "Once it has a type, that box can only hold that kind of value.",
+    "Behind the scenes, declaring `int age` reserves a small slot of memory sized for a whole number, and the name `age` is just a label pointing at that slot.",
+    "The type is read by the compiler — the program that turns your Java into runnable instructions — long before the program runs.",
+    "So the type isn't a comment or a hint. It is a rule the compiler enforces, and breaking it stops your code from building at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of labelled boxes in a warehouse.",
+      "Each box has a name (`x`) and a label saying what may go inside (`int` = whole numbers only).",
+      "Try to put a sentence in the whole-numbers box, and Java refuses before you even run."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four types you'll use most",
+      "teaser": "int, double, String, boolean — one job each",
+      "body": [
+        "`int` is for whole numbers, like `9` or `-4`.",
+        "`double` is for numbers with a decimal point, like `3.14`.",
+        "`String` is for text, written in double quotes, like `\"Sam\"`.",
+        "`boolean` is for a yes/no value: only `true` or `false`.",
+        "Pick the type that matches the data, and Java helps catch mistakes for you."
+      ]
+    },
+    {
+      "title": "Why Java makes you name the type",
+      "teaser": "the type is a promise the compiler checks",
+      "body": [
+        "Python lets you skip the type and guesses as it runs.",
+        "Java asks for it up front. That extra word is a promise about what the box holds.",
+        "Because Java knows the type before running, it can warn you about a whole class of bugs early — a big reason large teams trust it."
+      ]
+    },
+    {
+      "title": "Why int and double behave so differently",
+      "teaser": "whole numbers are exact, decimals are not",
+      "body": [
+        "An `int` stores a whole number exactly — there is no rounding.",
+        "But an `int` divided by an `int` throws away the remainder, so `7 / 2` gives `3`, not `3.5`.",
+        "If you want the `.5`, at least one side must be a `double`, like `7.0 / 2`, which gives `3.5`.",
+        "A `double` can hold the decimal, but it stores numbers in binary and cannot represent every fraction perfectly.",
+        "That is why `0.1 + 0.2` prints `0.30000000000000004` in Java — a tiny rounding error, not a Java bug.",
+        "The pitfall: never use `double` for money. A fraction of a cent that vanishes turns into a real mismatch on a real invoice.",
+        "Banks store money as whole cents in an `int`-like type, or use a special exact-decimal type, exactly to dodge this."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "variable",
+      "def": "A named box that stores a value you can use later."
+    },
+    {
+      "term": "type",
+      "def": "The kind of value a variable holds, declared before the name."
+    },
+    {
+      "term": "int",
+      "def": "A type for whole numbers, like 9 or -4."
+    },
+    {
+      "term": "declare",
+      "def": "To create a variable by giving its type, name, and value."
+    },
+    {
+      "term": "double",
+      "def": "A type for numbers with a decimal point, like 3.14 or 4.50."
+    },
+    {
+      "term": "compiler",
+      "def": "The program that checks your Java and turns it into instructions the computer can run; it enforces type rules before the program starts."
+    },
+    {
+      "term": "value",
+      "def": "The actual piece of data stored in a variable, such as the number 9 or the text \"Sam\"."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "One box per type — run it and watch each print",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int age = 30;\n        double price = 4.50;\n        String city = \"Sydney\";\n        boolean isOpen = true;\n        System.out.println(age);\n        System.out.println(price);\n        System.out.println(city);\n        System.out.println(isOpen);\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "Whole-number division drops the remainder — run it and see 3, not 3.5",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int wholeDivision = 7 / 2;\n        double realDivision = 7.0 / 2;\n        System.out.println(wholeDivision);\n        System.out.println(realDivision);\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Inside main, declare an int called x set to 9, then print x.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "9",
+    "check": "equals",
+    "hint": "Write int x = 9; then System.out.println(x);"
+  },
+  "knowledgeCheck": [
+    {
+      "q": "Which type should you use to store a customer's name, like \"Sam\"?",
+      "options": [
+        { "text": "int", "correct": false },
+        { "text": "String", "correct": true },
+        { "text": "boolean", "correct": false },
+        { "text": "double", "correct": false }
+      ],
+      "feedback": "`String` holds text, written in double quotes. `int` and `double` are for numbers, and `boolean` is only true or false."
+    },
+    {
+      "q": "In Java, what does `7 / 2` evaluate to when both numbers are ints?",
+      "options": [
+        { "text": "3.5", "correct": false },
+        { "text": "3", "correct": true },
+        { "text": "4", "correct": false },
+        { "text": "An error", "correct": false }
+      ],
+      "feedback": "Dividing an int by an int throws away the remainder, so `7 / 2` is `3`. Make one side a double, like `7.0 / 2`, to get `3.5`."
+    },
+    {
+      "q": "Why does Java make you write the type, as in `int x = 9;`?",
+      "options": [
+        { "text": "It is just an optional comment for other people to read.", "correct": false },
+        { "text": "It is a rule the compiler checks before the program runs, catching wrong-type mistakes early.", "correct": true },
+        { "text": "It makes the program run faster every time it prints.", "correct": false },
+        { "text": "It lets the variable hold any kind of value later on.", "correct": false }
+      ],
+      "feedback": "The type is a promise the compiler enforces before your code runs, so a whole class of mistakes is caught at build time rather than in production."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a banking app keeps cents straight",
+    "body": [
+      "A bank's balance is a number, a customer's name is text, and \"account frozen?\" is a yes/no flag.",
+      "Java code at banks like JPMorgan declares each as a type — a number, a `String`, a `boolean`.",
+      "Because the types are fixed, you can't accidentally add a name to a balance.",
+      "Banks go one step further: they avoid `double` for money, because a `double` can lose a fraction of a cent to rounding.",
+      "Instead they store amounts as whole cents (a balance of $4.50 becomes the integer 450 cents) or use Java's exact-decimal `BigDecimal` type.",
+      "That choice is why your statement always adds up to the last cent, even across millions of transactions a day."
+    ],
+    "bridge": "The type you wrote on `int x` is the same discipline that keeps real money safe in production systems."
+  },
+  "takeaways": [
+    "A variable is a named box for a value.",
+    "Java is typed: you state `int`, `double`, `String`, or `boolean` before the name.",
+    "Declare with type, then name, then value: `int x = 9;`.",
+    "int division drops the remainder; use a double for exact decimals — and never use double for money."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — Variables",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/variables.html"
+    },
+    {
+      "label": "Oracle — Primitive Data Types",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html"
+    }
+  ]
+}

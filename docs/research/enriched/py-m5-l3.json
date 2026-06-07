@@ -1,0 +1,160 @@
+{
+  "id": "py-m5-l3",
+  "trackId": "python",
+  "moduleId": "py-m5",
+  "order": 3,
+  "estMinutes": 13,
+  "title": "Reuse and Not Repeating Yourself",
+  "coreIdea": "Functions let you write logic once and reuse it everywhere, instead of copying the same code.",
+  "plainEnglish": [
+    "Copying and pasting the same code is risky.",
+    "If you need to fix it, you have to fix every copy.",
+    "A function lets you write that logic once and call it everywhere.",
+    "Programmers call this DRY: Don't Repeat Yourself.",
+    "Under the hood, a function is stored in memory once.",
+    "When you call its name, Python jumps to that one stored block, runs it, then comes back.",
+    "So every caller shares the exact same instructions — there is only ever one copy to trust."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine handwriting the same letter to 50 people.",
+      "Miss a typo, and you must redo all 50.",
+      "A function is the printed template: fix it once, every copy improves."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why DRY saves you from bugs",
+      "teaser": "one fix in one place beats fifty fixes in fifty places",
+      "body": [
+        "Say you square numbers in ten spots by writing `n * n` each time.",
+        "Later you decide squaring should also print a message.",
+        "With copied code, you change ten lines and probably miss one.",
+        "With a `square(n)` function, you change one place and every caller updates."
+      ]
+    },
+    {
+      "title": "A good function name reads like its job",
+      "teaser": "square(4) tells you what it does at a glance",
+      "body": [
+        "`square(4)` is easier to read than `4 * 4` scattered through your code.",
+        "The name documents the intent.",
+        "Future you — and your teammates — can read it without decoding the math."
+      ]
+    },
+    {
+      "title": "The trap: don't get DRY-obsessed",
+      "teaser": "two things that just happen to look alike are not the same thing",
+      "body": [
+        "DRY is about removing one idea written many times.",
+        "It is not about merging two ideas that only look similar today.",
+        "Imagine a `tax` calculation and a `tip` calculation that both happen to be `amount * 0.1`.",
+        "Forcing them into one shared function feels clever, but it is a trap.",
+        "The day the tax rate changes to `0.15`, your shared function now breaks the tip too.",
+        "Programmers call this a wrong abstraction: code that is glued together for a reason that was never real.",
+        "The rule of thumb: only pull code into a function once you see the *same idea* repeated, not just the same characters."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "DRY",
+      "def": "\"Don't Repeat Yourself\" — write logic once and reuse it."
+    },
+    {
+      "term": "reuse",
+      "def": "Calling the same function many times instead of rewriting its code."
+    },
+    {
+      "term": "duplication",
+      "def": "Copies of the same code that must all be kept in sync."
+    },
+    {
+      "term": "call",
+      "def": "Running a function by writing its name with parentheses, like `square(4)`."
+    },
+    {
+      "term": "single source of truth",
+      "def": "One place that holds the real version of something, so everything else points to it instead of keeping its own copy."
+    },
+    {
+      "term": "abstraction",
+      "def": "Hiding the messy details behind a simple name, so you can use a thing without re-reading how it works."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "One function, reused on three different numbers",
+      "runnable": true,
+      "source": "def square(n):\n    return n * n\n\nprint(square(2))\nprint(square(5))\nprint(square(9))"
+    },
+    {
+      "language": "python",
+      "caption": "Fix the function once, and every caller improves",
+      "runnable": true,
+      "source": "def greet(name):\n    return \"Hello, \" + name + \"!\"\n\nprint(greet(\"Ada\"))\nprint(greet(\"Grace\"))\nprint(greet(\"Linus\"))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Write a function square(n) that returns n times n. Print square(4).",
+    "starter": "",
+    "expectedOutput": "16",
+    "check": "equals",
+    "hint": "Use return n * n inside the function, then print(square(4))."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does DRY stand for in programming?",
+      "options": [
+        { "text": "Don't Repeat Yourself", "correct": true },
+        { "text": "Do Run Yearly", "correct": false },
+        { "text": "Delete Redundant YAML", "correct": false }
+      ],
+      "feedback": "DRY means \"Don't Repeat Yourself\" — write logic once and reuse it instead of copying it."
+    },
+    {
+      "q": "You have the same calculation copied into 8 places and find a bug in it. Why does putting it in one function help?",
+      "options": [
+        { "text": "You fix it in one place and all 8 callers update automatically", "correct": true },
+        { "text": "It makes the program run 8 times faster", "correct": false },
+        { "text": "It deletes the other 7 files for you", "correct": false }
+      ],
+      "feedback": "A function is one shared block. Fix it once and every place that calls it gets the fix — no hunting for the other copies."
+    },
+    {
+      "q": "When is it a BAD idea to merge two pieces of code into one shared function?",
+      "options": [
+        { "text": "When they only look alike today but are really two different ideas that can change separately", "correct": true },
+        { "text": "Whenever the two pieces of code are longer than one line", "correct": false },
+        { "text": "Whenever the function would be called more than once", "correct": false }
+      ],
+      "feedback": "DRY removes the same idea written twice — not two different ideas that happen to look similar. Merging them creates a wrong abstraction that breaks when one needs to change but the other doesn't."
+    }
+  ],
+  "caseStudy": {
+    "title": "Stripe charges every business with the same payment function",
+    "body": [
+      "Stripe processes payments for millions of companies, from corner shops to Amazon and Shopify.",
+      "It does not write fresh \"charge a card\" code for each one.",
+      "Instead, a business sends one request to a shared endpoint — `POST /v1/charges` (now the Payment Intents API) — and Stripe's own code does the work.",
+      "That one well-tested path handles fraud checks, currency conversion, and bank rules for everybody.",
+      "So when Stripe upgrades its fraud detection, every merchant on Earth gets the upgrade at once — nobody has to copy new code into their app."
+    ],
+    "bridge": "Writing square(n) once and reusing it is the same instinct that keeps huge systems safe and consistent."
+  },
+  "takeaways": [
+    "Copy-pasted code is duplication you have to maintain in many places.",
+    "A function lets you write logic once and reuse it.",
+    "DRY means one place to fix, one place to improve.",
+    "But only share code when it's truly the same idea — not when it just looks alike."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — Defining Functions",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "id": "py-m3-l1",
+  "trackId": "python",
+  "moduleId": "py-m3",
+  "order": 1,
+  "estMinutes": 12,
+  "title": "while Loops",
+  "coreIdea": "A `while` loop repeats a block of code over and over, for as long as a condition stays true.",
+  "plainEnglish": [
+    "Sometimes you want to do the same thing again and again.",
+    "A `while` loop says: keep doing this while a condition is true.",
+    "Each time around, Python checks the condition first. If it is true, it runs the block again. If it is false, the loop stops.",
+    "Something inside the loop has to change, or the condition never becomes false. Then it loops forever — an infinite loop.",
+    "Under the hood there is no magic. Python just jumps back up to the top of the loop and re-checks the same `True`/`False` test every single pass.",
+    "One full pass through the block is called an iteration. The condition is only ever checked between iterations, never in the middle of one.",
+    "Because the check happens at the top, a `while` loop can run zero times. If the condition is already false on the very first look, Python skips the whole block."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Stirring a pot while the timer still has time left.",
+      "Each stir, you glance at the timer. Still time? Stir again.",
+      "Time's up? You stop. If the timer never ran down, you'd stir forever."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "How to avoid an infinite loop",
+      "teaser": "the counter must move toward 'false'",
+      "body": [
+        "A `while` loop only ends when its condition becomes false.",
+        "So something inside the loop must change, step by step, toward that.",
+        "If you count `n` up from 1 while `n <= 3`, you must add to `n` each time. Forget that line, and `n` stays 1 forever — the loop never stops.",
+        "If you ever run a loop that won't end, press the stop button. No harm done."
+      ]
+    },
+    {
+      "title": "break and continue — two trapdoors out of a loop",
+      "teaser": "leave early, or skip the rest of this pass",
+      "body": [
+        "Sometimes you want to leave a loop before the condition naturally turns false.",
+        "The `break` keyword does exactly that. The instant Python runs `break`, the loop stops right there and jumps to the code after it.",
+        "A common pattern is `while True:` — a condition that is always true — paired with a `break` inside an `if`. The loop runs until that one exact moment you choose to escape.",
+        "The `continue` keyword is gentler. It does not leave the loop. It skips the rest of the current pass and jumps straight back up to re-check the condition.",
+        "So `break` means 'I'm done with the whole loop', and `continue` means 'skip the rest of this one pass, but keep looping'.",
+        "Here is the subtle trap: if you put `continue` before the line that changes your counter, that change gets skipped — and you can spin into an infinite loop without meaning to."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "while loop",
+      "def": "Repeats a block as long as a condition stays true."
+    },
+    {
+      "term": "condition",
+      "def": "A yes/no test Python checks before each repeat."
+    },
+    {
+      "term": "infinite loop",
+      "def": "A loop that never stops, because its condition never turns false."
+    },
+    {
+      "term": "iteration",
+      "def": "One full pass through the loop's block of code."
+    },
+    {
+      "term": "break",
+      "def": "A keyword that stops the loop immediately and jumps past it."
+    },
+    {
+      "term": "continue",
+      "def": "A keyword that skips the rest of the current pass and re-checks the condition."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "A countdown — watch the condition turn false",
+      "runnable": true,
+      "source": "count = 3\nwhile count > 0:\n    print(count)\n    count = count - 1\nprint(\"Lift off!\")"
+    },
+    {
+      "language": "python",
+      "caption": "break — stop the moment you find what you want",
+      "runnable": true,
+      "source": "n = 1\nwhile n <= 10:\n    if n == 4:\n        print(\"Found 4, stopping.\")\n        break\n    print(n)\n    n = n + 1"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Use a while loop to print the numbers 1, 2, 3 — each on its own line.",
+    "starter": "",
+    "expectedOutput": "1\n2\n3",
+    "check": "equals",
+    "hint": "Start a counter at 1, loop while it is `<= 3`, print it, then add 1 each time."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "When does a `while` loop check its condition?",
+      "options": [
+        { "text": "Before every pass through the block", "correct": true },
+        { "text": "Only once, before the loop starts", "correct": false },
+        { "text": "In the middle of each pass, line by line", "correct": false }
+      ],
+      "feedback": "Python checks the condition at the top, before each iteration. If it is already false on the first look, the block never runs at all."
+    },
+    {
+      "q": "You write `while count > 0:` but forget to change `count` inside the loop. What happens?",
+      "options": [
+        { "text": "The loop runs forever — an infinite loop", "correct": true },
+        { "text": "The loop runs exactly once", "correct": false },
+        { "text": "Python skips the loop entirely", "correct": false }
+      ],
+      "feedback": "If nothing inside moves `count` toward 0, the condition `count > 0` stays true forever, so the loop never ends."
+    },
+    {
+      "q": "What does the `break` keyword do inside a loop?",
+      "options": [
+        { "text": "Stops the loop immediately and jumps to the code after it", "correct": true },
+        { "text": "Skips the rest of this pass but keeps looping", "correct": false },
+        { "text": "Restarts the loop from the beginning", "correct": false }
+      ],
+      "feedback": "`break` exits the whole loop on the spot. (Skipping just the current pass is what `continue` does.)"
+    }
+  ],
+  "caseStudy": {
+    "title": "The loop running inside every video game",
+    "body": [
+      "Every game has a 'game loop' at its heart.",
+      "It runs `while` the game is still on: read the controller, update the world, draw the screen — then repeat.",
+      "It does this fast and over and over. A game running at 60 frames per second is just this loop spinning 60 full passes every second.",
+      "To keep that pace steady, the loop often waits a few milliseconds each pass so it doesn't run too fast — this is how a game stays smooth instead of speeding up on a faster computer.",
+      "The moment you quit, the condition turns false and the loop ends. Pressing the in-game 'Quit' button is often literally a `break` out of that `while` loop."
+    ],
+    "bridge": "You just wrote the same shape that keeps Mario moving: repeat while something is still true."
+  },
+  "takeaways": [
+    "A `while` loop repeats as long as its condition is true.",
+    "Python checks the condition before every repeat.",
+    "Something inside must change, or you get an infinite loop.",
+    "`break` leaves the loop early; `continue` skips the rest of one pass."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — while statement",
+      "url": "https://docs.python.org/3/reference/compound_stmts.html#the-while-statement"
+    }
+  ]
+}

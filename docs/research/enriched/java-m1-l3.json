@@ -1,0 +1,161 @@
+{
+  "id": "java-m1-l3",
+  "trackId": "java",
+  "moduleId": "java-m1",
+  "order": 3,
+  "estMinutes": 14,
+  "title": "Numbers and Math",
+  "coreIdea": "Java does arithmetic with `+ - * /`, but dividing two whole numbers throws away the remainder.",
+  "plainEnglish": [
+    "Java can do maths like a calculator: add, subtract, multiply, and divide.",
+    "The symbols are `+`, `-`, `*` for times, and `/` for divide.",
+    "Whole numbers are `int`. Numbers with a decimal point are `double`.",
+    "Watch out: dividing one `int` by another `int` drops the part after the decimal.",
+    "So `7 / 2` gives `3`, not `3.5`. This surprises almost everyone once.",
+    "Under the hood, every value in Java has a fixed type, and that type decides how the maths is done.",
+    "When both numbers are `int`, Java promises to give you back an `int` — so it must drop the fraction to keep that promise.",
+    "The moment you mix in a `double`, Java quietly upgrades the whole sum to decimal maths, and the fraction survives."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of sharing whole apples with `int` division.",
+      "Seven apples split between two people: each gets 3, and the leftover apple is ignored.",
+      "Use a `double` (`7.0 / 2`) when you care about the half."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The integer-division gotcha",
+      "teaser": "int / int = int — the decimals vanish",
+      "body": [
+        "When both sides of `/` are whole numbers, Java keeps the answer whole.",
+        "`9 / 4` is `2`, because it throws away the `.25`.",
+        "To get `2.25`, make one side a decimal: `9.0 / 4`.",
+        "This is not a bug. It is Java staying true to the types you gave it."
+      ]
+    },
+    {
+      "title": "Meet the modulo operator: %",
+      "teaser": "The leftover that integer division throws away",
+      "body": [
+        "Integer division throws the remainder away. The `%` operator hands it back.",
+        "`%` is called the modulo (or remainder) operator.",
+        "`9 % 4` is `1`, because 4 goes into 9 twice with `1` left over.",
+        "`7 % 2` is `1`, because 2 goes into 7 three times with `1` left over.",
+        "Here is the mechanism: `9 / 4` gives the `2` (how many whole groups), and `9 % 4` gives the `1` (what is left after those groups).",
+        "Together they fully describe the division, with nothing lost.",
+        "A classic everyday use: `number % 2`. If it is `0`, the number is even; if it is `1`, the number is odd.",
+        "Another: `%` is how clocks wrap around. `(10 + 5) % 12` is `3`, which is how 10 o'clock plus 5 hours lands on 3 o'clock."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "arithmetic",
+      "def": "Doing maths with operators like + - * /."
+    },
+    {
+      "term": "operator",
+      "def": "A symbol that combines values, such as * for multiply."
+    },
+    {
+      "term": "integer division",
+      "def": "Dividing two whole numbers and discarding the remainder."
+    },
+    {
+      "term": "int",
+      "def": "A type that holds whole numbers only, with no decimal point, like 3 or -42."
+    },
+    {
+      "term": "double",
+      "def": "A type that holds numbers with a decimal point, like 3.5 or 2.25."
+    },
+    {
+      "term": "modulo (%)",
+      "def": "An operator that gives the remainder left over after dividing, so 9 % 4 is 1."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "The same division, two ways — run it and compare",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(8 * 5);\n        System.out.println(9 / 4);\n        System.out.println(9.0 / 4);\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "Division and remainder side by side — the quotient and what's left over",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(9 / 4);\n        System.out.println(9 % 4);\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Print the result of 8 * 5.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "40",
+    "check": "equals",
+    "hint": "Put 8 * 5 directly inside System.out.println( )."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In Java, what does `7 / 2` evaluate to?",
+      "options": [
+        { "text": "3", "correct": true },
+        { "text": "3.5", "correct": false },
+        { "text": "4", "correct": false },
+        { "text": "1", "correct": false }
+      ],
+      "feedback": "Both `7` and `2` are whole numbers (`int`), so Java does integer division and throws away the `.5`. The answer is `3`. To get `3.5`, write `7.0 / 2`."
+    },
+    {
+      "q": "You want `9 / 4` to give `2.25` instead of `2`. What is the simplest fix?",
+      "options": [
+        { "text": "Make one side a decimal, like `9.0 / 4`", "correct": true },
+        { "text": "Use `%` instead of `/`", "correct": false },
+        { "text": "Swap the order to `4 / 9`", "correct": false },
+        { "text": "Nothing — `9 / 4` already gives `2.25`", "correct": false }
+      ],
+      "feedback": "If either side is a `double`, Java switches to decimal maths and keeps the fraction. `9.0 / 4` gives `2.25`. The `%` operator gives the remainder, not the decimal answer."
+    },
+    {
+      "q": "What does `9 % 4` evaluate to?",
+      "options": [
+        { "text": "1", "correct": true },
+        { "text": "2", "correct": false },
+        { "text": "2.25", "correct": false },
+        { "text": "0", "correct": false }
+      ],
+      "feedback": "`%` is the modulo operator: it gives the remainder. 4 goes into 9 twice, leaving `1` left over, so `9 % 4` is `1`. (`9 / 4` would give the `2`.)"
+    }
+  ],
+  "caseStudy": {
+    "title": "Splitting a bill in a payments app",
+    "body": [
+      "Apps like Splitwise divide a total bill among friends.",
+      "If they used `int` division, a $10 bill split three ways would show $3 each and quietly lose a dollar.",
+      "So they avoid plain `int / int` for money. Many finance systems store amounts as whole cents (1000 cents for $10) and divide carefully.",
+      "Dividing 1000 cents by 3 gives 333 cents each, and `1000 % 3` reveals the `1` cent left over.",
+      "That leftover cent has to go somewhere — a real app assigns it to one person so the parts add back up to exactly $10.00.",
+      "This is also why serious money code avoids `double`: tiny rounding errors in decimals can make cents drift, so types like `BigDecimal` are used for exact arithmetic."
+    ],
+    "bridge": "Knowing that `int / int` drops the remainder — and that `%` hands that remainder back — is exactly the trap, and the tool, real money apps rely on."
+  },
+  "takeaways": [
+    "Java's maths operators are `+`, `-`, `*`, and `/`.",
+    "`int / int` throws away the decimal part.",
+    "Use a `double` like `9.0 / 4` when you need the fraction.",
+    "The `%` operator gives the remainder that division throws away (`9 % 4` is `1`)."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — Arithmetic Operators",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html"
+    },
+    {
+      "label": "Oracle — Primitive Data Types",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html"
+    }
+  ]
+}

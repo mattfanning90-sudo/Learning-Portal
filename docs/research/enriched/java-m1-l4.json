@@ -1,0 +1,158 @@
+{
+  "id": "java-m1-l4",
+  "trackId": "java",
+  "moduleId": "java-m1",
+  "order": 4,
+  "estMinutes": 14,
+  "title": "Strings in Java",
+  "coreIdea": "A `String` holds text, and the `+` sign glues two pieces of text together.",
+  "plainEnglish": [
+    "A `String` is text: a name, a sentence, anything in double quotes.",
+    "You store it like any variable: `String name = \"Sam\";`.",
+    "To join text together, use `+`. This is called concatenation.",
+    "`\"Hi, \" + name` builds the single text `Hi, Sam`.",
+    "You can keep gluing with more `+` signs: `\"Welcome aboard, \" + name + \"!\"` joins three pieces in order. The quoted parts are literal text; `name` with no quotes is replaced by the value stored in it.",
+    "Mind the spaces inside the quotes — Java glues exactly what you wrote.",
+    "Under the hood, a `String` is really a fixed sequence of characters that Java stores in memory and never edits in place.",
+    "When you write `\"Hi, \" + name`, Java doesn't change either piece — it builds a brand-new `String` that contains both, and the originals stay exactly as they were.",
+    "That is why we say strings are immutable: every join, every change, quietly produces a fresh piece of text rather than rewriting an old one."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of words printed on strips of paper.",
+      "The `+` is tape that joins two strips into one longer strip.",
+      "If you want a gap between words, you tape in the space yourself: `\"Hi, \"`."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Concatenation, and the missing-space trap",
+      "teaser": "the + only adds what you put inside the quotes",
+      "body": [
+        "`+` between two strings sticks them together with nothing extra.",
+        "`\"Hi,\" + \"Sam\"` gives `Hi,Sam` — no space, because you never typed one.",
+        "Add the space inside the quotes: `\"Hi, \" + \"Sam\"` gives `Hi, Sam`.",
+        "Java is literal. It glues exactly the characters you wrote, spaces included."
+      ]
+    },
+    {
+      "title": "Why strings are immutable (and why + makes a new one)",
+      "teaser": "every join builds a fresh String — the old ones never change",
+      "body": [
+        "In Java a `String` is immutable. That word means it can never be changed after it is created.",
+        "So `+` does not edit either side. It builds a completely new `String` and leaves the originals untouched.",
+        "Picture it: `String greeting = \"Hi, \" + name;` reads `\"Hi, \"` and the value in `name`, then makes a third strip of paper that holds both. The first two strips are unchanged.",
+        "This is also why one common beginner mistake is silent: writing `name + 1` does not error. Java turns the number `1` into the text `\"1\"` and glues it on, giving `Sam1`, not arithmetic.",
+        "The handy rule: if either side of `+` is a `String`, Java treats `+` as glue, not addition.",
+        "A real-world cost: if you glue text inside a loop that runs thousands of times, each `+` quietly makes a new `String`, which can pile up. For heavy looping, Java offers `StringBuilder`, a kind of scratch pad you can edit in place — but for everyday greetings, plain `+` is perfectly fine."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "String",
+      "def": "A piece of text, written inside double quotes."
+    },
+    {
+      "term": "concatenation",
+      "def": "Joining two strings into one using +."
+    },
+    {
+      "term": "double quotes",
+      "def": "The \" marks that wrap text in Java."
+    },
+    {
+      "term": "immutable",
+      "def": "Cannot be changed after it is created. Every edit to a String actually makes a brand-new String."
+    },
+    {
+      "term": "string literal",
+      "def": "Text you type directly in your code between double quotes, like \"Hi, \"."
+    },
+    {
+      "term": "StringBuilder",
+      "def": "A built-in Java tool that lets you build up text step by step without making a new String each time — useful when joining a lot of text in a loop."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Glue text together with + — note the space inside the quotes",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        String name = \"Sam\";\n        System.out.println(\"Hi, \" + name);\n        System.out.println(\"Welcome aboard, \" + name + \"!\");\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "A number glued to text becomes text, not arithmetic",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        String name = \"Sam\";\n        System.out.println(name + 1);\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Declare a String name set to Sam, then print: Hi, Sam",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "Hi, Sam",
+    "check": "equals",
+    "hint": "Use String name = \"Sam\"; then System.out.println(\"Hi, \" + name);"
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does `\"Hi,\" + \"Sam\"` print?",
+      "options": [
+        { "text": "Hi,Sam", "correct": true },
+        { "text": "Hi, Sam", "correct": false },
+        { "text": "Hi, + Sam", "correct": false }
+      ],
+      "feedback": "There is no space inside the quotes, so Java glues the strips exactly as written: `Hi,Sam`. To get a gap you must type the space yourself, like `\"Hi, \"`."
+    },
+    {
+      "q": "A `String` in Java is immutable. What does that mean for `\"Hi, \" + name`?",
+      "options": [
+        { "text": "Java edits the original \"Hi, \" text in place to add the name", "correct": false },
+        { "text": "Java builds a brand-new String and leaves the originals unchanged", "correct": true },
+        { "text": "Java refuses to run because strings cannot be joined", "correct": false }
+      ],
+      "feedback": "Immutable means a String never changes after it is made. So `+` does not edit either side — it creates a new String holding both, and the originals stay exactly as they were."
+    },
+    {
+      "q": "If `name` holds `\"Sam\"`, what does `System.out.println(name + 1);` print?",
+      "options": [
+        { "text": "Sam1", "correct": true },
+        { "text": "An error, because you can't add a number to text", "correct": false },
+        { "text": "Sam (the 1 is ignored)", "correct": false }
+      ],
+      "feedback": "When one side of `+` is a String, Java treats `+` as glue, not addition. It turns the number `1` into the text `\"1\"` and joins it on, giving `Sam1`."
+    }
+  ],
+  "caseStudy": {
+    "title": "How an email greeting gets your name",
+    "body": [
+      "Marketing tools like Mailchimp send \"Hi, Sam\" to thousands of people at once.",
+      "They store your name as a `String` and concatenate it into a template.",
+      "The template is one fixed piece of text with a placeholder — Mailchimp calls these merge tags, written like `*|FNAME|*`.",
+      "When the email is sent, the tool swaps the placeholder for your stored first name, which is exactly a concatenation: fixed text plus your name.",
+      "Because each recipient's name produces its own new String, one template quietly becomes thousands of personalised greetings.",
+      "One line of text plus your name produces a personal-feeling greeting."
+    ],
+    "bridge": "The `\"Hi, \" + name` you just wrote is the exact trick behind every personalised email you receive."
+  },
+  "takeaways": [
+    "A `String` holds text inside double quotes.",
+    "`+` joins strings together — this is concatenation.",
+    "Spaces only appear if you type them inside the quotes.",
+    "Strings are immutable: every join makes a new String rather than editing an old one.",
+    "If either side of `+` is a String, Java glues rather than adds — so `name + 1` becomes text."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — Strings",
+      "url": "https://docs.oracle.com/javase/tutorial/java/data/strings.html"
+    },
+    {
+      "label": "Oracle — Concatenating Strings",
+      "url": "https://docs.oracle.com/javase/tutorial/java/data/strings.html"
+    }
+  ]
+}

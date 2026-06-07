@@ -1,0 +1,171 @@
+{
+  "id": "java-m2-l2",
+  "trackId": "java",
+  "moduleId": "java-m2",
+  "order": 2,
+  "estMinutes": 12,
+  "title": "Comparisons and Booleans",
+  "coreIdea": "Comparing two values gives a boolean — a value that is always either `true` or `false`.",
+  "plainEnglish": [
+    "A comparison asks a yes-or-no question about values.",
+    "`5 > 2` asks: is 5 greater than 2?",
+    "The answer is a boolean: either `true` or `false`.",
+    "These are the questions an `if` uses to decide what to do.",
+    "You can even print a boolean to see the answer directly.",
+    "Under the hood, the computer does not store the words \"true\" and \"false\".",
+    "It stores a single bit: a 1 for `true` or a 0 for `false`.",
+    "So a comparison is really the computer reducing a whole question down to one tiny on/off flag."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a light switch with only two positions.",
+      "Every comparison flips the switch to either `true` or `false`.",
+      "There is no \"maybe\" — it is always one or the other."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The comparison operators",
+      "teaser": "greater, less, equal — and the two-equals trap",
+      "body": [
+        "`>` is greater than, `<` is less than.",
+        "`>=` is greater-or-equal, `<=` is less-or-equal.",
+        "`==` (two equals signs) asks \"are these equal?\".",
+        "A single `=` means \"assign\", not \"compare\" — mixing them up is a classic beginner bug."
+      ]
+    },
+    {
+      "title": "What boolean really means",
+      "teaser": "a type that holds only true or false",
+      "body": [
+        "`boolean` is a Java type, like `int`.",
+        "An `int` can hold many numbers; a `boolean` can hold only `true` or `false`.",
+        "Every comparison produces a boolean.",
+        "That is why an `if (...)` always knows whether to run: it is handed a true or a false."
+      ]
+    },
+    {
+      "title": "Why `==` is dangerous with text",
+      "teaser": "the trap that bites everyone the first time they compare words",
+      "body": [
+        "With numbers, `==` works exactly as you expect: `5 == 5` is `true`.",
+        "But text in Java is a different kind of value, called a `String`.",
+        "For a `String`, `==` does not ask \"do these words read the same?\".",
+        "It asks \"are these the very same object in memory?\" — a much pickier question.",
+        "Two strings that look identical can live in two different memory slots, so `==` returns `false`.",
+        "To compare the actual letters, Java gives you a method: `\"cat\".equals(\"cat\")` returns `true`.",
+        "Rule of thumb: use `==` for numbers and booleans, use `.equals(...)` for text.",
+        "This single gotcha is one of the most common bugs in beginner Java — now you know to expect it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "boolean",
+      "def": "A value that is either true or false — nothing else."
+    },
+    {
+      "term": ">",
+      "def": "\"Greater than\" — true when the left value is bigger than the right."
+    },
+    {
+      "term": "==",
+      "def": "Two equals signs: asks whether two values are equal."
+    },
+    {
+      "term": "true / false",
+      "def": "The only two boolean values in Java."
+    },
+    {
+      "term": "operator",
+      "def": "A symbol that does something to values, like `>` (compare) or `+` (add)."
+    },
+    {
+      "term": "String",
+      "def": "Java's type for text — a piece of writing like \"cat\" or \"hello\"."
+    },
+    {
+      "term": ".equals(...)",
+      "def": "The method used to check whether two pieces of text read the same. Safer than `==` for words."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Each line prints a boolean — try changing the numbers",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(10 > 3);\n        System.out.println(4 == 5);\n        System.out.println(7 <= 7);\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "Save a comparison's answer in a boolean, then print it",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        boolean isAdult = 21 >= 18;\n        System.out.println(isAdult);\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Print whether 5 is greater than 2 (it should print true or false).",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "true",
+    "check": "equals",
+    "hint": "Put the comparison 5 > 2 directly inside System.out.println(...)."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "What does the expression `7 == 7` evaluate to?",
+      "options": [
+        { "text": "true", "correct": true },
+        { "text": "false", "correct": false },
+        { "text": "7", "correct": false },
+        { "text": "It causes an error", "correct": false }
+      ],
+      "feedback": "`==` asks \"are these equal?\". Seven equals seven, so the boolean answer is `true`."
+    },
+    {
+      "q": "You want to check if `age` is at least 18. Which line is correct?",
+      "options": [
+        { "text": "age >= 18", "correct": true },
+        { "text": "age = 18", "correct": false },
+        { "text": "age => 18", "correct": false },
+        { "text": "age < 18", "correct": false }
+      ],
+      "feedback": "`>=` means greater-or-equal, which captures \"at least\". A single `=` would assign 18 instead of comparing, and `=>` is not a Java operator."
+    },
+    {
+      "q": "Why might `\"cat\" == \"cat\"` not reliably return `true` for text in Java?",
+      "options": [
+        { "text": "Because `==` checks if two strings are the same object in memory, not whether the letters match", "correct": true },
+        { "text": "Because Java cannot compare text at all", "correct": false },
+        { "text": "Because text comparisons always return `false`", "correct": false },
+        { "text": "Because `==` only works on numbers above zero", "correct": false }
+      ],
+      "feedback": "For text, `==` asks an identity question (same memory slot?), not a content question. Use `\"cat\".equals(\"cat\")` to compare the actual letters."
+    }
+  ],
+  "caseStudy": {
+    "title": "The boolean behind every online filter",
+    "body": [
+      "When you shop on Amazon and slide the price filter to \"under $50\", every product in the results gets checked one by one.",
+      "Behind the scenes it is a comparison: `price < 50`.",
+      "Each product where that boolean is `true` stays on the page; the `false` ones are hidden.",
+      "Stack several filters — price, star rating, \"Prime eligible\" — and each one is its own boolean.",
+      "A product is shown only when every boolean is `true` at the same time.",
+      "Databases like the ones behind Amazon turn the same comparisons into a query, then run them across millions of rows in milliseconds."
+    ],
+    "bridge": "Every filter you have ever used is millions of these true/false comparisons running at once."
+  },
+  "takeaways": [
+    "A comparison always produces a boolean: `true` or `false`.",
+    "`==` compares; a single `=` assigns — keep them straight.",
+    "For text, prefer `.equals(...)` over `==`.",
+    "Booleans are the answers that `if` statements depend on."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — Equality, Relational, and Conditional Operators",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op2.html"
+    }
+  ]
+}

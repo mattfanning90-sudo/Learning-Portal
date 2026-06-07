@@ -1,0 +1,163 @@
+{
+  "id": "py-m5-l4",
+  "trackId": "python",
+  "moduleId": "py-m5",
+  "order": 4,
+  "estMinutes": 14,
+  "title": "Using Libraries: import",
+  "coreIdea": "`import` brings in ready-made code so you can use functions other people already wrote.",
+  "plainEnglish": [
+    "You do not have to build everything yourself.",
+    "Python comes with libraries — bundles of useful functions.",
+    "`import` pulls a library into your program.",
+    "Then you reach its functions with a dot, like `math.sqrt`.",
+    "Under the hood, `import math` runs the library's code once and stores it under the name `math`.",
+    "From then on, that name is a label pointing at the whole toolbox.",
+    "The dot then digs inside that label to grab one named piece."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A library is a toolbox someone else already filled.",
+      "`import math` is opening that toolbox on your bench.",
+      "`math.isqrt(16)` is picking out the exact tool you need."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The dot connects the library to its function",
+      "teaser": "math.isqrt means \"the isqrt function inside math\"",
+      "body": [
+        "After `import math`, the library's functions live under its name.",
+        "You reach them with a dot: `math.sqrt`, `math.isqrt`, `math.pi`.",
+        "The dot says: look inside `math` and use this piece."
+      ]
+    },
+    {
+      "title": "sqrt vs. isqrt: why we use isqrt here",
+      "teaser": "one gives a decimal, the other a whole number",
+      "body": [
+        "`math.sqrt(16)` returns `4.0` — a decimal number.",
+        "`math.isqrt(16)` returns `4` — a plain whole number (integer).",
+        "When you want a clean whole number with no `.0`, `isqrt` is the right tool."
+      ]
+    },
+    {
+      "title": "What import actually does the first time you run it",
+      "teaser": "Python runs the library once, then remembers it",
+      "body": [
+        "The first time you write `import math`, Python finds the library and runs its code.",
+        "It stores the result in a hidden cache called `sys.modules`.",
+        "So if you write `import math` again later, Python skips the work and reuses the cached copy.",
+        "This is why importing the same library twice is fast and harmless — it does not load twice.",
+        "A common pitfall: writing `import Math` with a capital M.",
+        "Python names are case-sensitive, so `Math` is treated as a different, unknown library.",
+        "That mistake raises a `ModuleNotFoundError` — the fix is simply lowercase `math`."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "library",
+      "def": "A bundle of ready-made functions you can pull into your program."
+    },
+    {
+      "term": "import",
+      "def": "The keyword that brings a library into your code."
+    },
+    {
+      "term": "math module",
+      "def": "Python's built-in library of mathematical functions."
+    },
+    {
+      "term": "module",
+      "def": "A single file of Python code you can import; the math library is one module."
+    },
+    {
+      "term": "standard library",
+      "def": "The set of modules that ship with Python, so you can import them without installing anything."
+    },
+    {
+      "term": "ModuleNotFoundError",
+      "def": "The error Python shows when you import a name it cannot find, often from a typo or a missing install."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "python",
+      "caption": "Import once, then reach inside with a dot",
+      "runnable": true,
+      "source": "import math\n\nprint(math.isqrt(25))\nprint(math.isqrt(81))"
+    },
+    {
+      "language": "python",
+      "caption": "One import unlocks many tools inside the same library",
+      "runnable": true,
+      "source": "import math\n\nprint(math.isqrt(100))\nprint(math.floor(3.7))\nprint(math.gcd(12, 8))"
+    }
+  ],
+  "challenge": {
+    "language": "python",
+    "prompt": "Import the math library and print the whole-number square root of 16.",
+    "starter": "",
+    "expectedOutput": "4",
+    "check": "equals",
+    "hint": "Use import math, then print(math.isqrt(16)) for a whole-number result."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "After writing `import math`, how do you call the `isqrt` function?",
+      "options": [
+        { "text": "math.isqrt(16)", "correct": true },
+        { "text": "isqrt.math(16)", "correct": false },
+        { "text": "import.isqrt(16)", "correct": false }
+      ],
+      "feedback": "You reach a library's function with the library name, a dot, then the function: `math.isqrt(16)`."
+    },
+    {
+      "q": "What is the difference between `math.sqrt(16)` and `math.isqrt(16)`?",
+      "options": [
+        { "text": "sqrt returns 4.0 (a decimal) and isqrt returns 4 (a whole number)", "correct": true },
+        { "text": "They are identical and both return 4.0", "correct": false },
+        { "text": "sqrt only works on negative numbers", "correct": false }
+      ],
+      "feedback": "`math.sqrt` gives a decimal like `4.0`; `math.isqrt` gives a plain whole number like `4`."
+    },
+    {
+      "q": "Why do programmers import libraries like `math` instead of writing the math themselves?",
+      "options": [
+        { "text": "To reuse proven, ready-made functions instead of reinventing them", "correct": true },
+        { "text": "Because Python forbids you from doing any math without importing", "correct": false },
+        { "text": "Because importing makes the program run on a different computer", "correct": false }
+      ],
+      "feedback": "Libraries are tested, ready-made tools — importing lets you reuse them instead of building from scratch."
+    }
+  ],
+  "caseStudy": {
+    "title": "Data scientists import NumPy instead of reinventing math",
+    "body": [
+      "NumPy is a free, open-source library used across science, finance, and AI.",
+      "It was first released in 2006 and grew out of earlier projects called Numeric and Numarray.",
+      "Researchers import it to do heavy math on large tables of numbers in a single line.",
+      "In 2020 the team published a paper in the journal Nature describing NumPy's role in modern science.",
+      "It was even used in the analysis behind the first image of a black hole and the LIGO gravitational-wave discovery.",
+      "Nobody on those teams rewrote square roots or averages from scratch — they imported proven tools."
+    ],
+    "bridge": "Typing import math is the first step toward the same superpower the pros use every day."
+  },
+  "takeaways": [
+    "Libraries are bundles of functions other people already wrote.",
+    "`import` brings a library into your program.",
+    "Reach a library's functions with a dot, like `math.isqrt`."
+  ],
+  "sources": [
+    {
+      "label": "Python docs — math module",
+      "url": "https://docs.python.org/3/library/math.html"
+    },
+    {
+      "label": "Python docs — import statement",
+      "url": "https://docs.python.org/3/reference/import.html"
+    }
+  ]
+}

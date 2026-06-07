@@ -1,0 +1,162 @@
+{
+  "id": "java-m1-l1",
+  "trackId": "java",
+  "moduleId": "java-m1",
+  "order": 1,
+  "estMinutes": 14,
+  "title": "Your First Program: Hello from Java",
+  "coreIdea": "Java displays text with `System.out.println()`, wrapped in a little required structure.",
+  "plainEnglish": [
+    "Like Python, a Java program runs instructions in order.",
+    "Java's way to display text is `System.out.println()`. It means: print this line to the output.",
+    "Java also needs some structure around your instruction: a class and a `main` method.",
+    "For now, treat that structure as a frame you write once. Your real instruction lives inside it.",
+    "Every instruction in Java ends with a semicolon `;`. It tells Java that one statement is finished, like a full stop ends a sentence.",
+    "The words `public static void` and `(String[] args)` are part of the required frame. You'll meet each later — for now, copy them exactly and focus on the line inside.",
+    "Under the hood, Java does not run your code directly. A tool called the compiler first translates your whole file into a lower-level form called bytecode.",
+    "That bytecode then runs on the Java Virtual Machine, a kind of universal player installed on the computer. That two-step path is why Java feels more formal than Python — but it is also why the same program runs unchanged on Windows, a Mac, or a phone.",
+    "So when you press Run here, two things happen in order: your text is compiled, then the result is executed. If you forget a semicolon or a brace, the compiler catches it before anything runs at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Java is the formal cousin of Python.",
+      "Python lets you scribble a quick note. Java insists on official letterhead.",
+      "The fuss feels like a lot at first. But that structure is exactly why big companies trust Java for huge systems: everything has its place."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The structure, decoded",
+      "teaser": "class, main, and the curly braces — one line each",
+      "body": [
+        "Do not memorise this yet. Just meet the pieces.",
+        "Think of it as an envelope. The `System.out.println(...)` line is the letter inside.",
+        "Each part has one job — see the key terms below."
+      ]
+    },
+    {
+      "title": "Compile first, run second — and why that helps you",
+      "teaser": "Java checks your whole program before it runs a single line",
+      "body": [
+        "Python reads and runs your file one line at a time, as it goes.",
+        "Java works differently. First the compiler reads your entire file and translates it into bytecode. Only then does it run.",
+        "This means Java refuses to run a program that does not fit the rules. Miss a semicolon, drop a curly brace, or misspell `System`, and the compiler stops with an error before any output appears.",
+        "That can feel strict. But it is a safety net: the compiler catches many mistakes up front, instead of letting them blow up halfway through a running program.",
+        "There is a useful split here. A compile error means your code broke a grammar rule and never ran. A runtime error means your code ran but hit a problem partway through.",
+        "`println` versus `print`: `println` adds a line break at the end, so the next output starts on a fresh line. `print` does not — the next text continues on the same line. The `ln` literally stands for \"line\"."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "public class Main",
+      "def": "Names your program."
+    },
+    {
+      "term": "{ }",
+      "def": "Curly braces group the code that belongs together."
+    },
+    {
+      "term": "main",
+      "def": "The line Java runs first when the program starts."
+    },
+    {
+      "term": "System.out.println()",
+      "def": "Displays one line of text on the screen."
+    },
+    {
+      "term": ";",
+      "def": "A semicolon ends each Java statement, the way a full stop ends a sentence. Forgetting it is the most common beginner error."
+    },
+    {
+      "term": "compiler",
+      "def": "The tool that reads your whole Java file and translates it into bytecode before anything runs. It also reports grammar mistakes up front."
+    },
+    {
+      "term": "bytecode",
+      "def": "The lower-level form your Java code is turned into. It is not machine code yet — it runs on the Java Virtual Machine."
+    },
+    {
+      "term": "Java Virtual Machine (JVM)",
+      "def": "A program installed on the computer that runs Java bytecode. Because every device has its own JVM, the same bytecode runs unchanged everywhere."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Run it, then change the message inside the quotes",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, world!\");\n        System.out.println(\"Java is running too.\");\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "print vs println — notice how only println starts a new line",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        System.out.print(\"Same \");\n        System.out.print(\"line.\");\n        System.out.println();\n        System.out.println(\"New line.\");\n    }\n}"
+    }
+  ],
+  "caseStudy": {
+    "title": "Why Android and banks run on Java",
+    "body": [
+      "Java arrived in 1995 from Sun Microsystems with a now-famous promise: \"write once, run anywhere\".",
+      "The trick was the JVM. You compile your code to bytecode once, and any device with a JVM can run it — no rewrite needed.",
+      "That portability, plus its strict structure, made Java the backbone of enterprise software. Banks, airlines, and payment systems still run huge Java systems today.",
+      "Java was also the original language of Android apps. When Android launched in 2008, app developers wrote in Java, and it powered the rise to billions of devices.",
+      "Even now, with Kotlin the newer favourite for Android, vast amounts of existing app and server code are still Java — so the language you are touching now is everywhere."
+    ],
+    "bridge": "The extra structure is not busywork. It is the discipline that lets Java scale to enormous systems. You just wrote your first piece of it."
+  },
+  "takeaways": [
+    "Java displays text with `System.out.println()`.",
+    "Your instructions live inside a class and a `main` method.",
+    "Java compiles your whole file to bytecode first, then runs it — so the compiler catches mistakes before anything appears.",
+    "The structure feels heavier than Python — and that is the point: it scales."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does `System.out.println(\"Hi\");` do?",
+      "options": [
+        { "text": "Displays the text Hi on its own line in the output", "correct": true },
+        { "text": "Saves the text Hi to a file", "correct": false },
+        { "text": "Asks the user to type the word Hi", "correct": false },
+        { "text": "Renames the program to Hi", "correct": false }
+      ],
+      "feedback": "`System.out.println()` prints one line of text to the output. The `ln` means it also moves to a new line afterwards."
+    },
+    {
+      "q": "You leave the semicolon off the end of a statement. What happens?",
+      "options": [
+        { "text": "The compiler reports an error and the program does not run", "correct": true },
+        { "text": "Java guesses where the semicolon should go and runs anyway", "correct": false },
+        { "text": "The program runs but prints nothing", "correct": false },
+        { "text": "The line is silently skipped and the rest runs fine", "correct": false }
+      ],
+      "feedback": "Java compiles the whole file first. A missing semicolon breaks a grammar rule, so the compiler stops with an error before any output appears."
+    },
+    {
+      "q": "Why can the same Java program run on Windows, a Mac, and an Android phone without being rewritten?",
+      "options": [
+        { "text": "It is compiled to bytecode, which runs on the Java Virtual Machine present on each device", "correct": true },
+        { "text": "Java code is stored in the cloud and streamed to each device", "correct": false },
+        { "text": "Each device automatically translates the program into its own language as a user reads it", "correct": false },
+        { "text": "Java programs only ever run on one type of computer", "correct": false }
+      ],
+      "feedback": "Java's \"write once, run anywhere\" works because your code compiles to bytecode, and every device's own JVM knows how to run that bytecode."
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Finish the program so it prints the greeting. The frame is written for you — add the line inside main.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // write your line here\n    }\n}",
+    "expectedOutput": "Hello, Java!",
+    "check": "equals",
+    "hint": "Use System.out.println(\"Hello, Java!\"); inside main."
+  },
+  "sources": [
+    {
+      "label": "Oracle — A Closer Look at HelloWorld",
+      "url": "https://docs.oracle.com/javase/tutorial/getStarted/application/index.html"
+    }
+  ]
+}

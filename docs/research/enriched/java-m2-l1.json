@@ -1,0 +1,166 @@
+{
+  "id": "java-m2-l1",
+  "trackId": "java",
+  "moduleId": "java-m2",
+  "order": 1,
+  "estMinutes": 14,
+  "title": "if and else",
+  "coreIdea": "An `if` runs a block of code only when a condition is true; `else` runs when it is not.",
+  "plainEnglish": [
+    "Programs often need to make a choice.",
+    "An `if` checks a question that is either true or false.",
+    "If the answer is true, Java runs the code in the braces right after it.",
+    "Add an `else` to say what to do when the answer is false.",
+    "Only one of the two blocks ever runs — never both.",
+    "Under the hood, Java first works out the condition into a single `boolean` value: just `true` or `false`.",
+    "Then it looks at that value and jumps to the matching block, skipping the other one entirely.",
+    "So the lines you skip are not run slowly — they are not run at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a bouncer at a door.",
+      "The rule is: \"18 or older? Come in. Otherwise, turn away.\"",
+      "`if` is the bouncer checking the rule; `else` is what happens to everyone who fails it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why Java needs the braces",
+      "teaser": "the { } decide exactly which lines belong to the choice",
+      "body": [
+        "After `if (...)`, Java runs the block inside the curly braces `{ }`.",
+        "Everything between those braces is the \"true\" branch.",
+        "Code after the closing brace runs no matter what — it is outside the choice.",
+        "The braces are how Java knows where the decision starts and stops."
+      ]
+    },
+    {
+      "title": "The shape of a full if/else",
+      "teaser": "condition, true-block, else, false-block",
+      "body": [
+        "You write `if (condition) { ... } else { ... }`.",
+        "The condition goes in round brackets and must be true or false.",
+        "The first block is for true; the `else` block is for false.",
+        "Java picks exactly one block and skips the other."
+      ]
+    },
+    {
+      "title": "The classic = vs == trap",
+      "teaser": "one equals sign assigns; two equals signs compare",
+      "body": [
+        "A single `=` means \"put this value into this box\" — that is assignment.",
+        "A double `==` means \"are these two things equal?\" — that is a comparison.",
+        "Inside an `if`, you almost always want the comparison `==`, not the assignment `=`.",
+        "In many languages, writing `if (x = 5)` silently does the wrong thing and is a famous source of bugs.",
+        "Java protects you here: the condition in an `if` must be a `boolean`, so `if (x = 5)` simply will not compile for an `int`.",
+        "The fix is to slow down and read it aloud: \"is x equal to 5?\" tells you to use `==`."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "if",
+      "def": "Runs a block of code only when its condition is true."
+    },
+    {
+      "term": "else",
+      "def": "Runs a block of code when the if condition is false."
+    },
+    {
+      "term": "condition",
+      "def": "A question in round brackets that is either true or false."
+    },
+    {
+      "term": ">=",
+      "def": "\"Greater than or equal to\" — true when the left value is at least the right value."
+    },
+    {
+      "term": "boolean",
+      "def": "A value that can only be true or false — the kind of value an if condition must produce."
+    },
+    {
+      "term": "block",
+      "def": "The group of statements inside a pair of curly braces { } that run together."
+    },
+    {
+      "term": "==",
+      "def": "\"Is equal to\" — compares two values and is true when they match (different from a single = which assigns)."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Change the temperature and run again to see the other branch",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int temperature = 30;\n        if (temperature >= 25) {\n            System.out.println(\"hot\");\n        } else {\n            System.out.println(\"mild\");\n        }\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "== compares for equality; change the password to see the other branch",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int code = 1234;\n        if (code == 1234) {\n            System.out.println(\"unlocked\");\n        } else {\n            System.out.println(\"denied\");\n        }\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Inside main, set int age = 20. Print adult if age >= 18, otherwise print minor.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "adult",
+    "check": "equals",
+    "hint": "Write if (age >= 18) { ... } else { ... } and put a System.out.println in each block."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "In an if/else, how many of the two blocks run for a single check?",
+      "options": [
+        { "text": "Exactly one — Java picks the matching block and skips the other.", "correct": true },
+        { "text": "Both blocks always run, one after the other.", "correct": false },
+        { "text": "Neither block runs unless you call them by name.", "correct": false }
+      ],
+      "feedback": "The condition becomes true or false, and Java runs only the matching block. The other is skipped entirely."
+    },
+    {
+      "q": "You want to check whether `score` equals 10 inside an if. Which symbol do you use?",
+      "options": [
+        { "text": "`==`, because two equals signs compare two values.", "correct": true },
+        { "text": "`=`, because one equals sign asks if they are equal.", "correct": false },
+        { "text": "`>=`, because that means equal.", "correct": false }
+      ],
+      "feedback": "A single `=` assigns a value; `==` compares. To test equality use `if (score == 10)`."
+    },
+    {
+      "q": "What is the job of the curly braces `{ }` right after an `if (...)`?",
+      "options": [
+        { "text": "They mark exactly which lines belong to the true branch.", "correct": true },
+        { "text": "They are just decoration and can always be left out.", "correct": false },
+        { "text": "They turn the condition from false into true.", "correct": false }
+      ],
+      "feedback": "The braces group the statements of the branch. Code after the closing brace runs no matter what the condition was."
+    }
+  ],
+  "caseStudy": {
+    "title": "How Gmail decides what is spam",
+    "body": [
+      "Every email Gmail receives faces a decision.",
+      "Simplified, it is one giant `if`: does this message look like spam?",
+      "If yes, it goes to the Spam folder; if no, it lands in your inbox.",
+      "In reality Google's filter scores each message on signals like the sender's reputation, suspicious links, and words common in scams.",
+      "If that score crosses a threshold, the `if` fires and the message is routed to Spam; otherwise the `else` path delivers it.",
+      "Google has said this kind of filtering blocks the large majority of spam before it ever reaches an inbox."
+    ],
+    "bridge": "That folder choice is the same `if`/`else` you just wrote — only with a smarter condition."
+  },
+  "takeaways": [
+    "`if` runs its block only when the condition is true.",
+    "`else` covers the false case — exactly one block runs.",
+    "The curly braces `{ }` mark which lines belong to the choice.",
+    "Use `==` to compare for equality; a single `=` assigns instead."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — The if-then and if-then-else Statements",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/if.html"
+    }
+  ]
+}

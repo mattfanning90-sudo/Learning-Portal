@@ -1,0 +1,169 @@
+{
+  "id": "java-m2-l3",
+  "trackId": "java",
+  "moduleId": "java-m2",
+  "order": 3,
+  "estMinutes": 14,
+  "title": "while Loops",
+  "coreIdea": "A `while` loop repeats a block of code over and over, as long as its condition stays true.",
+  "plainEnglish": [
+    "Sometimes you want to repeat the same work many times.",
+    "A `while` loop checks a condition, then runs its block if the condition is true.",
+    "Then it checks again, and runs again — over and over.",
+    "It stops the moment the condition becomes false.",
+    "Something inside the loop must change, or it would run forever.",
+    "Under the hood, the computer is just jumping back to the top of the loop and re-checking the same `boolean` question.",
+    "The condition is tested first, so if it starts false the block runs zero times — the loop can be skipped entirely.",
+    "Each full pass through the block is called one iteration."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of climbing stairs while a sign says \"keep going\".",
+      "Before each step you read the sign.",
+      "The day the sign flips to \"stop\", you stop — that flip is your condition turning false."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The three moving parts",
+      "teaser": "start, check, change — get all three right",
+      "body": [
+        "First, set up a starting value before the loop, like `int i = 1`.",
+        "Second, the `while (i <= 3)` condition is checked before every pass.",
+        "Third, inside the loop you change the value, like `i = i + 1`.",
+        "Miss the change and the condition never turns false — that is an infinite loop."
+      ]
+    },
+    {
+      "title": "What an infinite loop feels like",
+      "teaser": "the loop that never stops",
+      "body": [
+        "If the condition is always true, the loop never ends.",
+        "The program just keeps printing, or freezes, until you stop it.",
+        "It is the most common loop mistake — and an easy one to fix.",
+        "Always ask: what changes here to eventually make the condition false?"
+      ]
+    },
+    {
+      "title": "Off-by-one: the classic loop bug",
+      "teaser": "why your loop ran one time too many — or one too few",
+      "body": [
+        "The most common loop bug after the infinite loop is the off-by-one error.",
+        "It happens when your condition uses the wrong comparison.",
+        "Say you want to print 1 to 5, so you write `while (i <= 5)` starting at `i = 1`.",
+        "Change it to `while (i < 5)` and you print only 1 to 4 — one short.",
+        "Change the start to `i = 0` and you print 0 to 5 — one too many, and an extra line.",
+        "The fix is simple: trace the loop on paper for the first and last pass.",
+        "Write down the value of `i` and ask \"does the block run on this value?\" — that catches the bug before you run anything."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "while",
+      "def": "Repeats a block as long as its condition stays true."
+    },
+    {
+      "term": "loop",
+      "def": "Code that runs the same block more than once."
+    },
+    {
+      "term": "i = i + 1",
+      "def": "Adds one to the counter so the loop can eventually stop."
+    },
+    {
+      "term": "infinite loop",
+      "def": "A loop whose condition never becomes false, so it never ends."
+    },
+    {
+      "term": "iteration",
+      "def": "One full run through the loop's block of code."
+    },
+    {
+      "term": "condition",
+      "def": "A true-or-false question the loop checks before each pass."
+    },
+    {
+      "term": "off-by-one error",
+      "def": "A bug where the loop runs one time too many or one too few, usually from the wrong comparison like `<` instead of `<=`."
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "java",
+      "caption": "Counts down from 3 — watch the condition turn false",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int count = 3;\n        while (count > 0) {\n            System.out.println(count);\n            count = count - 1;\n        }\n        System.out.println(\"liftoff\");\n    }\n}"
+    },
+    {
+      "language": "java",
+      "caption": "A false condition means the block never runs at all",
+      "runnable": true,
+      "source": "public class Main {\n    public static void main(String[] args) {\n        int i = 10;\n        while (i < 5) {\n            System.out.println(\"this never prints\");\n        }\n        System.out.println(\"loop was skipped\");\n    }\n}"
+    }
+  ],
+  "challenge": {
+    "language": "java",
+    "prompt": "Use a while loop to print 1, 2, 3 — each on its own line.",
+    "starter": "public class Main {\n    public static void main(String[] args) {\n        // your code here\n    }\n}",
+    "expectedOutput": "1\n2\n3",
+    "check": "equals",
+    "hint": "Start int i = 1, loop while i <= 3, print i, then do i = i + 1."
+  },
+  "knowledgeCheck": [
+    {
+      "q": "A `while` loop checks its condition before each pass. What happens if the condition is false the very first time it is checked?",
+      "options": [
+        { "text": "The block runs zero times — the loop is skipped entirely.", "correct": true },
+        { "text": "The block always runs at least once, then stops.", "correct": false },
+        { "text": "The program crashes because the loop never started.", "correct": false }
+      ],
+      "feedback": "A `while` loop tests its condition first. If that test is false at the start, the block is skipped and the program moves on — it can run zero times."
+    },
+    {
+      "q": "You write `int i = 1; while (i <= 3) { System.out.println(i); }` but forget the line `i = i + 1`. What goes wrong?",
+      "options": [
+        { "text": "It prints 1 forever — an infinite loop, because `i` never changes.", "correct": true },
+        { "text": "It prints 1, 2, 3 and then stops normally.", "correct": false },
+        { "text": "It prints nothing because `i` was never updated.", "correct": false }
+      ],
+      "feedback": "Nothing inside the loop changes `i`, so `i <= 3` stays true forever. The loop keeps printing 1 — that is an infinite loop."
+    },
+    {
+      "q": "You want to print the numbers 1, 2, 3, 4, 5. Starting at `int i = 1`, which condition prints exactly those five numbers?",
+      "options": [
+        { "text": "`while (i <= 5)`", "correct": true },
+        { "text": "`while (i < 5)`", "correct": false },
+        { "text": "`while (i > 5)`", "correct": false }
+      ],
+      "feedback": "Starting at 1, `i <= 5` runs for 1, 2, 3, 4, 5 and stops at 6. Using `i < 5` stops at 5 and prints only 1 to 4 — a classic off-by-one error."
+    }
+  ],
+  "caseStudy": {
+    "title": "How a download bar keeps going",
+    "body": [
+      "When you download a file in a browser like Chrome, the progress bar updates again and again.",
+      "Behind it is a loop: while the file is not fully received, keep reading the next chunk of bytes.",
+      "Files arrive in small pieces, not all at once — a 10 MB file might come as thousands of small chunks over the network.",
+      "Each pass through the loop reads one chunk, writes it to disk, and nudges the progress bar forward a little.",
+      "The condition being checked is something like \"have we received fewer bytes than the file's total size?\"",
+      "The instant the last chunk arrives and the byte count matches the total, the condition turns false and the loop ends.",
+      "That is also why a download can stall: if a chunk never arrives, the condition stays true and the loop just waits."
+    ],
+    "bridge": "\"Keep going while there is more to do\" is exactly the `while` loop you just wrote."
+  },
+  "takeaways": [
+    "A `while` loop repeats its block while the condition is true.",
+    "Change something inside the loop so it can eventually stop.",
+    "A condition that never turns false is an infinite loop.",
+    "The condition is checked first, so a loop can run zero times.",
+    "Watch your comparison (`<` vs `<=`) to avoid off-by-one errors."
+  ],
+  "sources": [
+    {
+      "label": "Oracle — The while and do-while Statements",
+      "url": "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/while.html"
+    }
+  ]
+}
