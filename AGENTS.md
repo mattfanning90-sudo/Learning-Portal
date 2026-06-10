@@ -97,6 +97,11 @@ on any invalid lesson, undefined glossary term, or malformed diagram.
 - **Comprehension-audit pattern** (used to harden existing content): fan out read-only "cold
   reader" agents (one slice each) that flag *genuine* gaps with concrete fixes; then fan out
   fill agents on **disjoint files**; then `npm test` + prod-preview. Define every term before use.
+- **Enrichment pipeline** (deepen existing lessons): one agent per lesson reads the current lesson
+  and writes a deeper version to `docs/research/enriched/<id>.json` (schema-validated);
+  `scripts/apply-enrichment.mjs` re-stamps authoritative fields, drops undefined glossary refs, and
+  rewrites each source file in its native format. Used to enrich all 33 coding lessons (challenges
+  preserved); the 117 AI/Product/Cloud lessons were already deep and left as-is.
 
 ## The code runner
 
@@ -187,8 +192,10 @@ push/PR — keep all green. Other guardrails in place:
   unavailable` — infra flakiness, not a code bug. Re-run before treating it as a failure.
 - **Workflow `args`**: pass arrays/objects as real JSON, not a stringified JSON string
   (guard with `typeof args === 'string' ? JSON.parse(args) : args`).
-- **iCloud conflict copies**: this repo lives in iCloud, which sometimes spawns `"<name> 2.ext"`
-  duplicates. They're cruft — don't commit them; remove with `find . -name "* 2.*" -delete`.
+- **Keep the repo OUT of iCloud Drive.** It now lives at `~/projects/Learning-Portal`. While it
+  was under iCloud, sync corrupted `node_modules` (eslint/vitest failing to load — fixed by a
+  clean `npm ci`) and spawned `"<name> 2.ext"` conflict copies. If those reappear, you're in an
+  iCloud-synced folder — move out; clean stragglers with `find . -name "* 2.*" -delete`.
 
 ## File map
 
@@ -204,6 +211,7 @@ src/
               CollapsibleSection(Body,Inline), Boxes(KeyTerms,…), Diagram, KnowledgeCheck,
               CodeRunner, CodeChallenge, NotesPanel}
 server/   index.js (Express: dist + API) · auth.js (Clerk) · db.js (pg) · progress.js
-scripts/  build-jobs · assemble-content · build-coding-jobs · assemble-coding · assemble-cloud
-docs/     superpowers/{specs,plans} · research/ · product/{atlas-product-brief.md, backlog.md}
+scripts/  build-jobs · assemble-{content,coding,cloud} · apply-enrichment (deepen lessons)
+docs/     superpowers/{specs,plans} · research/{*-jobs,enriched} · CHECKLIST-production.md
+          product/{atlas-product-brief.md, backlog.md}
 ```

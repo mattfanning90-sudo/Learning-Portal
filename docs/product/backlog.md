@@ -7,6 +7,13 @@ Effort key: **S** ≈ hours · **M** ≈ a focused build · **H** ≈ multi-step
 
 ---
 
+## Recently shipped ✅
+- **Engineering hardening:** CI (lint→typecheck→test→build), ESLint/Prettier, JSDoc + `checkJs`,
+  top-level ErrorBoundary, `helmet` + rate-limiting, JSON API error handler, route code-splitting, WCAG-AA.
+- **Content:** enriched all 33 coding lessons (Python + Java) — deeper explanations, key terms, practice Qs.
+- **Observability wired** (env-gated Sentry + PostHog) — flip on via `docs/CHECKLIST-production.md`.
+- **Repo moved out of iCloud** → `~/projects/Learning-Portal` (ended `node_modules` corruption + `" 2"` conflict copies).
+
 ## Next up
 - [ ] **Fan diagrams out across more lessons** — _M_
   The `diagram` field + renderer + animation are proven on 6 pilot lessons. Extend via the

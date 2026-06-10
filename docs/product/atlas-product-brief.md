@@ -74,10 +74,11 @@ The **living list is `docs/product/backlog.md`** (prioritised, with effort). Hea
 - **AI "explain-it-back" tutor** — the learner explains a concept, an LLM grades it and probes
   (open-model, swappable). The feature that actually *measures* fluency.
 - **Fan animated diagrams** out across more lessons; **interactive sims** (e.g. a FinOps cost calculator).
-- **Lazy-load** content to shrink initial load; **full-text search**; **guided onboarding pathway**.
+- **Full-text search**; **guided onboarding pathway**; **interactive sims** (e.g. FinOps cost calculator).
 - **Production-harden auth** (promote Clerk dev→prod instance) + privacy policy / data-deletion.
-- _Shipped since v1:_ optional accounts + cross-device progress sync; the Cloud/AWS/FinOps track;
-  animated diagrams; build chunking.
+- _Shipped since v1:_ optional accounts + cross-device sync; the Cloud/AWS/FinOps track; animated
+  diagrams; build chunking + route code-splitting; **engineering hardening** (CI, ESLint, JSDoc+checkJs,
+  WCAG-AA, helmet/rate-limit, ErrorBoundary); **enriched coding lessons**; env-gated observability.
 
 ## Out of scope (for now)
 
