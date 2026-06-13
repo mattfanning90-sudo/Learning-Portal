@@ -143,4 +143,13 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     expect(html).toContain('The core idea')
     expect(html).toContain('Check your understanding')
   })
+  it('header collapses courses into a single dropdown trigger', async () => {
+    const html = await renderAt('/')
+    // Top-level chrome stays minimal: Dashboard · Courses ▾ · Glossary.
+    expect(html).toContain('Dashboard')
+    expect(html).toContain('Courses')
+    expect(html).toContain('Glossary')
+    // The dropdown is closed by default, so the long track titles are NOT inline in the bar.
+    expect(html).toContain('aria-haspopup')
+  })
 })
