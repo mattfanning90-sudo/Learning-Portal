@@ -7,8 +7,9 @@ Context for any AI coding agent (or human) working in this repo. Read this first
 A **React learning portal** that takes a *smart but non-technical* learner to confidence
 across the modern software stack — **AI engineering, Silicon-Valley-style product leadership,
 coding, and cloud/cost**. Every lesson is plain-English with a metaphor, a real case study,
-and an assessment. The portal has **5 tracks / 150 lessons**: AI Engineering (40),
-Product Leadership (34), Python (25), Java (8), Cloud/AWS/FinOps (43).
+and an assessment. The portal has **7 tracks / 230 lessons**: AI Engineering (40),
+Product Leadership (34), Python (25), Java (8), Cloud/AWS/FinOps (43), Full-Stack
+Engineering (44), Agentic Engineering & Coding (36).
 
 The core idea: **content is data, not markup.** Each lesson is a plain object; one renderer
 (`LessonPage`) turns it into the page. Adding content = adding data.
@@ -134,15 +135,18 @@ Off by default; the app is fully usable signed-out. When configured:
 
 ## Deployment
 
-Two hosts, both deploy from the working tree (independent of git):
-- **Netlify** (static frontend, `learningatlas.netlify.app`): `netlify deploy --prod --build`.
-- **Railway** (`atlas-portal` service, full-stack): `railway up --service atlas-portal --detach`;
-  start = `node server/index.js`. Env vars live on the service.
+**Single host: Railway** (we consolidated off Netlify — one platform, one deploy, one bill).
+The Express server (`server/index.js`) serves the built `dist` (static SPA) **and** the `/api`
+backend + Postgres, so the whole app runs on one service.
+- **Railway** (`atlas-portal` service): `railway up --service atlas-portal` from the working tree
+  (uploads + builds via Nixpacks: `npm run build` → `npm start`). Env vars live on the service;
+  the frontend calls `/api` same-origin (`VITE_API_URL` unset → empty base). Live at
+  `atlas-portal-production-302b.up.railway.app`.
 - `vite.config.js` `manualChunks` splits `vendor` / `clerk` / `content` from app code for caching.
-- **Verify-before-claim playbook** (this is the standard ship loop): `npm test` green →
-  `npm run build` → headless prod-preview check → commit on a branch → merge to `main` → push →
-  redeploy both → confirm Netlify bundle has the change + Railway `/api/health` 200 + `/api/progress`
-  401 (auth wired). Don't claim "done"/"live" without the evidence.
+- **Verify-before-claim playbook** (the standard ship loop): `npm test` green → `npm run build` →
+  headless prod-preview check → commit → push → `railway up` → confirm the served `content-*.js`
+  bundle has the change + Railway `/api/health` 200 + `/api/progress` 401 (auth wired). Don't
+  claim "done"/"live" without the evidence.
 
 ## Conventions
 

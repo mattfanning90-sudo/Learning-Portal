@@ -8,6 +8,10 @@ Effort key: **S** ≈ hours · **M** ≈ a focused build · **H** ≈ multi-step
 ---
 
 ## Recently shipped ✅
+- **Two new tracks** → portal is now **7 tracks / 230 lessons**: **Full-Stack Engineering** (44,
+  concept-first whole-stack tour) and **Agentic Engineering & Coding** (36, using + building AI agents).
+- **Consolidated hosting to Railway-only** (retired Netlify): one Express service serves the SPA +
+  `/api` + Postgres — one platform, one deploy (`railway up`), one bill.
 - **Engineering hardening:** CI (lint→typecheck→test→build), ESLint/Prettier, JSDoc + `checkJs`,
   top-level ErrorBoundary, `helmet` + rate-limiting, JSON API error handler, route code-splitting, WCAG-AA.
 - **Content:** enriched all 33 coding lessons (Python + Java) — deeper explanations, key terms, practice Qs.
@@ -34,7 +38,7 @@ Effort key: **S** ≈ hours · **M** ≈ a focused build · **H** ≈ multi-step
 - [ ] **"Ask about this lesson" AI Q&A** — _M_
   Scoped LLM Q&A on the current lesson for follow-ups. Reuses the `/api/tutor` infra + model.
 - [ ] **Full-text search / command palette (⌘K)** — _M_
-  Search all 150 lessons by title, term, or content. _Why:_ navigation at this scale.
+  Search all 230 lessons by title, term, or content. _Why:_ navigation at this scale.
 - [ ] **Onboarding goal → guided pathway** — _M_
   "I want to be an AI-fluent PM" → a curated cross-track path instead of "start anywhere".
   _Why:_ kills the cold-start.

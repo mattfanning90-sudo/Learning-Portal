@@ -29,8 +29,15 @@ No backend, no login. Progress, notes, and quiz results persist in your browser
 - **Product Leadership** — 6 modules, 34 lessons: the product operating model,
   discovery (Cagan/Torres), vision & strategy, leading people, managing AI products,
   and the business/engineering edge (moats, pricing, growth & GTM).
+- **Python** (6 modules, 25 lessons) & **Java** (2 modules, 8 lessons) — runnable from-scratch coding.
+- **Cloud, AWS & FinOps** — 7 modules, 43 lessons: cloud foundations, the AWS platform & core
+  services, how the bill works, and FinOps; cert-mapped to AWS Cloud Practitioner + FinOps.
+- **Full-Stack Engineering** — 8 modules, 44 lessons: concept-first tour of the whole stack, from
+  how the web works through frontend, backend, data, DevOps, quality, and system design.
+- **Agentic Engineering & Coding** — 7 modules, 36 lessons: using Claude/ChatGPT/Gemini & coding
+  agents well, how agents actually work, building agentic systems, evals, and the craft.
 - A searchable **glossary** (no term left unexplained) and a **braided** path that
-  interleaves the two tracks so shared ideas reinforce each other.
+  interleaves the tracks so shared ideas reinforce each other.
 
 ## How the content is built
 

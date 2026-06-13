@@ -16,8 +16,9 @@ mode" badge on the sign-in modal; dev instances have user caps + shared OAuth cr
 - [ ] Copy the **production** keys (`pk_live_…`, `sk_live_…`).
 - [ ] Set on **Railway** (`atlas-portal` service): `VITE_CLERK_PUBLISHABLE_KEY=pk_live_…`,
       `CLERK_PUBLISHABLE_KEY=pk_live_…`, `CLERK_SECRET_KEY=sk_live_…`.
-- [ ] Set on **Netlify**: `VITE_CLERK_PUBLISHABLE_KEY=pk_live_…` (publishable only — never the secret).
-- [ ] Redeploy both. Verify sign-in shows no "Development mode" badge.
+- [ ] Add the Railway origin (`atlas-portal-production-302b.up.railway.app` + any custom domain)
+      to Clerk **allowed origins**.
+- [ ] `railway up` to redeploy. Verify sign-in shows no "Development mode" badge.
 
 ## 2. Custom domain (optional, pairs with #1)
 - [ ] Point a custom domain at Railway (Railway → service → Settings → Domains; it issues TLS).
@@ -27,14 +28,14 @@ mode" badge on the sign-in modal; dev instances have user caps + shared OAuth cr
 Code is wired (`src/lib/observability.js`; the ErrorBoundary already reports to it).
 
 - [ ] Create a **Sentry** project (React).
-- [ ] Set `VITE_SENTRY_DSN=…` on **Netlify** and **Railway**, then redeploy.
+- [ ] Set `VITE_SENTRY_DSN=…` on **Railway**, then `railway up` to redeploy.
 - [ ] Trigger a test error; confirm it appears in Sentry.
 
 ## 4. Product analytics — PostHog (the measurement Gordon wanted)
 Code is wired (`src/lib/observability.js`).
 
 - [ ] Create a **PostHog** project; copy the project API key (`phc_…`).
-- [ ] Set `VITE_POSTHOG_KEY=phc_…` (and `VITE_POSTHOG_HOST` if EU) on **Netlify** + **Railway**, redeploy.
+- [ ] Set `VITE_POSTHOG_KEY=phc_…` (and `VITE_POSTHOG_HOST` if EU) on **Railway**, then `railway up`.
 - [ ] Confirm pageviews land in PostHog. Then instrument the North-Star event
       (e.g. `lesson_completed`) — that's the data the backlog's "where do learners drop off" needs.
 

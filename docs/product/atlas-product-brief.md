@@ -21,7 +21,7 @@ available when they reach for it, without being drowned in it up front.
 
 A **static-first, browser-based portal** (React + Vite). Progress lives in the learner's
 browser by default; an **optional sign-in** syncs it across devices (see *Static-first,
-optionally connected*). Five tracks, 150 lessons:
+optionally connected*). Seven tracks, 230 lessons:
 
 | Track | Scope |
 |---|---|
@@ -30,6 +30,8 @@ optionally connected*). Five tracks, 150 lessons:
 | **Python** | 6 modules · 25 lessons — from zero to "Python for data & AI", fully runnable |
 | **Java** | 2 modules · 8 lessons — a from-scratch starter |
 | **Cloud, AWS & FinOps** | 7 modules · 43 lessons — cloud foundations, security, the AWS platform & core services, how the bill works, and FinOps; cert-mapped to AWS Cloud Practitioner + FinOps Certified Practitioner |
+| **Full-Stack Engineering** | 8 modules · 44 lessons — concept-first, stack-light: how the web works → frontend → backend → data → integration → DevOps → quality → system design |
+| **Agentic Engineering & Coding** | 7 modules · 36 lessons — using Claude/ChatGPT/Gemini & coding agents well, then how agents work, building agentic systems, evals, and the craft |
 
 **Every lesson follows one rhythm** so the reader is never lost: plain-English core idea →
 🧭 metaphor → (where a process or architecture is clearer *seen*) an animated step-through
@@ -57,7 +59,7 @@ with the coding and cloud tracks following).
   terminal marked against a real outcome.
 - **Static-first, optionally connected.** Works with zero backend (progress in the browser);
   an optional sign-in (Clerk) syncs progress across devices via a small API + Postgres. Deployed
-  on Netlify (static) and Railway (full-stack).
+  as a single full-stack service on Railway (one Express app serves the SPA + the API + Postgres).
 - **Faithful design system.** One editorial look (Lumen) reused throughout.
 
 ## Success metrics
