@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Context engineering is the discipline of deciding what goes into the model's prompt and what stays out — feeding it the few most relevant pieces, in a sensible order, rather than everything you have, because more context is not better context.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "You already know the model reads everything you put in front of it — the prompt — and that this working space has a fixed size limit.",
+    "Context engineering is the job of choosing what to put in that space.",
+    "The instinct is to dump in everything that might be relevant, just in case.",
+    "That instinct is wrong: extra material doesn't just waste room, it actively distracts the model and buries the parts that matter.",
+    "The skill is selection — fetch the few most relevant pieces, put the important ones where the model will weigh them, and leave the rest out."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Briefing a sharp new colleague before a meeting is the right picture. You don't email them the entire company drive and say \"it's all in there somewhere.\" You hand them the three pages that actually matter for this meeting.",
+      "Give them everything and they walk in overwhelmed, having skimmed the wrong memo; give them the right three pages and they sound like they've worked here for years.",
+      "Where the metaphor bends: a colleague can ignore the irrelevant pages, but a model treats everything in its context as potentially relevant — so noise you leave in doesn't just sit there harmlessly, it pulls the answer off course."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "More context is not better context",
+      "teaser": "Stuffing the window dilutes the signal instead of strengthening it",
+      "body": [
+        "It feels safe to add more — surely the model can sort out what's useful. It can't, reliably.",
+        "Every extra paragraph competes for the model's attention with the parts that actually answer the question.",
+        "Irrelevant or contradictory material is `noise`: information that doesn't help and often misleads, pulling the answer toward the wrong detail.",
+        "There's a well-documented failure called `lost in the middle`: when you cram a long prompt full of documents, models reliably use what's at the very start and very end but miss facts buried in the middle.",
+        "So a long, padded prompt can score worse than a short, curated one — not because the answer wasn't \"in there,\" but because it was drowned.",
+        "The goal isn't maximum information; it's maximum relevant information and as little else as possible."
+      ]
+    },
+    {
+      "title": "Retrieval (RAG): fetch the few that matter, then prompt",
+      "teaser": "Don't paste your whole knowledge base — go find the handful you need",
+      "body": [
+        "You usually have far more material than fits in the window — a whole handbook, a year of tickets, thousands of documents.",
+        "The answer is `retrieval`: before you call the model, you search your collection for the few pieces most relevant to this specific question, and put only those in the prompt.",
+        "The common pattern is `RAG`, short for retrieval-augmented generation: retrieve the relevant snippets, then let the model generate its answer using them.",
+        "Concretely: a user asks \"what's our refund window?\", the system fetches the three passages from your policy docs that mention refunds, pastes them into the prompt, and the model answers from those.",
+        "The model never sees the other 997 documents — it doesn't need to, and seeing them would only add noise.",
+        "This also keeps answers grounded in your real, current material rather than the model's generic memory, which is the whole reason teams reach for RAG."
+      ]
+    },
+    {
+      "title": "Order and recency change the answer",
+      "teaser": "Where you place a fact, and how fresh it is, both matter",
+      "body": [
+        "Two prompts with the exact same words in a different order can produce different answers.",
+        "Because of `lost in the middle`, the safest move is to put the most important context near the top or the very bottom of the prompt, not stranded in the centre.",
+        "Recency matters too: if your material contains an old policy and a new one, and both sit in the context, the model has no reliable way to know which wins.",
+        "So part of the job is removing the stale version, not just adding the fresh one — leaving both in invites a confident wrong answer.",
+        "A blunt rule of thumb: state the instruction and the freshest, most relevant facts where the model is most likely to weigh them, and prune anything outdated.",
+        "Ordering and pruning are illustrative levers here, not exact science — but the direction holds: position and freshness are part of what you're engineering."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "context engineering",
+      "def": "The discipline of deciding what information goes into the model's prompt and what is left out, so the model sees the few things that matter and little else."
+    },
+    {
+      "term": "noise",
+      "def": "Material in the prompt that doesn't help answer the question and often misleads — irrelevant, off-topic, or contradictory content that pulls the answer off course."
+    },
+    {
+      "term": "retrieval",
+      "def": "Searching a larger collection of documents for the few pieces most relevant to the current question, so you can put only those into the prompt instead of everything."
+    },
+    {
+      "term": "RAG (retrieval-augmented generation)",
+      "def": "A pattern where you first retrieve the most relevant snippets from your own material, then have the model generate its answer using them — grounding it in your real, current content."
+    },
+    {
+      "term": "lost in the middle",
+      "def": "A documented model weakness: in a long prompt, models reliably use information at the start and end but tend to miss facts placed in the middle."
+    },
+    {
+      "term": "recency",
+      "def": "How fresh a piece of context is; when an old and a new version both sit in the prompt, the model can't reliably tell which one should win, so stale material must be pruned."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Context engineering is where quality and cost meet: every extra token you stuff in costs money on every single call and can make the answer worse, so \"include more\" is usually the expensive wrong default.",
+      "The product decisions you own are concrete — what gets retrieved, how many pieces, in what order, and how stale material gets cleaned out — and they move accuracy more than swapping to a fancier model often does.",
+      "When a RAG-backed feature gives wrong answers, the cause is far more often bad retrieval or stale context than a weak model — so \"what did we actually put in the prompt?\" is the first question to ask."
+    ]
+  },
+  "caseStudy": {
+    "title": "Stanford's \"Lost in the Middle\" study",
+    "body": [
+      "In 2023, researchers at Stanford, UC Berkeley, and Samaya AI published a study titled \"Lost in the Middle: How Language Models Use Long Contexts.\"",
+      "They gave models a question plus a set of documents, and deliberately moved the one document containing the answer to different positions in the prompt.",
+      "Accuracy was highest when the key document sat at the very beginning or very end, and it sagged noticeably when that same document was placed in the middle — sometimes worse than giving the model no documents at all.",
+      "The effect held across multiple leading models, showing it was a general property of how these models read long contexts, not a quirk of one system."
+    ],
+    "bridge": "The study is the hard evidence behind this lesson: where you place a fact matters as much as whether you included it, which is exactly why curation and ordering are engineering decisions, not afterthoughts."
+  },
+  "takeaways": [
+    "Context engineering is choosing what goes in the prompt and what stays out — relevant in, noise out.",
+    "More context is not better: padding dilutes the signal and can make answers worse, not safer.",
+    "Retrieval (RAG) fetches the few most relevant pieces from a larger collection and feeds only those, keeping answers grounded and the window uncluttered.",
+    "Order and recency matter — put key facts near the top or bottom to dodge \"lost in the middle,\" and prune stale versions instead of leaving them to compete."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why is filling the prompt with every document that might be relevant usually the wrong move?",
+      "options": [
+        {
+          "text": "Extra, irrelevant material acts as noise that competes for the model's attention and can bury the parts that actually answer the question",
+          "correct": true
+        },
+        {
+          "text": "The model refuses to respond once the prompt passes a certain number of documents",
+          "correct": false
+        },
+        {
+          "text": "More context always makes the answer better, so the only downside is a slightly higher bill",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — more context is not better context. Irrelevant material distracts the model and can drown the signal, so a short curated prompt often beats a long padded one."
+    },
+    {
+      "q": "What does retrieval (the RAG pattern) actually do before the model answers?",
+      "options": [
+        {
+          "text": "It searches a larger collection for the few snippets most relevant to this question and puts only those in the prompt",
+          "correct": true
+        },
+        {
+          "text": "It pastes the entire knowledge base into the prompt so nothing relevant is ever missed",
+          "correct": false
+        },
+        {
+          "text": "It permanently retrains the model on all of your documents before each request",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — RAG retrieves the handful of most-relevant pieces and feeds only those, keeping the answer grounded in your real material without flooding the window with the rest."
+    },
+    {
+      "q": "Your prompt contains both last year's refund policy and this year's updated one. What's the most reliable fix?",
+      "options": [
+        {
+          "text": "Remove the outdated policy so the model isn't left guessing which version should win",
+          "correct": true
+        },
+        {
+          "text": "Leave both in and trust the model to always pick the newer one",
+          "correct": false
+        },
+        {
+          "text": "Add even more old policies so the model can see the full history and infer the rule",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — recency only helps if you prune the stale version. With both present, the model has no reliable way to tell which wins, so pruning is part of the job, not just adding the fresh one."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Liu et al. — Lost in the Middle: How Language Models Use Long Contexts (Stanford / UC Berkeley / Samaya AI)",
+      "url": "https://arxiv.org/abs/2307.03172"
+    },
+    {
+      "label": "Anthropic — Effective context engineering for AI agents",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "label": "AWS — What is RAG (Retrieval-Augmented Generation)?",
+      "url": "https://aws.amazon.com/what-is/retrieval-augmented-generation/"
+    }
+  ]
+}

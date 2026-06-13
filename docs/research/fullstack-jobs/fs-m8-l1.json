@@ -1,0 +1,174 @@
+{
+  "coreIdea": "A system grows from one server to many by finding its single busiest part — its `bottleneck` — and relieving it: a bigger machine buys you time, but real scale comes from running many machines behind a `load balancer`, keeping those machines `stateless` so any of them can handle any request, copying the database into `replicas`, and putting `queues` in front of slow work so traffic bursts get smoothed instead of dropped.",
+  "estMinutes": 11,
+  "plainEnglish": [
+    "Almost every app starts as one program on one computer — a `server`, which is just a computer whose job is to answer requests from users over the internet.",
+    "That works fine until enough people show up at once, and then one part of the system — the part that can't keep up — slows everything down; that part is called the `bottleneck`.",
+    "Scaling is the craft of finding the current bottleneck and removing it, then finding the next one, over and over.",
+    "You have two broad moves: make the one machine bigger (`vertical scaling`), or add more machines and split the work between them (`horizontal scaling`).",
+    "Everything else in this lesson — load balancers, replicas, queues, statelessness — exists to make that second move, adding more machines, actually work."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of your system as a single coffee shop with one barista. When a queue forms, you have two choices: give that one barista a faster machine and more arms (vertical scaling — a bigger person), or hire more baristas and add more counters (horizontal scaling — more people).",
+      "A host at the door who sends each new customer to whichever barista is free is your `load balancer`; a second copy of the recipe book so any barista can read orders without fighting over one book is a `replica`; and a ticket spike on the counter that holds orders during a rush so nothing gets lost is a `queue`.",
+      "Where the metaphor breaks: baristas remember a regular's usual order, but for easy scaling you want the opposite — interchangeable workers who remember nothing between orders, so it never matters which one serves you. That \"remember nothing\" property is `statelessness`, and it's the quiet hero of this whole lesson."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Two directions to grow: a bigger machine vs. more machines",
+      "teaser": "Vertical scaling is simpler; horizontal scaling is what actually scales",
+      "body": [
+        "`Vertical scaling` (also called \"scaling up\") means giving your single server more power — more processor, more memory — so it can do more work at once.",
+        "It's the easy first move: you change nothing about your code, you just rent a bigger box, and your app suddenly handles more.",
+        "But it hits a hard ceiling — there's a biggest machine money can buy, and one machine is also a single point of failure: if it dies, everything is down.",
+        "`Horizontal scaling` (\"scaling out\") means adding more servers and spreading the work across all of them, so ten modest machines share the load instead of one giant one.",
+        "It has no ceiling in principle — need more capacity, add more boxes — and if one machine fails, the others keep serving, so it's also more resilient.",
+        "The catch is that horizontal scaling is harder: the moment you have many machines, you need a way to share traffic across them and to make sure they don't trip over each other's data — which is what the rest of this lesson is about."
+      ]
+    },
+    {
+      "title": "A load balancer spreads traffic — but only if the machines are stateless",
+      "teaser": "One front door that fans requests out to many identical servers",
+      "body": [
+        "A `load balancer` is a piece of software (or hardware) that sits in front of your servers, receives every incoming request, and forwards each one to whichever server is least busy.",
+        "To users it looks like a single address, but behind it sits a pool of identical servers, and the balancer quietly fans requests across them and stops sending to any machine that has crashed.",
+        "This only works cleanly if the servers are `stateless` — meaning a server keeps no memory of you between requests, so any server can handle any request from anyone.",
+        "Contrast that with a `stateful` server that remembers \"this user is logged in\" in its own memory: now your next request *must* go back to that exact machine, which defeats the whole point of a balanced pool.",
+        "So the standard pattern is to push that memory out of the servers and into a shared place both can read — a database, or a fast cache — leaving the servers themselves interchangeable and disposable.",
+        "Statelessness is what lets you add and remove servers freely: any one can pick up any request, and killing one costs nobody their session — it's the precondition that makes horizontal scaling smooth."
+      ]
+    },
+    {
+      "title": "Replicas relieve the database; queues absorb the bursts",
+      "teaser": "Copy the read-heavy data, and buffer the slow work",
+      "body": [
+        "Add enough servers and the bottleneck often moves to the `database` — the one place all those servers go to read and write data, which quickly becomes the new traffic jam.",
+        "A common fix is a `read replica`: a live copy of the database kept in sync with the original, used only for reads (loading a page) while the original handles writes (saving a change).",
+        "Since most apps read far more than they write — illustratively, dozens of reads per write — spreading reads across several replicas takes huge pressure off the one machine that must handle writes.",
+        "The other tool is a `queue`: a waiting line that sits between a request and slow work, holding tasks in order until a worker is free to pick them up.",
+        "When traffic spikes, the queue absorbs the surge — requests pile into the line and get processed steadily, instead of all hitting an overwhelmed system at once and failing.",
+        "Sending a confirmation email or encoding a video doesn't have to happen while the user waits; you drop it on a queue, answer the user instantly, and let a background worker do the slow job — which is why queues are the classic shock absorber for bursty load."
+      ]
+    },
+    {
+      "title": "The real skill: chase the bottleneck, one at a time",
+      "teaser": "There's always exactly one slowest part — find it, fix it, repeat",
+      "body": [
+        "Every system has a single `bottleneck` — the one part that runs out of capacity first — and it alone sets how much load the whole system can take.",
+        "The mistake is to scale blindly: doubling your web servers does nothing if the real jam is the database, so you spend money and the app stays slow.",
+        "The discipline is to measure first, find the genuinely slowest part, relieve just that part, then re-measure — because fixing one bottleneck always reveals the next one downstream.",
+        "Often the cheapest relief isn't more machines at all: a `cache` — a small, fast store that keeps recent answers so you don't recompute them — can absorb most of the load for a fraction of the cost.",
+        "This is also where you stay in your lane: making one server's code run faster is a different job (covered separately under performance), and how to slice the app into smaller services is the next lesson — here the question is purely \"where is the line forming, and what's the smallest change that clears it?\"",
+        "Done well, scaling is unglamorous and methodical: not heroics, just patiently moving the constraint until the system comfortably carries the load you actually have."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "vertical vs. horizontal scaling",
+      "def": "Vertical scaling means making one server more powerful (a bigger machine); horizontal scaling means adding more servers and splitting work across them (more machines). Vertical is simpler but hits a ceiling; horizontal scales without limit but needs extra machinery to coordinate."
+    },
+    {
+      "term": "bottleneck",
+      "def": "The single slowest or most overloaded part of a system — the one that runs out of capacity first and therefore caps how much load the whole system can handle. Scaling is mostly the work of finding and relieving the current bottleneck, then the next."
+    },
+    {
+      "term": "load balancer",
+      "def": "Software that sits in front of a pool of identical servers, receives every request, and forwards each one to whichever server is least busy — while skipping any server that has crashed. It makes many machines look like one address to users."
+    },
+    {
+      "term": "stateless vs. stateful",
+      "def": "A stateless server remembers nothing about you between requests, so any server in the pool can handle any request. A stateful server keeps that memory locally, which forces your next request back to that one machine. Statelessness is what lets you add and remove servers freely."
+    },
+    {
+      "term": "read replica",
+      "def": "A live, continuously synced copy of a database used to serve reads (loading data) so the original is freed up for writes (saving data). Because most apps read far more than they write, replicas relieve the database, which is often the bottleneck after you add servers."
+    },
+    {
+      "term": "queue",
+      "def": "A waiting line placed between a request and slow work; it holds tasks in order until a worker is free to process them. Queues smooth out traffic bursts and let slow jobs (emails, video encoding) happen in the background instead of making the user wait."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Scaling decisions are budget decisions in disguise: vertical scaling is fast to buy but caps out and leaves you with a single point of failure, while horizontal scaling costs more engineering effort up front and then buys you near-unlimited headroom plus resilience — so \"up or out?\" is a real trade-off you own, not a purely technical detail.",
+      "The most expensive mistake here is scaling the wrong thing — pouring money into more web servers when the database is the actual jam — which is why \"where is the bottleneck, and how do we know?\" should be a question you can answer with data before any spend is approved.",
+      "Much of the load you fear is predictable (a launch, a sale, a viral moment), so the leverage is in designing for it early — stateless services, a cache, a queue in front of slow work — because retrofitting those under fire, during the outage, is how launches turn into headlines."
+    ]
+  },
+  "caseStudy": {
+    "title": "Healthcare.gov buckles on launch day, 2013",
+    "body": [
+      "When the US government's health-insurance marketplace, Healthcare.gov, launched on 1 October 2013, it was expected to handle around 50,000–60,000 simultaneous users but was hit by far more, and the site effectively collapsed — only a handful of people managed to enrol on day one.",
+      "A major culprit was a bottleneck early in the flow: every visitor was forced to create an account and have it verified before they could even browse plans, funneling a flood of traffic through one overloaded, tightly-coupled step.",
+      "The rescue team (\"the tech surge\") didn't just throw bigger machines at it; they re-architected the choke points — adding caching so repeated data wasn't recomputed for every user, splitting overloaded components, and letting people window-shop without first creating an account.",
+      "Within roughly two months the site reliably handled its target load, and these are real, widely-documented figures from the post-mortems — a textbook case of relieving the true bottleneck rather than scaling blindly."
+    ],
+    "bridge": "Healthcare.gov is the whole lesson in one disaster: the system was only ever as strong as its single busiest part, and the fix wasn't a bigger server but finding that bottleneck — the forced account step — and clearing it."
+  },
+  "takeaways": [
+    "Scaling means finding your system's single busiest part — the bottleneck — relieving it, then repeating; scaling anything else is wasted money.",
+    "Vertical scaling (a bigger machine) is the simple first move but hits a ceiling and is one point of failure; horizontal scaling (more machines) scales without limit and survives failures, but needs more coordination.",
+    "A load balancer spreads traffic across many identical servers — but only works cleanly if those servers are stateless, so any server can handle any request.",
+    "Read replicas relieve the database by serving reads from synced copies, and queues smooth traffic bursts by holding slow work in a line for background workers instead of making users wait."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your app runs on one server and is getting slow under traffic. You move it to a much more powerful single machine, and it handles the load again. What did you do, and what's the main limitation of this move?",
+      "options": [
+        {
+          "text": "Vertical scaling — making one machine more powerful; it's simple and needs no code changes, but it hits a hard ceiling on how big one machine can get and leaves you with a single point of failure if that machine dies",
+          "correct": true
+        },
+        {
+          "text": "Horizontal scaling — adding more machines; its main limitation is that it requires a load balancer, which is expensive to run",
+          "correct": false
+        },
+        {
+          "text": "Load balancing — spreading traffic across servers; its main limitation is that it only works for read-heavy apps",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — moving to a bigger single machine is vertical scaling (\"scaling up\"). It's the easy first move because your code doesn't change, but there's a biggest machine money can buy, and that one box is still a single point of failure. To grow past that ceiling and survive failures, you eventually scale out: add more machines and spread the load across them."
+    },
+    {
+      "q": "You put a load balancer in front of five identical servers, but logged-in users keep getting randomly signed out as they click around. What's the most likely cause?",
+      "options": [
+        {
+          "text": "The servers are stateful — each remembers a user's login in its own local memory — so when the balancer sends a user's next request to a different server, that server has no record of them; making the servers stateless (storing session data in a shared place) fixes it",
+          "correct": true
+        },
+        {
+          "text": "The load balancer is broken and should be removed so all traffic goes to one server again",
+          "correct": false
+        },
+        {
+          "text": "There aren't enough servers in the pool, so adding five more will stop the sign-outs",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is the classic statefulness trap. If each server keeps your login in its own memory, your next request must return to that exact machine, but a load balancer deliberately spreads requests across the whole pool. The fix is statelessness: push session data into a shared store (a database or cache) both servers can read, so any server can serve any request and adding or removing machines becomes painless."
+    },
+    {
+      "q": "After adding many web servers, your app is slow again — and the new jam is the database, which every server hits to load and save data. Reads (loading pages) vastly outnumber writes (saving changes). What's a standard way to relieve this specific bottleneck?",
+      "options": [
+        {
+          "text": "Add read replicas — live, synced copies of the database that serve the many reads — so the original is freed to handle writes; spreading reads across replicas takes pressure off the one machine that must handle writes",
+          "correct": true
+        },
+        {
+          "text": "Add even more web servers, since more web servers always make every part of the system faster",
+          "correct": false
+        },
+        {
+          "text": "Switch every server to vertical scaling so they each remember their own copy of the data locally",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — when the database becomes the bottleneck and reads dominate, read replicas are the standard relief: synced copies handle the heavy read traffic while the original handles writes. Adding more web servers wouldn't help — they're not the jam, the database is — which is exactly why you measure to find the real bottleneck before spending, rather than scaling the part that was never the constraint."
+    }
+  ]
+}

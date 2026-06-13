@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Some models can be given room to work through a problem step by step before answering — called chain-of-thought, and built into a new category of \"reasoning models\" — which sharply improves hard, multi-step tasks but wastes time and money on simple ones.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A normal model answers the instant you ask, blurting out the first plausible response.",
+    "For an easy question that is fine, but for a hard multi-step problem it is like demanding a sum in your head with no scratch paper — mistakes creep in.",
+    "The fix is to let the model show its working: write out the intermediate steps before committing to a final answer. That is `chain-of-thought`.",
+    "You can ask any model to do this in the prompt, or you can use a `reasoning model` — a newer kind of model trained to think first, automatically, before it replies.",
+    "The catch: all that thinking takes extra time and costs extra money, so it is worth it for genuinely hard problems and pure waste on simple ones."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a maths exam. A weak student writes the answer straight down and often gets it wrong; a strong one fills the margin with working, catches their own slips, and arrives at the right answer.",
+      "Chain-of-thought is handing the model that margin — telling it to work the problem out on paper before writing the final line. A reasoning model is a student who has been trained to always do that without being told.",
+      "Where the metaphor breaks: a human shows working to prove the answer is right, but a model's written steps are not a guaranteed audit trail — they usually help it reason, yet the model can still reach a wrong answer with neat-looking working, or even produce working that doesn't truly match how it got there."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What \"think step by step\" actually does",
+      "teaser": "Giving the model room to work, not a magic phrase",
+      "body": [
+        "A language model generates its answer one chunk of text at a time, each chunk based on everything written so far.",
+        "If it commits to a final answer immediately, it has done no on-page reasoning — it has to leap straight to the conclusion.",
+        "Chain-of-thought asks it to write the intermediate steps first: lay out the sub-problems, work each one, then state the answer.",
+        "Those written steps become part of what the model reads as it continues, so each step can build on the last instead of being guessed all at once.",
+        "The famous trigger phrase is literally \"let's think step by step,\" which nudges a model to produce that working rather than a bare answer.",
+        "It is not a spell — the gain comes from the model actually doing the intermediate work, which is why it helps most where the work is the hard part."
+      ]
+    },
+    {
+      "title": "Reasoning models: a distinct category",
+      "teaser": "Thinking built in, not bolted on by your prompt",
+      "body": [
+        "A `reasoning model` is a model specifically trained to generate a long internal chain-of-thought before its final answer, with no special prompting from you.",
+        "Examples include OpenAI's `o1` and `o3`, Anthropic's Claude in its `extended thinking` mode, and DeepSeek's `R1` — these are a different product category from standard chat models.",
+        "They often expose a `thinking mode` or a `reasoning effort` dial, letting you trade more thinking (slower, pricier, usually more accurate) for less (faster, cheaper).",
+        "Crucially, the thinking tokens — the words the model spends working things out — are billed even though you may never see them, so a reasoning answer can cost several times a normal one.",
+        "They shine on problems with many dependent steps: hard maths, multi-step logic, complex code, planning a sequence of tool calls.",
+        "On simple lookups or short rewrites they add latency and cost for no real gain — sometimes they even overthink an easy question into a worse answer."
+      ]
+    },
+    {
+      "title": "When it helps, and when it just burns tokens",
+      "teaser": "Match the thinking to the difficulty of the task",
+      "body": [
+        "The rule of thumb: chain-of-thought helps in proportion to how many dependent steps a correct answer requires.",
+        "Worth it: a word problem needing several calculations, debugging code, comparing options against multiple criteria, or planning a multi-stage workflow.",
+        "Wasteful: \"what's the capital of France,\" extracting a date from a sentence, or reformatting text — the answer needs no working, so the steps are dead weight.",
+        "There is a real cost. `Tokens` are the chunks of text a model reads and writes, and you pay per token, so a long reasoning trace can multiply both the time and the bill of a single request.",
+        "All numbers here are illustrative, but the shape holds: a reasoning model might turn a 1-second, 1-cent answer into a 20-second, 10-cent one — fantastic for a hard problem, absurd for a trivial one.",
+        "The skill is routing: send hard, multi-step work to thinking; send simple, one-step work to a fast standard model."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "chain-of-thought",
+      "def": "Having the model write out its intermediate reasoning steps before the final answer, so each step can build on the last instead of leaping straight to a conclusion."
+    },
+    {
+      "term": "reasoning model",
+      "def": "A model trained to automatically generate a long internal chain-of-thought before answering — a distinct category from standard chat models — for example OpenAI's o1 or DeepSeek's R1."
+    },
+    {
+      "term": "thinking mode (extended thinking)",
+      "def": "A setting that turns a model's step-by-step reasoning on or up, trading more time and cost for usually better answers on hard tasks."
+    },
+    {
+      "term": "reasoning effort",
+      "def": "A dial on many reasoning models that controls how much thinking the model does before answering — higher means slower, pricier, and usually more accurate."
+    },
+    {
+      "term": "tokens",
+      "def": "The small chunks of text a model reads and writes; you are billed per token, so a long reasoning trace adds real cost and time even when you never see it."
+    },
+    {
+      "term": "thinking tokens",
+      "def": "The tokens a model spends working a problem out internally; on most reasoning models these are billed and count against limits even though the working is often hidden from you."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Reasoning is a quality dial that costs money, so the product decision you own is per-task: which jobs are hard enough to justify thinking, and which should hit a fast, cheap model instead.",
+      "Defaulting every request to a reasoning model is a common and expensive mistake — you pay multiples in cost and latency on the 80% of tasks that never needed it, and slow users down for nothing.",
+      "The mature pattern is routing: classify the request, then send hard multi-step work to a thinking model and simple work to a standard one, which is a real architecture choice you can measure and tune."
+    ]
+  },
+  "caseStudy": {
+    "title": "OpenAI's o1 — the first mainstream reasoning model (September 2024)",
+    "body": [
+      "In September 2024 OpenAI released `o1`, a model explicitly trained to \"think before it answers\" by producing a long internal chain-of-thought.",
+      "On a hard high-school maths competition, the AIME, OpenAI reported o1 solving a large share of problems where its general-purpose chat model `GPT-4o` solved only a small fraction — the gain came almost entirely from spending more time reasoning.",
+      "OpenAI was open about the trade-off: o1 is slower and more expensive per answer, and it bills the hidden \"reasoning tokens\" the model spends thinking, even though users don't see that working.",
+      "They also said plainly that o1 was not the right tool for many everyday tasks, where a faster standard model gave just as good an answer for far less — establishing reasoning models as a separate category you choose deliberately, not a free upgrade."
+    ],
+    "bridge": "o1 made the lesson concrete at scale: giving a model room to think step by step transforms hard multi-step problems, but it is a costly dial you reach for on purpose, not a default for everything."
+  },
+  "takeaways": [
+    "Chain-of-thought means letting the model write out its intermediate steps before answering, so each step builds on the last instead of a blind leap to the conclusion.",
+    "Reasoning models (like OpenAI o1 or DeepSeek R1) are a distinct category trained to think first automatically, often with a thinking-mode or reasoning-effort dial.",
+    "Step-by-step thinking helps in proportion to how many dependent steps a correct answer needs — great for hard maths, logic, code, and planning.",
+    "It costs extra time and tokens, so it is wasteful on simple lookups and rewrites; the skill is routing hard work to thinking and easy work to a fast model."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does \"chain-of-thought\" prompting actually do for a model?",
+      "options": [
+        {
+          "text": "It has the model write out intermediate reasoning steps before the final answer, so each step can build on the last",
+          "correct": true
+        },
+        {
+          "text": "It secretly switches the model to a larger, more powerful version for that one request",
+          "correct": false
+        },
+        {
+          "text": "It guarantees the answer is correct by forcing the model to double-check every fact",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the gain comes from the model doing the intermediate work on the page, where each step informs the next. It does not swap in a bigger model, and written working makes the answer more likely to be right, not guaranteed."
+    },
+    {
+      "q": "What makes a \"reasoning model\" a distinct category rather than just a normal model with a good prompt?",
+      "options": [
+        {
+          "text": "It is trained to automatically generate a long internal chain-of-thought before answering, without you prompting for it",
+          "correct": true
+        },
+        {
+          "text": "It never makes mistakes because it always shows its working",
+          "correct": false
+        },
+        {
+          "text": "It is always cheaper and faster than a standard chat model",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — reasoning models like OpenAI's o1 or DeepSeek's R1 are trained to think first by default. They still make mistakes, and the extra thinking makes them slower and more expensive, not cheaper."
+    },
+    {
+      "q": "For which task is reaching for a reasoning model most clearly a waste of time and tokens?",
+      "options": [
+        {
+          "text": "Extracting a date from a single sentence, where the answer needs no multi-step working",
+          "correct": true
+        },
+        {
+          "text": "Solving a multi-step word problem that requires several dependent calculations",
+          "correct": false
+        },
+        {
+          "text": "Planning a sequence of actions where each step depends on the one before it",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — chain-of-thought helps in proportion to how many dependent steps a correct answer needs. A one-step extraction needs none, so the thinking is dead weight; the multi-step problems are precisely where it earns its cost."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenAI — Learning to Reason with LLMs (introducing o1)",
+      "url": "https://openai.com/index/learning-to-reason-with-llms/"
+    },
+    {
+      "label": "Wei et al. (Google, 2022) — Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "url": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "label": "Anthropic — Building with extended thinking",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking"
+    }
+  ]
+}

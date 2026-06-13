@@ -1,0 +1,188 @@
+{
+  "coreIdea": "Observability for an agent means recording every step it took — each thought, tool call, prompt, and response — as a connected trace, because an agent's path changes run to run, so you can't debug it by re-running the code; you have to read the history of what it actually did.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "When ordinary software breaks, you can usually re-run it and watch it fail the same way every time.",
+    "An agent doesn't behave like that — give it the same task twice and it may take a different path each time, because the model chooses its own steps.",
+    "So when an agent does something wrong, \"run it again and watch\" often doesn't reproduce the problem.",
+    "The fix is `observability`: making the agent record what it did — every step, every tool it called, every prompt it sent, and every reply it got back.",
+    "With that recorded history, called a `trace`, you can open up a single run after the fact and see exactly where it went off the rails — even though you could never have caught it live."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a trace like the black-box flight recorder on a plane: it quietly logs every control input, instrument reading, and decision, so after an incident investigators can replay the whole flight second by second and find the exact moment things went wrong.",
+      "You don't watch the recorder live — its whole value is that the history is already captured when you need to look back, because you can't ask the plane to crash again the same way to study it.",
+      "Where the metaphor bends: a plane follows fixed physics, so two identical flights behave identically, while an agent is non-deterministic — run the same task twice and it can genuinely choose different actions — which is exactly why the recording matters even more for agents than for planes."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "A trace is the agent's run, recorded step by step",
+      "teaser": "One task becomes a tree of nested, timed events you can read after the fact",
+      "body": [
+        "A `trace` is the full recorded story of one run of the agent, from the task coming in to the final answer going out.",
+        "It's broken into `spans` — individual timed events, each one capturing a single step like \"the model decided,\" \"the search tool ran,\" or \"the database was queried.\"",
+        "Spans nest inside each other: a top-level span for the whole task contains child spans for each loop iteration, which contain spans for each tool call, forming a tree you can expand and collapse.",
+        "Every span records what went in, what came out, how long it took, and whether it succeeded or errored — so you can see not just that the agent failed, but at which exact step.",
+        "Crucially, the trace captures the loop we met earlier — perceive, decide, act — made visible: each lap of the loop and each action the agent chose is now a line you can inspect.",
+        "This is the single most useful artifact for debugging an agent, because it turns an invisible internal process into a readable timeline of decisions."
+      ]
+    },
+    {
+      "title": "Log the prompts and responses, not just the outcome",
+      "teaser": "The agent's words are the evidence — without them you're guessing",
+      "body": [
+        "With ordinary code, the source code is the same on every run, so reading it tells you what the program did.",
+        "With an agent, the real instructions on any given run are the `prompt` — the exact text sent to the model that turn — and that text is assembled fresh each time from the task, the history, and whatever the tools returned.",
+        "So a trace must log the full prompt and the model's full response (its `completion`) for every step, or you're left guessing why it chose what it chose.",
+        "Nine times out of ten the bug isn't in the model — it's that a tool returned messy text, or stale data slipped into the prompt, and the model reasoned correctly from bad inputs.",
+        "You can only see that by reading the actual words that went in and came out, the way you'd read a transcript of a conversation.",
+        "One real caution: prompts and responses often contain customer data, so this logging has to be access-controlled and scrubbed of sensitive details — visibility can't come at the cost of leaking private information."
+      ]
+    },
+    {
+      "title": "Watch cost and latency, because the loop quietly multiplies both",
+      "teaser": "Every lap of the loop is another bill and another delay — so meter them",
+      "body": [
+        "An agent that loops ten times made ten model calls, and you pay for every one — the bill is measured in `tokens`, the chunks of text the model reads and writes.",
+        "A trace should total the tokens and the dollar cost across the whole run, so a task that quietly takes thirty laps instead of three shows up as a number, not a surprise on the monthly invoice.",
+        "It should also record `latency` — how long each step took and how long the whole task took — because users feel an agent's slowness far more than a chatbot's, since the loop adds up many calls in sequence.",
+        "Watching these over many runs reveals patterns: maybe one specific tool is slow, or one type of task always balloons in cost, and now you can point at the exact span responsible.",
+        "All numbers here are illustrative, but the shape holds — a 30-step run can cost roughly ten times a 3-step run for the same job, just because the agent wandered.",
+        "This is agent-specific monitoring: ordinary apps watch requests and errors, but agents add a new axis — how many laps, how many tokens, how much reasoning — that you only catch if the trace counts it."
+      ]
+    },
+    {
+      "title": "Why agents are genuinely harder to observe than normal code",
+      "teaser": "Non-determinism breaks the one trick that makes debugging work",
+      "body": [
+        "Normal debugging rests on one assumption: the same input produces the same behavior, so you can reproduce a bug and study it.",
+        "Agents are `non-deterministic` — the model can pick different words and therefore different actions on different runs, even with the exact same task — so that assumption breaks.",
+        "A bug that appeared once may simply not happen the next ten times, which means you often can't reproduce it on demand; the recorded trace of the one bad run becomes your only evidence.",
+        "Failures are also subtle: the agent doesn't crash, it just does the wrong thing confidently — picks the wrong tool, misreads a result, or loops in circles — and nothing throws an error to flag it.",
+        "And the agent's reasoning lives in plain English inside the prompts and responses, not in tidy variables, so you have to read its words to follow its logic.",
+        "Put together — unreproducible, silent, and expressed in language — this is why \"just add some logging\" isn't enough, and why purpose-built tracing for agents became its own category of tool."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "observability",
+      "def": "The practice of making a running system record enough about what it's doing that you can understand and debug it later by reading that record — rather than by watching it live or re-running it."
+    },
+    {
+      "term": "trace",
+      "def": "The full recorded story of one run of an agent — every step, tool call, prompt, and response, with timings — captured so you can replay and inspect that exact run after it finished."
+    },
+    {
+      "term": "span",
+      "def": "One timed event inside a trace — a single step such as a model decision or a tool call — recording what went in, what came out, how long it took, and whether it succeeded."
+    },
+    {
+      "term": "prompt and completion",
+      "def": "The exact text sent to the model on a given step (the prompt) and the exact text it sent back (the completion) — the real evidence of why the agent chose what it chose."
+    },
+    {
+      "term": "non-deterministic",
+      "def": "Behaving differently on different runs of the same input — true of agents, because the model can choose different words and actions each time, which is why bugs often can't be reproduced on demand."
+    },
+    {
+      "term": "latency",
+      "def": "How long something takes to respond — for an agent, the time for each step and for the whole task, which adds up fast because the loop runs many model calls one after another."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Without tracing you are flying an agent blind: when a customer reports it gave a wrong answer, you have no way to see what it actually did, so \"we'll look into it\" turns into a shrug — which is why tracing is a launch requirement, not a nice-to-have you bolt on later.",
+      "The trade-off you own is visibility versus privacy and overhead: logging full prompts and responses is what makes debugging possible, but those logs hold customer data and cost money to store, so you decide what's captured, who can read it, and how long it's kept.",
+      "Tracing also quietly governs your bill and your speed — it's how you catch the agent that quietly loops thirty times or leans on a slow tool — so treat \"can we see inside every run?\" as the same kind of first question as \"who owns the cost?\""
+    ]
+  },
+  "caseStudy": {
+    "title": "LangSmith and the rise of agent tracing (2023)",
+    "body": [
+      "As developers built agents on top of the popular `LangChain` framework in 2023, a recurring complaint was that agents were a \"black box\" — when one misbehaved, there was no way to see the chain of steps it took.",
+      "The team behind LangChain responded by launching `LangSmith`, a tool whose core job is to capture a full trace of every agent run: each step, each tool call, and the exact prompt and response at every stage, laid out as an expandable tree.",
+      "Developers could finally open a single bad run and read, step by step, where the agent picked the wrong tool or fed itself a garbled result — alongside the tokens spent and the time each step took.",
+      "It landed because it solved a real and specific pain, and similar agent-tracing tools — and an open standard called `OpenTelemetry` for emitting traces — quickly became a normal part of shipping agents to production."
+    ],
+    "bridge": "LangSmith caught on precisely because it made the invisible visible — turning an agent's unreproducible, silent run into a readable trace you can inspect after the fact, which is the whole point of observability."
+  },
+  "takeaways": [
+    "Observability means the agent records what it did — every step, tool call, prompt, and response — so you can debug a run by reading its history, not by re-running it.",
+    "A trace is that history: a tree of timed spans showing the loop made visible, where each decision and action becomes a line you can inspect after the fact.",
+    "Log the actual prompts and responses, because most agent bugs come from bad inputs the model reasoned over — and the words are the only evidence (kept access-controlled and scrubbed).",
+    "Agents are non-deterministic, so bugs often can't be reproduced and failures are silent — which is why agent-specific tracing of cost, latency, and reasoning is a launch requirement, not an afterthought."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why can't you usually debug a misbehaving agent the way you'd debug ordinary code — by re-running it and watching it fail?",
+      "options": [
+        {
+          "text": "Agents are non-deterministic, so the same task can take a different path each run, meaning a bug often won't reproduce — the recorded trace of the bad run becomes your evidence",
+          "correct": true
+        },
+        {
+          "text": "Agents run too fast for a human to watch, so the only option is to slow the model down and step through it live",
+          "correct": false
+        },
+        {
+          "text": "Agents always crash with a clear error message, so re-running them is unnecessary",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — because the model can choose different actions on different runs, a bug may not happen again on demand; the trace of the one bad run is what lets you see what actually went wrong."
+    },
+    {
+      "q": "Why is it important for a trace to log the full prompts and responses, not just whether the agent succeeded or failed?",
+      "options": [
+        {
+          "text": "Because most agent bugs come from bad inputs the model reasoned over correctly — and the actual words sent and received are the only way to see that",
+          "correct": true
+        },
+        {
+          "text": "Because the prompts and responses are needed to retrain the model into a smarter version overnight",
+          "correct": false
+        },
+        {
+          "text": "Because the final pass/fail result tells you nothing at all about whether the task worked",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the real instructions on each run live in the prompt, which is assembled fresh from tools and history, so reading the actual prompt and response is how you spot that a tool returned messy or stale data."
+    },
+    {
+      "q": "Beyond debugging, what agent-specific thing should a trace measure that ordinary application monitoring doesn't emphasize?",
+      "options": [
+        {
+          "text": "The number of loop iterations and tokens, plus the cost and latency they add up to — because each extra lap is another model call you pay and wait for",
+          "correct": true
+        },
+        {
+          "text": "The brand of server the agent runs on, since that determines whether the model is correct",
+          "correct": false
+        },
+        {
+          "text": "Nothing extra — an agent costs and responds exactly like a single chatbot reply",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the loop quietly multiplies cost and latency, so a trace that totals tokens, dollars, and per-step timing across the run is how you catch an agent that wandered thirty laps instead of three."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LangChain — LangSmith documentation (tracing for agents)",
+      "url": "https://docs.smith.langchain.com/"
+    },
+    {
+      "label": "OpenTelemetry — Generative AI and LLM observability semantic conventions",
+      "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/"
+    },
+    {
+      "label": "Anthropic — Building effective agents (on inspecting agent behavior)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    }
+  ]
+}

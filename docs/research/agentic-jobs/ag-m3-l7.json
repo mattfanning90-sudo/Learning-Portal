@@ -1,0 +1,176 @@
+{
+  "coreIdea": "A coding agent is a power tool, not an all-purpose worker — reach for it on boilerplate, exploration, and tests, but do the subtle, critical, novel, and security-sensitive work yourself, because reviewing bad output there costs more than just writing it right.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A coding agent like `Claude Code`, `GitHub Copilot`, or `Cursor` is an AI tool that reads your codebase and writes changes for you to review.",
+    "The skill is not \"use it for everything\" or \"refuse to use it\" — it's knowing which jobs it's good at and which it quietly makes worse.",
+    "It shines on repetitive, well-trodden, low-stakes work where a mistake is cheap and easy to spot.",
+    "It gets dangerous on subtle, critical, brand-new, or security-sensitive work, where a wrong answer looks right and catching it costs more than doing it yourself.",
+    "The honest rule of thumb: if checking the agent's output would take longer than just writing it, don't hand it over."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A coding agent is like a nail gun on a construction site: for the hundredth identical floorboard it's a huge speed-up, but you'd never use it for the delicate finish work on an antique, where one wrong shot ruins the piece.",
+      "A good carpenter doesn't argue about whether nail guns are good — they pick up the gun for the floor and the chisel for the carving, depending on the job in front of them.",
+      "Where the metaphor breaks: a nail gun never pretends a bad shot was a good one, but an agent will hand you broken code wrapped in a confident, fluent explanation of why it's correct — so the danger is hidden, not loud."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Where agents genuinely help — the green zone",
+      "teaser": "Repetitive, well-trodden, cheap-to-check work",
+      "body": [
+        "Agents are strongest on boilerplate: the routine, repetitive code that's nearly the same every time, like wiring up a form, generating a config file, or converting data from one shape to another.",
+        "They're excellent for exploration: \"where in this codebase does login happen?\" or \"sketch three ways I could structure this feature\" — drafts and maps you'll refine, not final answers.",
+        "They're a strong fit for tests — small programs that check your real code behaves correctly — because tests are tedious to write, follow predictable patterns, and a wrong test usually fails loudly instead of hiding.",
+        "What these jobs share: the work is common (so the patterns are well-represented in what the agent learned), the stakes are low, and a mistake is fast and obvious to catch.",
+        "In the green zone the agent removes drudgery and frees your attention for the parts that need judgment.",
+        "The win here is real and worth taking — most of a working day is not subtle or novel."
+      ]
+    },
+    {
+      "title": "Where agents hurt — the red zone",
+      "teaser": "Subtle, critical, novel, or security-sensitive work",
+      "body": [
+        "Subtle work — code where the bug is in a corner case, an off-by-one, a rare timing issue — is risky, because the agent's output reads as plausible and the flaw only shows up under conditions you have to think hard to imagine.",
+        "Critical work is anything where a failure is expensive or dangerous: code that moves money, handles medical or legal data, or runs unattended in production. There, a quiet wrong answer can cost far more than the time it saved.",
+        "Novel work — a genuinely new idea, an unusual algorithm, something with no obvious precedent — is weak ground, because the agent is strongest where lots of similar examples existed to learn from, and weakest where they didn't.",
+        "Security-sensitive work is its own red zone: authentication, permissions, handling passwords or secrets, validating untrusted input. A flaw here isn't just a bug, it's a door left open.",
+        "The common thread is the cost of being wrong. When a mistake is cheap and loud, lean on the agent; when it's expensive and silent, do it yourself or review like your job depends on it.",
+        "This isn't anti-agent — it's the same judgment a senior engineer uses about which work to delegate to a fast but junior teammate."
+      ]
+    },
+    {
+      "title": "The review-cost test, and keeping your own edge",
+      "teaser": "If checking it costs more than doing it, don't delegate",
+      "body": [
+        "Here's the single test that decides most cases: estimate how long it would take to truly verify the agent's output versus write it yourself, and choose the cheaper one.",
+        "Reviewing is not free — to catch a subtle bug you have to understand the problem at least as well as if you'd written the code, sometimes better, because now you're reverse-engineering someone else's choices.",
+        "That's why the agent's fluency is a trap: confident, well-formatted output lowers your guard exactly when the stakes are highest, a pattern researchers call automation bias — trusting a machine's answer more than the evidence warrants.",
+        "There's a longer-term cost too: if you let the agent do all the hard thinking, your own skills quietly erode, and you lose the very judgment you need to catch its mistakes.",
+        "So deliberately keep your hands dirty — write some of the tricky code yourself, read what the agent produces closely, and treat the green-zone time it frees up as time to sharpen on the hard parts, not skip them.",
+        "The goal is to stay the kind of reviewer the agent needs, which means staying a practitioner, not just a button-presser."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "coding agent",
+      "def": "An AI tool (such as Claude Code, GitHub Copilot, or Cursor) that reads your codebase, writes or edits code to carry out a task you describe, and presents the changes for you to review."
+    },
+    {
+      "term": "boilerplate",
+      "def": "Routine, repetitive code that's nearly identical every time it's needed — like setup, configuration, or plumbing — where there's little real decision-making and lots of typing."
+    },
+    {
+      "term": "tests",
+      "def": "Small programs that automatically check your real code behaves correctly, so a mistake usually fails loudly and visibly instead of slipping through unnoticed."
+    },
+    {
+      "term": "security-sensitive code",
+      "def": "Code that guards access or data — logins, permissions, passwords, secrets, or the handling of untrusted input — where a single flaw can let an attacker in rather than just causing a bug."
+    },
+    {
+      "term": "review-cost test",
+      "def": "A simple judgment for delegation: if truly verifying the agent's output would take longer than writing the code yourself, don't hand the task over."
+    },
+    {
+      "term": "automation bias",
+      "def": "The tendency to trust a machine's confident answer more than the evidence justifies — a particular trap when an agent's fluent output lowers your guard on high-stakes work."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The real productivity lever isn't \"how much can we hand to agents\" but \"which work should we hand to agents\" — and getting that boundary wrong shows up as a fast-looking team that ships subtle, expensive failures.",
+      "There's a trade-off you own: agents make the cheap, common work cheaper, but they can hollow out a team's expertise if leaders let the hard, skill-building work be outsourced too, leaving no one able to catch the bad output.",
+      "So the question to ask of any task is the same delegation judgment a good manager already uses — \"is the cost of a quiet mistake here higher than the time we'd save?\" — and the answer should route work into the green zone or back to a human, not blindly toward whatever is fastest today."
+    ]
+  },
+  "caseStudy": {
+    "title": "Stanford's study: AI assistants and less-secure code (2023)",
+    "body": [
+      "In 2023, Stanford researchers Neil Perry, Megha Srivastava, Deepak Kumar, and Dan Boneh published a study with the blunt title \"Do Users Write More Insecure Code with AI Assistants?\"",
+      "They had participants solve security-related programming tasks, some with an AI coding assistant and some without, then measured how secure the resulting code actually was.",
+      "The participants who used the AI assistant wrote code that was measurably less secure on several tasks — yet they were also more likely to believe their code was secure, a dangerous gap between confidence and reality.",
+      "The flaws clustered exactly in the red zone this lesson warns about: security-sensitive work like encryption and input handling, where a plausible-looking answer can quietly leave a door open."
+    ],
+    "bridge": "The study is this lesson in one finding: agents are most seductive and most dangerous precisely on security-sensitive work, where confidence rises while correctness falls — so that's the work to keep close, not hand off."
+  },
+  "takeaways": [
+    "Reach for an agent on the green zone — boilerplate, exploration, and tests — where the work is common, the stakes are low, and mistakes are cheap and loud.",
+    "Keep the red zone — subtle, critical, novel, and security-sensitive work — close, because there a wrong answer looks right and catching it costs more than doing it yourself.",
+    "Use the review-cost test: if truly verifying the output would take longer than writing it, don't delegate the task.",
+    "Guard against automation bias and skill erosion — stay a practitioner who can catch bad output, not just a button-presser who trusts fluent code."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which kind of work is the best fit to hand to a coding agent?",
+      "options": [
+        {
+          "text": "Repetitive boilerplate and tests, where the patterns are common, the stakes are low, and a mistake is cheap and easy to spot",
+          "correct": true
+        },
+        {
+          "text": "The authentication and permissions code, because security is too important to write slowly by hand",
+          "correct": false
+        },
+        {
+          "text": "A genuinely novel algorithm with no precedent, because the agent will invent something no human could",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — boilerplate and tests are common, low-stakes, and fail loudly, so they're the green zone; security-sensitive and novel work are exactly where an agent's plausible-but-wrong output is hardest and costliest to catch."
+    },
+    {
+      "q": "What is the practical test for whether to delegate a task to an agent at all?",
+      "options": [
+        {
+          "text": "If truly verifying the agent's output would take longer than writing the code yourself, don't hand it over",
+          "correct": true
+        },
+        {
+          "text": "If the agent sounds confident and the explanation reads well, it's safe to accept",
+          "correct": false
+        },
+        {
+          "text": "If the task is hard for you, always delegate it so you save the most time",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the review-cost test weighs the time to verify against the time to write; an agent's confident, fluent output is a trap, not evidence, especially on the hardest tasks."
+    },
+    {
+      "q": "What does the 2023 Stanford study by Perry and colleagues most directly warn about?",
+      "options": [
+        {
+          "text": "People using an AI assistant wrote less-secure code while feeling more confident it was secure",
+          "correct": true
+        },
+        {
+          "text": "AI assistants refused to attempt any security-related task, leaving the work undone",
+          "correct": false
+        },
+        {
+          "text": "AI assistants made all code more secure, so security review became unnecessary",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the study found AI-assisted participants produced measurably less-secure code yet were more likely to believe it was secure, which is the dangerous confidence-versus-correctness gap on red-zone work."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Perry, Srivastava, Kumar, Boneh — Do Users Write More Insecure Code with AI Assistants? (Stanford, 2023)",
+      "url": "https://arxiv.org/abs/2211.03622"
+    },
+    {
+      "label": "Anthropic — Claude Code best practices for agentic coding",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      "label": "GitHub — Best practices for using GitHub Copilot",
+      "url": "https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot"
+    }
+  ]
+}

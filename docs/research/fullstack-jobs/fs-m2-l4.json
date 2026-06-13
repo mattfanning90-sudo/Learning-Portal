@@ -1,0 +1,138 @@
+{
+  "id": "fs-m2-l4",
+  "trackId": "fullstack",
+  "moduleId": "fs-m2",
+  "order": 4,
+  "title": "Routing and SPAs vs Server-Rendered Pages",
+  "estMinutes": 10,
+  "coreIdea": "A URL is a name for what you see, and there are two ways to honour it — the server sends a fresh page on every click, or JavaScript swaps the view in the browser without a full reload — each with its own trade-off between a snappy feel and a fast, findable first load.",
+  "plainEnglish": [
+    "Every screen you can reach on a website usually has its own web address, called a `URL`.",
+    "Click around and the `URL` changes — that mapping of address to view is called `routing`.",
+    "The old way: every click asks the server for a brand-new page, and the whole screen reloads.",
+    "The newer way: the page loads once, then `JavaScript` quietly swaps the content in place when you click, with no full reload.",
+    "Neither is simply better — they trade off how snappy the app feels against how fast and findable the very first load is."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A server-rendered site is like a flip-book: every time you turn a page, you replace the whole sheet with a freshly printed one — a clean new page, but a visible flip each time.",
+      "A single-page app is like a tablet showing a slideshow: the device loads once, and after that each tap just redraws the screen — no new sheet, no flip, just an instant change.",
+      "Where the metaphor bends: the tablet still has to download the whole slideshow app before the first slide appears, which is exactly the single-page app's weak spot — a heavier first load in exchange for instant changes afterward."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Routing: how a URL maps to what you see",
+      "teaser": "Every view has an address, and routing decides which view that address shows",
+      "body": [
+        "A `URL` is the web address of a specific screen, like `shop.com/cart` or `shop.com/checkout`.",
+        "`Routing` is the rule that connects each address to the right content — `/cart` shows your basket, `/checkout` shows the payment form.",
+        "Good routing means the address bar always reflects where you are, so you can bookmark a page, share the link, or hit the back button and land exactly where you expect.",
+        "The big question this lesson answers is not whether there is routing — there always is — but who does it: the server, far away, or `JavaScript`, right there in your browser.",
+        "That single choice — server-side or client-side routing — is what separates the two kinds of web app below."
+      ]
+    },
+    {
+      "title": "The traditional way: server-rendered, multi-page apps",
+      "teaser": "Every click is a fresh request, and the server sends back a whole new page",
+      "body": [
+        "In a `multi-page app` (often shortened to `MPA`), each `URL` is a separate page that lives on the server.",
+        "Click a link and your browser sends a `request` — a message asking the server for that page — and waits.",
+        "The server builds the finished `HTML` (the text file that holds a page's content and structure) and sends back a complete new page; the whole screen reloads.",
+        "This is called `server-side rendering` because the server does the work of turning data into a ready-to-show page before sending it.",
+        "The upside: the first thing the browser receives is already the real, visible content, so the page appears fast and is easy for search engines to read.",
+        "The cost: every click means another round trip to the server and a full reload, which can feel like a small stutter each time."
+      ]
+    },
+    {
+      "title": "The modern way: single-page apps and client-side routing",
+      "teaser": "Load the app once, then let JavaScript swap views in the browser",
+      "body": [
+        "A `single-page app` (or `SPA`) loads one `HTML` page plus a bundle of `JavaScript` up front, and after that it never does a full reload.",
+        "When you click, `client-side routing` kicks in: `JavaScript` running in your browser intercepts the click, updates the `URL` in the address bar, and redraws just the part of the screen that changed.",
+        "`Client-side routing` means the browser, not the server, decides which view a `URL` maps to — no fresh page is fetched, only the new data it needs.",
+        "Because nothing reloads, navigation feels instant, like flipping between tabs in an app rather than waiting for new pages.",
+        "The price is paid at the start: the browser must download and run that `JavaScript` bundle before anything useful appears, so the very first load can be slower and heavier.",
+        "Gmail and Google Maps are everyday `SPA`s — you move around inside them for ages without a single full-page reload."
+      ]
+    },
+    {
+      "title": "The trade-offs, and the hybrid that splits the difference",
+      "teaser": "Snappy-after vs fast-and-findable-first — and a way to get both",
+      "body": [
+        "The honest summary: a `SPA` feels snappier once loaded, but pays with a slower first load and a problem with `SEO`.",
+        "`SEO` (Search Engine Optimization) is making sure search engines like Google can find and rank your pages; a `SPA` that ships a near-empty page and fills it in with `JavaScript` can be harder for them to read.",
+        "A multi-page app is the mirror image: each navigation reloads, but the first page is real content straightaway and trivially findable.",
+        "The hybrid is `server-side rendering for the first page, then a SPA after` — the server sends a fully-built page so it appears fast and search engines can read it, then `JavaScript` takes over and behaves like a `SPA` for every click after.",
+        "Tools like `Next.js` (a popular framework built on the `React` UI library) make this hybrid the default, which is why so many modern sites quietly do both.",
+        "All of these still rely on routing — the difference is only ever who maps the `URL` to the view, and when."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "routing", "def": "The rule that maps each URL (web address) to the specific view or screen it should show — for example, `/cart` shows your basket." },
+    { "term": "multi-page app (MPA)", "def": "A traditional website where each URL is a separate page on the server, and every click loads a brand-new page with a full reload." },
+    { "term": "single-page app (SPA)", "def": "A website that loads one page plus JavaScript once, then swaps views in the browser without any full-page reloads." },
+    { "term": "client-side routing", "def": "When JavaScript in your browser — not the server — handles which view a URL shows, updating the screen and address bar without fetching a new page." },
+    { "term": "server-side rendering (SSR)", "def": "When the server builds the finished, ready-to-show HTML page before sending it, so the real content arrives in the first response." },
+    { "term": "SEO", "def": "Search Engine Optimization — making sure search engines like Google can find, read, and rank your pages so people can discover them." }
+  ],
+  "pmAngle": {
+    "body": [
+      "The SPA-vs-server-rendered choice is not a back-room engineering detail — it directly shapes two things you own: how fast the product feels and how easily strangers find it.",
+      "If a slow first load or weak search ranking would hurt the business — a marketing site, a news page, an online store — leaning on server-rendering or the hybrid usually wins; if you are building a logged-in tool people live inside all day, the snappy SPA feel often wins.",
+      "The modern hybrid mostly dissolves the dilemma, but it costs more engineering complexity, so the real question you should ask your team is \"what does our first load and our findability need to be?\" before debating frameworks."
+    ]
+  },
+  "caseStudy": {
+    "title": "Twitter's mobile site reverses course (2012, then 2017)",
+    "body": [
+      "Around 2012, Twitter rebuilt its web app as a JavaScript-heavy single-page app to feel more like a native phone app.",
+      "It backfired: the browser had to download and run so much JavaScript before showing anything that the first tweet took several seconds to appear, which was painful on the slow phone connections of the time.",
+      "Twitter publicly moved rendering back toward the server so the initial page arrived ready-to-read, cutting time-to-first-tweet dramatically.",
+      "Years later, in 2017, it shipped \"Twitter Lite,\" a deliberately lean app that rendered fast on the first load and then behaved like a SPA — the hybrid approach in practice."
+    ],
+    "bridge": "Twitter learned the exact trade-off in this lesson the hard way: a pure SPA feels great once loaded but can ruin the first impression, and the fix was to render the first page on the server and go SPA from there."
+  },
+  "takeaways": [
+    "Routing maps each URL to a view; the only real question is whether the server or the browser's JavaScript does that mapping.",
+    "A multi-page app reloads a fresh server-built page on every click — great first load and SEO, but a small stutter each navigation.",
+    "A single-page app loads once and swaps views with client-side routing — instant navigation, but a heavier first load and harder SEO.",
+    "Server-side rendering plus a SPA afterward is the common hybrid: fast, findable first page, then snappy clicks — at the cost of more complexity."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core difference between a server-rendered multi-page app and a single-page app (SPA)?",
+      "options": [
+        { "text": "An MPA fetches a fresh, full page from the server on every click, while a SPA loads once and lets browser JavaScript swap views without a full reload", "correct": true },
+        { "text": "An MPA has no URLs, while a SPA gives every screen its own URL", "correct": false },
+        { "text": "A SPA never uses JavaScript, while an MPA depends entirely on it", "correct": false }
+      ],
+      "feedback": "Right — both have URLs and both have routing; the difference is the MPA reloads a whole new server-built page each time, whereas the SPA loads once and uses client-side routing to swap views in place."
+    },
+    {
+      "q": "A SPA feels snappy once it is open. What is the main trade-off it makes to get that feel?",
+      "options": [
+        { "text": "A slower, heavier first load and weaker SEO, because the browser must download and run JavaScript before showing real content", "correct": true },
+        { "text": "It can no longer use URLs, so pages cannot be bookmarked or shared", "correct": false },
+        { "text": "It permanently runs slower than a multi-page app on every single click", "correct": false }
+      ],
+      "feedback": "Correct — the SPA pays its cost up front: the first load is heavier because JavaScript has to arrive and run before useful content appears, and a near-empty initial page can be harder for search engines to read."
+    },
+    {
+      "q": "What does the common hybrid — server-side rendering plus a SPA afterward — give you?",
+      "options": [
+        { "text": "A fully-built first page that loads fast and is findable by search engines, then SPA-style instant navigation for every click after", "correct": true },
+        { "text": "It removes the need for any routing because the server handles everything", "correct": false },
+        { "text": "It makes the app slower on the first load but identical to an MPA afterward", "correct": false }
+      ],
+      "feedback": "Exactly — the server sends a ready-to-show page so it appears fast and ranks well, then JavaScript takes over and behaves like a SPA, capturing the strengths of both at the cost of more engineering complexity."
+    }
+  ],
+  "sources": [
+    { "label": "MDN — Single-page applications (SPAs)", "url": "https://developer.mozilla.org/en-US/docs/Glossary/SPA" },
+    { "label": "MDN — Client-side routing and frameworks", "url": "https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Introduction" },
+    { "label": "Twitter Engineering — Improving performance on twitter.com", "url": "https://blog.twitter.com/engineering/en_us/a/2012/improving-performance-on-twittercom" }
+  ]
+}

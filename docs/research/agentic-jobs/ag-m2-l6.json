@@ -1,0 +1,176 @@
+{
+  "coreIdea": "When a prompt misbehaves, you don't argue with the model — you debug it like a system: reproduce the failure, look at what was actually in the context, change one thing at a time, and treat each fix as an experiment you can confirm.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Sooner or later a prompt that looked fine starts producing wrong, weird, or inconsistent output.",
+    "The instinct is to scold the model or pile on more words — but that is guessing, not debugging.",
+    "Prompting is empirical: you can't reason your way to the right wording from your armchair, you have to run it and watch what comes back.",
+    "So you treat a bad prompt the way an engineer treats a bug — reproduce it reliably, inspect what the model actually received, then change one thing and re-test.",
+    "Most failures fall into a handful of named patterns, and each pattern has a standard fix, so you spend less time stuck and more time narrowing in."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Debugging a prompt is like a doctor diagnosing a patient, not a judge passing sentence. You don't decide the patient is \"bad\" — you gather symptoms, run one test at a time, and rule causes in or out until the picture is clear.",
+      "If you change five things at once and the patient improves, you learn nothing about which change helped — so you isolate variables, just as a doctor changes one medication and watches.",
+      "Where the metaphor bends: a patient's body is the same from one visit to the next, but a model can give two different answers to the exact same prompt, so part of your job is telling a real bug apart from ordinary randomness."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Prompting is empirical, not a debate",
+      "teaser": "You experiment and observe — you don't reason your way to the wording",
+      "body": [
+        "A model is not a rulebook you can read; it is a system whose behaviour you discover by poking it.",
+        "That makes prompting `empirical` — meaning you learn what works by running tests and observing results, not by arguing about what the wording \"should\" do.",
+        "Two facts make this tricky. First, models are `non-deterministic`: the same prompt can produce different answers on different runs, because the model samples from a range of likely continuations.",
+        "Second, a single bad answer might be a genuine flaw in your prompt, or it might just be one unlucky roll of that randomness.",
+        "So before you \"fix\" anything, run the same prompt several times — if it fails most of the time, you have a real prompt problem; if it fails one time in ten, you may be chasing noise.",
+        "This is also why you resist the urge to argue with the model in follow-up messages: a reliable fix lives in the prompt itself, not in nagging it after the fact."
+      ]
+    },
+    {
+      "title": "Inspect what was actually in the context",
+      "teaser": "The model answered what it received — which is often not what you think you sent",
+      "body": [
+        "The single most useful debugging move is to look at the `context` — the full block of text the model actually received — exactly as it saw it.",
+        "When a prompt is built by your code, the version that reaches the model is assembled from pieces: your instructions, plus retrieved documents, prior messages, and variables filled in from a template.",
+        "Bugs hide in that assembly. A document didn't load and left a blank. A name slotted into the wrong placeholder. The text got cut off because it overflowed the `context window` — the maximum amount of text a model can consider at once.",
+        "The model is not being stupid; it is answering the text in front of it faithfully, and that text is not what you imagined.",
+        "So print or log the final, fully-assembled prompt and read it as if you were the model: if a fact you assumed was present is actually missing, the failure explains itself.",
+        "Deciding what belongs in that context in the first place — and what to leave out — is its own discipline, `context engineering`, covered separately in this module; here the job is simply to verify what made it in."
+      ]
+    },
+    {
+      "title": "A loop for fixing it: isolate, add specificity, simplify, iterate",
+      "teaser": "Change one thing, re-test, repeat — and know the common failure patterns",
+      "body": [
+        "Step one, isolate the failure: strip the prompt down to the smallest version that still misbehaves, so you're not debugging through clutter.",
+        "Step two, add specificity: if the output is generic or off-target, the prompt probably left a decision unstated, so name the missing constraint, audience, or definition (the move from the prompt-anatomy lesson).",
+        "Step three, show, don't just tell: if words aren't landing, add one or two worked examples of the input and the exact output you want — `few-shot` prompting — so the model can copy the pattern.",
+        "Step four, simplify: an over-stuffed prompt with contradictory rules confuses the model, so cut clauses that fight each other and put the most important instruction where it can't be missed.",
+        "Crucially, change one variable per run; if you alter the role, the examples, and the format all at once and it improves, you'll never know which edit did the work.",
+        "Common patterns repeat: the model ignores an instruction (move it to the top or state it as a hard rule), invents facts — a `hallucination` — (tell it to answer only from the provided text and to say \"I don't know\"), drifts off format (give an explicit template), or rambles (set a length limit). Each pattern has a go-to fix you'll reach for again and again."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "empirical",
+      "def": "Learned by running tests and observing results, rather than worked out by reasoning alone — which is how you find what wording actually works with a model."
+    },
+    {
+      "term": "non-deterministic",
+      "def": "A system that can give different outputs for the exact same input — a model samples from many likely continuations, so identical prompts can yield different answers."
+    },
+    {
+      "term": "context",
+      "def": "The full block of text the model actually receives on a given call — your instructions plus any documents, prior messages, and filled-in variables assembled together."
+    },
+    {
+      "term": "context window",
+      "def": "The maximum amount of text a model can consider at once; anything beyond that limit is cut off and effectively invisible to the model."
+    },
+    {
+      "term": "hallucination",
+      "def": "When a model states something false with full confidence — inventing a fact, source, or detail that was never in its context."
+    },
+    {
+      "term": "few-shot prompting",
+      "def": "Including a small number of worked input-and-output examples in the prompt so the model copies the pattern, instead of describing the task in words alone."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "A prompt inside your product runs against thousands of inputs you'll never personally see, so a failure you can't reproduce on demand is a failure you can't safely fix — which makes \"can we reliably reproduce this bug?\" the first product question, not the last.",
+      "Changing one variable at a time is slow by hand, so the real leverage is process: keep a small set of saved failing cases, log the fully-assembled prompt the model received, and re-run them after every edit so you can prove a change helped instead of hoping it did.",
+      "The trap to own is the quiet over-edit — patching a prompt until it passes the one example in front of you while silently breaking ten others — which is exactly why systematic testing (covered later as evaluations) is what turns prompt-fiddling into engineering."
+    ]
+  },
+  "caseStudy": {
+    "title": "Air Canada's chatbot invents a refund policy",
+    "body": [
+      "In 2022 a grieving passenger asked Air Canada's website chatbot about bereavement fares, and the bot confidently told him he could book now and claim the discount retroactively within 90 days.",
+      "That policy did not exist — the chatbot had produced a plausible-sounding but false answer, a textbook hallucination, while the airline's real policy said the opposite.",
+      "When Air Canada refused the refund, a tribunal ruled in February 2024 that the airline was liable for what its chatbot said and ordered it to pay.",
+      "The failure was not bad luck; the system let the model answer from its own invention instead of being constrained to answer only from Air Canada's actual, verified policy text."
+    ],
+    "bridge": "It is the hallucination pattern from this lesson in the wild — and the standard fix maps directly: constrain the model to the provided policy, forbid invented terms, and make it say \"I don't know\" rather than guess."
+  },
+  "takeaways": [
+    "Debug a prompt like a system, not a person: reproduce the failure, inspect the real context, change one thing, re-test — don't argue with the model.",
+    "Prompting is empirical and models are non-deterministic, so run a failing prompt several times to tell a real bug apart from ordinary randomness.",
+    "The highest-value move is reading the fully-assembled prompt the model actually received; most bugs are missing or mangled context, not a dim model.",
+    "Most failures are named patterns — ignored instruction, hallucination, format drift, rambling — and each has a standard fix you can reach for."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your prompt gave a wrong answer once. Before rewriting it, what is the soundest first step?",
+      "options": [
+        {
+          "text": "Run the same prompt several times to see whether it fails reliably or was just one unlucky, random result",
+          "correct": true
+        },
+        {
+          "text": "Immediately add several new instructions, since one failure proves the wording is broken",
+          "correct": false
+        },
+        {
+          "text": "Reply to the model telling it that its last answer was wrong and to try harder",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — models are non-deterministic, so a single bad answer might be noise. Reproducing the failure tells you whether there's a real prompt bug worth fixing before you change anything."
+    },
+    {
+      "q": "A code-built prompt keeps giving answers that ignore a key fact you're sure you included. What's the most informative thing to check?",
+      "options": [
+        {
+          "text": "The fully-assembled context the model actually received, to confirm the fact really made it in and wasn't blank, misplaced, or cut off",
+          "correct": true
+        },
+        {
+          "text": "Whether the model is simply too weak and needs to be swapped for a bigger one",
+          "correct": false
+        },
+        {
+          "text": "How politely the instruction was phrased, since manners change how carefully a model reads",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the model answers the text it actually receives. Most such bugs are a missing document, a misfilled variable, or text cut off by the context window, so reading the assembled prompt usually explains the failure on its own."
+    },
+    {
+      "q": "While debugging, you change the role, add two examples, and tighten the format all in one edit, and the output improves. What's the problem?",
+      "options": [
+        {
+          "text": "You can't tell which change actually helped, so you haven't really learned anything or built a reliable fix",
+          "correct": true
+        },
+        {
+          "text": "Nothing — making many changes at once is the fastest path to a dependable prompt",
+          "correct": false
+        },
+        {
+          "text": "The only issue is that the prompt is now too long, which always lowers accuracy",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — changing one variable per run is what lets you attribute the improvement to a specific edit. Bundle changes and an apparent win could come from any of them, or mask a regression you can't see."
+    }
+  ],
+  "sources": [
+    {
+      "label": "BBC News — Air Canada must honour refund policy invented by its chatbot",
+      "url": "https://www.bbc.com/travel/article/20240222-air-canada-chatbot-misinformation-what-travellers-should-know"
+    },
+    {
+      "label": "Anthropic — Prompt engineering overview (iterate and test empirically)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"
+    },
+    {
+      "label": "OpenAI — Prompt engineering best practices",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    }
+  ]
+}

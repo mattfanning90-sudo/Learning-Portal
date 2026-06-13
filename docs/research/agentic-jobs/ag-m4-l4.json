@@ -1,0 +1,188 @@
+{
+  "coreIdea": "An agent's only built-in memory is the context window it is holding right now, which empties when the task or session ends — so to remember anything for longer, it has to write notes to an external store and read them back later.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An agent is a model that runs in a loop, taking actions to finish a task rather than just answering once.",
+    "While it works, everything it \"knows\" sits in the context window — the block of text it is reading this turn.",
+    "That window is short-term working memory: it holds the task so far, but it has a fixed size and it is wiped clean when the session ends.",
+    "So for an agent to remember anything beyond the current task — a fact from yesterday, a preference, a half-finished plan — it must save that text somewhere outside the window and load it back when needed.",
+    "That outside store is the agent's long-term memory, and building it is a deliberate choice, not something the model does on its own."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a contractor with a whiteboard and a filing cabinet. The whiteboard is the context window: roomy enough for today's job, wiped clean each evening, and if it fills up mid-job the oldest scribbles get erased to make space.",
+      "The filing cabinet is external memory: anything worth keeping has to be deliberately written onto a sheet and filed, then pulled back out when it's relevant again — the cabinet never reads itself.",
+      "Where the metaphor bends: a human contractor remembers a bit even without filing anything, but an agent remembers literally nothing between sessions unless it was written down and reloaded — there is no faint residual memory in the model itself."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Short-term memory: the context window, and why it isn't enough",
+      "teaser": "Roomy for one task, but finite and erased at the end",
+      "body": [
+        "Within a single task, the agent's memory is just the `context window` — the text it can see this turn, covered in Module 1.",
+        "As the agent loops — calling tools, reading results, planning next steps — each step gets appended, so the window doubles as a running record of the task so far.",
+        "Two limits make this short-term only. First, the window is finite, measured in `tokens` (chunks of text), so a long task can overflow it and the earliest steps silently drop out.",
+        "Second, the window is per-session: close the chat or start a new task and it is gone, like erasing the whiteboard.",
+        "So the context window is excellent working memory for the job in hand, and useless for remembering anything once that job is over.",
+        "Everything in this lesson is about bridging that gap — getting the right text back into the window when the agent needs it again."
+      ]
+    },
+    {
+      "title": "Long-term memory: write a note now, read it back later",
+      "teaser": "Memory the agent builds by saving and reloading text",
+      "body": [
+        "Long-term memory for an agent is plain: it `writes` important text to a store outside the window, then `reads` it back into the window in a future turn or session.",
+        "The store can be ordinary `files` — a running notes file, a `to-do` list, a saved plan — that the agent edits as it works and re-reads when it resumes.",
+        "It can be a `database`: structured records like \"user prefers metric units\" or \"the deploy key is named `prod-east`\" that the agent looks up by name.",
+        "The most common form for messy, free-text memories is a `vector store`: a special database that finds saved notes by meaning rather than exact keywords (defined below).",
+        "The pattern is always the same loop: notice something worth keeping, write it out, and — crucially — retrieve it later, because a note nobody reads back changes nothing.",
+        "None of this is automatic. An agent only \"remembers\" because someone built the write step and the read step into how it runs."
+      ]
+    },
+    {
+      "title": "Why long tasks force the issue",
+      "teaser": "The longer the job, the sooner working memory runs out",
+      "body": [
+        "A one-shot question never strains memory; a multi-hour, multi-session task does.",
+        "Imagine an agent refactoring a large codebase over two days: by hour three the early decisions have scrolled out of the window, and a fresh session tomorrow starts blank.",
+        "Without external memory it re-derives the same choices, contradicts yesterday's work, or repeats a step it already finished.",
+        "The fix is to checkpoint: as it goes, the agent writes a short progress note — what's done, what's next, key decisions — to a file, then reloads that note when it resumes.",
+        "This also keeps the window lean: instead of dragging the whole history along (costly and noisy), it carries a compact summary and fetches detail only when needed.",
+        "Choosing what to remember versus what to drop is the heart of the design — keep too little and it forgets, keep too much and the window clogs."
+      ]
+    },
+    {
+      "title": "How agent memory differs from human memory",
+      "teaser": "No automatic recall, no fading — recall is engineered",
+      "body": [
+        "Human memory is automatic and associative: you absorb experience without deciding to, and a smell or a word can surface a related memory unbidden.",
+        "Agent memory is the opposite — nothing is stored unless code explicitly saves it, and nothing is recalled unless code explicitly fetches it.",
+        "Humans forget gradually and fuzzily; an agent's memory is binary — a note is either in the window verbatim or completely absent, with no in-between.",
+        "There is also no consolidation: humans sleep and quietly reorganise the day's memories, while an agent's store only changes when something writes to it.",
+        "A `vector store` gives a rough imitation of human \"reminds me of…\" recall by matching on meaning, but it only searches notes that were deliberately saved first.",
+        "The practical lesson: never assume an agent \"will just remember\" — if you didn't build the save and the recall, the memory does not exist."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "working memory",
+      "def": "What the agent holds in its context window for the current task — the running record of steps so far. Roomy but finite, and erased when the session ends."
+    },
+    {
+      "term": "external memory",
+      "def": "Any store outside the context window — files, a database, a vector store — where an agent saves text to recall in a later turn or session. The model never reads it on its own; code has to write to it and read from it."
+    },
+    {
+      "term": "vector store",
+      "def": "A database that finds saved notes by meaning rather than exact wording, so a query like \"what does the user prefer?\" can surface a relevant note even if it used different words. The usual home for free-text long-term memories."
+    },
+    {
+      "term": "checkpoint",
+      "def": "A short progress note an agent writes mid-task — what's done, what's next, key decisions — so it can reload that summary and continue instead of starting blank."
+    },
+    {
+      "term": "write / read (of memory)",
+      "def": "The two halves of every memory: writing saves a note to external memory, reading loads it back into the window. A memory that is written but never read back changes nothing."
+    },
+    {
+      "term": "session",
+      "def": "One continuous run of an agent against a task. Working memory lives only inside a session; the moment it ends, anything not saved to external memory is gone."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"The agent should remember the customer's last order\" is a feature you have to build, not a setting you switch on — someone must decide what gets saved, where, and when it gets pulled back.",
+      "Memory has a cost and a trade-off you own: every remembered detail you reload spends tokens (and money) on each call, while every detail you drop is something the agent can no longer use, so \"remember everything\" is rarely the right default.",
+      "It is also where privacy and safety land squarely on you — an agent that writes user details into long-term memory is now storing personal data, which means retention, deletion, and \"forget this\" all become product and legal decisions, not afterthoughts."
+    ]
+  },
+  "caseStudy": {
+    "title": "ChatGPT's Memory feature",
+    "body": [
+      "In February 2024 OpenAI began rolling out Memory in ChatGPT, a feature that lets the assistant carry facts across separate conversations rather than forgetting you the moment a chat ends.",
+      "When you mention something worth keeping — \"I'm vegetarian,\" \"I manage a team of six,\" \"I prefer concise replies\" — it can save that as a stored note outside the current chat.",
+      "In later, unrelated conversations it retrieves the relevant notes back into the context window, so it tailors answers without you repeating yourself.",
+      "OpenAI deliberately exposed the plumbing to users: you can view what it has saved, delete individual memories, or turn the whole feature off — because this is stored personal data, not a quirk of the model."
+    ],
+    "bridge": "ChatGPT only \"remembers\" you because the save step and the recall step were built around the model — proof that long-term memory is engineered around the window, never something the model does by itself."
+  },
+  "takeaways": [
+    "An agent's only native memory is the context window: roomy working memory for one task, but finite and wiped when the session ends.",
+    "Long-term memory is built by writing important text to an external store — files, a database, or a vector store — and reading it back into the window later.",
+    "Long, multi-session tasks force the issue: checkpoint progress to a note so the agent can resume instead of re-deriving or contradicting earlier work.",
+    "Agent memory is engineered, not automatic — unlike human memory it stores and recalls nothing unless code explicitly saves and fetches it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An agent finishes a task on Monday, and on Tuesday a fresh session starts on a related task. What does it remember from Monday by default?",
+      "options": [
+        {
+          "text": "Nothing, unless something was deliberately written to external memory and read back into the new session",
+          "correct": true
+        },
+        {
+          "text": "Everything from Monday, because the model automatically retains its past conversations",
+          "correct": false
+        },
+        {
+          "text": "A faint, fuzzy version of Monday that gradually fades over the following days",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — working memory lives only inside a session and is wiped at the end. Across sessions an agent remembers only what was explicitly saved to external memory and explicitly reloaded; there is no automatic recall and no fading residue."
+    },
+    {
+      "q": "Why does external memory always involve two distinct steps, a write and a read?",
+      "options": [
+        {
+          "text": "Saving a note to the store is useless on its own — the agent only benefits when that note is later read back into the context window",
+          "correct": true
+        },
+        {
+          "text": "Writing encrypts the memory and reading decrypts it, which is required for security",
+          "correct": false
+        },
+        {
+          "text": "The model writes automatically but a human must manually perform every read",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a memory that is written but never retrieved changes nothing, because the model can only use text that is actually back in the window. Both halves, save and recall, have to be built."
+    },
+    {
+      "q": "An agent is refactoring a large codebase over two days. What is the most reliable way to stop it from re-deriving or contradicting yesterday's decisions?",
+      "options": [
+        {
+          "text": "Checkpoint progress — write a short note of what's done, what's next, and key decisions, then reload it when resuming",
+          "correct": true
+        },
+        {
+          "text": "Keep the entire two-day conversation history in the context window at all times so nothing is ever lost",
+          "correct": false
+        },
+        {
+          "text": "Trust the model to remember its earlier decisions, since it made them itself",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the window is finite and erased between sessions, so early decisions scroll out or vanish. A compact checkpoint note, written as it goes and reloaded on resume, lets the agent continue without dragging the whole costly history along."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenAI — Memory and new controls for ChatGPT",
+      "url": "https://openai.com/index/memory-and-new-controls-for-chatgpt/"
+    },
+    {
+      "label": "Anthropic — Building agents with the Claude Agent SDK (memory and context)",
+      "url": "https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk"
+    },
+    {
+      "label": "Pinecone — What is a vector database?",
+      "url": "https://www.pinecone.io/learn/vector-database/"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "coreIdea": "A cache stores the result of expensive work close to where it's needed so you don't redo it — which makes apps dramatically faster, at the price of a hard question that never fully goes away: when does the saved copy go stale, and how do you know to throw it away?",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Some work an app does is slow or expensive — querying a database, rendering a page, calling another service, fetching a big image.",
+    "If the answer rarely changes, redoing that work for every visitor is waste: you computed it once, why pay again?",
+    "A `cache` is a small, fast store where you keep the result of that work so the next request can grab the saved copy instead of redoing it.",
+    "The win is speed: a saved answer can come back in a millisecond where the original took hundreds.",
+    "The catch is freshness: the moment the real data changes, every saved copy is potentially wrong — and knowing exactly when to throw a copy away is one of the genuinely hard problems in computing."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a cache like keeping a printed copy of a long document on your desk instead of walking to the archive every time you need it.",
+      "The desk copy is instant — but the original in the archive can be edited without anyone touching your printout, and now your fast copy quietly disagrees with the truth.",
+      "Where the metaphor breaks: a paper copy never updates itself and you always know it's a copy, whereas a cache sits invisibly in the path of real users, so a stale copy can be served to thousands of people before anyone notices it's wrong."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What caching actually is: save the answer, skip the work",
+      "teaser": "Compute once, reuse many times",
+      "body": [
+        "A `cache` is a store that holds the result of expensive work so it can be reused instead of recomputed.",
+        "The pattern is always the same: before doing the slow thing, check the cache; if the answer is there (a `cache hit`), return it; if not (a `cache miss`), do the work, save the result in the cache, then return it.",
+        "\"Expensive\" can mean slow (a database query that scans millions of rows), costly (a paid API call that bills per request), or far away (data fetched across the internet).",
+        "Caching only pays off when the same answer is requested many times and the underlying data changes far less often than it's read — a read-heavy, change-rarely shape.",
+        "It buys you speed and saves you load: fewer trips to the database, fewer paid calls, fewer servers needed to handle the same traffic.",
+        "Crucially, a cache is never the source of truth — it's a fast copy of an answer that lives, authoritatively, somewhere slower."
+      ]
+    },
+    {
+      "title": "Where caches live: a stack of layers from server to browser",
+      "teaser": "The same idea, repeated at every distance from the user",
+      "body": [
+        "Caching happens at several layers, each closer to the user than the last, and a single request can pass through all of them.",
+        "An `in-memory cache` like `Redis` is a store that keeps data in fast memory (RAM) on or near your servers — apps ask it for a saved answer before they bother the main database, and it replies in well under a millisecond.",
+        "A `CDN` (Content Delivery Network) is a worldwide network of servers that keep copies of your content (images, videos, whole pages) physically near users, so a person in Sydney is served from a nearby city instead of a server in Virginia — we'll treat the CDN at a concept level here.",
+        "The `browser cache` is the copy your own device keeps on disk: revisit a site and the logo, fonts, and scripts often load from your machine, never leaving it.",
+        "The rule of thumb: the closer the cache is to the user, the faster the response and the cheaper it is to serve — but the harder it is to reach in and update when the data changes.",
+        "That last point is the whole tension — pushing copies outward for speed scatters them where you can no longer easily call them back."
+      ]
+    },
+    {
+      "title": "Cache invalidation: knowing when the copy is stale",
+      "teaser": "Famously, one of the two hard problems in computing",
+      "body": [
+        "`Invalidation` means deciding when a cached copy is out of date and removing or refreshing it so users stop seeing the old answer.",
+        "It is hard because the cache has no idea the original changed — the database update and the cached copy live in different places, with nothing automatically linking them.",
+        "There are two broad strategies, and real systems mix them. `Time-based expiry` (often called `TTL`, short for time-to-live) says \"trust this copy for 60 seconds, then throw it away\" — simple, but it serves stale data for up to that whole window.",
+        "`Event-based invalidation` says \"the moment the data changes, actively delete the matching cached copy\" — fresher, but you must correctly find and clear every copy across every layer, and missing one means someone keeps seeing the old answer.",
+        "There's a famous engineering quip — attributed to Phil Karlton — that there are only two hard things in computer science: cache invalidation and naming things.",
+        "It's a joke, but it points at something true: getting the answer fast is easy; knowing precisely when your fast answer became a lie is the genuinely hard part."
+      ]
+    },
+    {
+      "title": "The trade-off you're really making: staleness versus speed",
+      "teaser": "There is no free freshness — you tune the dial per piece of data",
+      "body": [
+        "Every cache forces one decision: how stale are you willing to let this data get in exchange for how much speed?",
+        "Cache aggressively with a long lifetime and you get blazing speed and low cost — but users may see old prices, old stock counts, or old content for longer.",
+        "Cache cautiously with a short lifetime, or skip the cache entirely, and data stays fresh — but you pay in slower responses and heavier load on your database.",
+        "The right answer depends entirely on the data: a blog article can safely be cached for hours, while a bank balance or a live auction bid must be fresh to the second.",
+        "So caching isn't one global setting — it's a per-item judgement about how much staleness each kind of data can tolerate, illustratively ranging from \"hours are fine\" to \"never cache this.\"",
+        "Getting that judgement wrong in the unsafe direction is the danger: showing an item as \"in stock\" when it sold out two minutes ago is a cache being fast and confidently wrong."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "cache",
+      "def": "A small, fast store that holds the result of expensive work (a query, a page, an image) so it can be reused instead of recomputed. It is a fast copy, never the source of truth."
+    },
+    {
+      "term": "cache hit / cache miss",
+      "def": "A hit is when the answer you need is already in the cache, so you return it instantly; a miss is when it isn't there, so you do the real work, save the result, then return it."
+    },
+    {
+      "term": "in-memory cache (e.g. Redis)",
+      "def": "A store that keeps data in fast memory (RAM) on or near your servers, answering in well under a millisecond — apps check it before querying the slower main database."
+    },
+    {
+      "term": "CDN (Content Delivery Network)",
+      "def": "A worldwide network of servers that keep copies of your content physically close to users, so each person is served from a nearby location instead of one distant origin server."
+    },
+    {
+      "term": "cache invalidation",
+      "def": "Deciding when a cached copy is out of date and removing or refreshing it so users stop seeing the old answer — famously one of the hard problems in computing."
+    },
+    {
+      "term": "TTL (time-to-live)",
+      "def": "A lifetime set on a cached copy: \"trust this for N seconds, then discard it.\" Simple to use, but it can serve stale data for up to that whole window."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Caching is one of the cheapest performance wins you own — often a faster, far smaller change than rewriting code or buying bigger servers — so \"can we cache this?\" is a fair first question whenever a screen feels slow or a bill runs high.",
+      "But every cache you add is a freshness promise you now have to keep, and the real product decision is the staleness budget: for each piece of data, how out-of-date is acceptable — seconds for a price, minutes for a feed, hours for an article, never for a payment confirmation.",
+      "The dangerous failures are silent and pointed at customers — a stale \"in stock\" badge, an old discount that won't apply at checkout, a profile change that doesn't show up — so when you ask for caching, ask in the same breath \"and how do we make sure it updates when this changes?\""
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub's Unicorn purge and the stale-fork bug",
+    "body": [
+      "GitHub serves enormous read traffic — repository pages, avatars, rendered files — and leans heavily on caching, including a CDN, to keep those pages fast for millions of developers worldwide.",
+      "The company has written publicly about building purging systems (an internal tool it nicknamed \"Unicorn\") whose entire job is cache invalidation: when content changes, actively clearing the now-stale copies sitting in its caching layers.",
+      "The reason such a system has to exist is exactly the hard problem — without precise, fast purging, a user could push a change and still be shown the old, cached version of their page, sometimes for an uncomfortably long time.",
+      "GitHub's engineers have described chasing subtle staleness bugs where a cached page lingered after the underlying data moved on, the classic symptom of invalidation gone slightly wrong at scale."
+    ],
+    "bridge": "GitHub's experience is the lesson made concrete: the easy half is serving cached pages fast, and the hard, expensive, never-quite-finished half is knowing the instant a copy went stale and reliably clearing it everywhere it lives."
+  },
+  "takeaways": [
+    "A cache saves the result of expensive work so it can be reused instead of recomputed — a fast copy, never the source of truth — and pays off most for data that's read often and changes rarely.",
+    "Caches stack in layers from server to user: an in-memory store like Redis near your servers, a CDN holding copies near users worldwide, and the browser cache on the device itself.",
+    "Cache invalidation — knowing when a saved copy is stale and clearing it — is the genuinely hard part, handled by time-based expiry (TTL) and/or event-based deletion, and getting it wrong silently serves wrong answers.",
+    "Caching is always a staleness-versus-speed trade-off tuned per item: how out-of-date you'll tolerate buys you how much speed — seconds for a price, hours for an article, never for a payment."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An app shows a product's review count, which is read constantly but only changes a few times a day. Why is this a good candidate for caching?",
+      "options": [
+        {
+          "text": "Because the same answer is requested far more often than the underlying data changes, so a saved copy is reused many times before it ever needs refreshing",
+          "correct": true
+        },
+        {
+          "text": "Because caching makes the database itself permanently faster at computing the count",
+          "correct": false
+        },
+        {
+          "text": "Because once cached, the review count becomes the official source of truth and the database is no longer needed",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — caching pays off for read-heavy, change-rarely data: you compute the count once and serve the saved copy to the many readers who arrive before it next changes. A cache doesn't speed up the database's own work, and it's never the source of truth — it's a fast copy of an answer that authoritatively lives somewhere slower."
+    },
+    {
+      "q": "An online store caches each product's stock status with a 10-minute time-to-live (TTL). An item sells out at 2:00pm. What's the risk?",
+      "options": [
+        {
+          "text": "Until the cached copy expires, shoppers can be shown the stale \"in stock\" badge for up to 10 minutes after it sold out",
+          "correct": true
+        },
+        {
+          "text": "The TTL guarantees the cache updates the instant the item sells out, so there is no staleness risk",
+          "correct": false
+        },
+        {
+          "text": "The cache will refuse to serve the page at all once the real stock count changes",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — time-based expiry trusts a copy for a fixed window and only discards it when that window ends, so it can serve stale data for up to the full TTL. The sale didn't reach into the cache; the copy simply isn't refreshed until it expires (or something actively invalidates it). That gap is exactly why showing \"in stock\" when it isn't is a real product risk."
+    },
+    {
+      "q": "Why is \"cache invalidation\" famously called one of the hard problems in computing?",
+      "options": [
+        {
+          "text": "Because the cache doesn't know the original data changed, so reliably finding and clearing every stale copy across every layer — at the right moment — is genuinely difficult",
+          "correct": true
+        },
+        {
+          "text": "Because writing data into a cache is technically very slow and complicated",
+          "correct": false
+        },
+        {
+          "text": "Because caches can only ever store text, never images or pages",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — serving a cached answer fast is the easy half. The hard half is that a cached copy has no automatic link to the original, so when the data changes you must correctly detect it and clear every matching copy everywhere it lives (in-memory, CDN, browser) — and missing one means someone keeps seeing the old, wrong answer."
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Your agent toolkit is a small, deliberately grown system — the tools you trust, your reusable prompts and specs, your context files, your saved commands and skills, your connected tools, and a tiny test set — that compounds in value because each piece you add makes every future task a little faster and more reliable.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A coding agent out of the box is generic — it knows nothing about how you work or what your project expects.",
+    "A `toolkit` is the personal setup you build up around it over time so it stops starting from scratch every session.",
+    "It is not one big install. It is many small, reusable pieces: prompts you keep, instructions the agent always reads, shortcuts for jobs you repeat, and connections to your real tools.",
+    "Each piece is cheap to add and pays off every time you reuse it, so the value `compounds` — it builds on itself rather than staying flat.",
+    "This lesson is about how to grow that system on purpose, not which buttons to click in any one tool — those step-by-step tutorials live elsewhere in the course."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A new chef gets a bare kitchen. Over months they build a `mise en place` — French for \"everything in its place\": knives sharpened, sauces prepped, recipes written on cards, the good supplier on speed-dial. None of it is the cooking itself, but it makes every dish faster and more consistent.",
+      "Your agent toolkit is that prepped kitchen for software work: the agent is the chef, and your prompts, context files, commands, and connected tools are the knives, recipe cards, and supplier list you have set up so you are never starting cold.",
+      "Where the metaphor bends: a chef's prep spoils overnight and must be redone, while your toolkit is the opposite — it persists and accumulates, so the longer you tend it the more it is worth."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What goes in the toolkit — the six moving parts",
+      "teaser": "A handful of reusable assets, each solving a job you keep repeating",
+      "body": [
+        "Start with the `tools` themselves: the coding agent and editor you trust, chosen because they fit your work, not because they are newest. Picking and learning a specific tool is covered earlier in the course; here it is just one slot in the kit.",
+        "Next, reusable `prompts` and `specs`. A prompt is an instruction you give the agent; a spec is a written description of what a feature should do and how you will know it is done. Save the ones that worked so you can reuse them instead of rewriting them.",
+        "Then `context files` — plain text files in your project, often named `AGENTS.md` or similar, that the agent reads automatically so it learns your conventions, naming, and \"how we do things here\" without you repeating it each session.",
+        "Add `slash commands` and `skills`: a slash command is a saved instruction you trigger with a short name like `/test`; a skill is a reusable packaged capability the agent can load when a task calls for it. Both turn a job you do often into one move.",
+        "Connect your real tools through `MCP servers` — the standard plug, covered in its own lesson, that lets the agent reach your database, your tickets, or your files. The toolkit point is simply: wire up the few you actually use and trust.",
+        "Finally, keep a small `eval set` — a handful of saved test cases you can re-run to check the agent still does the right thing after you change a prompt or upgrade a model."
+      ]
+    },
+    {
+      "title": "Why a grown system compounds",
+      "teaser": "Each piece you add pays off on every future task, not just once",
+      "body": [
+        "A one-off prompt helps you once. The same prompt saved as a `/command` helps you every time the job recurs — the work of writing it is paid once and reused forever.",
+        "Context files compound the hardest. Every correction you fold back into `AGENTS.md` — \"use this library, never that one,\" \"our tests live here\" — is a mistake the agent stops making for you and your teammates from then on.",
+        "Pieces also reinforce each other. A good spec plus a good context file plus a connected tool means the agent can take a vague request and do most of it correctly the first time, because the surrounding setup fills in what you would otherwise have to say.",
+        "This is the difference between `compounding` and `flat` returns: flat means each task costs the same effort forever; compounding means today's effort lowers the cost of every similar task tomorrow.",
+        "The catch worth naming: a toolkit also accumulates `cruft` — stale prompts, outdated instructions, dead connections — so part of the craft is pruning, not just adding. A small, sharp kit beats a large, rotting one."
+      ]
+    },
+    {
+      "title": "How to grow it on purpose, not by accident",
+      "teaser": "A simple loop: capture what worked, keep it small, test before you trust",
+      "body": [
+        "Grow it by `capture`, not by planning it all up front. When a prompt or workflow works well, save it; when the agent gets something wrong, write the rule that would have prevented it into a context file. The toolkit accretes from real work.",
+        "Keep it small on purpose. A context file the agent must read every time is also tokens and attention it spends every time, so a bloated `AGENTS.md` can make the agent worse, not better. Favour a few sharp instructions over an encyclopedia.",
+        "Treat the eval set as your safety net for change. Before you adopt a new prompt or a new model, re-run your handful of saved cases; if they still pass, you change with confidence instead of hoping.",
+        "Make it shareable. The same context files, commands, and specs that help you also onboard a teammate or a new agent instantly — which is why teams check this setup into their code repository, the shared folder where a project's files and history live.",
+        "Review it on a rhythm. Once in a while, prune dead commands, update stale instructions, and drop tools you stopped using — the same maintenance any system needs to stay an asset rather than a liability."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "agent toolkit",
+      "def": "The personal or team setup you build around a coding agent over time — trusted tools, reusable prompts and specs, context files, saved commands and skills, connected tools, and a small test set — so the agent rarely starts from scratch."
+    },
+    {
+      "term": "context file",
+      "def": "A plain text file in your project (often named `AGENTS.md`) that an agent reads automatically, so it learns your conventions and preferences without you repeating them each session."
+    },
+    {
+      "term": "spec",
+      "def": "A short written description of what a feature should do and how you will know it is finished; reused, it lets the agent take a vague request and produce most of the right result the first time."
+    },
+    {
+      "term": "slash command",
+      "def": "A saved instruction you trigger with a short name like `/test`, turning a task you do often into a single move instead of a fresh prompt each time."
+    },
+    {
+      "term": "eval set",
+      "def": "A small collection of saved test cases you re-run to check the agent still behaves correctly after you change a prompt, add a tool, or upgrade the model."
+    },
+    {
+      "term": "compounding",
+      "def": "When today's effort lowers the cost of every similar task tomorrow, so value builds on itself — the opposite of flat returns, where each task costs the same effort forever."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own the team's output, the toolkit is a quiet productivity asset that does not show up on any feature roadmap — yet a shared set of context files, commands, and specs is often the difference between an agent that helps one expert and one that lifts the whole team's baseline.",
+      "The trade-off you own is investment versus speed. Tending the toolkit costs time that could go to shipping, but skipping it means re-explaining the same things forever; the win is treating it like infrastructure — small, steady upkeep, not a heroic one-off.",
+      "It is also a portability and risk decision. A toolkit built on open, reusable pieces (context files, MCP connections, written specs) survives a change of model or vendor; one glued to a single tool's private features does not, so where you invest determines how much you can move later."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic ships AGENTS.md-style context files and the practice spreads (2024–2025)",
+    "body": [
+      "When Anthropic released its coding agent, Claude Code, it supported a project context file — a `CLAUDE.md` checked into the repository — that the agent reads on every run to learn the project's conventions, commands, and house rules.",
+      "Teams quickly found that folding their corrections back into that file was where the real gains came from: each \"don't use this library\" or \"run tests this way\" note, written once, stopped the agent repeating the mistake for everyone.",
+      "Through 2025 the idea converged into a shared convention, `AGENTS.md`, adopted across multiple agent tools so that one context file could guide many different agents rather than each tool inventing its own format.",
+      "These dates and details are illustrative of the trend, not a precise timeline — but the direction is the lesson: the highest-leverage part of many teams' setups was not a clever prompt, it was a maintained context file that compounded."
+    ],
+    "bridge": "The context file becoming a portable, shared standard is the toolkit idea in miniature — build a reusable asset once, keep it tended, and its value compounds across every agent and teammate that reads it."
+  },
+  "takeaways": [
+    "A toolkit is a small, deliberately grown system — trusted tools, reusable prompts and specs, context files, commands and skills, connected tools, and a tiny eval set — not a single install.",
+    "Its value compounds: a saved command, a folded-back context rule, or a reused spec pays off on every future task instead of just once.",
+    "Grow it by capture, keep it small and sharp, and re-run your eval set before trusting a new prompt or model — adding without pruning lets cruft rot the kit.",
+    "The biggest leverage is often a maintained context file, and the most durable toolkits are built on open, reusable pieces that survive a change of model or vendor."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What best describes an agent toolkit as this lesson uses the term?",
+      "options": [
+        {
+          "text": "A small, deliberately grown system of reusable pieces — trusted tools, prompts and specs, context files, commands and skills, connected tools, and a tiny eval set — built up over time",
+          "correct": true
+        },
+        {
+          "text": "A single all-in-one application you install once that replaces the need for any prompts or setup",
+          "correct": false
+        },
+        {
+          "text": "The raw AI model itself, before any project files or connections are added around it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a toolkit is not one install; it is many small reusable assets you accumulate around the agent so it rarely starts from scratch."
+    },
+    {
+      "q": "Why does a deliberately grown toolkit compound in value rather than staying flat?",
+      "options": [
+        {
+          "text": "Because each saved piece — a command, a context rule, a reusable spec — pays off on every future task, so today's effort lowers the cost of every similar task tomorrow",
+          "correct": true
+        },
+        {
+          "text": "Because the AI model automatically gets faster the more files you put next to it",
+          "correct": false
+        },
+        {
+          "text": "Because adding more prompts and instructions always improves the agent, so bigger is reliably better",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — compounding means reuse: a one-off prompt helps once, but saved as a command or folded into a context file it helps every time the job recurs. Note that more is not always better — bloated context files can hurt."
+    },
+    {
+      "q": "What is the point of keeping a small eval set as part of your toolkit?",
+      "options": [
+        {
+          "text": "A handful of saved test cases you re-run to confirm the agent still behaves correctly after you change a prompt, add a tool, or upgrade the model",
+          "correct": true
+        },
+        {
+          "text": "A list of which AI vendors are cheapest this month so you can switch to the lowest price",
+          "correct": false
+        },
+        {
+          "text": "A backup copy of the agent's source code in case the tool company shuts down",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the eval set is your safety net for change: re-run those cases before trusting a new prompt or model, so you upgrade with evidence instead of hope."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Claude Code best practices (context files, custom commands)",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      "label": "AGENTS.md — an open format for guiding coding agents",
+      "url": "https://agents.md/"
+    },
+    {
+      "label": "Anthropic — Introducing the Model Context Protocol",
+      "url": "https://www.anthropic.com/news/model-context-protocol"
+    }
+  ]
+}

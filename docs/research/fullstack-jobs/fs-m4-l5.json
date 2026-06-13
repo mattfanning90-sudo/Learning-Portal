@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Some queries are slow because the database reads every row to answer them; an index is a pre-sorted lookup that makes reads fast at a small cost to writes, migrations are how you change a database's structure safely over time, and the most common avoidable slowdown is the N+1 problem — one query that quietly fires hundreds more.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A query that feels instant on a hundred rows can crawl on ten million rows.",
+    "By default, to answer \"find the customer with this email,\" the database may scan every single row until it finds a match — fine for a small table, painfully slow for a huge one.",
+    "An `index` fixes this: it's a pre-sorted helper, like the index at the back of a book, that lets the database jump straight to the rows it needs instead of reading them all.",
+    "Indexes speed up reads but slow down writes a little, because every time you add or change a row the index has to be kept up to date too.",
+    "Two more ideas round this out: `migrations`, the safe, step-by-step way you change a database's structure over time, and the `N+1 problem`, a classic trap where one innocent-looking query secretly triggers hundreds more."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine a 900-page textbook with no index. To find every mention of \"photosynthesis,\" you'd have to read all 900 pages, cover to cover — that's a database scanning every row.",
+      "The index at the back changes everything: it's an alphabetical list that sends you straight to pages 412 and 587, so you skip the other 898. A database `index` works the same way — pre-sorted, so the database jumps to the answer instead of reading everything.",
+      "Where the metaphor bends: a book's index is printed once and never changes, but a database index must be silently rewritten on every single insert, update, and delete — which is exactly why indexes make reads faster but writes a touch slower."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why a query is slow: the full table scan",
+      "teaser": "By default, the database reads every row until it finds a match",
+      "body": [
+        "A `table` is a labelled grid of records — rows are individual items (one customer, one order) and columns are their fields (name, email, city).",
+        "When you ask \"find the customer whose email is `ana@example.com`,\" the database has no shortcut by default, so it does a `full table scan`: it checks row 1, then row 2, then row 3, all the way down until it finds a match or runs out of rows.",
+        "On a table of 100 rows that's nothing. On a table of 50 million rows, the database may inspect tens of millions of rows to answer one lookup — and it does that work *every time* the query runs.",
+        "This is the single most common reason a query that was fast in testing becomes slow in production: the test database was tiny, the real one is enormous.",
+        "The work grows roughly in line with the number of rows — double the table, roughly double the scanning — which is why slowness creeps up gradually as a product succeeds and its data piles up.",
+        "The fix is to give the database a shortcut so it never has to read the whole table to find a few rows: that shortcut is an index."
+      ]
+    },
+    {
+      "title": "An index: the pre-sorted shortcut",
+      "teaser": "Fast reads, paid for with slightly slower writes",
+      "body": [
+        "An `index` is a separate, pre-sorted copy of one or more columns, kept alongside the table, that points to where each row lives.",
+        "Because it's sorted, the database can use it like a phone book — open to roughly the right place, narrow down fast, and jump straight to the matching rows — instead of scanning every row.",
+        "Adding an index on the `email` column turns \"check 50 million rows\" into \"check a few\" — often a hundredfold-plus speedup on a big table (illustrative, but the order of magnitude is real).",
+        "Nothing is free, though: every index is extra data that must be updated on every `INSERT`, `UPDATE`, or `DELETE`, so writes get a little slower and the database takes more storage.",
+        "So you don't index everything — you index the columns you frequently search, filter, or sort by, and leave rarely-queried columns alone.",
+        "The mental model is a trade you choose deliberately: you spend a little write speed and disk to buy a lot of read speed, which is the right deal for the read-heavy lookups most apps do constantly."
+      ]
+    },
+    {
+      "title": "Migrations: changing the database's shape safely",
+      "teaser": "Version control for your data's structure",
+      "body": [
+        "Over time, an app's needs change — you add a `phone_number` column, rename a field, or add a new index — which means changing the database's `schema`, the blueprint that defines what tables and columns exist.",
+        "You can't just edit a live database by hand: it holds real customer data, multiple engineers share it, and one bad manual change can corrupt or lose information.",
+        "A `migration` is a small, written, ordered script that makes one structural change — \"add this column,\" \"create this index\" — and is saved in the codebase like any other code.",
+        "Because migrations are written down and run in order, every environment — your laptop, the test server, production — ends up with the exact same structure, and you can see the full history of how the schema evolved.",
+        "Crucially, a good migration is reversible: it pairs the change (`up`) with how to undo it (`down`), so if a release goes wrong you can roll the structure back, much like the all-or-nothing transactions from the previous lesson.",
+        "Think of migrations as version control for your data's shape — the same discipline that lets teams safely change code, applied to the database underneath it."
+      ]
+    },
+    {
+      "title": "The N+1 problem: one query that becomes hundreds",
+      "teaser": "The most common avoidable slowdown in real apps",
+      "body": [
+        "Picture a page listing 100 blog posts, each showing its author's name.",
+        "A naive approach runs 1 query to fetch the 100 posts, then — for each post — 1 more query to fetch that post's author: that's 1 + 100 = 101 queries to draw one page. This is the `N+1 problem`: 1 query to get a list of N things, then N extra queries, one per thing.",
+        "Each query is fast on its own, so nothing looks broken — but 101 separate round-trips to the database is far slower than it needs to be, and it gets worse as the list grows.",
+        "This trap is especially easy to fall into with an `ORM` — Object-Relational Mapper, a tool that lets you work with database rows as if they were ordinary code objects — because fetching `post.author` hides the fact that a whole new query just fired.",
+        "The fix is to fetch the related data in bulk: ask for all 100 posts *and* their authors together, turning 101 queries into roughly 2 (a technique often called eager loading or a join).",
+        "You rarely need to write that fix yourself, but recognising the symptom — a page that gets dramatically slower as a list grows, with a query count that balloons — is one of the highest-leverage performance instincts there is."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "index",
+      "def": "A separate, pre-sorted helper on one or more columns that lets the database jump straight to matching rows instead of scanning the whole table — like the index at the back of a book. It speeds up reads but slightly slows writes."
+    },
+    {
+      "term": "full table scan",
+      "def": "When the database reads every row of a table one by one to answer a query, because no index gives it a shortcut. Fine on small tables, very slow on huge ones."
+    },
+    {
+      "term": "schema",
+      "def": "The blueprint of a database: which tables exist, what columns each has, and how they relate. Changing the schema means changing this structure."
+    },
+    {
+      "term": "migration",
+      "def": "A small, written, ordered script that makes one safe change to the database schema (such as adding a column or index), saved in the codebase so every environment ends up identical and changes can be undone."
+    },
+    {
+      "term": "N+1 problem",
+      "def": "A common performance trap where fetching a list of N items triggers 1 query for the list plus N extra queries (one per item), turning what should be a couple of queries into hundreds."
+    },
+    {
+      "term": "ORM (Object-Relational Mapper)",
+      "def": "A tool that lets developers work with database rows as ordinary code objects, hiding the SQL — convenient, but it can hide how many queries are actually running, which is how N+1 problems sneak in."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Performance is a feature with a deadline you can't see coming: queries that are fast on today's data quietly get slower as the product succeeds and the tables grow, so \"it's fast on my machine\" is never proof it'll be fast at scale — ask how it behaves at 100x the current row count.",
+      "Indexes and the N+1 fix are usually cheap, high-leverage wins rather than expensive rewrites, which makes \"why is this page slow?\" a question worth raising early — the answer is often a missing index or a runaway query count, both fixable in hours, not weeks.",
+      "Migrations are a release-risk and trust issue you own: every schema change touches live customer data, so the questions to insist on are \"is this migration reversible?\" and \"can it run without taking the app down?\" — a careless one can mean downtime, data loss, and a very bad day."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub's 2018 schema migration on a live database",
+    "body": [
+      "GitHub stores enormous tables — its core MySQL databases hold billions of rows powering nearly every page on the site.",
+      "Changing the structure of such a table the naive way can lock it for minutes or hours, during which the whole site would effectively freeze — unacceptable for a service developers worldwide depend on.",
+      "To change schemas safely, GitHub built and open-sourced a tool called `gh-ost` that performs migrations on live tables without locking them: it quietly builds the new structure alongside the old one, copies the data across in the background, and switches over in a single near-instant step.",
+      "This let GitHub run structural changes — including ones that add or rebuild indexes — on production tables serving live traffic, with no downtime, rather than scheduling scary maintenance windows."
+    ],
+    "bridge": "GitHub's experience shows why migrations are treated as careful, reversible, well-tooled operations rather than quick manual edits: on a large live database, *how* you change the structure matters as much as *what* you change."
+  },
+  "takeaways": [
+    "Slow queries are often a full table scan — the database reading every row because nothing gives it a shortcut, which only hurts as the table grows.",
+    "An index is a pre-sorted shortcut (like a book's index) that makes reads fast in exchange for slightly slower writes, so you index the columns you search and sort by, not everything.",
+    "Migrations are small, ordered, ideally reversible scripts that change the database's structure safely — version control for your data's shape, kept in the codebase.",
+    "The N+1 problem is a list of N items causing 1 + N queries; the symptom is a page that balloons in query count as the list grows, and the fix is fetching related data in bulk."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A lookup-by-email query was instant in testing but is now slow in production. The test table had 200 rows; the real one has 40 million. With no index on the email column, what is the database most likely doing?",
+      "options": [
+        {
+          "text": "A full table scan — checking rows one by one until it finds the match, which barely registers on 200 rows but is very slow across 40 million",
+          "correct": true
+        },
+        {
+          "text": "Running out of memory, because 40 million rows can't fit in a database at once",
+          "correct": false
+        },
+        {
+          "text": "Slowing down because the email addresses in production are simply longer than the test ones",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — with no index, the database has no shortcut, so it scans rows one at a time. That work grows with the size of the table, which is exactly why a query that flew on 200 test rows crawls on 40 million real ones. The fix is an index on the email column."
+    },
+    {
+      "q": "Why don't engineers just add an index to every column to make everything fast?",
+      "options": [
+        {
+          "text": "Because every index must be kept up to date on each insert, update, and delete, so too many indexes slow down writes and use extra storage — you index columns you actually search or sort by",
+          "correct": true
+        },
+        {
+          "text": "Because databases only allow one index per table, so you must choose a single column",
+          "correct": false
+        },
+        {
+          "text": "Because indexes make reads slower, so they're only worth adding to columns you never query",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — an index is a pre-sorted helper that speeds up reads but must be rewritten on every write, costing write speed and storage. So you spend that cost where it pays off — frequently searched, filtered, or sorted columns — rather than indexing everything blindly."
+    },
+    {
+      "q": "A page lists 100 products and shows each product's category name. It's surprisingly slow, and the database log shows 101 queries for that one page. What's happening, and what's the fix?",
+      "options": [
+        {
+          "text": "It's the N+1 problem — 1 query for the 100 products plus 1 per product for its category; the fix is to fetch the products and their categories together in bulk, cutting it to about 2 queries",
+          "correct": true
+        },
+        {
+          "text": "The database needs a bigger index on every column so each of the 101 queries runs faster individually",
+          "correct": false
+        },
+        {
+          "text": "It's a failed migration, and re-running the migration will collapse the 101 queries into one",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — 1 query for the list plus N (here 100) for each item's related data is the classic N+1 problem, often hidden by an ORM. Each query is fast alone, but 101 round-trips is the slowdown. The fix is fetching the related data in bulk (eager loading / a join), turning 101 queries into roughly 2 — not adding more indexes."
+    }
+  ]
+}

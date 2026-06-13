@@ -1,0 +1,180 @@
+{
+  "coreIdea": "When software needs to act on a model's answer rather than just read it, you ask for structured output — usually JSON shaped to an exact schema of fields and types — because that is the bridge from chatting with a model to building reliable apps on top of it.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "By default a model replies in prose — sentences written for a human to read.",
+    "That is fine when a person is on the other end, but useless when the next step is a piece of software.",
+    "A program can't reliably pull \"the price\" or \"the customer's name\" out of a friendly paragraph; it needs the answer in a fixed, predictable shape it can read directly.",
+    "The fix is to ask for `structured output`: machine-readable data, almost always in a format called `JSON`, instead of prose.",
+    "And you go one step further — you hand the model a `schema`: an exact blueprint of which fields you expect and what type each one is — so the output comes back in the precise shape your code is waiting for."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Asking a model for prose is like asking a colleague to \"tell me about this job applicant\" and getting a warm paragraph back. Lovely to read, but you can't drop it into a spreadsheet.",
+      "Asking for structured output to a schema is like handing that colleague a blank form with labelled boxes — Name, Years of experience, Recommended (yes/no) — and saying \"fill this in, nothing else.\" Now every answer lands in the same slots, every time, ready to file.",
+      "Where the metaphor breaks: a paper form physically can't be filled in wrong, but a model can still leave a box blank, invent a field, or write text where you wanted a number — which is exactly why the reliability tricks in this lesson matter."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What JSON is, and why it became the default",
+      "teaser": "A simple, universal way to write down structured data",
+      "body": [
+        "`JSON`, short for JavaScript Object Notation, is a plain-text way of writing structured data that almost every programming language can read.",
+        "It is built from two simple ideas: key–value pairs like `\"name\": \"Ada\"`, and lists of them inside curly braces `{ }`.",
+        "A `field` is one of those keys — `\"name\"`, `\"price\"`, `\"in_stock\"` — and each field has a `type`: text (a `string`), a `number`, true/false (a `boolean`), a list (an `array`), or a nested object.",
+        "It became the default because it is human-readable and machine-readable at once, and because the web already runs on it — so your code can take JSON from a model and use it without translation.",
+        "The crucial property is that JSON is parseable: a program can split it into named pieces with certainty, which a sentence of prose never allows.",
+        "When people say they want \"the model to return JSON,\" this is what they mean — the answer as labelled data, not as a story about the answer."
+      ]
+    },
+    {
+      "title": "A schema turns 'some JSON' into 'the JSON my code expects'",
+      "teaser": "The blueprint that pins down fields and types",
+      "body": [
+        "Asking for JSON alone isn't enough; the model might name a field `\"cost\"` one time and `\"price\"` the next, or return the price as the text `\"twelve dollars\"` instead of the number `12`.",
+        "A `schema` removes that wobble: it is a precise specification of exactly which fields must appear and what type each one must be.",
+        "For example: \"return an object with `product_name` (string), `price` (number), and `in_stock` (boolean) — and nothing else.\"",
+        "With the schema fixed, your code can rely on `price` always being there and always being a number, so the line that adds up a total never crashes on a surprise.",
+        "Schemas also let you mark fields as required versus optional, and restrict a field to a fixed set of choices — say `status` must be one of `\"new\"`, `\"shipped\"`, or `\"cancelled\"`.",
+        "In short, JSON gives you a shape the machine can read; the schema guarantees it is the *specific* shape your machine is built to read."
+      ]
+    },
+    {
+      "title": "Making it reliable — from \"please use JSON\" to guaranteed JSON",
+      "teaser": "Three levels of how hard the format is enforced",
+      "body": [
+        "The weakest approach is to just ask in the prompt: \"reply only in JSON matching this shape.\" It works often, but the model may still wrap the JSON in chatter like \"Sure! Here's your data:\" — which breaks any program trying to read it.",
+        "A stronger approach is `JSON mode`, a setting offered by providers like OpenAI and Anthropic that forces the reply to be valid, parseable JSON — no stray prose around it.",
+        "The strongest approach is `structured outputs` (also called constrained decoding): you supply the schema itself, and the system guarantees the output matches it — right fields, right types, every time.",
+        "It works by limiting the model's choices as it writes: at each step it is only allowed to produce text the schema permits, so an invalid answer is literally impossible to generate.",
+        "Practical habits still help: keep field names obvious, give one tiny example of the shape, and always `validate` the result — check it against the schema in your code before trusting it.",
+        "Treat the model as a fallible form-filler: enforce the format at the strongest level your provider offers, then verify, rather than hoping a polite instruction holds across millions of calls."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "structured output",
+      "def": "A model response returned as machine-readable data in a fixed shape — rather than free-flowing prose — so software can use it directly without trying to parse a paragraph."
+    },
+    {
+      "term": "JSON",
+      "def": "JavaScript Object Notation: a plain-text format for writing structured data as labelled key–value pairs, readable by humans and by nearly every programming language."
+    },
+    {
+      "term": "field",
+      "def": "One named piece of a JSON object — a key like `price` or `customer_name` — that holds a single value."
+    },
+    {
+      "term": "type",
+      "def": "What kind of value a field holds — text (string), a number, true/false (boolean), a list (array), or a nested object — so code knows how to handle it."
+    },
+    {
+      "term": "schema",
+      "def": "A precise blueprint of the output: exactly which fields must appear, what type each must be, which are required, and what values are allowed — the shape your code is built to expect."
+    },
+    {
+      "term": "structured outputs (constrained decoding)",
+      "def": "A provider feature that guarantees the model's answer matches a schema you supply by only ever letting it produce text the schema permits — making an off-format reply impossible rather than merely discouraged."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Structured output is the line between a demo and a product: a model that chats is a clever toy, but a model whose answers slot cleanly into your database, your checkout, or your dashboard is something you can actually ship.",
+      "The trade-off you own is rigidity versus resilience — a tight schema makes downstream code simple and safe, but every time you change those fields you may break the code that depends on them, so the schema becomes a contract worth versioning.",
+      "And the failure mode is sneaky: prompt-only \"please use JSON\" passes in testing and then breaks on a fraction of real traffic, so for anything in production, paying for guaranteed structured outputs and validating the result is usually cheaper than chasing malformed-data bugs later."
+    ]
+  },
+  "caseStudy": {
+    "title": "OpenAI ships Structured Outputs (August 2024)",
+    "body": [
+      "For a long time, developers using OpenAI's models had to beg for JSON in the prompt and write defensive code for the times the model returned something slightly off.",
+      "In August 2024 OpenAI released a feature called Structured Outputs, where you pass a JSON schema with the request and set a `strict` flag.",
+      "OpenAI reported that with this on, the model's output matched the supplied schema essentially 100% of the time, up from the unreliable rates of prompt-only approaches — these figures are the company's own and illustrative of the leap.",
+      "Under the hood it constrains the model as it writes, so it can only generate text that fits the schema — turning \"usually valid JSON\" into \"guaranteed valid JSON.\""
+    ],
+    "bridge": "That release is this lesson made concrete: the move from politely asking for a shape to guaranteeing it is exactly what lets teams build dependable software on top of a model."
+  },
+  "takeaways": [
+    "Models reply in prose by default; software needs structured output — almost always JSON — so it can act on the answer instead of parsing a paragraph.",
+    "JSON gives you labelled fields and types a program can read with certainty; a schema pins down exactly which fields and types must appear.",
+    "Enforce the format at the strongest level your provider offers — prompt-only is weakest, JSON mode is firmer, schema-based structured outputs guarantee the shape — then validate the result anyway.",
+    "A schema is a contract between the model and your code: it makes downstream logic simple and safe, but changing it can break what depends on it, so version it."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why would you ask a model for JSON rather than a normal prose answer?",
+      "options": [
+        {
+          "text": "So that software can read the answer as labelled, predictable data instead of trying to parse meaning out of a paragraph",
+          "correct": true
+        },
+        {
+          "text": "Because JSON answers are always more accurate and thoughtful than prose answers",
+          "correct": false
+        },
+        {
+          "text": "Because JSON uses far fewer tokens, which is the main reason to choose it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the point of JSON is machine-readability: it returns the answer as named fields a program can use directly. It doesn't make the model smarter or exist mainly to save tokens; it makes the output something code can reliably act on."
+    },
+    {
+      "q": "You already get JSON back, but one call labels the value `cost` and the next labels it `price`, and sometimes the price is text like \"twelve dollars.\" What addresses this?",
+      "options": [
+        {
+          "text": "Supplying a schema that fixes the exact field names and their types, so price is always present and always a number",
+          "correct": true
+        },
+        {
+          "text": "Adding \"please\" to the prompt so the model takes the formatting more seriously",
+          "correct": false
+        },
+        {
+          "text": "Switching to a larger model, which removes the need to specify any structure",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — getting *some* JSON isn't enough; a schema specifies which fields must appear and what type each must be, so your code can rely on `price` always existing and always being a number."
+    },
+    {
+      "q": "For a production app, why is schema-based 'structured outputs' more reliable than just instructing the model to 'reply only in JSON'?",
+      "options": [
+        {
+          "text": "It constrains the model so it can only generate text that fits the schema, making an off-format answer impossible rather than merely discouraged",
+          "correct": true
+        },
+        {
+          "text": "It runs the model twice and keeps whichever answer happens to be valid",
+          "correct": false
+        },
+        {
+          "text": "It retrains the model on your schema so it permanently learns your format",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — structured outputs limit the model's choices as it writes so the result must match the schema, which is why a prompt-only approach can quietly fail on real traffic while a guaranteed-schema approach does not."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenAI — Introducing Structured Outputs in the API (August 2024)",
+      "url": "https://openai.com/index/introducing-structured-outputs-in-the-api/"
+    },
+    {
+      "label": "OpenAI — Structured Outputs guide",
+      "url": "https://platform.openai.com/docs/guides/structured-outputs"
+    },
+    {
+      "label": "Anthropic — Increase output consistency (JSON mode and prefilling)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/increase-consistency"
+    },
+    {
+      "label": "JSON — Introducing JSON (the format specification)",
+      "url": "https://www.json.org/json-en.html"
+    }
+  ]
+}

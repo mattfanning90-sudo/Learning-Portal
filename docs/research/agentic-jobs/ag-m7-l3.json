@@ -1,0 +1,172 @@
+{
+  "coreIdea": "As the models get better at producing code, the durable human skills are the ones the model can't supply for you: taste (knowing what good looks like), judgment (deciding what's worth building and what's safe to ship), system thinking, and the discipline of verifying instead of trusting — and these are skills you keep sharp by practising, not by reading about the latest tool.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "It is easy to look at how fast the models improve and assume your job is shrinking.",
+    "But getting an answer cheaply only raises the value of being able to tell a good answer from a plausible-looking bad one.",
+    "When code is abundant, the scarce thing is `judgment`: deciding what is worth building, what \"good\" looks like, and what is safe to ship.",
+    "The model can hand you a thousand options in seconds; it cannot care which one is right, or be accountable when it's wrong — that part stays yours.",
+    "So the craft going forward is less about typing code and more about taste, system thinking, and the discipline of checking the work — the human skills that get more valuable, not less, as the tools get better."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a sharp drop in the price of an ingredient — say flour became nearly free overnight. That doesn't make bakers worthless; it makes the baker's `taste` — knowing which loaf is actually good — the thing people pay for, because anyone can now produce dough.",
+      "An agent that writes code cheaply is the cheap flour: the raw material got abundant, so the value moves to the person who can judge the result, shape the whole menu, and stand behind what goes out the door.",
+      "Where the metaphor bends: a bad loaf is obvious the moment you taste it, but bad code can look perfect and pass a quick glance, then fail months later — which is exactly why the verification discipline below matters more here than in a bakery."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Taste and judgment: knowing what good looks like",
+      "teaser": "When answers are cheap, knowing which answer is right becomes the scarce skill",
+      "body": [
+        "`Taste`, here, means a trained sense of what a good solution looks like — clear over clever, simple over complicated, the right size for the problem.",
+        "`Judgment` is the decision layer on top: is this worth building at all, is this the right trade-off, is this safe to ship?",
+        "A model can generate a working solution and an over-engineered one with equal confidence, and describe both as good — it has no stake in which you choose.",
+        "So the model raises the floor (almost anyone can now produce something that runs) and that makes the ceiling — knowing which version is actually right — the thing that separates people.",
+        "You build taste the slow way: by reading a lot of good and bad work, shipping things, watching them break, and noticing why — the same way an editor develops an ear by reading thousands of sentences.",
+        "This is why \"the model wrote it\" is never an answer to \"is this good?\" — that judgment is the part of the job that doesn't transfer to the tool."
+      ]
+    },
+    {
+      "title": "System thinking and verification: the parts the model can't hold for you",
+      "teaser": "The model sees the snippet in front of it; you have to see the whole machine — and check the result",
+      "body": [
+        "`System thinking` is holding the whole machine in your head: how the pieces connect, where they can fail, what happens under load, and what breaks three steps downstream when you change one thing here.",
+        "A model answers the narrow question you asked; it does not own the consequences across the rest of the system, because it cannot see — or be accountable for — the whole.",
+        "`Verification` is the matching discipline: treating every output as a claim to be checked, not a fact to be trusted, because a confident wrong answer looks exactly like a right one.",
+        "Concretely, verification means reading what was produced, running it against tests, checking it on the cases you actually care about, and asking \"how would I know if this were wrong?\" before you ship.",
+        "The faster and more fluent the model gets, the more this matters: speed without verification just means you reach the wrong destination sooner.",
+        "These two skills — seeing the system and checking the work — are durable precisely because they are about owning outcomes, which is the one thing you can't delegate to a tool."
+      ]
+    },
+    {
+      "title": "Staying current without chasing every tool",
+      "teaser": "Learn the durable shapes once, and let the specific products come and go",
+      "body": [
+        "In a fast-moving field the panic move is to chase every new release, and it doesn't work — by the time you've mastered one tool, three more have shipped.",
+        "The durable move is to separate the `fundamentals` (the underlying ideas that barely change) from the `surface` (the specific product names and buttons that change constantly).",
+        "Concepts like \"check the output,\" \"break the problem down,\" \"design for failure,\" and \"keep a human accountable for what ships\" have held for decades and will outlive whatever tool is hot this quarter.",
+        "A practical way to keep learning: build small real things on a regular cadence, because shipping teaches you what reading can't — you feel where the idea actually bites.",
+        "Read the primary sources (the people who built the thing) over the hot takes, learn in public so people correct you, and timebox tool-trying so curiosity doesn't become a treadmill.",
+        "The goal isn't to know every tool; it's to be the person who can pick up any new tool quickly because the fundamentals underneath it are already familiar."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "taste",
+      "def": "A trained sense of what a good solution looks like — clear over clever, simple over complicated, the right size for the problem; built by seeing lots of good and bad work, not by reading rules."
+    },
+    {
+      "term": "judgment",
+      "def": "The decision layer on top of taste: whether something is worth building, whether it's the right trade-off, and whether it's safe to ship — a stake in the outcome that a model doesn't have."
+    },
+    {
+      "term": "system thinking",
+      "def": "Holding the whole machine in your head — how the parts connect, where they fail, and what breaks downstream when you change one thing — rather than just the snippet in front of you."
+    },
+    {
+      "term": "verification",
+      "def": "The discipline of treating every output as a claim to be checked, not a fact to be trusted: reading it, testing it, and asking \"how would I know if this were wrong?\" before shipping."
+    },
+    {
+      "term": "fundamentals",
+      "def": "The underlying ideas that barely change over time (break the problem down, check the output, design for failure), as opposed to the surface of specific product names and buttons that change constantly."
+    },
+    {
+      "term": "accountability",
+      "def": "Being the human who answers for what ships — the part of the work that can't be delegated to a tool, because a model can produce a result but cannot own its consequences."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If your team treats the model as the source of truth, you've quietly outsourced judgment to something that can't be held accountable — and accountability is the thing your customers, your regulator, and your boss will demand a human name for when something goes wrong.",
+      "The leadership move is to be explicit about where the durable human skills live in your process: who decides what good looks like, who owns the system view, and who verifies before it ships — these are roles, not afterthoughts.",
+      "It also reshapes hiring and growth: as raw output gets cheap, you're not paying for typing speed, you're paying for taste, judgment, and the discipline to check — so invest in the people and habits that build those, because that's the part the next model release won't replace."
+    ]
+  },
+  "caseStudy": {
+    "title": "Air Canada's chatbot and the Civil Resolution Tribunal (2024)",
+    "body": [
+      "In 2022, a grieving passenger named Jake Moffatt asked Air Canada's website chatbot about bereavement fares, and the bot told him he could buy a full-price ticket and claim a partial refund afterward — which was not actually the airline's policy.",
+      "When Air Canada refused the refund, Moffatt took it to British Columbia's Civil Resolution Tribunal, and the airline argued it should not be liable because the chatbot was a \"separate legal entity\" responsible for its own answers.",
+      "In February 2024 the tribunal flatly rejected that, ruling that Air Canada was responsible for all information on its website — chatbot or not — and ordering it to pay damages.",
+      "The model produced a fluent, confident, plausible answer; what was missing was the human discipline of verifying it against the real policy and the recognition that someone still has to own what the system tells customers."
+    ],
+    "bridge": "The chatbot didn't crash — it gave a perfectly confident wrong answer, which is precisely why verification and accountability stay human jobs no matter how good the model that generated the text becomes."
+  },
+  "takeaways": [
+    "Cheap, abundant output doesn't shrink your value — it moves your value to taste and judgment: knowing which answer is actually good and what's safe to ship.",
+    "System thinking (seeing the whole machine) and verification (checking the output instead of trusting it) are durable because they're about owning outcomes, which can't be delegated to a tool.",
+    "Stay current by learning the fundamentals once and letting specific tools come and go — build small real things on a cadence rather than chasing every release.",
+    "A confident wrong answer looks identical to a right one, so the enduring human role is being the accountable person who verifies before it ships."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "As models get better at producing working code cheaply, what happens to the value of human taste and judgment?",
+      "options": [
+        {
+          "text": "It rises — when answers are abundant, the scarce skill is telling a genuinely good answer from a plausible-looking bad one and deciding what's safe to ship",
+          "correct": true
+        },
+        {
+          "text": "It falls to zero, because the model now decides what good looks like and what is worth building",
+          "correct": false
+        },
+        {
+          "text": "It stays exactly the same, since taste and judgment have nothing to do with how code gets produced",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — making output cheap raises the value of judging it. The model can produce a good solution and an over-engineered one with equal confidence; deciding which is actually right, and standing behind it, is the scarce human skill."
+    },
+    {
+      "q": "Why does the discipline of verification matter more, not less, as the model gets faster and more fluent?",
+      "options": [
+        {
+          "text": "Because a confident wrong answer looks identical to a right one, so speed without checking just means reaching the wrong destination sooner",
+          "correct": true
+        },
+        {
+          "text": "Because faster models stop making mistakes, so verification becomes a quick formality you can mostly skip",
+          "correct": false
+        },
+        {
+          "text": "Because the model now verifies its own output, so the human only needs to read the first line",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — fluency makes wrong answers more convincing, not rarer. Verification means treating each output as a claim to check (read it, test it, ask how you'd know if it were wrong) rather than a fact to trust."
+    },
+    {
+      "q": "What is the more durable way to stay current in a fast-moving field than chasing every new tool release?",
+      "options": [
+        {
+          "text": "Separate the fundamentals that barely change from the surface that changes constantly, and build small real things on a cadence so you learn what reading can't teach",
+          "correct": true
+        },
+        {
+          "text": "Memorise every new product's name and buttons the week it ships, so you are never behind on any tool",
+          "correct": false
+        },
+        {
+          "text": "Stop learning entirely and wait for the field to settle down before picking anything up",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the fundamentals (break it down, check the output, design for failure, keep a human accountable) outlast any specific tool. Learn those once and you can pick up any new tool quickly, instead of running on a treadmill of releases."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Civil Resolution Tribunal of British Columbia — Moffatt v. Air Canada, 2024 BCCRT 149",
+      "url": "https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html"
+    },
+    {
+      "label": "Anthropic — Building effective agents (on verification and keeping a human in the loop)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    }
+  ]
+}

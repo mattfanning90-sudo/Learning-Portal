@@ -1,0 +1,173 @@
+{
+  "coreIdea": "Most web attacks are not exotic — they're a handful of well-known tricks where attackers slip malicious input past code that trusted it too easily, and a short list of habits (validate input, escape output, give every part the least access it needs, and patch your dependencies) defends against almost all of them.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Your app takes input from the outside world — search boxes, login forms, URLs, uploaded files — and most of that input is harmless.",
+    "But some of it comes from an attacker who is deliberately typing things designed to break your code or trick it into doing something it shouldn't.",
+    "The dangerous moment is when your code takes that untrusted input and treats it as a trusted instruction — for example, pasting it straight into a database command or onto a web page.",
+    "A short, famous list called the `OWASP Top 10` catalogues the most common of these mistakes, so teams everywhere can talk about the same risks in the same words.",
+    "You don't need to memorise every attack; you need a few defensive habits that, applied consistently, shut down the vast majority of them."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of your app as a busy hotel front desk. Most guests are honest and ask normal questions, but anyone can walk up — including someone who slides a forged note across the counter hoping the clerk will act on it without checking.",
+      "Security is the clerk's training: verify who's asking, never carry out an instruction just because it was written confidently, and give the cleaning staff a key to one room, not a master key to the whole building.",
+      "Where the metaphor breaks: a hotel clerk is a slow, suspicious human who can pause and use judgement, whereas your code is fast and literal — it does exactly what the input tells it, instantly, millions of times, with no instinct that something feels off. That speed and literalness is precisely why attacks scale."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Injection: when input gets treated as a command",
+      "teaser": "The classic — and SQL injection is the textbook case",
+      "body": [
+        "`Injection` is the family of attacks where untrusted input is fed into an interpreter — a piece of software that reads text and acts on it — and the input gets executed as part of a command instead of being treated as plain data.",
+        "The textbook example is `SQL injection`, where `SQL` is the language apps use to ask a database questions like \"find the user whose email is X.\"",
+        "If your code builds that database command by gluing the user's typed input directly into the query string, an attacker can type input that *is* extra command, not just a value — for instance ending your intended query early and appending `OR 1=1`, which means \"or always true,\" so the database returns every row instead of one.",
+        "The fix is to never hand-assemble commands from raw input: you use `parameterised queries` (also called prepared statements), where you send the command and the values down separate channels so the database treats the input strictly as data and never as instructions.",
+        "The same shape of bug exists beyond databases — feeding untrusted input into operating-system commands, into search engines, or into any interpreter — which is why \"injection\" is a whole category, not a single bug."
+      ]
+    },
+    {
+      "title": "Cross-site scripting (XSS): smuggling code onto a page",
+      "teaser": "Injection's cousin, aimed at the browser instead of the database",
+      "body": [
+        "`Cross-site scripting`, almost always shortened to `XSS`, is when an attacker gets their own code — usually `JavaScript`, the language browsers run — to execute inside another user's browser while they're on your site.",
+        "It happens when your app takes input from one person and displays it to others without cleaning it: a comment, a username, a profile bio.",
+        "If an attacker types a comment that is secretly a `<script>` tag instead of plain text, and your page renders it raw, then everyone who views that comment silently runs the attacker's script.",
+        "That script runs with the victim's logged-in session, so it can steal their `session cookie` (the token that proves they're logged in), impersonate them, or quietly perform actions on their behalf.",
+        "The core defence is `output escaping`: before you put any user-supplied text onto a page, you convert characters like `<` and `>` into harmless display versions, so the browser shows the text rather than executing it as code.",
+        "Most modern frameworks escape output by default, which is a big reason XSS is less common than it used to be — but it returns the moment a developer deliberately bypasses that safety to inject raw HTML."
+      ]
+    },
+    {
+      "title": "Broken authentication: getting past the front door",
+      "teaser": "When proving who you are is too easy to fake",
+      "body": [
+        "`Authentication` is the process of proving you are who you claim to be — typically logging in with a password, and we cover the mechanics of it in its own lesson.",
+        "`Broken authentication` is the bucket of weaknesses that let an attacker log in as someone they aren't, or stay logged in when they shouldn't.",
+        "Common forms include allowing weak or reused passwords, leaving login open to unlimited rapid guesses (so attackers can try millions of combinations, called a `brute-force attack`), and mishandling the `session token` so it can be stolen or guessed.",
+        "A related trap is `credential stuffing`: attackers take username-and-password pairs leaked from some other breached site and try them on yours, betting that people reuse passwords — and depressingly often, they do.",
+        "Defences are mostly about not making it easy: rate-limit and lock out repeated failed logins, require strong passwords, offer `multi-factor authentication` (a second proof such as a code from your phone), and store passwords `hashed` — scrambled with a one-way function so even a stolen database doesn't reveal the real passwords.",
+        "The theme across all three attacks so far is identical: the system trusted an input — a query, a comment, a login attempt — that it should have treated as suspect until proven safe."
+      ]
+    },
+    {
+      "title": "The OWASP Top 10 and four habits that cover most of it",
+      "teaser": "A shared list, and the defenses worth making reflexes",
+      "body": [
+        "`OWASP`, the Open Worldwide Application Security Project, is a respected non-profit, and its `OWASP Top 10` is a periodically updated list of the most critical web application security risks.",
+        "Its real value is as a shared vocabulary: when a security report says \"this is an injection issue\" or \"this is broken access control,\" engineers, auditors, and leaders across companies all know exactly what's meant, because they're all pointing at the same well-known list.",
+        "Four habits defend against the large majority of what's on it. First, `validate input`: check incoming data against what you actually expect — right type, right length, right format — and reject the rest at the door.",
+        "Second, `escape output`: never put untrusted text onto a page, into a query, or into any command without converting it to safe, inert data first — this is the single move that kills both injection and XSS.",
+        "Third, `least privilege`: give every user, service, and database account the minimum access it needs and nothing more, so that if one part is compromised, the blast radius is small — a leaked read-only key can't delete your data.",
+        "Fourth, `patch your dependencies`: modern apps are built mostly from third-party code (libraries), and known holes in those libraries are a top way in, so keeping them updated closes doors before attackers walk through them."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "OWASP Top 10",
+      "def": "A regularly updated, widely cited list from the non-profit OWASP naming the most critical web application security risks. It works as a shared vocabulary so teams everywhere describe the same threats the same way."
+    },
+    {
+      "term": "injection (e.g. SQL injection)",
+      "def": "An attack where untrusted input is fed into an interpreter and gets executed as part of a command rather than treated as plain data. SQL injection is the classic case: malicious input changes what a database command actually does."
+    },
+    {
+      "term": "cross-site scripting (XSS)",
+      "def": "An attack where an attacker's code (usually JavaScript) runs inside another user's browser on your site, because user-supplied text was displayed without being cleaned. It can hijack the victim's logged-in session."
+    },
+    {
+      "term": "broken authentication",
+      "def": "Weaknesses in the login and session system that let an attacker log in as someone else or stay logged in when they shouldn't — for example, allowing endless password guesses or mishandling session tokens."
+    },
+    {
+      "term": "output escaping",
+      "def": "Converting untrusted text into a safe, inert form before placing it onto a page or into a command — for instance turning < and > into harmless display characters — so it's shown as text, never executed as code."
+    },
+    {
+      "term": "least privilege",
+      "def": "The principle of giving every user, account, and service the minimum access it needs to do its job and nothing more, so that if one part is compromised, the damage it can do is small."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Security work rarely ships a visible feature, so it's easy to defer — but a single breach can erase years of brand trust, trigger regulatory fines, and dominate every roadmap conversation for months, which makes it a risk you own, not just an engineering chore.",
+      "The OWASP Top 10 is genuinely useful to a non-engineer: it lets you ask sharp, concrete questions in reviews — \"how do we handle injection?\", \"are we escaping output?\", \"who has access to what, and why?\" — without needing to write code yourself.",
+      "The trade-off you're balancing is friction versus exposure: defenses like rate limiting, strong-password rules, and multi-factor authentication add small frictions for honest users, and the leadership call is how much of that friction is worth how much reduction in risk for your particular product."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2017 Equifax breach — an unpatched dependency",
+    "body": [
+      "Equifax is one of the largest US credit-reporting agencies, holding deeply sensitive financial records on hundreds of millions of people.",
+      "In 2017 attackers exploited a known security hole in `Apache Struts`, an open-source web framework Equifax used — a third-party dependency — to break into its systems.",
+      "A fix for that exact vulnerability had been publicly released months earlier, but Equifax had not applied the patch to the affected system, leaving the door open long after everyone knew about it.",
+      "The breach exposed the personal data of roughly 147 million people and ultimately led to a settlement of up to around 700 million US dollars — a stark illustration that the failure was not exotic, just an unpatched, well-known weakness."
+    ],
+    "bridge": "Equifax is the textbook case for the fourth habit — patch your dependencies — because the most damaging breaches often come not from clever new attacks but from known holes nobody got around to closing."
+  },
+  "takeaways": [
+    "Most web attacks share one root cause: code trusted untrusted input and treated it as an instruction — injection (e.g. SQL injection), XSS, and broken authentication are all variations on that theme.",
+    "The OWASP Top 10 is a shared, well-known list of the most critical web risks — its value is giving everyone, including non-engineers, the same vocabulary to ask about them.",
+    "Four habits cover most of the list: validate input, escape output, grant least privilege, and patch your dependencies.",
+    "Escaping output is the single highest-leverage reflex — it shuts down both injection and XSS by ensuring untrusted text is always treated as inert data, never as code."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A login form builds its database query by gluing the user's typed email directly into the command string. An attacker types input that ends the intended query and adds `OR 1=1` (\"or always true\"), and the database returns every user row. What category of vulnerability is this, and what's the right fix?",
+      "options": [
+        {
+          "text": "SQL injection — the input was treated as part of the command instead of as data; the fix is parameterised queries, which send the command and the values on separate channels so input is always treated strictly as data",
+          "correct": true
+        },
+        {
+          "text": "Cross-site scripting — the fix is to run the database on a faster server so malicious queries time out before completing",
+          "correct": false
+        },
+        {
+          "text": "Broken authentication — the fix is to require a longer password so the attacker can't guess the `OR 1=1` value",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — this is the textbook SQL injection: untrusted input was glued into a command and got executed as command rather than data. The defense is parameterised queries (prepared statements), which keep the command and the values on separate channels so the database can never mistake the input for instructions. It isn't XSS (that targets the browser) and isn't an authentication weakness."
+    },
+    {
+      "q": "Your site lets users post comments that everyone can read. An attacker posts a comment that is secretly a `<script>` tag, and your page renders comments exactly as typed, so the script runs in every visitor's browser and steals their session cookies. Which single defensive habit most directly prevents this?",
+      "options": [
+        {
+          "text": "Escape output — convert characters like `<` and `>` into harmless display versions before putting user text on the page, so the browser shows the text instead of executing it as code",
+          "correct": true
+        },
+        {
+          "text": "Grant least privilege — give the comment feature a read-only database account so it can't run scripts",
+          "correct": false
+        },
+        {
+          "text": "Patch your dependencies — keep your libraries updated so the `<script>` tag is automatically removed",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is cross-site scripting (XSS), and the direct fix is output escaping: before rendering any user-supplied text, convert special characters so the browser displays them as text rather than running them as code. Least privilege and patching are good general habits, but neither stops the page from executing attacker script that's been rendered raw — escaping is the move that does."
+    },
+    {
+      "q": "Someone asks you, the product owner, why your team keeps a checklist tied to the OWASP Top 10 and routinely updates the third-party libraries the app depends on. What's the best explanation?",
+      "options": [
+        {
+          "text": "The OWASP Top 10 is a shared, well-known list of the most critical web risks that gives the whole team a common vocabulary, and patching dependencies closes publicly known holes in third-party code before attackers exploit them — exactly the failure behind the Equifax breach",
+          "correct": true
+        },
+        {
+          "text": "The OWASP Top 10 is a legal contract every website must sign, and updating libraries is required to keep that contract valid each year",
+          "correct": false
+        },
+        {
+          "text": "The OWASP Top 10 guarantees an app is unhackable once all ten items are checked off, so no other security work is ever needed afterward",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the OWASP Top 10 is a respected, periodically updated list whose power is a shared vocabulary for the most critical risks, not a contract or a guarantee. And patching dependencies matters because apps are built largely from third-party libraries with publicly known holes; leaving a known fix unapplied is precisely what let attackers into Equifax in 2017."
+    }
+  ]
+}

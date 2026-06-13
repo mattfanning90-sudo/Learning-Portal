@@ -1,0 +1,175 @@
+{
+  "coreIdea": "An app needs settings that change between where it runs (like which database to talk to) and secrets that must stay private (like passwords and API keys) — the discipline is to keep both of these *out* of the code itself, feed them in from the environment, and store the sensitive ones in a guarded vault rather than anywhere that touches git.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "The same app rarely runs in just one place — it runs on the developer's laptop, on a shared test server, and on the live `production` system that real users hit.",
+    "In each of those places, some settings have to be different: which database to connect to, which payment account to use, how chatty the logs should be.",
+    "Hard-coding those values — typing them straight into the code — means you'd need a different copy of the app for every place, which is a recipe for mistakes.",
+    "Some of those values are also `secrets`: passwords, database credentials, and `API keys` (the private passcodes one service uses to prove who it is to another).",
+    "The whole skill of this lesson is keeping settings and secrets *outside* the code, so one identical app can behave correctly — and safely — wherever it runs."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of your app as a single appliance, like a hair dryer, that you carry between countries.",
+      "The appliance never changes — but the wall socket does, so you plug in a different adapter in each country to get the right voltage; the code is the appliance, and the `environment variables` are the adapter the surrounding system hands it.",
+      "Secrets are different again: the password to your hotel safe isn't printed on the adapter for anyone to read — it's kept in the safe's own keypad, separate from the appliance entirely.",
+      "Where the metaphor bends: a travel adapter is a physical object you can lose, while environment variables are just named values the operating system holds in memory and passes to the program when it starts — there's nothing to physically plug in."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the same app must behave differently in each place",
+      "teaser": "One codebase, many environments, different settings",
+      "body": [
+        "An `environment` is simply a place an app runs, set up for a purpose: `development` is the developer's laptop, `staging` (or `test`) is a rehearsal copy, and `production` is the live system real users touch.",
+        "You want the *exact same code* in all three — if production ran different code than you tested, your testing would prove nothing.",
+        "But the code has to point at different things in each: development talks to a throwaway local database, while production talks to the real one holding customer data.",
+        "Other settings shift too — development might log every tiny detail to help you debug, while production logs less to stay fast and avoid leaking information.",
+        "The answer is `configuration`: the set of values that are *handed to* the app from outside, rather than baked into it, so one app reads its surroundings and adapts.",
+        "This is why a feature can work perfectly on a laptop yet fail in production — same code, but a setting pointed somewhere wrong."
+      ]
+    },
+    {
+      "title": "Environment variables: settings the surroundings hand in",
+      "teaser": "Named values the system passes to the app at startup",
+      "body": [
+        "An `environment variable` is a named value the operating system holds and passes to a program when it launches — think of it as a labelled note slipped under the door, like `DATABASE_URL=...` or `LOG_LEVEL=debug`.",
+        "The code reads these by name instead of containing the value itself — for example `process.env.DATABASE_URL` in a JavaScript app means \"give me whatever `DATABASE_URL` is set to here.\"",
+        "Because each environment sets its own values, the *same* line of code resolves to the local database on a laptop and the real one in production — no code change required.",
+        "On a developer's machine, these are usually written in a plain text file conventionally named `.env`, which the app loads when it starts.",
+        "The values are just text — there is nothing magic about them — so the discipline is entirely about *where* they live and *who* can see them.",
+        "This single indirection — read a name, not a value — is what lets one codebase run anywhere safely."
+      ]
+    },
+    {
+      "title": "Secrets and the one rule: never commit them",
+      "teaser": "If it leaks, attackers don't need to break in — they walk in",
+      "body": [
+        "A `secret` is any value that, if a stranger saw it, would let them act as you: a database password, an `API key`, a private signing key.",
+        "`git` — the system that tracks every version of your code — is the trap here, because once a secret is committed, it lives in the project's history *forever*, even if you delete it in a later version.",
+        "And code gets shared: pushed to GitHub, cloned by teammates, sometimes accidentally made public — so a committed secret is a secret you've potentially handed to the entire internet.",
+        "The standard guard is a `.gitignore` file, which lists files git should refuse to track; you add `.env` to it so your local secrets are never committed in the first place.",
+        "The mantra is simple: configuration *names* can live in code (`DATABASE_URL` is fine to see), but the *values* of secrets must be supplied from outside and never written into a tracked file.",
+        "If a secret does leak, the only safe fix is to `rotate` it — generate a fresh one and retire the old — because you can never un-share what's already out."
+      ]
+    },
+    {
+      "title": "Secrets managers: a guarded vault instead of scattered files",
+      "teaser": "Centralise, encrypt, and control who can read each secret",
+      "body": [
+        "A `.env` file is fine for one laptop, but production with many servers and many people needs something stronger — a `secrets manager`.",
+        "A secrets manager is a dedicated, locked service whose only job is to store sensitive values `encrypted` (scrambled so they're unreadable without a key) and hand them out only to whoever is authorised.",
+        "Named examples you'll hear are `AWS Secrets Manager`, `HashiCorp Vault`, and `Doppler` — the app asks the vault for a secret at startup instead of reading it from a file.",
+        "Two big wins follow: an `audit log` records *who* read *which* secret *when*, and rotation becomes one central action instead of a hunt across dozens of files.",
+        "Access is scoped — the billing service can be granted the payment key but nothing else — so one compromised service doesn't expose every secret you own.",
+        "The trade-off is added moving parts: another service to run and depend on, in exchange for not having passwords scattered, in plain text, across your systems."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "environment",
+      "def": "A place an app runs, set up for a purpose — development (a developer's laptop), staging (a rehearsal copy), and production (the live system real users touch) — running the same code but with different settings."
+    },
+    {
+      "term": "configuration",
+      "def": "The set of values handed to an app from outside rather than baked into its code — which database to use, how much to log — so one codebase can adapt to wherever it runs."
+    },
+    {
+      "term": "environment variable",
+      "def": "A named value the operating system holds and passes to a program when it starts (for example `DATABASE_URL`); the code reads it by name, so the same code resolves to different values in different environments."
+    },
+    {
+      "term": "secret",
+      "def": "A sensitive value — a password, database credential, or API key — that would let a stranger act as you if they saw it, and so must never be exposed or stored where it can leak."
+    },
+    {
+      "term": "API key",
+      "def": "A private passcode one service uses to prove its identity to another (for example an app proving to a payment provider that it's allowed to charge cards); a secret that must be kept off-code."
+    },
+    {
+      "term": "secrets manager",
+      "def": "A dedicated, locked service (such as AWS Secrets Manager, HashiCorp Vault, or Doppler) that stores secrets encrypted, hands them out only to authorised callers, logs who read what, and makes rotation a single central action."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Secrets handling is a small line of engineering hygiene with an outsized blast radius: a single leaked database password or API key can turn into a full data breach, a regulator's fine, and a front-page headline — so this is a risk you own at the product level, not a detail to delegate and forget.",
+      "Good configuration discipline is also what makes \"it works on my machine but breaks in production\" preventable rather than a recurring fire — because the only thing changing between environments is a controlled set of named values, not the code itself.",
+      "The trade-off worth naming is friction versus safety: a proper secrets manager adds setup and a service to maintain, but the alternative — passwords pasted into chat, committed to git, or copied between laptops — is the cheap option that quietly accrues catastrophic risk."
+    ]
+  },
+  "caseStudy": {
+    "title": "Uber's 2016 breach — an AWS key in committed code",
+    "body": [
+      "In 2016, attackers found login credentials that Uber engineers had accidentally committed into a private GitHub code repository.",
+      "Those credentials unlocked an `AWS` (Amazon Web Services) account, and from there the attackers reached a database holding personal data on roughly 57 million riders and drivers.",
+      "The root cause was exactly the rule this lesson is about: a secret that should have lived outside the code was instead sitting *in* it, where anyone with access to that repository could read it.",
+      "The fallout was severe — Uber concealed the breach, later paid a $148 million settlement across US states in 2018, and its security chief was criminally convicted, a rare personal consequence for a cover-up."
+    ],
+    "bridge": "Uber's code wasn't hacked through some clever exploit — a secret was simply stored in the one place it must never be, which is precisely why \"never commit secrets\" is a hard rule, not a nice-to-have."
+  },
+  "takeaways": [
+    "Run one identical codebase everywhere; let configuration — values handed in from outside, not baked into the code — be the only thing that differs between development, staging, and production.",
+    "Environment variables are named values the system passes to the app at startup, so the same code line points at a local database on a laptop and the real one in production with no edits.",
+    "Never commit secrets: git keeps history forever and code gets shared, so a password or API key written into a tracked file is a password potentially handed to the whole internet — keep them out via `.gitignore`, and rotate any that leak.",
+    "Beyond a single laptop, a secrets manager stores secrets encrypted, releases them only to authorised callers, logs every access, and makes rotation one central action — friction traded for a far smaller blast radius."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A developer writes the production database password directly into a file, commits it to the project's git repository, then notices the mistake and deletes the password in the next commit. Why is the secret still considered compromised?",
+      "options": [
+        {
+          "text": "Git keeps the full history of every version, so the password still lives in earlier commits and anyone who can read the repository can recover it — the only safe fix is to rotate the password",
+          "correct": true
+        },
+        {
+          "text": "Deleting it in a later commit fully removes it from history, so the secret is safe again and nothing more needs to be done",
+          "correct": false
+        },
+        {
+          "text": "It's only a problem if the repository is public; in a private repository a committed secret carries no real risk",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — git records every version permanently, so a committed secret survives in the project's history even after you 'delete' it later, and anyone with repository access (including teammates or anyone it's ever shared with) can dig it out. That's why deletion isn't enough: the value is potentially exposed, so the genuine fix is to rotate it — issue a new secret and retire the old one."
+    },
+    {
+      "q": "The same code reads `process.env.DATABASE_URL`, yet it connects to a throwaway local database on a developer's laptop and to the real customer database in production. How does identical code end up pointing at different databases?",
+      "options": [
+        {
+          "text": "The code reads a value by name from the environment, and each environment sets that environment variable to a different value — so no code change is needed to point it at a different database",
+          "correct": true
+        },
+        {
+          "text": "The code secretly detects whether it's running in production and rewrites itself to use the correct database",
+          "correct": false
+        },
+        {
+          "text": "There are actually two different versions of the code, one for the laptop and one for production",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the code holds a name, not a value: it asks the environment for whatever `DATABASE_URL` is set to *here*. Development supplies the local database, production supplies the real one, so the very same code line resolves differently in each place. Running the same code everywhere is the whole point — it's why your testing means something."
+    },
+    {
+      "q": "A growing company runs dozens of servers and wants to stop scattering passwords across `.env` files on different machines. What is the main thing a secrets manager gives them that a pile of `.env` files does not?",
+      "options": [
+        {
+          "text": "A central, encrypted store that releases each secret only to authorised callers, logs who read what and when, and makes rotating a secret a single action instead of a hunt across many files",
+          "correct": true
+        },
+        {
+          "text": "It makes the app run faster, because secrets stored in a manager load more quickly than from a file",
+          "correct": false
+        },
+        {
+          "text": "It removes the need for secrets entirely, so the app no longer has any passwords or keys to protect",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a secrets manager's value is control, not speed, and it certainly doesn't make secrets disappear. It centralises sensitive values in one encrypted, access-controlled store, records an audit log of every read, scopes which service can see which secret, and turns rotation into one central change rather than editing files on every machine — the things scattered `.env` files can't give you."
+    }
+  ]
+}

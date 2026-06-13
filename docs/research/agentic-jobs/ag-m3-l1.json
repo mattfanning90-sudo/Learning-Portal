@@ -1,0 +1,172 @@
+{
+  "coreIdea": "AI help for coding has evolved from finishing your line, to chatting about your code, to acting on your code — and that last step, agentic coding, changes the developer's job from typist to director who delegates work and reviews the result.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "AI help for writing software arrived in three waves, each doing more than the last.",
+    "First came `autocomplete`: the tool guesses the rest of the line you are typing and offers it, like a smarter version of your phone's predictive text.",
+    "Then came `chat assistants`: you ask a question in plain English in a side panel, and the AI explains code or hands you a snippet to paste in yourself.",
+    "Now there is `agentic coding`: you give the AI a goal, and it reads your files, edits the code, runs commands, checks the result, and tries again until the goal is met — without you driving every keystroke.",
+    "The big shift is not that the AI got smarter at suggesting text. It is that the AI can now take actions on its own, which moves you from doing the work to directing and reviewing it."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a kitchen. Autocomplete is a knife that glides a little on its own — you still make every cut, it just helps each one land cleaner.",
+      "A chat assistant is a cookbook you can talk to: you ask \"how do I make this sauce?\" and it reads you the recipe, but you still do all the cooking yourself.",
+      "Agentic coding is hiring a line cook: you say \"plate the pasta course,\" and they fetch ingredients, cook, taste, adjust, and bring you the dish to inspect. The metaphor bends in one place — a trained cook has years of real-world judgement, while the AI cook is fast and tireless but will confidently plate something wrong, so you must taste every dish before it leaves the kitchen."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The three waves: complete, converse, act",
+      "teaser": "Each wave does more of the work, and asks more of your judgement",
+      "body": [
+        "Wave one is autocomplete. As you type, the tool predicts the next few words or lines of code and offers them; you press a key to accept or keep typing to ignore. It saves keystrokes but never leaves your current line.",
+        "Wave two is the chat assistant. You open a panel, describe what you want in plain English, and the AI answers — explaining a function, drafting a snippet, or spotting a bug. It can see the code you paste or point it at, but it does not touch your files; you copy its output across by hand.",
+        "Wave three is agentic. You hand over a goal, not a snippet, and the AI works across your whole project: opening files, writing changes, running the code, reading the errors, and fixing them in a loop.",
+        "Notice the trend: each wave shifts more of the typing and the chasing-down onto the tool. What stays with you, and grows, is deciding what to build and judging whether what came back is right."
+      ]
+    },
+    {
+      "title": "What \"agentic\" actually adds: tools and a loop",
+      "teaser": "The difference is acting on the world, then checking its own work",
+      "body": [
+        "A chat assistant can only produce text. An agent can also use `tools` — abilities wired to the AI that let it do things, like read a file, edit a file, or run a command in the `terminal` (the text window where you type commands to the computer).",
+        "Tools turn talk into action. Instead of telling you \"add a test and run it,\" the agent writes the test file and actually runs it.",
+        "The second new ingredient is the `agentic loop`: the AI takes a step, observes what happened, and decides the next step based on that result, repeating until the goal is met or it gets stuck.",
+        "This is why an agent can recover from its own mistakes. It writes code, runs it, sees an error message, reads the message, and corrects the code — a cycle a chat assistant cannot do because it never sees the result of its suggestion.",
+        "We will not unpack that loop step by step here; this lesson is about the shift in kind. The point is simply that acting plus checking is a different category from suggesting."
+      ]
+    },
+    {
+      "title": "Your job changes: from typist to director",
+      "teaser": "You stop producing every line and start delegating and reviewing",
+      "body": [
+        "When the AI can do the typing, your value moves up a level. The scarce skill becomes describing the goal clearly, then judging the result sharply.",
+        "Think of it as managing a fast, eager junior developer. You write a clear brief, let them attempt it, and review what they bring back — you do not hover over their keyboard.",
+        "This raises the importance of `code review`: reading a change to confirm it is correct, safe, and sensible before it ships. With an agent, review is no longer a final polish — it is the main control you keep.",
+        "It also makes the brief matter more. A vague goal gives a vague result, exactly as it would with a new hire, so spelling out the intent and the constraints up front pays off.",
+        "You stay accountable for the output. The agent can write the code, but \"I directed it and I checked it\" is the job — \"the AI did it\" is not a defence when something breaks in production."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "autocomplete (code completion)",
+      "def": "An AI feature that predicts and offers the next few words or lines as you type, which you accept or ignore — it speeds up typing but never leaves your current line."
+    },
+    {
+      "term": "chat assistant",
+      "def": "An AI you talk to in a side panel about your code; it explains, drafts, or debugs in text, but does not touch your files — you copy its output across yourself."
+    },
+    {
+      "term": "agentic coding",
+      "def": "Giving an AI a goal rather than a snippet, so it reads files, edits code, runs commands, and iterates toward the goal largely on its own, with you directing and reviewing."
+    },
+    {
+      "term": "tool (in agents)",
+      "def": "An ability wired to the AI that lets it act on the world rather than only produce text — for example, reading a file, editing a file, or running a command."
+    },
+    {
+      "term": "agentic loop",
+      "def": "The cycle of take a step, observe the result, decide the next step, and repeat until the goal is met — what lets an agent catch and fix its own mistakes."
+    },
+    {
+      "term": "code review",
+      "def": "Reading a proposed change to confirm it is correct, safe, and sensible before it ships; with an agent doing the typing, this becomes the developer's main control."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own a product or an engineering team, the shift to agentic coding changes where your leverage and your risk live. The bottleneck moves from how fast people can type to how clearly work can be specified and how well it can be reviewed — so investing in clear requirements and a strong review process now pays off directly in shipping speed.",
+      "It also reshapes what a developer's day looks like: less rote typing, more directing and judging, which is a different skill you may need to hire and train for. The trade-off you own is throughput versus oversight — an agent can produce far more change far faster, but unreviewed speed is how bad code reaches customers.",
+      "Treat the AI like a capable junior teammate, not a magic button: accountable processes (who reviews, who approves, what gets tested) matter more, not less, the moment a tool can act on your codebase by itself."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub Copilot's path from completion to agent (2021–2024)",
+    "body": [
+      "GitHub launched Copilot in 2021 as an autocomplete tool: it suggested the next line or block of code inside the editor as developers typed, and they pressed Tab to accept.",
+      "In 2023 GitHub added Copilot Chat — a panel where developers could ask questions about their code in plain English and get explanations or snippets back, the chat-assistant wave.",
+      "In 2024 GitHub previewed Copilot Workspace and an agent mode, where you describe a task or point it at an issue and the tool plans the change, edits multiple files, and runs steps toward the goal rather than just suggesting text.",
+      "The same product, in roughly three years, walked through all three waves — complete, converse, act — which is why it is a clean illustration of the evolution rather than three separate tools."
+    ],
+    "bridge": "Watching one product move from finishing your line, to chatting about your code, to acting on your code is the whole arc of this lesson in a single timeline."
+  },
+  "takeaways": [
+    "AI coding help arrived in three waves: autocomplete finishes your line, chat assistants converse about your code, and agentic coding acts on it.",
+    "Agentic is different in kind, not just smarter — it adds tools (to read, edit, and run) plus a loop that lets it check and fix its own work.",
+    "The developer's role shifts from typist to director: describe the goal, delegate the work, and review the result.",
+    "Because the AI can now act on the codebase, clear briefs and code review become the main controls — and you stay accountable for what ships."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What most distinguishes agentic coding from a chat assistant?",
+      "options": [
+        {
+          "text": "The agent can take actions — reading files, editing code, and running commands — then check the result and iterate, instead of only producing text for you to copy",
+          "correct": true
+        },
+        {
+          "text": "The agent writes in a more polite and detailed tone than a chat assistant does",
+          "correct": false
+        },
+        {
+          "text": "The agent runs on your own computer while a chat assistant only runs in the cloud",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a chat assistant only produces text you act on yourself; an agent uses tools to act on the world and a loop to observe results and fix its own mistakes, which is a difference in kind."
+    },
+    {
+      "q": "As coding tools become agentic, how does the developer's role shift?",
+      "options": [
+        {
+          "text": "From typist who writes every line to director who delegates the work and reviews the result",
+          "correct": true
+        },
+        {
+          "text": "From writing code to never looking at code again, since the AI is now fully trusted",
+          "correct": false
+        },
+        {
+          "text": "From building software to only writing documentation, as coding is fully automated",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — when the AI does the typing, the scarce skills become describing the goal clearly and judging the result sharply; review becomes the main control, and the developer stays accountable for what ships."
+    },
+    {
+      "q": "Which sequence correctly orders the three waves of AI coding help, from earliest to most recent?",
+      "options": [
+        {
+          "text": "Autocomplete (finish the line) → chat assistant (converse about code) → agentic coding (act on code)",
+          "correct": true
+        },
+        {
+          "text": "Agentic coding → chat assistant → autocomplete",
+          "correct": false
+        },
+        {
+          "text": "Chat assistant → autocomplete → agentic coding",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — each wave does more of the work: completion finishes your current line, chat lets you converse about code, and agentic coding acts across the whole project, as GitHub Copilot's own 2021–2024 path illustrates."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GitHub — Introducing GitHub Copilot: your AI pair programmer (2021)",
+      "url": "https://github.blog/2021-06-29-introducing-github-copilot-ai-pair-programmer/"
+    },
+    {
+      "label": "GitHub — Copilot Chat general availability (2023)",
+      "url": "https://github.blog/2023-12-29-github-copilot-chat-now-generally-available-for-organizations-and-individuals/"
+    },
+    {
+      "label": "GitHub — GitHub Copilot Workspace: technical preview (2024)",
+      "url": "https://github.blog/news-insights/product-news/github-copilot-workspace/"
+    }
+  ]
+}

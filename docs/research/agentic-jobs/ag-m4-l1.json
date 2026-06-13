@@ -1,0 +1,176 @@
+{
+  "coreIdea": "What turns a plain language model into an agent is a loop: the model observes the situation, decides the next action, acts by using a tool, observes the result, and repeats — with the model as the reasoning engine and autonomy as the new ingredient.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A plain `language model` — the kind behind a chatbot — does one thing: you give it text, it gives you text back, and then it stops.",
+    "It can't check today's weather, send an email, or run code; it only predicts the next words.",
+    "An `agent` wraps that same model inside a loop so it can take real actions and react to what happens.",
+    "The loop is simple to say: look at the situation, decide what to do next, do it, look at the result, and go again — until the task is done.",
+    "The model is the brain that does the deciding; the loop is what lets it keep going on its own, which is the genuinely new part."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A plain language model is like a brilliant expert locked in a room with no windows and no phone: ask a question, slide a note under the door, and a perfect answer slides back — but the expert can never see what actually happened next.",
+      "An agent gives that expert a window to look through and a phone to make calls: now they can check the real situation, take an action, see the outcome, and decide what to do next.",
+      "Where the metaphor bends: a human expert knows when they're stuck and will stop to ask for help, while an agent will happily keep looping on a wrong idea unless you build in a way to halt it — which is why the loop always needs a clear stopping rule."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Perceive, Decide, Act — the three beats of the loop",
+      "teaser": "The cycle that turns a text predictor into a doer",
+      "body": [
+        "The loop has three repeating beats, and an agent runs them over and over until the goal is met.",
+        "Perceive: the model is shown the current situation — the goal, what's happened so far, and the result of its last action — all as text it can read.",
+        "Decide: the model reasons about that situation and chooses the single next action, such as \"search the web for X\" or \"the task is finished.\"",
+        "Act: the chosen action is actually carried out in the real world — a search runs, a file is read, a message is sent — and produces a result.",
+        "That result becomes the next thing the model perceives, so the loop closes and begins again with fresh information.",
+        "Each lap is called an `iteration` (one full pass through the loop), and a task might take three laps or thirty depending on how hard it is."
+      ]
+    },
+    {
+      "title": "The model is the engine; autonomy is the new ingredient",
+      "teaser": "Same brain, but now it drives instead of answering once",
+      "body": [
+        "Crucially, the loop doesn't make the model smarter — it's the exact same model that powers the chatbot.",
+        "What changes is its job: instead of answering once and stopping, it sits in the driver's seat and decides each step, lap after lap.",
+        "This is `autonomy`: the agent picks its own next actions toward a goal, without a human approving every single move.",
+        "Autonomy is a dial, not a switch — you can let it run freely, or pause it for approval before risky steps like sending money or deleting files.",
+        "The agent doesn't run the loop on willpower; a piece of ordinary software (sometimes called the `orchestrator` or harness) feeds the model the situation, carries out its chosen action, and feeds back the result.",
+        "So an agent is really two parts working together: the model that decides, and the plain code around it that perceives and acts on its behalf."
+      ]
+    },
+    {
+      "title": "Why the loop is powerful — and where it goes wrong",
+      "teaser": "Feedback makes it adaptive, but a bad loop wanders forever",
+      "body": [
+        "The power of the loop is feedback: because the agent sees the result of each action, it can recover from surprises a one-shot answer never could.",
+        "If a search returns nothing useful, it can try a different query; if a file is missing, it can look elsewhere — it adapts instead of failing flat.",
+        "But the same loop that lets it adapt also lets it spiral: with no stopping rule, an agent can loop on a wrong idea, repeating near-identical steps and burning time and money.",
+        "Every real agent therefore needs limits — a clear definition of \"done,\" a cap on the number of iterations, and a budget — so a stuck loop stops instead of running away.",
+        "Two pieces of the loop get their own lessons: how the \"Act\" step actually works under the hood (tool calling) comes next, and what happens when several agents run loops together (multi-agent systems) comes later.",
+        "For now, the one idea to hold is the shape: perceive, decide, act, repeat — that cycle is the whole difference between a chatbot and an agent."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "language model",
+      "def": "The AI behind a chatbot: you give it text, it predicts and returns text, then stops. On its own it cannot take actions in the world — it only produces words."
+    },
+    {
+      "term": "agent",
+      "def": "A language model wrapped in a loop so it can pursue a goal by taking actions, seeing the results, and choosing its next move — rather than answering once and stopping."
+    },
+    {
+      "term": "the agent loop",
+      "def": "The repeating cycle of perceive (see the situation), decide (choose the next action), and act (carry it out), running over and over until the task is done."
+    },
+    {
+      "term": "autonomy",
+      "def": "An agent's ability to choose its own next actions toward a goal without a human approving each one — a dial you can turn up for speed or down for safety."
+    },
+    {
+      "term": "iteration",
+      "def": "One full pass through the agent loop — a single round of perceive, decide, act. A task may take a few iterations or many, depending on its difficulty."
+    },
+    {
+      "term": "orchestrator",
+      "def": "The ordinary software around the model that runs the loop for it: it hands the model the current situation, carries out the action the model picks, and feeds back the result."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Understanding the loop reframes what you're actually buying when you adopt an agent: you're not buying a smarter model, you're handing an existing model autonomy to act in a cycle — and autonomy is exactly where the value and the risk both live.",
+      "The trade-off you own is autonomy versus control: more autonomy means the agent finishes more on its own but can also wander further before anyone notices, so deciding where to put approval checkpoints is a product decision, not just an engineering one.",
+      "It also reshapes your cost and reliability thinking — an agent is billed per iteration, so a task that quietly loops twenty times costs and waits far more than a single answer, which is why \"how does this loop know it's done, and what stops it if it isn't?\" is the first question to ask of any agent you ship."
+    ]
+  },
+  "caseStudy": {
+    "title": "AutoGPT goes viral (March 2023)",
+    "body": [
+      "In March 2023, a developer named Toran Bruce Richards released `AutoGPT`, an open-source program that wrapped OpenAI's `GPT-4` model in a loop and let it run on its own toward a goal you typed in.",
+      "Instead of answering one prompt, AutoGPT would set itself a sub-task, take an action like searching the web or writing a file, read the result, and decide its next step — looping until it judged the goal met.",
+      "It became one of the fastest-starred projects in GitHub's history within weeks, and the demos made the agent loop concrete for a mass audience for the first time.",
+      "It also made the failure mode just as famous: with weak stopping rules, AutoGPT would frequently get stuck repeating the same steps, chasing dead ends, and running up API costs with little to show for it."
+    ],
+    "bridge": "AutoGPT was the moment the world saw both halves of the lesson at once — that a loop is what turns a model into an agent, and that a loop without good limits will happily run forever."
+  },
+  "takeaways": [
+    "An agent is a language model wrapped in a loop: perceive the situation, decide the next action, act, observe the result, repeat until done.",
+    "The loop doesn't make the model smarter — it's the same model — but it gives it autonomy to drive each step instead of answering once and stopping.",
+    "An agent is two parts: the model that decides, and the plain software (the orchestrator) that perceives and acts on its behalf.",
+    "The loop's feedback makes it adaptive, but without a clear \"done\" rule, an iteration cap, and a budget, a stuck loop wanders and runs up cost."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core thing that turns a plain language model into an agent?",
+      "options": [
+        {
+          "text": "Wrapping the model in a loop so it can perceive a situation, decide an action, act, see the result, and repeat",
+          "correct": true
+        },
+        {
+          "text": "Retraining the model on far more data so it becomes powerful enough to act",
+          "correct": false
+        },
+        {
+          "text": "Giving the model a longer, more detailed single prompt to answer in one go",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — it's the same model; the new ingredient is the loop, which lets it take an action, observe the outcome, and choose its next step rather than answering once and stopping."
+    },
+    {
+      "q": "In the agent loop, what role does the model itself play?",
+      "options": [
+        {
+          "text": "It's the reasoning engine that decides the next action each lap; surrounding software perceives the situation and carries the action out",
+          "correct": true
+        },
+        {
+          "text": "It personally runs every tool and sends every message itself, with no other software involved",
+          "correct": false
+        },
+        {
+          "text": "It only stores past conversations and never makes any decisions in the loop",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the model does the deciding, but it's the orchestrator (ordinary code around it) that feeds it the situation, executes the chosen action, and returns the result for the next lap."
+    },
+    {
+      "q": "Why does every real agent need limits like a clear \"done\" rule, an iteration cap, and a budget?",
+      "options": [
+        {
+          "text": "Because the same loop that lets an agent adapt can also spiral — repeating steps on a wrong idea and running up time and cost — unless something stops it",
+          "correct": true
+        },
+        {
+          "text": "Because limits make the underlying model more intelligent and accurate",
+          "correct": false
+        },
+        {
+          "text": "Because agents are forbidden from using any tools more than once",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — feedback makes the loop powerful but open-ended, so without a stopping rule, an iteration cap, and a budget a stuck agent will keep looping and burning resources, as AutoGPT famously showed."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Building effective agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "AutoGPT — Significant-Gravitas/AutoGPT (GitHub)",
+      "url": "https://github.com/Significant-Gravitas/AutoGPT"
+    },
+    {
+      "label": "OpenAI — Function calling and the agent loop (guide)",
+      "url": "https://platform.openai.com/docs/guides/function-calling"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "coreIdea": "You can't tell whether an agent is good by trying it a few times and liking the answers — you need an eval: a fixed set of test cases plus a way to score the results, run automatically so quality becomes a number you can track instead of a feeling.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "When you build an agent, the tempting way to check it is to type a few prompts, read the replies, and decide it \"seems good.\"",
+    "That is shipping on vibes, and vibes lie: you only tried the handful of cases you happened to think of, and the agent is non-deterministic — it can give a different answer to the same prompt next time.",
+    "An `eval` (short for evaluation) replaces the gut feel with a measurement.",
+    "It is two things bolted together: a set of `test cases` (example inputs you collected on purpose) and a `scoring method` (a rule that decides whether each output passed or failed).",
+    "Run that eval and you get a score — say, \"82 out of 100 cases passed\" — a number you can watch over time, instead of a vibe you can't compare to yesterday."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "An eval is the exam, and the agent is the student. You don't decide a student is ready by chatting with them for five minutes — you write a fixed set of questions with known right answers, give the same exam every time, and read the score.",
+      "Because the exam is the same each sitting, a falling score tells you the student got worse, not that you happened to ask harder questions today.",
+      "Where the metaphor bends: a school exam has one obvious correct answer per question, but an agent's output is often open-ended — there are many acceptable ways to answer — so the hard part of an eval is the scoring rule, deciding what \"correct enough\" even means."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why vibes fail: non-determinism and the cases you forgot",
+      "teaser": "The same prompt can pass on Monday and fail on Tuesday",
+      "body": [
+        "Two facts make eyeballing an agent dangerous. First, agents are `non-deterministic`: feed the model the identical prompt twice and you can get two different answers, so one good demo proves almost nothing.",
+        "Second, manual testing only covers the cases you happened to think of — usually the easy, friendly ones — and never the weird inputs real users will send.",
+        "So an agent that looks great in a demo can be quietly broken on the long tail of cases nobody tried.",
+        "Worse, the failures hide: an agent rarely crashes like a normal program, it just confidently returns a wrong answer, which is far harder to spot by reading a few replies.",
+        "An eval fixes both gaps at once: it runs a large, fixed batch of cases every time, including the ugly ones, so coverage and consistency stop depending on your mood that day.",
+        "The goal is not to prove the agent is perfect — it never will be — but to turn \"I think it's fine\" into \"73% of these 200 cases passed,\" a claim you can actually check."
+      ]
+    },
+    {
+      "title": "What's inside an eval: cases plus a scorer",
+      "teaser": "Inputs you collected on purpose, and a rule that grades the output",
+      "body": [
+        "An eval has exactly two ingredients, and you need both.",
+        "The first is the `eval set`: a collection of test cases, where each case is an input (a prompt or a task) and, often, the expected result you'd accept as correct.",
+        "The second is the `scoring method`: the rule that looks at what the agent produced and decides pass or fail.",
+        "Scoring can be simple — does the output exactly match the expected answer, or contain a required keyword — for narrow tasks with one right answer.",
+        "For open-ended tasks where many answers are acceptable, a common trick is an `LLM-as-judge`: you ask a second model to grade the first one's output against a written rubric, like an examiner with a marking guide.",
+        "Picking the right score for the right task is its own deep topic — exact-match, rubric, and LLM-judge each have trade-offs — and that is the next lesson; here the point is only the shape: cases in, a scorer, a number out."
+      ]
+    },
+    {
+      "title": "Eval-driven development: the score becomes the gate",
+      "teaser": "Catch the regression in your eval before a user catches it in production",
+      "body": [
+        "Once you have an eval, you can flip how you build. Instead of changing a prompt and hoping, you change it, re-run the eval, and read whether the score went up or down.",
+        "This is `eval-driven development`: you treat the eval score as the definition of \"better,\" and you only keep a change that raises it.",
+        "The biggest payoff is catching a `regression` — when a change you thought was an improvement silently breaks cases that used to work.",
+        "Agents are full of these: tweaking the prompt to fix one type of question often quietly wrecks another, and without an eval you'd never know until users complained.",
+        "Run the eval on every change and the regression shows up as a falling number on your screen — before it ships — instead of as an angry support ticket after.",
+        "The same eval set, run automatically on every change to guard against regressions, is the agent version of a `regression test`, the safety net software teams have used for decades."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "eval (evaluation)",
+      "def": "A systematic test of an agent's quality: a fixed set of test cases plus a scoring method, run to produce a number you can track — replacing gut feel with measurement."
+    },
+    {
+      "term": "eval set",
+      "def": "The collection of test cases you assemble on purpose — each one an input (and often the expected answer) — covering the easy, the hard, and the ugly inputs you expect in the real world."
+    },
+    {
+      "term": "scoring method",
+      "def": "The rule that grades each agent output as pass or fail — anything from an exact-match check to a written rubric judged by another model."
+    },
+    {
+      "term": "non-deterministic",
+      "def": "The property that the same input can produce different outputs on different runs, which is why one good demo doesn't prove an agent works and a fixed eval set does."
+    },
+    {
+      "term": "eval-driven development",
+      "def": "Building by treating the eval score as the definition of \"better\": you make a change, re-run the eval, and keep the change only if the score goes up."
+    },
+    {
+      "term": "regression",
+      "def": "When a change meant to improve things silently breaks something that used to work; running an eval on every change catches the broken cases before users do."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Without an eval, \"is the agent good enough to ship?\" has no honest answer — it's one person's impression of a few examples, which means quality is unmeasurable and therefore ungovernable.",
+      "An eval turns quality into a number you own: you can set a bar (\"we don't ship below 90% on the eval set\"), watch it move release to release, and refuse changes that drag it down — the same way a CFO refuses spend that misses a target.",
+      "The investment worth funding early is the eval set itself, because it is the asset that compounds: every real failure a user reports should become a new test case, so the agent can never silently break that way again — which makes building the eval set, not chasing one more clever prompt, the highest-leverage thing your team can do."
+    ]
+  },
+  "caseStudy": {
+    "title": "OpenAI open-sources Evals (March 2023)",
+    "body": [
+      "When OpenAI shipped GPT-4 in March 2023, it also released an open-source framework called `Evals` — a public toolkit for writing exactly these test-case-plus-scorer suites for language models.",
+      "The pitch was blunt: OpenAI said it considered a good eval \"one of the most impactful things\" a contributor could build, and it invited the community to submit eval sets covering failure cases the company's own team had never thought to test.",
+      "Crucially, OpenAI stated it used these evals internally to guide development — meaning the same idea, cases plus a scoring rule run repeatedly, was the gate it used on its own flagship model, not just advice for outsiders.",
+      "The framework let anyone define a set of prompts with expected behaviour and a way to grade the model's responses, then run the whole batch and get a score — the building blocks of an eval, made concrete and shareable."
+    ],
+    "bridge": "OpenAI treating crowd-sourced evals as one of the most valuable contributions to GPT-4 is the clearest signal that even the people with the best model in the world don't ship on vibes — they ship on a score from a fixed set of test cases."
+  },
+  "takeaways": [
+    "An eval is two things bolted together: a fixed set of test cases plus a scoring method that grades each output pass or fail — turning quality into a trackable number.",
+    "Vibes fail because agents are non-deterministic and manual testing only covers the friendly cases you thought of, while real failures hide as confident wrong answers.",
+    "Eval-driven development makes the eval score the definition of \"better\" — you keep a change only if the number goes up.",
+    "The main payoff is catching regressions: run the eval on every change and a silently broken case shows up as a falling score before it reaches a user."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What are the two ingredients that together make up an eval?",
+      "options": [
+        {
+          "text": "A fixed set of test cases plus a scoring method that decides whether each output passed or failed",
+          "correct": true
+        },
+        {
+          "text": "A bigger model plus a longer, more detailed prompt for it to answer",
+          "correct": false
+        },
+        {
+          "text": "A live dashboard of production traffic plus an on-call engineer to read it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — an eval is test cases (inputs you collected on purpose) plus a scoring rule (how you grade each output). Run them together and you get a number you can track, instead of a vibe."
+    },
+    {
+      "q": "Why is trying an agent a few times and liking the answers a poor way to judge whether it works?",
+      "options": [
+        {
+          "text": "Agents are non-deterministic and manual checks only cover the easy cases you happened to think of, so a good demo can hide failures on the cases real users will send",
+          "correct": true
+        },
+        {
+          "text": "Because agents always crash loudly on bad inputs, so a few tries will reliably reveal every problem",
+          "correct": false
+        },
+        {
+          "text": "Because the same prompt is guaranteed to give the exact same answer every time, making repeat testing pointless",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the same prompt can give different answers on different runs, and eyeballing only covers the friendly cases you imagined; real failures show up as confident wrong answers on inputs you never tried."
+    },
+    {
+      "q": "In eval-driven development, what is the main thing running the eval on every change protects you against?",
+      "options": [
+        {
+          "text": "Regressions — a change that looked like an improvement but silently broke cases that used to work, now caught as a falling score before it ships",
+          "correct": true
+        },
+        {
+          "text": "The model becoming less intelligent over time as it answers more questions",
+          "correct": false
+        },
+        {
+          "text": "Users sending too much traffic to the agent at once",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — tweaking an agent to fix one case often quietly breaks another. Re-running the same eval on every change surfaces that regression as a lower number on your screen, instead of as a support ticket after users hit it."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenAI — GPT-4 announcement (introduces open-source Evals)",
+      "url": "https://openai.com/index/gpt-4-research/"
+    },
+    {
+      "label": "OpenAI — Evals framework (GitHub)",
+      "url": "https://github.com/openai/evals"
+    },
+    {
+      "label": "Anthropic — Building effective agents (on evaluating agents)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    }
+  ]
+}

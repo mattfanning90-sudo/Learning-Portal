@@ -1,0 +1,176 @@
+{
+  "coreIdea": "A reliably effective prompt isn't polite or clever — it's structured, supplying the model with five things it can't guess: a role, a clear task, the relevant context, explicit constraints, and the exact output format you want back.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A prompt is just the instruction you type to a model.",
+    "Most weak prompts fail for the same reason: they leave the model to guess what you actually wanted.",
+    "The model will always fill those gaps with the most average, generic answer — because that is the safest plausible continuation.",
+    "A great prompt removes the guessing by spelling out who the model should act as, what to do, what to work from, what rules to follow, and what shape the answer should take.",
+    "The surprising part: being specific matters far more than being nice. \"Please\" and \"thank you\" don't change the output — concrete detail does."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Briefing a model is like briefing a freelance contractor you hired an hour ago. They are highly capable but know nothing about your situation, so whatever you leave unsaid, they will assume — usually wrongly.",
+      "Say \"write me something about our product\" and you get bland filler. Say \"you're a B2B copywriter; write a 50-word LinkedIn post for time-poor finance leaders; here's our one-pager; no jargon; return just the post\" and you get something usable.",
+      "Where the metaphor breaks: a human contractor will ask you a clarifying question when the brief is vague, but a model almost never does — it just guesses confidently and hands you the result as if it were certain."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The five parts of a strong prompt",
+      "teaser": "Role, task, context, constraints, format — the things a model cannot infer",
+      "body": [
+        "A reliable prompt has five components, and each one closes a specific gap the model would otherwise fill by guessing.",
+        "`Role` (or persona): who you want the model to act as — \"you are a senior tax accountant\" — which sets the vocabulary, depth, and assumptions it reaches for.",
+        "`Task`: the single clear thing to do, stated as a verb — \"summarise,\" \"draft,\" \"classify,\" \"compare\" — not a vague topic.",
+        "`Context`: the specific material the answer depends on — the document, the audience, the goal, the situation — so the model reasons from your reality, not a generic average.",
+        "`Constraints`: the explicit rules and boundaries — length, tone, what to avoid, what must be included — so the output fits where it has to go.",
+        "`Output format`: the exact shape you want back — \"a three-bullet list,\" \"a single paragraph,\" \"just the code, no explanation\" — so you can use the result without reformatting it by hand."
+      ]
+    },
+    {
+      "title": "Specificity beats politeness",
+      "teaser": "The model responds to detail, not manners",
+      "body": [
+        "It feels natural to soften a request with \"please\" and \"could you possibly\" — but politeness adds no information the model can act on.",
+        "What moves the output is detail: who the reader is, how long the answer should be, what to leave out, what good looks like.",
+        "Compare \"make this email better\" with \"rewrite this email to be 30% shorter, keep a warm tone, and remove every apology\" — the second tells the model exactly what \"better\" means to you.",
+        "Vague words like \"good,\" \"professional,\" or \"engaging\" are invisible to the model unless you define them, because it has no way to read your private standard.",
+        "A simple test: if you handed your prompt to a competent stranger, could they produce what you want without asking a single question? If not, the gaps are where the model will guess.",
+        "This is why a slightly blunt, highly specific prompt routinely beats a courteous but fuzzy one."
+      ]
+    },
+    {
+      "title": "Vague vs. structured on the same task",
+      "teaser": "One job, two prompts, two very different results",
+      "body": [
+        "Take a real job: turning a customer complaint into a reply.",
+        "The vague prompt: \"Write a response to this angry customer.\" The model has no idea who you are, what you can offer, your tone, or how long the reply should be — so it produces a generic, hedged apology that could come from any company.",
+        "The structured prompt names all five parts: \"You are a support lead for a meal-kit company (role). Draft a reply to this complaint about a late delivery (task). The customer is a 6-month subscriber; our policy allows one free box as a goodwill gesture (context). Keep it under 120 words, warm but not grovelling, and don't admit legal fault (constraints). Return just the email body, no subject line (format).\"",
+        "Same underlying task — but the second prompt produces a reply you could almost send as-is, because every decision the model would have guessed at has been made for it.",
+        "Notice the structured version isn't longer for the sake of it; every extra clause removes one source of randomness in the answer.",
+        "That predictability is the whole point: a structured prompt makes the output reliable, so you get a usable result on the first try instead of the fifth."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "prompt",
+      "def": "The instruction you give a language model — the text you type in to tell it what to do and what to work from."
+    },
+    {
+      "term": "role (persona)",
+      "def": "The character or expertise you ask the model to adopt — \"act as a financial analyst\" — which sets the vocabulary, depth, and assumptions it uses."
+    },
+    {
+      "term": "task",
+      "def": "The single, clear action you want performed, stated as a verb (summarise, draft, classify), rather than a vague topic to wander around."
+    },
+    {
+      "term": "context",
+      "def": "The specific material the answer depends on — the document, the audience, the goal — supplied so the model reasons from your situation instead of a generic average."
+    },
+    {
+      "term": "constraints",
+      "def": "The explicit rules and boundaries on the answer — length, tone, what to include, what to avoid — that keep the output usable where it has to go."
+    },
+    {
+      "term": "output format",
+      "def": "The exact shape you want the answer in — a bullet list, one paragraph, just the code — so you can use the result without reformatting it yourself."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "When a model sits inside your product, the prompt stops being a one-off chat message and becomes part of the product itself — a written spec that ships, gets versioned, and has to work for thousands of inputs you'll never see.",
+      "A vague prompt produces unreliable output at scale, which lands on you as inconsistent quality, support tickets, and re-rolls that quietly burn money on every call.",
+      "So \"who owns the prompt, and how do we test changes to it?\" becomes a real product question — the same way you'd own any other piece of logic that decides what a customer sees."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub Copilot's prompt engineering team",
+    "body": [
+      "GitHub Copilot is the AI coding assistant that suggests code as developers type, used by millions of programmers.",
+      "Early in its development, GitHub's own engineers wrote publicly that the quality of Copilot's suggestions depended far less on the underlying model alone and far more on how carefully they built the prompt sent to it.",
+      "They assembled the prompt from structured context — the file you're editing, nearby open tabs, the function's name and signature, and surrounding comments — rather than just sending your raw cursor position.",
+      "GitHub described this work as \"prompt engineering\": deciding what context to include, in what order, and within a strict size budget, because that structure is what turned a generic model into a tool that suggests the right line."
+    ],
+    "bridge": "Copilot's lesson is the lesson of this whole module — the model was capable all along; what made it reliable was feeding it a well-structured prompt instead of leaving it to guess."
+  },
+  "takeaways": [
+    "A reliable prompt has five parts: role, task, context, constraints, and output format — each one closes a gap the model would otherwise guess at.",
+    "Specificity beats politeness: \"please\" adds nothing, but concrete detail about audience, length, and what to avoid changes everything.",
+    "Define vague words like \"good\" or \"professional,\" or the model defaults to the most average, generic answer.",
+    "On the same task, a structured prompt yields a usable first-try result while a vague one yields hedged filler — predictability is the whole point."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which set best describes the parts of a reliably effective prompt?",
+      "options": [
+        {
+          "text": "A role, a clear task, relevant context, explicit constraints, and the desired output format",
+          "correct": true
+        },
+        {
+          "text": "A polite greeting, a thank-you, and an apology for bothering the model",
+          "correct": false
+        },
+        {
+          "text": "As many examples as possible plus a strict JSON schema for the answer",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — those five parts each remove something the model would otherwise have to guess. Politeness adds no information, and examples and schemas are useful but are the focus of later lessons, not the core anatomy here."
+    },
+    {
+      "q": "You tell a model \"make this email better\" and get a bland result. What is the most reliable fix?",
+      "options": [
+        {
+          "text": "Specify what \"better\" means — e.g. 30% shorter, warm tone, remove every apology",
+          "correct": true
+        },
+        {
+          "text": "Add \"please\" and \"thank you\" so the model tries harder",
+          "correct": false
+        },
+        {
+          "text": "Repeat the same request several times until the answer improves",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — \"better\" is invisible to the model until you define it. Specificity, not politeness or repetition, is what changes the output."
+    },
+    {
+      "q": "Why does a structured prompt produce a more usable result than a vague one on the same task?",
+      "options": [
+        {
+          "text": "Every explicit clause removes a decision the model would otherwise make for itself by guessing",
+          "correct": true
+        },
+        {
+          "text": "Longer prompts always make the model more accurate regardless of content",
+          "correct": false
+        },
+        {
+          "text": "Structured prompts unlock a more powerful, hidden version of the model",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the gain comes from removing guesswork, not from length itself or any hidden mode. Each added constraint pins down one decision, making the output predictable and usable first try."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GitHub Blog — How GitHub Copilot is getting better at understanding your code (prompt engineering)",
+      "url": "https://github.blog/ai-and-ml/github-copilot/how-github-copilot-is-getting-better-at-understanding-your-code/"
+    },
+    {
+      "label": "OpenAI — Prompt engineering best practices",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    },
+    {
+      "label": "Anthropic — Be clear, direct, and detailed (prompt engineering)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+    }
+  ]
+}

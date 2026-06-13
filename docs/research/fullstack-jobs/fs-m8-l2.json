@@ -1,0 +1,175 @@
+{
+  "coreIdea": "Monolith, microservices, and serverless are three ways to package the same app — one big deployable unit, many small independent services, or individual functions that run only on demand — and the choice is a trade-off between simplicity and the ability to scale and staff teams independently, which is why the standard advice is to start with a monolith.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Once you've built an app, you still have to decide how to *package* it for the world — as one chunk, as many small chunks, or as tiny snippets that wake up only when needed.",
+    "A `monolith` is the simplest: the whole app is one program you deploy as a single unit, all its parts living and shipping together.",
+    "`Microservices` chop that one program into many small, independent programs (a 'service' each for, say, payments, search, and accounts) that talk to each other over the network.",
+    "`Serverless` goes smaller still: you write individual functions, the cloud runs each one only for the moment a request needs it, and you pay nothing while it sits idle.",
+    "None of these is 'the modern, correct' answer — each buys you something real and charges you something real, and picking well means knowing exactly what you're trading."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of feeding a crowd three ways. A monolith is one big communal kitchen: everyone cooks in the same room with shared ovens, which is simple and fast to coordinate — until ten chefs are fighting over the same stove and one burnt pan fills the whole place with smoke.",
+      "Microservices are a food court: each stall is its own little kitchen with its own staff, oven, and menu, so the pizza place can get busy or catch fire without touching the noodle stall next door — at the cost of a lot more plumbing, rent, and coordination between stalls.",
+      "Serverless is a pop-up cart that only sets up when a customer actually walks over, serves them, and packs away — you pay nothing when no one's hungry, but there's a short delay each time it has to set up from cold.",
+      "Where the metaphor breaks: real kitchens are physically separate, but microservices and serverless still run on the *same* shared cloud computers underneath — the separation is logical (how the software is divided and deployed), not a different building."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The monolith: one app, one deploy, one place to look",
+      "teaser": "The simple default — and why simple is a feature, not a weakness",
+      "body": [
+        "A `monolith` is an application built and shipped as a single deployable unit: all its features — login, billing, search, the lot — are one codebase that compiles, deploys, and runs together.",
+        "Its parts call each other directly inside the same program, which is as fast and reliable as one room talking to itself; there's no network in between to be slow or to drop a message.",
+        "This makes a monolith dramatically simpler to build, test, and run: one thing to deploy, one set of logs to read, one place a bug can be, and one `database` (the app's organised store of data) everything shares.",
+        "The catch is coupling: because everything ships together, one team's risky change can break another team's feature, and you can't deploy a tiny fix to the search page without redeploying the whole app.",
+        "It also scales as one block — covered properly in lesson 1, but the short version is you can run more copies of the *entire* app, but you can't add muscle to just the one slow part.",
+        "People sneer at 'the monolith' as old-fashioned, but for most apps it's the right call for a long time — the simplicity is genuinely worth more than the flexibility you're giving up."
+      ]
+    },
+    {
+      "title": "Microservices: many small apps, split by team and by job",
+      "teaser": "You trade in-app simplicity for independent scaling and team autonomy",
+      "body": [
+        "`Microservices` split the one app into many small, independently deployable services, each owning one slice of the business — for example a separate payments service, search service, and accounts service.",
+        "Each service has its own codebase, often its own database, and its own deploy schedule, and they talk to each other over the network (one service sends another a request, like an internal phone call).",
+        "The two big prizes are real. First, `independent scaling`: if checkout is slammed on Black Friday you add capacity to just the checkout service, instead of cloning the whole app. Second, `team autonomy`: a small team can own a service end to end and ship it on its own schedule without waiting for everyone else's code.",
+        "The price is `operational complexity` — the sheer overhead of running many moving parts: now you have dozens of services to deploy, monitor, secure, and keep talking to each other, and a failure can hide in the network *between* them rather than in any one box.",
+        "A direct, internal, fast function call inside a monolith becomes a network request between services — which can be slow, can fail, and can arrive out of order, so you have to design for all of that.",
+        "There's also a famous prerequisite: `Conway's Law` says systems end up shaped like the organisation that builds them, so microservices pay off mainly when you have enough separate teams to actually own the separate services — split a small team's app this way and you get all the complexity with none of the autonomy."
+      ]
+    },
+    {
+      "title": "Serverless: functions that exist only when called",
+      "teaser": "Smallest unit, zero idle cost — and a cold-start tax",
+      "body": [
+        "`Serverless` lets you deploy individual functions — small, single-purpose pieces of code, like 'resize this uploaded image' — and the cloud runs each one only when a request triggers it.",
+        "The name is a (slightly cheeky) marketing term: there are still servers, but the provider manages them invisibly, so you never pick, size, or patch a machine — the hosting mechanics behind that are Module 6's territory, not ours.",
+        "The headline benefit is billing: you pay per request and per fraction of a second of run time, and when nothing is happening you pay *nothing* — which is transformational for spiky or rarely-used workloads.",
+        "It also scales automatically and instantly: a thousand simultaneous requests just spin up a thousand copies of the function, with no capacity for you to plan.",
+        "The signature drawback is the `cold start`: if a function hasn't run recently the provider has to set it up from scratch, adding a noticeable delay (often a fraction of a second, sometimes more) to that first request — fine for a background job, awkward for a snappy user-facing screen.",
+        "Serverless also pushes you toward many tiny functions, so at scale it can become its own kind of sprawl to reason about — you've traded server management for the job of orchestrating hundreds of little pieces."
+      ]
+    },
+    {
+      "title": "How to actually choose — and why you start with a monolith",
+      "teaser": "Architecture is a trade-off, and premature splitting is a classic own-goal",
+      "body": [
+        "These aren't three competing religions; they're points on a spectrum from 'one big unit' to 'many tiny units,' and you can mix them — a monolith with a couple of serverless functions on the side is extremely common and perfectly sensible.",
+        "The widely-repeated advice, associated with Martin Fowler and Amazon's own engineers, is to *start with a monolith*: until you understand the problem and have the team size to justify it, microservices give you distributed-systems complexity in exchange for autonomy you don't yet need.",
+        "The honest trade-off is this: a monolith optimises for *simplicity and speed early*, microservices optimise for *independent scaling and many teams shipping in parallel*, and serverless optimises for *cost on spiky work and never managing a server* — and each one charges you on the axis it isn't optimising.",
+        "A useful test is to ask what's actually hurting: if deploys are scary because everything ships together, or one team is blocked waiting on another, that's a real reason to peel a service off — but 'it's what big companies do' is not.",
+        "Splitting too early is a well-known failure mode — sometimes called a `distributed monolith`: you've paid the full operational complexity of microservices, but the services are still so tangled together that you can't deploy them independently, so you got the bill without the benefit.",
+        "The professional instinct isn't to pick the fanciest option; it's to start simple, watch where the pain actually appears, and split only the piece that the pain points at."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "monolith",
+      "def": "An application built and deployed as a single unit — all its features in one codebase that ships together. Simplest to build and run, but everything is coupled, so it scales and deploys as one block."
+    },
+    {
+      "term": "microservices",
+      "def": "An architecture that splits one app into many small, independently deployable services, each owning one job (e.g. payments, search) and talking to the others over the network. Buys independent scaling and team autonomy at the cost of a lot more operational complexity."
+    },
+    {
+      "term": "serverless",
+      "def": "Running individual functions that the cloud spins up only when a request needs them, billing you per use and nothing while idle. You never manage a machine yourself — though there are still servers underneath."
+    },
+    {
+      "term": "independent scaling",
+      "def": "The ability to add capacity to just the one busy part of a system — say, only the checkout service — instead of running more copies of the whole app. A core reason teams adopt microservices."
+    },
+    {
+      "term": "operational complexity",
+      "def": "The ongoing overhead of running a system: deploying, monitoring, securing, and connecting all its parts. Splitting one app into many services multiplies this — it's the main price microservices charge."
+    },
+    {
+      "term": "cold start",
+      "def": "The delay when a serverless function that hasn't run recently has to be set up from scratch before it can handle the first request. Usually a fraction of a second — tolerable for background work, awkward for snappy user-facing screens."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "This is one of the highest-leverage architecture calls you'll be in the room for, because it quietly decides how your *teams* work, not just how your software runs: microservices only pay off when you have enough separate teams to own the separate services, so 'should we split this?' is really an org-design question wearing a technical costume.",
+      "The trade-off you own is simplicity-now versus flexibility-later, and the expensive mistake runs one way — splitting a young product into microservices before you understand it buys you distributed-systems complexity (slow, harder-to-debug, more to operate) in exchange for autonomy and scaling you don't need yet, while a monolith that gets too big is a comparatively cheap problem to fix when it actually arrives.",
+      "A good instinct in the meeting is to ask 'what is actually hurting today?' — scary all-or-nothing deploys and teams blocking each other are real reasons to peel off a service; 'it's what Netflix does' is not, and matters a lot less than whether you have the headcount to run the extra moving parts without drowning."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon Prime Video moves a service back from microservices to a monolith (2023)",
+    "body": [
+      "Amazon Prime Video runs a tool that monitors thousands of live video streams to catch quality problems like a frozen or black picture.",
+      "The team first built it as a set of separate serverless and microservice pieces — the textbook 'modern' design — but at scale it turned out to be both expensive and unable to handle the volume, because the pieces spent huge effort shuffling data back and forth between each other over the network.",
+      "In a widely-shared 2023 engineering post, the team described rebuilding it as a single application — a monolith — so the steps ran together in one process instead of paying the network and coordination tax of separate services.",
+      "The result they reported was about a 90% cut in operating costs for that workload, and the ability to scale further than the distributed version ever could."
+    ],
+    "bridge": "Even Amazon — the company most associated with microservices — found that for this particular workload the monolith was the better trade, which is the whole point: the right architecture depends on the problem, not on which option sounds most advanced."
+  },
+  "takeaways": [
+    "Monolith, microservices, and serverless are three ways to package the same app — one deployable unit, many small independent services, or individual functions that run only on demand — sitting on a spectrum from 'one big unit' to 'many tiny units' that you can mix.",
+    "A monolith optimises for simplicity and speed early; microservices buy independent scaling and team autonomy at the cost of real operational complexity; serverless buys zero idle cost and no servers to manage at the cost of cold-start delay and lots of tiny pieces.",
+    "Microservices are as much an org decision as a technical one — they pay off mainly when you have enough separate teams to own the separate services, which is why splitting too early gives you the complexity bill without the autonomy benefit.",
+    "The standard advice is to start with a monolith and split off a service only when a specific pain — scary all-or-nothing deploys, teams blocking each other — actually points at it; 'it's what big companies do' is not a reason."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A small startup with one eight-person engineering team is building a new product, and a senior engineer argues they should ship it as a single monolith for now rather than as a dozen microservices. What's the strongest reason this is usually the right call?",
+      "options": [
+        {
+          "text": "Microservices buy independent scaling and per-team autonomy, but they cost a lot of operational complexity and pay off mainly when you have enough separate teams to own the separate services — neither of which a single small team has yet, so splitting now would buy distributed-systems complexity it doesn't need",
+          "correct": true
+        },
+        {
+          "text": "Monoliths are always faster, cheaper, and more scalable than microservices in every situation, so there is never a good reason for any company to use microservices at all",
+          "correct": false
+        },
+        {
+          "text": "Microservices are an outdated approach that the industry has abandoned, and modern apps are required to be either monoliths or fully serverless",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the benefits of microservices (independent scaling, team autonomy) only materialise when you have multiple teams and a problem you understand well enough to draw clean service boundaries. A single small team that splits early pays the full operational-complexity bill — many things to deploy, monitor, and connect over the network — for autonomy it doesn't yet need. That's why 'start with a monolith, split later when a real pain points at it' is the standard advice. Note the other options overshoot: monoliths aren't always better (microservices genuinely win for big multi-team systems that need independent scaling), and microservices are very much still in use."
+    },
+    {
+      "q": "A team is choosing how to run a feature that processes uploaded images. It runs in unpredictable bursts — sometimes thousands of uploads in a minute, sometimes nothing for hours — and they want to avoid paying for idle capacity. Which option fits best, and what's the main catch they should expect?",
+      "options": [
+        {
+          "text": "Serverless: it runs each function only when an upload triggers it and bills nothing while idle, scaling automatically with the bursts — but expect a 'cold start' delay when a function hasn't run recently and has to be set up from scratch",
+          "correct": true
+        },
+        {
+          "text": "A monolith: because a single deployable unit is the only design that can ever handle bursts of traffic, and it has no downsides for spiky, rarely-used work",
+          "correct": false
+        },
+        {
+          "text": "Microservices, specifically because microservices are the only architecture that lets you pay nothing at all while the system is sitting idle",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — serverless is built for exactly this shape of work: it runs individual functions only when a request triggers them, scales up automatically to handle a burst, and bills you nothing while idle, so you never pay for capacity you're not using. The catch is the cold start: a function that hasn't run recently has to be set up from scratch, adding a short delay to that first request — fine for background image processing, more awkward for a user staring at a screen. The other options misattribute serverless's pay-nothing-when-idle benefit (it's not a microservices property) and pretend the monolith has no trade-offs."
+    },
+    {
+      "q": "Amazon Prime Video's team rebuilt a video-monitoring tool from a set of separate microservice and serverless pieces back into a single monolith, cutting operating costs by around 90%. What does this best illustrate about architecture choices?",
+      "options": [
+        {
+          "text": "Architecture is a trade-off that depends on the specific problem: for this workload, splitting into many services made the pieces spend too much effort shuffling data over the network, so the simpler single-unit design was genuinely the better fit — even at Amazon",
+          "correct": true
+        },
+        {
+          "text": "It proves that microservices and serverless are always the wrong choice and that every company should convert all of its systems back into monoliths",
+          "correct": false
+        },
+        {
+          "text": "It proves the opposite — that monoliths are only ever a temporary mistake and any serious system must eventually become microservices to survive",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the lesson isn't 'monoliths always win' or 'microservices always win.' It's that the right architecture depends on the workload. For this particular tool, the overhead of moving data between separate services outweighed the benefits of splitting, so consolidating into one unit was cheaper and scaled further. The same company runs plenty of microservices elsewhere where the autonomy and independent scaling are worth it. The takeaway is to choose by the actual problem in front of you, not by which option sounds most advanced."
+    }
+  ]
+}

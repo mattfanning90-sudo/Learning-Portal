@@ -1,0 +1,174 @@
+{
+  "coreIdea": "User files like images and PDFs don't belong inside the database — they live in object storage, a service that holds each file as a blob addressed by a unique key, and they're usually served back to users through a CDN so they load fast from anywhere.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Real apps constantly handle files people upload: profile photos, receipts, PDFs, videos.",
+    "Your first instinct might be to stuff those files into the database alongside the rest of the app's data — but that's a trap that makes the whole system slow and expensive.",
+    "Instead, files go into `object storage`: a separate service built for one job, holding huge numbers of files cheaply and handing them back when asked.",
+    "Each file gets a unique `key` — a text address like `users/42/avatar.png` — and the database just stores that short address, not the file itself.",
+    "When a user views the file, it's usually delivered through a `CDN` (a content delivery network) so it arrives quickly no matter where in the world they are."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the database as a tightly organised office filing cabinet — fast to flip through, but only if you keep it to index cards, not bulky parcels.",
+      "Object storage is the giant warehouse next door: you hand over a box (the file), get back a slip with its exact shelf address (the key), and the warehouse holds millions of boxes cheaply without slowing the office down.",
+      "Where the metaphor bends: a real warehouse makes you walk over to fetch a box, but object storage hands any file back over the internet in milliseconds — and a CDN keeps copies in warehouses near every city so the trip is even shorter."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why big files don't belong in the database",
+      "teaser": "The wrong tool for bulky, unstructured stuff",
+      "body": [
+        "A `database` is tuned to store and search small, structured records — a name, a price, an order date — and answer precise questions about them fast.",
+        "A 10-megabyte image or a 50-megabyte PDF is the opposite: large, unstructured, and never something you'd run a query against.",
+        "Cram those files into the database and you bloat it, which slows down every ordinary query — even ones that have nothing to do with files.",
+        "Backups balloon too: a database backup is meant to be a quick snapshot of your records, not a copy of every video your users ever uploaded.",
+        "And database storage is premium-priced for speed and reliability, so paying those rates to hold idle holiday photos is simply the wrong tool for the job.",
+        "The fix is to keep only a tiny reference — the file's key — in the database, and put the heavy file somewhere built for bulk."
+      ]
+    },
+    {
+      "title": "What object storage actually is",
+      "teaser": "Files as blobs, each addressed by a key",
+      "body": [
+        "`Object storage` is a cloud service whose entire job is to hold files — called `objects` — and give each one a unique address.",
+        "The address is the `key`: a plain text string like `invoices/2026/inv-8841.pdf` that points to exactly one file.",
+        "Objects live in a `bucket` — a named top-level container, a bit like a labelled top-level folder that holds all your app's files.",
+        "The defining example is Amazon's `S3` (Simple Storage Service); other clouds copy its design, so \"S3-style\" has become shorthand for object storage generally.",
+        "It's cheap, effectively unlimited, and famously durable — providers replicate each object across multiple machines so files survive hardware failures.",
+        "The trade-off: you can fetch or replace a whole object by its key, but you can't edit it in place or run a database-style search over its contents — keys in, files out."
+      ]
+    },
+    {
+      "title": "How an upload actually works",
+      "teaser": "The clever trick: the browser uploads straight to storage",
+      "body": [
+        "The naive path is for the user's file to travel to your server, then your server forwards it on to object storage — but that makes your server carry every byte twice and buckles under big files.",
+        "The standard trick is a `presigned URL`: a special, temporary web address your server generates that grants permission to upload one specific file, directly to the bucket, for a few minutes only.",
+        "So the flow is: the browser asks your server \"I want to upload `avatar.png`\"; your server returns a presigned URL; the browser uploads the file straight to object storage using that URL.",
+        "Your server never touches the file's bytes — it only hands out a time-limited pass, which keeps it lean and fast.",
+        "Once the upload finishes, the browser tells your server, and your server saves the file's key (e.g. `users/42/avatar.png`) in the database, linked to that user.",
+        "From then on, that short key is all the app needs to find the file again."
+      ]
+    },
+    {
+      "title": "Serving files back — usually through a CDN",
+      "teaser": "Store once centrally, deliver from nearby",
+      "body": [
+        "When a page needs to show the file, the app looks up its key and turns it into a URL the browser can load — for example an `<img>` tag pointing at the file's address.",
+        "Pulling every image from one storage location works, but a user in Sydney loading a file stored in Virginia waits for it to cross the planet.",
+        "So files are usually served through a `CDN`, a content delivery network: a fleet of servers spread across the globe that keep cached copies of your files close to users.",
+        "The first request in a region fetches the file from object storage and caches it nearby; everyone after that gets the local copy, which is much faster.",
+        "For files that shouldn't be public — a private medical PDF — you serve them through a presigned URL too, so only someone with a valid, time-limited link can open it.",
+        "We'll go no deeper into how a CDN caches and expires content; here it's enough that it's the delivery layer sitting in front of your storage."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "object storage",
+      "def": "A cloud service built to hold large numbers of files (called objects) cheaply, handing each one back when you ask for it by its unique address. Amazon S3 is the best-known example."
+    },
+    {
+      "term": "key",
+      "def": "The unique text address of a single file in object storage, like `users/42/avatar.png`. The database stores this short key instead of the heavy file itself."
+    },
+    {
+      "term": "bucket",
+      "def": "A named top-level container that holds your app's objects in storage — think of it as a labelled top-level folder for all your files."
+    },
+    {
+      "term": "blob (binary large object)",
+      "def": "A chunk of raw file data — an image, PDF, or video — stored as one opaque lump. Object storage treats each file as a blob: it holds it and returns it, but doesn't look inside or search it."
+    },
+    {
+      "term": "presigned URL",
+      "def": "A temporary, permission-carrying web address your server generates so a browser can upload or download one specific file directly to or from storage, for a short time only — without routing the file through your server."
+    },
+    {
+      "term": "CDN (content delivery network)",
+      "def": "A network of servers spread across the world that keep cached copies of your files near users, so a file loads from a nearby city instead of crossing the planet from your central storage."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Where do the files live?\" is a question you can and should ask out loud when scoping any feature that accepts uploads — the right answer is almost always object storage plus a CDN, not the database, and getting it wrong shows up later as a slow, expensive system that's painful to unwind.",
+      "Object storage cost scales with how much you store and how often it's served, so user-uploaded video or high-resolution images can quietly become a real line on the cloud bill — worth a deliberate decision on size limits, allowed file types, and how long old files are kept.",
+      "Two product-shaped details hide here: privacy (public files are trivially shareable by URL, so anything sensitive needs presigned, expiring links) and reliability (object storage is extremely durable, but if your single CDN region or storage bucket has an outage, every image and download in your app can go dark at once)."
+    ]
+  },
+  "caseStudy": {
+    "title": "Instagram's 100 million photos on Amazon S3",
+    "body": [
+      "When Instagram launched in 2010, its tiny team — famously just a handful of engineers — needed to store a flood of user photos without building data centres.",
+      "They put the photos in Amazon S3 object storage and served them to users through Amazon CloudFront, S3's companion CDN, so images loaded fast worldwide.",
+      "Within a couple of years they were storing well over 100 million photos in S3, with the app's database holding only the small records — users, captions, and the S3 keys pointing at each image.",
+      "That split is exactly why a dozen people could run a service for tens of millions of users: the heavy files lived in storage built for bulk, while the database stayed lean and quick."
+    ],
+    "bridge": "Instagram proves the pattern in miniature — keep the bulky files in S3-style object storage addressed by key, deliver them through a CDN, and let the database hold nothing heavier than the address."
+  },
+  "takeaways": [
+    "Large user files (images, PDFs, video) don't belong in the database — they bloat it, slow every query, and inflate backups; the database should hold only a small reference.",
+    "Object storage holds each file as a blob in a bucket, addressed by a unique key like `users/42/avatar.png`; Amazon S3 is the defining example.",
+    "The standard upload trick is a presigned URL: your server hands the browser a temporary pass so the file goes straight to storage, never through your server.",
+    "Files are usually served back through a CDN, which caches copies near users so they load fast — and presigned URLs gate any file that must stay private."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An engineer proposes storing every user's uploaded profile photo directly inside the main app database. Why is that usually a mistake?",
+      "options": [
+        {
+          "text": "Large, unstructured files bloat the database — slowing ordinary queries and inflating backups — so only the file's key belongs there while the file itself goes in object storage",
+          "correct": true
+        },
+        {
+          "text": "Databases physically cannot accept image data, so the upload would simply fail and return an error",
+          "correct": false
+        },
+        {
+          "text": "It would work fine and is the recommended approach, because keeping everything in one place is always simpler and cheaper",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — databases can technically store files, but they're built for small structured records you query, not bulky blobs. Stuffing files in bloats the database, slows unrelated queries, and balloons backups. The standard fix is to keep the heavy file in object storage and store only its short key in the database."
+    },
+    {
+      "q": "In a well-designed upload flow using a presigned URL, where does the file's actual data travel?",
+      "options": [
+        {
+          "text": "The browser uploads the file directly to object storage using the presigned URL; the app's server only generates that temporary link and never carries the file's bytes",
+          "correct": true
+        },
+        {
+          "text": "The file is uploaded into the app's database first, and the server copies it into object storage overnight",
+          "correct": false
+        },
+        {
+          "text": "The file must pass fully through the app's server, which receives every byte and then forwards it on to storage",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a presigned URL is a temporary, permission-carrying address that lets the browser upload straight to the bucket. The server's only job is to generate that link and later record the file's key; it never handles the file's bytes, which keeps it lean even for very large files."
+    },
+    {
+      "q": "After files are stored in object storage, why are they usually served back to users through a CDN?",
+      "options": [
+        {
+          "text": "A CDN keeps cached copies of files near users worldwide, so each file loads from a nearby server instead of always crossing the distance to your central storage",
+          "correct": true
+        },
+        {
+          "text": "A CDN compresses files so small that storage becomes free and the database is no longer needed",
+          "correct": false
+        },
+        {
+          "text": "Object storage can only be read once, so a CDN is required to make a permanent second copy of every file",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a CDN is a network of servers around the globe that cache your files close to users. The first request in a region pulls the file from storage and caches it nearby; everyone after gets the fast local copy, so a user far from your central storage isn't stuck waiting for the file to cross the planet."
+    }
+  ]
+}

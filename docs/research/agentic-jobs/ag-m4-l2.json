@@ -1,0 +1,173 @@
+{
+  "coreIdea": "A language model can only output text, so to act in the real world it outputs a structured request to call a tool you described; your code runs that tool, feeds the result back, and that single move turns a text generator into something that can search, fetch data, and send email.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A language model, on its own, can only do one thing: produce text.",
+    "It cannot actually check today's weather, look up a customer record, or send an email — it can only write sentences that sound like it did.",
+    "Tool calling fixes this. You give the model a menu of `tools` — actions it is allowed to ask for, like \"search the web\" or \"send_email\" — each with a plain description of what it does and what information it needs.",
+    "When the model decides a tool would help, it does not run anything itself. It outputs a neat, structured request that names the tool and fills in the details, and your own code runs the real action and hands the result back.",
+    "That hand-off is the whole trick: it turns a model that can only talk into a system that can actually do things in the world."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a brilliant advisor locked in a room with a phone but no hands. They know exactly what needs doing, but they cannot touch anything themselves.",
+      "So they call out precise instructions to an assistant outside the door: \"Look up order #4471, then read me back the status.\" The assistant does the legwork and reports the answer through the door, and the advisor carries on.",
+      "The model is the advisor; your code is the assistant; the tools are the things only the assistant can physically reach. The metaphor bends in one place — a human assistant uses judgement and will refuse a dumb or dangerous request, while your code does exactly what the model asks unless you build in your own checks, so you cannot assume good sense on the other side of the door."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why a model needs hands at all",
+      "teaser": "A text generator predicts words; it never touches the world",
+      "body": [
+        "A language model is, at heart, a very good next-word predictor. Given some text, it produces the text most likely to come next.",
+        "That means it has no built-in way to reach outside itself. It cannot see live data, run a calculation reliably, or change anything — it can only generate plausible-sounding words.",
+        "Ask a bare model \"what's the weather in Sydney right now?\" and it will happily write a confident answer, but it is guessing from old training data, not checking. It might invent a number — a confident-but-wrong output people call a `hallucination`.",
+        "Tools close that gap. They give the model a way to request real actions whose results are true, current, and grounded — instead of made up.",
+        "So tool calling is not a fancy add-on. It is the bridge between a thing that can only talk and a system that can actually act."
+      ]
+    },
+    {
+      "title": "The four-step hand-off, in order",
+      "teaser": "Describe → request → run → feed back",
+      "body": [
+        "Step one: you describe the tools. For each one you write a `tool definition` — its name, a plain-English note on what it does, and the `parameters` (the pieces of information it needs, like a city name or an email address).",
+        "Step two: the model decides. Reading the user's request and your tool menu, it may answer in plain text, or it may output a `tool call` — a structured request naming one tool and filling in its parameters.",
+        "Step three: your code runs the tool. The model never executes anything; it only asks. Your program reads the request, calls the real weather service or database, and gets back an actual result.",
+        "Step four: you feed the result back to the model as a new message. Now the model can read the real data and write a final, grounded answer for the user.",
+        "The structured request usually arrives as `JSON` — a strict, machine-readable format of labelled fields — so your code can read it exactly, with no guessing about what the model meant."
+      ]
+    },
+    {
+      "title": "The model asks; your code is in charge",
+      "teaser": "Permission and execution stay on your side of the line",
+      "body": [
+        "This is the safety-relevant part: the model proposes, your code disposes. A tool call is a request, not a command that runs by itself.",
+        "Nothing happens until your code chooses to run it, which means you keep every important control on your side of the line.",
+        "You decide which tools exist at all — if there is no `delete_account` tool, the model simply cannot ask to delete an account.",
+        "You can also check a request before running it: confirm the user is allowed, sanity-check the values, or pause for a human to approve anything risky like sending money or an email.",
+        "Treat each tool description like product copy — the model picks tools based on what you wrote, so a vague note like \"does stuff with orders\" leads to wrong calls, while \"look up the status of a customer order by its ID\" leads to right ones."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "tool (function) calling",
+      "def": "A pattern where the model, instead of acting itself, outputs a structured request to run one of the tools you described — and your code runs the real action and returns the result."
+    },
+    {
+      "term": "tool definition",
+      "def": "Your written description of a tool the model may use: its name, a plain-English note on what it does, and the parameters it needs — this is what the model reads to decide whether and how to call it."
+    },
+    {
+      "term": "parameters",
+      "def": "The specific pieces of information a tool needs to do its job, such as a city name for a weather lookup or a recipient and subject for an email."
+    },
+    {
+      "term": "tool call",
+      "def": "The model's structured request naming one tool and filling in its parameters — a proposal for your code to run, not an action the model performs itself."
+    },
+    {
+      "term": "JSON",
+      "def": "A strict, machine-readable format of labelled fields that tool calls usually arrive in, so your code can read the model's request exactly with no guessing."
+    },
+    {
+      "term": "hallucination",
+      "def": "A confident but false output a model produces when it guesses instead of checking — exactly the failure that grounding answers in real tool results is meant to prevent."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Tool calling is where an AI feature stops being a chatbot and starts being a product that does work, so it is also where your real risk and cost move. Every tool you expose is a new thing the model can trigger on a user's behalf, which means the question \"what is this assistant allowed to actually do?\" is a product decision, not just an engineering one.",
+      "Your main levers are the tool menu and the checks around it: which tools exist, what each is allowed to touch, and which ones pause for human approval before they fire. Deciding that \"send a refund\" needs a confirmation step while \"look up an order\" does not is a product and trust call, and it is far cheaper to get right up front than after an agent has emailed the wrong customers.",
+      "It also changes how you write specs. Because the model chooses tools from your descriptions, clear tool names and crisp descriptions are now part of the product surface — vague wording quietly causes wrong actions, and you own that quality bar."
+    ]
+  },
+  "caseStudy": {
+    "title": "OpenAI introduces function calling (June 2023)",
+    "body": [
+      "In June 2023 OpenAI added `function calling` to its GPT models, giving developers a standard way to describe tools the model could request.",
+      "A developer registers functions such as `get_current_weather` or `send_email`, each with a description and its parameters; when the model judges one is needed, it returns a structured JSON object naming the function and the arguments, rather than plain prose.",
+      "Crucially, OpenAI's own guidance stressed that the model does not run the function — it only proposes the call, and the developer's code executes it and passes the result back for the model to use.",
+      "This pattern spread fast: Anthropic's Claude and Google's Gemini adopted the same describe-request-run-return shape, making tool calling the standard way to give a model hands and the foundation that agent frameworks are built on."
+    ],
+    "bridge": "OpenAI's launch turned the four-step hand-off into an industry standard, which is why \"describe a tool, let the model request it, run it yourself, feed the result back\" is the same dance behind almost every AI agent you will meet."
+  },
+  "takeaways": [
+    "A language model can only output text, so tool calling is what lets it act — search, fetch data, or send email — in the real world.",
+    "The hand-off is four steps: you describe the tools, the model outputs a structured request to call one, your code runs it, and you feed the result back.",
+    "The model only proposes a tool call; your code decides whether and how to run it, so permission and execution stay on your side.",
+    "Because the model picks tools from your descriptions, clear tool names and definitions are part of the product surface, not just plumbing."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "When a language model uses a tool to look up live data, what does the model itself actually do?",
+      "options": [
+        {
+          "text": "It outputs a structured request naming the tool and its parameters; your code runs the real action and feeds the result back",
+          "correct": true
+        },
+        {
+          "text": "It connects to the internet and runs the lookup directly, then returns the data it fetched",
+          "correct": false
+        },
+        {
+          "text": "It rewrites its own code at runtime so it gains the new ability permanently",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the model can only produce text, so it proposes a structured tool call; your code executes the real action and returns the result for the model to use. The model never runs anything itself."
+    },
+    {
+      "q": "Why does tool calling keep the developer's code in control of what actually happens?",
+      "options": [
+        {
+          "text": "A tool call is a request, not a command that runs by itself — nothing happens until your code chooses to run it, so you decide which tools exist and can check or approve each request",
+          "correct": true
+        },
+        {
+          "text": "The model is legally bound to ask permission before each action it performs",
+          "correct": false
+        },
+        {
+          "text": "Tools automatically refuse any request that could be harmful, with no work needed from the developer",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the model proposes and your code disposes. Because the request only runs if your code runs it, you control which tools exist and can validate, gate, or require human approval before a risky one fires."
+    },
+    {
+      "q": "What problem does grounding an answer in a real tool result help prevent?",
+      "options": [
+        {
+          "text": "A hallucination — a confident but false answer the model invents when it guesses from old training data instead of checking",
+          "correct": true
+        },
+        {
+          "text": "The model running out of words to say in a long conversation",
+          "correct": false
+        },
+        {
+          "text": "The model responding too slowly because tools make it faster",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — asked for live data, a bare model guesses and may invent a confident-but-wrong figure. A tool returns true, current data, so the model's final answer is grounded in fact rather than made up."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OpenAI — Function calling and other API updates (June 2023)",
+      "url": "https://openai.com/index/function-calling-and-other-api-updates/"
+    },
+    {
+      "label": "OpenAI — Function calling guide (API docs)",
+      "url": "https://platform.openai.com/docs/guides/function-calling"
+    },
+    {
+      "label": "Anthropic — Tool use (function calling) with Claude",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
+    }
+  ]
+}

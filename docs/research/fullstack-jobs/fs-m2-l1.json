@@ -1,0 +1,178 @@
+{
+  "coreIdea": "Modern frontends are not built as whole pages but assembled from `components` — small, self-contained, reusable building blocks like a button or a card — and that shift from pages to components is the mental model behind every framework like React, Vue, and Svelte.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "The old way to build a website was one big `HTML` file per page — `HTML` being the code that describes what is on a page.",
+    "Every page repeated the same nav bar, the same footer, the same buttons, copied and pasted into each file.",
+    "The modern way is to build small, reusable pieces called `components` — a button, a card, a search box — each one a self-contained block.",
+    "You then snap those blocks together to make a page, the way you build a wall out of bricks instead of pouring one giant slab.",
+    "A `component` is a building block of a user interface that bundles its own look and behaviour into one reusable unit."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Building a page from components is like building with LEGO instead of carving a statue from one block of marble.",
+      "Each LEGO brick is finished and self-contained, you can reuse the same brick in a hundred models, and if a brick is faulty you fix that one brick — not the whole statue.",
+      "Where the metaphor bends: LEGO bricks are dumb and identical, while components can hold their own logic and be customised each time you place one — a `Button` can say \"Buy\" in one spot and \"Cancel\" in another from the same definition."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The problem: pages that repeat themselves",
+      "teaser": "Copy-paste markup is the bug factory components were invented to kill",
+      "body": [
+        "In the page-first model, each page is its own `HTML` file, and shared parts like the nav bar are duplicated into every file.",
+        "`Markup` is the term for that `HTML` code — the tags that describe the structure of what is on the screen.",
+        "Duplication is the trap: change the nav bar and you must hunt down and edit every copy by hand, and you will miss one.",
+        "Miss a copy and your pages drift out of sync — the same button looks and behaves differently in two places.",
+        "The deeper cost is that the look of a thing and the behaviour of a thing live in separate files, so a single feature is smeared across many places at once.",
+        "Components exist to end the copying: define the nav bar once, use it everywhere, and fix it in exactly one place."
+      ]
+    },
+    {
+      "title": "The three reasons components exist: reuse, isolation, composition",
+      "teaser": "Define once, contain the mess, then snap pieces together",
+      "body": [
+        "`Reuse` means you define a piece — say a `Card` — a single time, then drop it onto many pages instead of rewriting it.",
+        "`Isolation` means each component keeps its own structure, styling, and behaviour inside its own boundary, so changing one cannot accidentally break another.",
+        "Isolation is what lets a big team work in parallel: one person owns the search box, another owns the checkout button, and they do not collide.",
+        "`Composition` means you build big things out of small things — a page is made of components, which are themselves made of smaller components.",
+        "A `ProductCard` might contain an `Image`, a `Price`, and a `Button`, and the page contains many `ProductCard`s — blocks nested inside blocks.",
+        "Together these three give you the central promise: write a little, reuse a lot, and contain each change to one place."
+      ]
+    },
+    {
+      "title": "The mental model: a component is a function from data to UI",
+      "teaser": "Same recipe in, predictable screen out — the idea under React, Vue, and Svelte",
+      "body": [
+        "The mental model every modern framework shares is simple: a component is like a function that takes in data and returns a piece of screen.",
+        "The data you pass into a component is called its `props` (short for properties) — the inputs that customise it, like the label on a button.",
+        "Give the same component the same `props` and you get the same result every time, which makes the interface predictable to reason about.",
+        "Pass `props` down from parent to child — a `Page` hands a name to a `Greeting`, which simply displays it — and data flows in one clear direction.",
+        "A `framework` is the toolkit (React, Vue, or Svelte are the popular three) that lets you define these components and keeps the screen matching the data.",
+        "We are deliberately not covering how a component remembers changing data over time, nor any one framework's exact syntax — those come in later lessons; the shared idea is all you need here."
+      ]
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "html",
+      "label": "The same nav bar, defined once and reused (illustrative, not real syntax)",
+      "source": "<!-- define one reusable component -->\n<NavBar logo=\"Atlas\" />\n\n<!-- then compose a page out of components -->\n<NavBar logo=\"Atlas\" />\n<ProductCard title=\"Plan A\" price=\"$9\" />\n<ProductCard title=\"Plan B\" price=\"$19\" />\n<Footer />"
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "component",
+      "def": "A self-contained, reusable building block of a user interface — like a button, a card, or a nav bar — that bundles its own structure, look, and behaviour into one unit you can reuse."
+    },
+    {
+      "term": "HTML / markup",
+      "def": "The code that describes the structure of what is on a page — the tags for headings, buttons, and images. `Markup` is the general word for that descriptive code."
+    },
+    {
+      "term": "reuse",
+      "def": "Defining a piece of interface once and using it in many places, so you never copy-paste the same markup and never have to fix the same bug twice."
+    },
+    {
+      "term": "isolation",
+      "def": "Each component keeping its structure, styling, and behaviour inside its own boundary, so changing or breaking one does not affect the others."
+    },
+    {
+      "term": "composition",
+      "def": "Building a large interface by nesting small components inside bigger ones — a page made of cards, a card made of an image, a price, and a button."
+    },
+    {
+      "term": "props (properties)",
+      "def": "The inputs passed into a component to customise it, like the label on a button — the same component with different `props` produces a different result."
+    },
+    {
+      "term": "framework",
+      "def": "A toolkit for building component-based interfaces — React, Vue, and Svelte are the three most common — that lets you define components and keeps the screen in step with the data."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Components are why a `design system` — one shared library of approved buttons, cards, and inputs — is even possible: a designer changes the official `Button` once and every screen that uses it updates, instead of fifty teams each tweaking their own.",
+      "The trade-off you own is up-front effort versus long-run speed: carving the interface into clean, reusable components costs time early, but it is what lets a small team ship and maintain a large product without each change rippling everywhere.",
+      "When you scope a feature, the practical question becomes \"is this a new component or a variation of one we already have?\" — answering \"reuse\" is usually cheaper and more consistent than answering \"build new.\""
+    ]
+  },
+  "caseStudy": {
+    "title": "Facebook builds and open-sources React",
+    "body": [
+      "Around 2011, Facebook's interface had grown so large that keeping every part of the screen in sync with the data behind it had become painful and bug-prone.",
+      "An engineer named Jordan Walke built a tool that let them describe the UI as small, self-contained components, each one a function from data to a piece of screen.",
+      "Facebook used it first inside its own products, then open-sourced it as `React` in 2013 so anyone could use it for free.",
+      "React's component model proved so useful that it reshaped how the whole industry builds frontends, and Vue (2014) and Svelte (2016) later offered their own takes on the same component idea."
+    ],
+    "bridge": "React did not invent a new kind of screen — it popularised the mental model that a page is just components composed together, which is exactly the shift this lesson is about."
+  },
+  "takeaways": [
+    "The modern frontend is assembled from `components` — small, reusable, self-contained building blocks — not written as whole `HTML` pages.",
+    "Components exist for three reasons: `reuse` (define once, use everywhere), `isolation` (changes stay contained), and `composition` (snap small blocks into big ones).",
+    "The shared mental model behind React, Vue, and Svelte is that a component is a function from data (`props`) to a piece of screen.",
+    "Thinking in components is what makes shared design systems and large-team parallel work possible — fix one button, every screen updates."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core shift that defines modern frontend development?",
+      "options": [
+        {
+          "text": "From writing whole `HTML` pages to assembling pages out of reusable, self-contained `components`",
+          "correct": true
+        },
+        {
+          "text": "From slow websites to fast ones by removing all the images",
+          "correct": false
+        },
+        {
+          "text": "From building websites to building mobile apps instead",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the shift is from page-first (one big `HTML` file per page, with shared parts copy-pasted) to component-first, where you build small reusable blocks and compose them into pages."
+    },
+    {
+      "q": "A nav bar appears on every page of a site. Why does the component model handle this better than copying the markup into each page?",
+      "options": [
+        {
+          "text": "You define the nav bar component once and reuse it everywhere, so a change is made in a single place instead of hunted down across every page",
+          "correct": true
+        },
+        {
+          "text": "Components make the nav bar load faster by skipping the network entirely",
+          "correct": false
+        },
+        {
+          "text": "The component model hides the nav bar from search engines so it never needs updating",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — that is `reuse`: define the nav bar once and use it everywhere, so you fix or change it in exactly one place and every page follows, instead of editing copy after copy and missing one."
+    },
+    {
+      "q": "What mental model do frameworks like React, Vue, and Svelte all share?",
+      "options": [
+        {
+          "text": "A component is like a function: it takes in data (its `props`) and returns a piece of screen",
+          "correct": true
+        },
+        {
+          "text": "A component is a separate website that loads inside the page through a hidden window",
+          "correct": false
+        },
+        {
+          "text": "A component is a single giant `HTML` file that contains the entire app at once",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the shared idea is that a component is a function from data to UI: give it the same `props` and you get the same piece of screen back, which is what makes the interface predictable and reusable."
+    }
+  ],
+  "sources": [
+    { "label": "React — Your First Component (official docs)", "url": "https://react.dev/learn/your-first-component" },
+    { "label": "MDN — Web Components and the idea of reusable UI", "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_components" },
+    { "label": "React — A brief history and why it was built", "url": "https://legacy.reactjs.org/blog/2013/06/05/why-react.html" }
+  ]
+}

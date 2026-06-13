@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Guardrails keep an autonomous agent safe and on task by stacking independent layers of control — limited permissions, approval gates for risky actions, input and output filtering, a small tool set, and loop limits — so that when one layer fails, another still catches the mistake.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An autonomous agent is software that takes a goal and then acts on its own — calling tools, running commands, sending messages — without you approving each step.",
+    "That autonomy is the whole point, and it's also the risk: a fast, literal agent can do the wrong thing many times before anyone notices.",
+    "Guardrails are the controls you put around an agent so a mistake stays small, cheap, and reversible.",
+    "The professional approach is `defense in depth` — not one perfect safeguard, but several independent layers, so that when one fails the next one still holds.",
+    "This lesson covers five layers: what the agent is allowed to touch, when it must stop and ask, what goes in and comes out, which tools it has, and how to stop it looping forever."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Guardrails are like the safety layers around a new bank teller on their first day: they get a till with a small float, a daily limit, a camera over their shoulder, and a rule that any transfer over a threshold needs a manager's signature.",
+      "No single rule trusts them completely — each layer assumes the others might fail, so a mistake is caught somewhere before it becomes a disaster.",
+      "Where the metaphor bends: a human teller gets tired and slows down, while an agent never tires and can repeat a bad action thousands of times per minute — which is exactly why automatic limits matter more for agents than for people."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Least privilege and sandboxing: limit the blast radius",
+      "teaser": "Decide what the agent can touch before it ever runs",
+      "body": [
+        "The first layer is `least privilege`: give the agent only the access it needs for its job, and nothing more.",
+        "An agent that summarises support tickets needs to read tickets — it does not need permission to delete accounts or send money, so you simply don't grant those.",
+        "A `sandbox` is a walled-off space where the agent runs, with no path to anything outside it. A coding agent might run in a throwaway container that can touch one project folder and reach the internet only through an approved list of sites.",
+        "`Blast radius` is the term for how much damage an action could do if it goes wrong; least privilege and sandboxing shrink it on purpose.",
+        "The mental shift is to assume the agent will eventually do something dumb or be tricked into it, and to make sure that when it does, the harm is contained.",
+        "This layer is preventive: it doesn't try to judge each action, it just makes the dangerous ones impossible to reach in the first place."
+      ]
+    },
+    {
+      "title": "Approval gates and input/output filtering: pause the risky, screen the rest",
+      "teaser": "A human checkpoint for high-stakes actions, plus a screen on both ends",
+      "body": [
+        "Some actions are too consequential to fully automate — sending a payment, emailing a customer, deleting data, deploying to production.",
+        "An `approval gate` (also called human-in-the-loop) pauses the agent at those moments and waits for a person to approve or reject before it proceeds.",
+        "The skill is choosing the threshold well: gate the few genuinely irreversible actions, and let the cheap, reversible ones run freely, or people start rubber-stamping everything and the gate stops meaning anything.",
+        "`Input filtering` screens what comes in — the data and instructions the agent reads — so obviously bad or out-of-scope requests are blocked before the agent acts on them.",
+        "`Output filtering` screens what goes out — checking the agent's results for leaked secrets, personal data, or unsafe content before they reach a user or another system.",
+        "One related danger, `prompt injection` — hidden instructions buried in the data an agent reads, trying to hijack it — is covered in its own lesson later; here, just know that filtering inputs and outputs is part of the defence against it."
+      ]
+    },
+    {
+      "title": "Scope the tools, and stop the runaway loop",
+      "teaser": "Fewer tools, tighter reach, and a hard stop on repetition",
+      "body": [
+        "An agent's `tools` are the specific actions it can take — search the web, query a database, run code, send an email — and every tool you add widens what it can do, for good and for ill.",
+        "Give it the smallest tool set that does the job, and scope each tool tightly: a database tool that can only read, not write, can't corrupt your data no matter how confused the agent gets.",
+        "Agents work in a loop — think, act, observe the result, think again — and a broken loop can run away, repeating a failing action or spiralling in cost without making progress.",
+        "Guard the loop with hard limits the agent can't override: a maximum number of steps, a time limit, and a spending or token cap that stops it cold when reached.",
+        "A `token` is the unit AI providers bill by — roughly a few characters of text — so a token cap is a literal budget that ends a runaway before it drains the account.",
+        "These limits are mechanical, not clever: they don't need to understand why the agent is stuck, they just refuse to let it keep going forever."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "guardrails",
+      "def": "The controls placed around an autonomous agent — permissions, approvals, filters, tool limits, loop caps — that keep it safe and on task so a mistake stays small and reversible."
+    },
+    {
+      "term": "defense in depth",
+      "def": "Stacking several independent layers of protection rather than relying on one, so that when any single layer fails, another still catches the problem."
+    },
+    {
+      "term": "least privilege",
+      "def": "Giving an agent only the access it actually needs for its task and withholding everything else, so it simply cannot reach the dangerous actions."
+    },
+    {
+      "term": "sandbox",
+      "def": "A walled-off space where the agent runs with no path to anything outside it, so even a misbehaving agent can only affect what's inside the walls."
+    },
+    {
+      "term": "approval gate (human-in-the-loop)",
+      "def": "A checkpoint that pauses the agent before a high-stakes or irreversible action and waits for a person to approve or reject it."
+    },
+    {
+      "term": "output filtering",
+      "def": "Screening the agent's results before they leave the system — checking for leaked secrets, personal data, or unsafe content — so a bad result is caught on the way out."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Guardrails are a product decision, not just an engineering one: every gate you add buys safety but costs speed and autonomy, and that trade-off is yours to set deliberately rather than by accident.",
+      "Gate too little and a single bad action can become a headline; gate too much and you've built an expensive autocomplete that needs a human babysitting every step, which defeats the reason you bought an agent.",
+      "The mature framing is to ask \"what is the worst this agent could do, and which independent layer would catch it?\" — because when something does go wrong, leadership will ask who owned the limits, and \"we trusted it\" is not an answer you want to give."
+    ]
+  },
+  "caseStudy": {
+    "title": "Air Canada's chatbot and the bill for an unguarded agent (2024)",
+    "body": [
+      "Air Canada deployed a customer-service chatbot on its website to answer travel questions.",
+      "A grieving passenger asked about bereavement fares, and the bot confidently told him he could book at full price and claim a discount back within 90 days — a policy that did not actually exist; the bot had effectively made it up.",
+      "When Air Canada refused the refund, the passenger took it to a Canadian tribunal, which in February 2024 ruled the airline was liable for what its chatbot said and ordered it to pay damages.",
+      "The bot had no output guardrail checking its answers against real policy, and no approval gate before it made a binding-sounding commitment to a customer — so a single unchecked output became a legal loss and a public embarrassment."
+    ],
+    "bridge": "An output filter that verified claims against actual policy, or a gate before the bot promised anything refundable, would have caught the mistake on the way out — which is precisely the job guardrails do."
+  },
+  "takeaways": [
+    "Guardrails keep an autonomous agent safe and on task; the professional approach is defense in depth — several independent layers, not one perfect safeguard.",
+    "Least privilege and sandboxing shrink the blast radius up front, so the dangerous actions are out of reach rather than merely discouraged.",
+    "Approval gates pause the few irreversible actions for a human, while input and output filtering screen what the agent reads and what it sends.",
+    "Scope the tool set small and read-only where possible, and cap the loop with hard limits on steps, time, and spend so a runaway stops cold."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does \"defense in depth\" mean when applied to keeping an agent on the rails?",
+      "options": [
+        {
+          "text": "Stacking several independent layers of control, so that when one layer fails another still catches the mistake",
+          "correct": true
+        },
+        {
+          "text": "Picking the single strongest safeguard and relying on it completely so the others aren't needed",
+          "correct": false
+        },
+        {
+          "text": "Giving the agent maximum access so it's powerful enough to fix its own mistakes",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — defense in depth means layered, independent controls; no single layer is trusted to be perfect, so a failure in one is caught by the next."
+    },
+    {
+      "q": "An agent that summarises support tickets is also granted permission to delete customer accounts and issue refunds. Which guardrail does this most directly violate?",
+      "options": [
+        {
+          "text": "Least privilege — the agent has been given access far beyond what its job actually requires",
+          "correct": true
+        },
+        {
+          "text": "Output filtering — it isn't checking its summaries for leaked secrets",
+          "correct": false
+        },
+        {
+          "text": "Loop limits — it has no cap on how many steps it can take",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — least privilege says give an agent only the access its task needs; granting delete and refund powers to a summariser widens the blast radius for no reason."
+    },
+    {
+      "q": "Why are hard limits on steps, time, and spend a necessary guardrail for an agent that works in a loop?",
+      "options": [
+        {
+          "text": "A broken loop can repeat a failing action or spiral in cost without progress, and a mechanical cap stops it cold even though it doesn't understand why the agent is stuck",
+          "correct": true
+        },
+        {
+          "text": "They make each step of the loop run faster, so the agent finishes its task sooner",
+          "correct": false
+        },
+        {
+          "text": "They teach the agent to permanently avoid the mistake so the limits are never needed again",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — loop caps are mechanical, not clever: they don't diagnose the problem, they just refuse to let a runaway agent keep burning steps or money forever."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Building effective agents (guardrails and human-in-the-loop)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "OWASP — Top 10 for Large Language Model Applications (excessive agency, output handling)",
+      "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+    },
+    {
+      "label": "CBC News — Air Canada found liable for chatbot's bad advice (Moffatt v. Air Canada, 2024)",
+      "url": "https://www.cbc.ca/news/canada/british-columbia/air-canada-chatbot-lawsuit-1.7116416"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "coreIdea": "A single agent can be wired in a few well-known shapes — ReAct interleaves thinking and doing step by step, plan-and-execute drafts a full plan first then carries it out, and reflection has the agent critique and revise its own work — and the craft is matching the pattern to the task while keeping it as simple as the task allows.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An `agent` is an AI model wired into a loop where it can take actions — call a tool, run a search, save a file — and react to what comes back, not just answer once.",
+    "Even with a single agent, there are a few standard ways to arrange that loop, and they are called patterns.",
+    "`ReAct` has the agent think a little, do a little, look at the result, then think again — reasoning and acting taking turns.",
+    "`Plan-and-execute` flips the order: the agent writes out a full plan first, then works through the steps.",
+    "`Reflection` adds a self-review step, where the agent reads its own output, criticises it, and tries again.",
+    "The most important rule across all of them: use the simplest pattern the task can get away with, because every extra step costs time, money, and a new chance to go wrong."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of three ways to cook dinner. ReAct is cooking from the fridge: you taste as you go, add salt, taste again, and adjust at every step — you react to what is actually in the pan. Plan-and-execute is following a recipe: you read the whole thing first, lay out every ingredient, then cook the steps in order without improvising. Reflection is plating the dish, stepping back to look at it, deciding the sauce is too thin, and fixing it before it leaves the kitchen.",
+      "A good cook picks the approach to fit the meal: scrambled eggs need no recipe, a wedding cake needs a plan, and anything you serve a guest deserves a final look.",
+      "The metaphor bends in one place: a cook builds real intuition and gets faster with practice, while an agent has no lasting memory between meals — each task starts cold, so the pattern, not the experience, is what carries the quality."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "ReAct: reason and act, taking turns",
+      "teaser": "Think a little, do a little, look at the result, repeat",
+      "body": [
+        "`ReAct` is short for \"Reason + Act,\" and it describes an agent that alternates between thinking and doing in a tight loop.",
+        "Each turn, the model writes a short `thought` (its reasoning about what to do next), takes one `action` (such as calling a tool or running a search), then reads the `observation` (the result that comes back) before thinking again.",
+        "Because it checks reality after every step, ReAct adapts well when the path is not knowable in advance — like answering a research question where each fact you find changes what you look up next.",
+        "Its strength is grounding: by observing real results instead of imagining them, the agent corrects course as it goes and is less likely to confidently make things up.",
+        "Its weakness is drift. With no overall plan, a long ReAct loop can wander, repeat itself, or get stuck circling the same dead end — so people usually cap the number of steps it is allowed to take.",
+        "Use ReAct when the task is exploratory and each step genuinely depends on what the last step returned."
+      ]
+    },
+    {
+      "title": "Plan-and-execute: decide the route, then drive it",
+      "teaser": "Draft the whole plan up front, then work through the steps",
+      "body": [
+        "`Plan-and-execute` splits the work in two. First a `planner` step writes out an ordered list of sub-tasks; then an `executor` step carries those sub-tasks out, one by one.",
+        "The payoff is structure. Committing to a plan up front keeps a long task on track, makes the agent's intentions easy to read, and avoids the aimless wandering that can plague a pure ReAct loop.",
+        "It also tends to use the expensive thinking once, at the planning stage, then run cheaper, more mechanical steps to execute — which can cut cost on long tasks.",
+        "The risk is the opposite of ReAct's: a plan written before any action can be wrong, because the agent guessed about a world it had not yet looked at.",
+        "Good versions allow `replanning` — if an executed step returns a surprise, the agent revises the remaining plan rather than blindly finishing a route that no longer makes sense.",
+        "Use plan-and-execute when the task has many steps with a knowable shape, like \"export this report, reformat it, and email it to the three regional leads.\""
+      ]
+    },
+    {
+      "title": "Reflection, and the discipline of staying simple",
+      "teaser": "A self-review loop can lift quality — but only earn the steps you add",
+      "body": [
+        "`Reflection` adds a critic to the loop. The agent produces a first attempt, then re-reads it against the goal, names what is weak or wrong, and produces an improved version — a built-in second draft.",
+        "It shines on tasks with a quality bar you can articulate: writing, code, or analysis, where \"is this actually good?\" is a question the model can meaningfully ask of its own output.",
+        "Reflection is not a separate pattern you choose instead of the others — it is a layer you can bolt onto ReAct or plan-and-execute when the output deserves a review pass.",
+        "But every added step has a cost: more `tokens` (the chunks of text a model reads and writes, which you pay for), more `latency` (the delay before the user gets an answer), and one more place for the agent to introduce a new error.",
+        "Hence the governing principle of single-agent design: use the simplest pattern the task allows, and add reasoning, planning, or reflection only when a real failure shows you need it — not by default.",
+        "A blunt test before adding complexity: would a careful human need a plan or a second draft for this? If a one-shot answer would do, do not wrap it in a loop."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "agent",
+      "def": "An AI model wired into a loop where it can take actions in the world — call tools, run searches, write files — and react to the results, rather than producing a single answer and stopping."
+    },
+    {
+      "term": "ReAct (Reason + Act)",
+      "def": "A single-agent pattern where the model alternates between a short reasoning step and a single action, observing the real result of each action before deciding the next one."
+    },
+    {
+      "term": "plan-and-execute",
+      "def": "A pattern that first has the agent write a full ordered plan of sub-tasks, then carries those sub-tasks out in sequence — deciding the route before driving it."
+    },
+    {
+      "term": "reflection",
+      "def": "A self-review step where the agent critiques its own output against the goal and produces an improved version — a built-in second draft, layered on top of another pattern."
+    },
+    {
+      "term": "observation",
+      "def": "The result an action returns to the agent — the answer from a search, the output of a tool, an error message — which the agent reads before deciding what to do next."
+    },
+    {
+      "term": "latency",
+      "def": "The delay between a request and its answer; each extra reasoning, planning, or reflection step adds latency, so more steps mean a slower response."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The pattern you choose is a direct lever on cost, speed, and reliability — the three things you are usually balancing. ReAct buys adaptability at the price of more model calls and the risk of wandering; plan-and-execute buys structure and predictable cost but can commit to a wrong plan; reflection buys quality at the price of latency and spend on every run.",
+      "Treat added complexity as a budget item, not a default. Each extra step in the loop multiplies token cost and slows the user's answer, so the question you own is not \"which pattern is most sophisticated\" but \"what is the simplest loop that hits our quality bar,\" and you only escalate when measured failures justify it.",
+      "This also shapes what you instrument. If you are paying for a planning step or a reflection pass, you want metrics that prove it earns its keep — fewer reruns, higher task success, fewer escalations to a human — otherwise you are buying steps that look smart and quietly burn budget."
+    ]
+  },
+  "caseStudy": {
+    "title": "The ReAct paper from Google Research and Princeton (2022–2023)",
+    "body": [
+      "The ReAct pattern was introduced in a 2022 research paper, \"ReAct: Synergizing Reasoning and Acting in Language Models,\" by researchers at Princeton University and Google Research, and presented at the ICLR conference in 2023.",
+      "Their key finding was that interleaving reasoning with actions beat doing either alone: a model that only reasoned tended to hallucinate facts, while a model that only acted lacked a plan, and combining the two let each cover the other's weakness.",
+      "On a benchmark called HotpotQA — multi-hop questions that require chaining several facts together — letting the model reason and then look facts up in a live source (rather than reasoning from memory alone) measurably reduced the made-up answers, with the exact gains reported in the paper.",
+      "The pattern proved simple and general enough that it became a default building block in widely used agent frameworks such as LangChain, which is why \"ReAct\" is now a word engineers say in standups, not just a paper title."
+    ],
+    "bridge": "ReAct earned its place precisely because it kept the agent honest — observing real results instead of imagining them — which is the core promise of interleaving reasoning and acting."
+  },
+  "takeaways": [
+    "A single agent can be arranged in a few standard shapes: ReAct (think-act-observe in a loop), plan-and-execute (full plan first, then carry it out), and reflection (critique and revise your own work).",
+    "ReAct fits exploratory tasks where each step depends on the last result; it stays grounded but can wander, so step limits matter.",
+    "Plan-and-execute fits long tasks with a knowable shape; it adds structure and can cut cost, but a plan made before acting can be wrong — so allow replanning.",
+    "Reflection is a layer you add for quality-sensitive output, and the governing rule across all patterns is to use the simplest loop the task allows and only add steps when failures prove you need them."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What best describes how the ReAct pattern works?",
+      "options": [
+        {
+          "text": "The agent alternates between a short reasoning step and a single action, observing the real result of each action before deciding the next one",
+          "correct": true
+        },
+        {
+          "text": "The agent writes a complete plan of every step before taking any action, then executes the whole plan without checking results",
+          "correct": false
+        },
+        {
+          "text": "The agent produces an answer once and stops, never calling a tool or reacting to a result",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — ReAct stands for Reason + Act: it thinks a little, does one thing, reads the observation, then thinks again, staying grounded by checking real results at every step."
+    },
+    {
+      "q": "A task involves many steps with a knowable, repeatable shape — export a report, reformat it, then email it to three named people. Which pattern fits best, and what is its main risk?",
+      "options": [
+        {
+          "text": "Plan-and-execute, whose main risk is committing to a plan made before the agent has looked at the real world — which is why allowing replanning matters",
+          "correct": true
+        },
+        {
+          "text": "Plan-and-execute, whose main risk is that it can never call any tools once the plan is written",
+          "correct": false
+        },
+        {
+          "text": "Reflection, whose main risk is that it refuses to produce any output at all without a critic",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a knowable multi-step task suits drafting the plan up front, but a plan written before acting can be wrong, so good versions let the agent revise the remaining steps when an observation surprises it."
+    },
+    {
+      "q": "What is the governing principle for choosing a single-agent pattern, including whether to add a reflection step?",
+      "options": [
+        {
+          "text": "Use the simplest pattern the task allows, and add reasoning, planning, or reflection only when real failures show it is needed — because every extra step costs tokens, latency, and a new chance to err",
+          "correct": true
+        },
+        {
+          "text": "Always add as many steps as possible, since more reasoning and reflection can only ever improve the result",
+          "correct": false
+        },
+        {
+          "text": "Always pick reflection, because a self-review step guarantees the output will be correct",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — each added step buys something but also costs time, money, and a fresh opportunity for error, so the discipline is to start simple and escalate only when measured failures justify the extra complexity."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Yao et al. — ReAct: Synergizing Reasoning and Acting in Language Models (ICLR 2023)",
+      "url": "https://arxiv.org/abs/2210.03629"
+    },
+    {
+      "label": "Anthropic — Building Effective Agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "LangChain — Plan-and-Execute and reflection agent patterns",
+      "url": "https://blog.langchain.dev/planning-agents/"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "coreIdea": "You can't fix what you can't see, so running software in production needs three kinds of visibility working together: `logs` (a written record of what happened), `metrics` (numbers tracked over time), and `alerts` (being told, automatically, the moment something is wrong) — together these are called `observability`, and they're what let a human fix a broken system at 3am instead of guessing.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Once your code is live and real people are using it, you no longer watch it run on your laptop — it's off in a data centre somewhere, handling thousands of requests a minute, and you can't see any of them.",
+    "So you build in ways to see inside it while it runs: this is the difference between code that merely works and code you can actually operate.",
+    "`Logs` are the diary — a timestamped written record of individual events, like \"user 412 tried to pay and the card was declined.\"",
+    "`Metrics` are the dashboard gauges — numbers measured over time, like \"requests per second\" or \"how long the average page took to load,\" so you can see trends and spikes.",
+    "`Alerts` are the smoke detector — a rule that watches those numbers and pings a human automatically when something crosses a danger line, so nobody has to sit staring at a screen all night."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of running a live system like flying a plane at night: you can't see the ground, so you fly on instruments. The cockpit gauges — altitude, fuel, airspeed — are your `metrics`, the running numbers that tell you the plane is healthy. The flight recorder, capturing each individual event in order, is your `logs`, the detailed record you read afterward to understand exactly what happened. And the alarm that blares when fuel runs low is your `alert`, the thing that grabs the pilot's attention so they don't have to watch every dial.",
+      "The whole point: a pilot doesn't stare at every gauge constantly — they trust the alerts to interrupt them, then read the instruments and the recorder to diagnose the problem.",
+      "Where the metaphor breaks: a plane has maybe a few dozen gauges, but a real software system can emit millions of log lines an hour and track thousands of metrics, so the hard part isn't collecting the data — it's choosing the handful of signals that actually matter and not drowning in the rest."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Logs: the timestamped diary of what happened",
+      "teaser": "Individual events, in order, with details — the record you read after the fact",
+      "body": [
+        "A `log` is a written record of a single thing that happened, stamped with the exact time it happened.",
+        "A typical line looks like `2026-06-13 14:02:11 ERROR payment failed for order 8841: card declined` — a timestamp, a severity level, and a human-readable message.",
+        "That `severity level` (often `INFO` for normal events, `WARN` for something odd, `ERROR` for an actual failure) lets you filter the noise and jump straight to the failures.",
+        "Logs are how you answer \"what exactly went wrong, for whom, and in what order?\" — they're the detail you reach for once you already know something is broken.",
+        "The catch is volume: a busy app can write millions of log lines an hour, far too many to read by eye, so logs are shipped to a central tool where you search and filter them like a giant searchable diary.",
+        "Logs tell you the story of one event; what they're bad at is showing the big picture across millions of events — which is exactly the job of the next thing."
+      ]
+    },
+    {
+      "title": "Metrics: numbers over time that show the big picture",
+      "teaser": "Not individual events — aggregates you can chart, trend, and compare",
+      "body": [
+        "A `metric` is a number measured repeatedly over time, like \"requests per second\" sampled every few seconds, then plotted on a chart.",
+        "Where a log is one event, a metric is a summary of many events squeezed into a single number — for example, \"the average response time over the last minute was 240 milliseconds.\"",
+        "That makes metrics cheap to store and fast to chart: you keep the number, not every underlying event, so you can watch months of history at a glance.",
+        "Metrics are how you spot a trend before it becomes an outage — error rate creeping up all afternoon, or memory slowly filling until the server will fall over tonight.",
+        "A few classic ones to know: `latency` (how long a request takes), `throughput` (how many requests you're handling), `error rate` (what fraction of requests fail), and `saturation` (how full a resource like memory or CPU is).",
+        "The trade-off is the mirror image of logs: a metric tells you *that* error rate jumped at 2:14pm, but not *why* — for the why, you go back to the logs around that moment."
+      ]
+    },
+    {
+      "title": "Alerts and on-call: being told, instead of watching",
+      "teaser": "A rule that pings a human the moment a signal crosses the line",
+      "body": [
+        "An `alert` is an automatic rule that watches a metric and notifies a human when it crosses a threshold you set — for example, \"page someone if the error rate stays above 5% for three minutes.\"",
+        "Without alerts, the only way to catch a problem is to keep staring at dashboards, which no one can do around the clock — so alerts are what let everyone sleep.",
+        "Teams run an `on-call rotation`: at any hour, one engineer carries the responsibility of being woken if a critical alert fires, and the duty rotates week to week so it doesn't crush one person.",
+        "Good alerting is a discipline of its own: alert on symptoms users feel (\"checkout is failing\") rather than on every internal twitch, or you get `alert fatigue` — so many false alarms that people start ignoring the pager.",
+        "Each alert ideally points at a `runbook`, a short written guide for \"if this fires, here's how to diagnose and fix it,\" so a half-asleep engineer isn't starting from zero.",
+        "The aim is a quiet pager that only goes off when something real is wrong — every alert that wakes someone at 3am for nothing erodes trust in the whole system."
+      ]
+    },
+    {
+      "title": "Observability and the few signals that say \"healthy\"",
+      "teaser": "Don't track everything — track the handful that actually matter",
+      "body": [
+        "`Observability` is the umbrella term for being able to understand what a running system is doing from the outside, using its logs, metrics, and other signals — without having to attach a debugger or guess.",
+        "The trap is thinking more data is always better; a wall of a thousand graphs is as useless as no graphs, because no human can read it under pressure.",
+        "So mature teams pick a small set of `key signals` that, together, answer one question: is the system healthy for users right now?",
+        "Google's site-reliability teams popularised the \"four golden signals\": `latency`, `traffic`, `errors`, and `saturation` — slowness, load, failures, and fullness.",
+        "Those four are deliberately few: if latency and errors are fine and the system isn't saturated, users are almost certainly having a good time, whatever the thousand other graphs say.",
+        "The skill isn't collecting more — it's choosing the few signals that let you tell \"all good\" from \"on fire\" in a single glance, then alerting only on those (we'll go deeper on making systems *fast* in a later module; here the job is just to *see* them)."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "log",
+      "def": "A timestamped written record of a single event — what happened, when, and at what severity (INFO / WARN / ERROR). Logs answer 'what exactly went wrong, for whom, in what order?' and are shipped to a central tool you search like a diary."
+    },
+    {
+      "term": "metric",
+      "def": "A number measured repeatedly over time and charted — like requests per second or average response time. Where a log is one event, a metric summarises many events into a single trackable number, so you can see trends and spikes at a glance."
+    },
+    {
+      "term": "alert",
+      "def": "An automatic rule that watches a metric and notifies a human the moment it crosses a threshold (e.g. 'page someone if error rate stays above 5% for three minutes'). Alerts mean nobody has to watch a dashboard around the clock."
+    },
+    {
+      "term": "observability",
+      "def": "Being able to understand what a running system is doing from the outside, using its logs, metrics, and other signals, without attaching a debugger or guessing. The umbrella idea that ties logs, metrics, and alerts together."
+    },
+    {
+      "term": "on-call",
+      "def": "An arrangement where one engineer at a time carries responsibility for responding to critical alerts, day or night, with the duty rotating between teammates week to week so it doesn't fall on one person."
+    },
+    {
+      "term": "four golden signals",
+      "def": "A widely used short list of the metrics that best tell you a system is healthy: latency (how slow), traffic (how much load), errors (how many failures), and saturation (how full its resources are). The idea is to track a few signals well, not a thousand badly."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Observability is the difference between learning your product is down from your dashboards versus learning it from angry customers on social media — and which of those happens is a choice you make by investing in monitoring before you need it, not after.",
+      "The trade-off you own is sensitivity versus noise: alert on too little and outages run for an hour before anyone notices; alert on too much and your team burns out on false alarms and starts ignoring the pager, which is worse than no alerts at all.",
+      "On-call is a real cost and a real morale lever — being woken repeatedly for nothing drives good engineers out — so 'how often does the pager fire, and how often is it a false alarm?' is a health metric for your team, and the few key signals you choose to watch (and the runbooks behind them) are a product decision about what 'healthy' even means for your users."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon's monitoring catches the 2017 S3 outage — and shows the limits",
+    "body": [
+      "On 28 February 2017, an Amazon engineer running a routine maintenance command mistyped one input, accidentally removing far more servers than intended from S3, Amazon's huge cloud storage service in its main US-East region.",
+      "S3 underpins a large slice of the internet, so as it went down it took chunks of Slack, Trello, Quora, and thousands of other sites with it for about four hours.",
+      "Tellingly, Amazon's own status dashboard kept showing everything green at first — because the dashboard itself depended on the very S3 service that was down, so the tool meant to tell everyone about the problem couldn't load.",
+      "In the public post-mortem, Amazon explained the root cause from its internal logs and metrics, and committed to changes including making the monitoring and recovery tooling not depend on the systems it monitors."
+    ],
+    "bridge": "The outage shows both sides of this lesson at once: logs and metrics are what let Amazon reconstruct exactly what went wrong, and the green-when-broken dashboard is a vivid reminder that your monitoring is only useful if it keeps working when the thing it's watching does not."
+  },
+  "takeaways": [
+    "Logs are the timestamped diary of individual events — best for 'what exactly went wrong, for whom, in what order?' once you know something is broken.",
+    "Metrics are numbers over time you can chart — best for the big picture: spotting a trend or spike across millions of events before it becomes an outage.",
+    "Alerts are automatic rules that ping a human when a signal crosses a danger line, and on-call rotations decide who gets woken — so nobody has to watch dashboards all night.",
+    "Observability ties all three together; the skill is choosing a few key signals (like latency, traffic, errors, saturation) that tell you 'healthy or on fire' at a glance, not collecting every possible graph."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your dashboard shows the error rate jumped sharply at 2:14pm. To find out *why* those specific requests failed — which users, which orders, what the actual error was — which kind of data do you reach for?",
+      "options": [
+        {
+          "text": "The logs around 2:14pm — they're the timestamped record of individual events, with the per-request detail a metric can't hold",
+          "correct": true
+        },
+        {
+          "text": "More metrics — adding additional charts will eventually reveal exactly which orders failed and why",
+          "correct": false
+        },
+        {
+          "text": "An alert rule — alerts are designed to explain the cause of a failure after it happens",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a metric like error rate is a number summarising many events, so it tells you *that* something spiked at 2:14pm but not *why*. For the per-request detail — which user, which order, the actual error message — you go to the logs, the timestamped diary of individual events. Metrics show the big picture; logs show the specific story. Alerts only notify you something is wrong; they don't explain the cause."
+    },
+    {
+      "q": "A team sets up alerts on dozens of tiny internal conditions, so the on-call engineer's pager fires twenty times a night, and almost every one turns out to be nothing. What's the real danger here?",
+      "options": [
+        {
+          "text": "Alert fatigue — so many false alarms that people start ignoring the pager, so they miss the one alert that's a genuine outage",
+          "correct": true
+        },
+        {
+          "text": "Nothing — more alerts always mean more safety, because no real problem can slip through",
+          "correct": false
+        },
+        {
+          "text": "The metrics will run out of numbers to measure, because each alert consumes a metric",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is alert fatigue, and it's why over-alerting can be worse than under-alerting. When the pager cries wolf twenty times a night, the on-call engineer stops trusting it, and the one alert that's a real outage gets ignored along with the noise. Good practice is to alert on symptoms users actually feel, keeping the pager quiet enough that when it fires, people believe it."
+    },
+    {
+      "q": "Why do mature teams deliberately watch a small set of 'key signals' (like Google's latency, traffic, errors, and saturation) rather than tracking every possible number?",
+      "options": [
+        {
+          "text": "Because a handful of well-chosen signals lets a human tell 'healthy' from 'on fire' at a glance, whereas a wall of a thousand graphs is unreadable under pressure",
+          "correct": true
+        },
+        {
+          "text": "Because tracking more than four metrics is technically impossible for most monitoring tools",
+          "correct": false
+        },
+        {
+          "text": "Because the four golden signals are the only numbers a system is capable of producing",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the goal of observability isn't collecting the most data, it's being able to answer one question fast: is the system healthy for users right now? A few well-chosen signals — slowness, load, failures, fullness — answer that at a glance, while a thousand graphs paralyse a half-asleep engineer at 3am. The limit isn't technical; tools can track thousands of metrics. The skill is choosing the few that matter."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "coreIdea": "The frontend talks to the backend by making an HTTP request for data, getting back text in a shared format called JSON, and — because that round trip takes time — it must handle three states for every call: loading, success, and error.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Most screens you use are not one finished page — they are an empty shell that goes and fetches its data.",
+    "When you open a profile, the frontend (the part running in your browser) sends a message over the internet to the backend (the company's server) asking \"give me this user's details.\"",
+    "The backend replies with the data written as plain text in a format both sides agreed on, called `JSON`.",
+    "That trip out and back is not instant — it can take a fraction of a second or several seconds — so the screen has to cope with the wait.",
+    "Every such call lives in one of three states at any moment: still loading, succeeded with data, or failed with an error — and good apps show all three on purpose."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Calling an API is like texting a warehouse for a stock count instead of walking there yourself.",
+      "You send a short message in a format the warehouse understands (the request), then you carry on with your day — and a reply comes back later as a neatly structured note you can read line by line (the JSON).",
+      "Where the metaphor breaks: a text reply is for a human to read, but JSON is built so a program can read it with zero guessing — every value sits in a labelled, predictable slot, not a friendly sentence."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "An API is a request for data, not a page",
+      "teaser": "Same HTTP handshake — but the answer is data, not a screen",
+      "body": [
+        "An `API` (Application Programming Interface) is just an address the backend exposes so other programs can ask it for things.",
+        "The frontend talks to it using the exact same `HTTP` request/response handshake from the Module 1 lesson — a method, a URL, headers, and an optional body — so nothing new is invented here.",
+        "The difference is what comes back: instead of a finished web page meant for human eyes, the response body is raw data meant for your code.",
+        "So a page load might first fetch the HTML shell, then call an API like `GET /api/users/42` to pull the actual numbers and names that fill it in.",
+        "This split is the whole point of a modern frontend: design the screen once, then let it request fresh data whenever it needs to."
+      ]
+    },
+    {
+      "title": "JSON: the format both sides agreed on",
+      "teaser": "Plain text, but laid out so a program never has to guess",
+      "body": [
+        "`JSON` (JavaScript Object Notation) is a way of writing data as plain text using a tiny, strict set of rules.",
+        "It has only a handful of building blocks: labelled pairs like `\"name\": \"Ada\"`, lists in square brackets, numbers, `true`/`false`, and nesting one inside another.",
+        "Because the rules are so strict, any program in any language — JavaScript, Python, Java — can read the same JSON and land each value in the same place every time.",
+        "That shared, language-neutral format is exactly why it became the default: the frontend and backend can be written in totally different languages and still understand each other perfectly.",
+        "When the frontend receives JSON, it `parses` it — turns that text into an in-memory object its code can use — and when it sends data up, it does the reverse and `serialises` an object back into JSON text."
+      ]
+    },
+    {
+      "title": "Why network calls are asynchronous",
+      "teaser": "The reply arrives later, so the app can't just stop and wait",
+      "body": [
+        "A call to the backend travels across the internet and back, which takes real, unpredictable time — call it anywhere from 50 milliseconds to several seconds (illustrative figures).",
+        "If the frontend simply froze until the reply came, the whole screen would lock up — no scrolling, no clicking — every time it fetched anything.",
+        "So these calls are `asynchronous`: the frontend fires off the request, keeps the interface responsive, and is notified later when the answer arrives.",
+        "In code this is usually written with a `promise` — an object that stands for \"a result that isn't here yet but will be\" — which runs your follow-up code the moment the data lands.",
+        "The mental shift is the lesson: you are not writing \"get the data, then use it\" as one instant step; you are writing \"ask for the data, and here's what to do whenever it shows up.\""
+      ]
+    },
+    {
+      "title": "The three states every request lives in",
+      "teaser": "Loading, success, error — and you must design all three",
+      "body": [
+        "Because the answer arrives later, at any instant a request is in one of three states, and the screen should reflect which one.",
+        "`Loading`: the request is in flight — show a spinner or a greyed-out placeholder so the user knows something is happening, not that the app is broken.",
+        "`Success`: the data arrived and parsed cleanly — now render it.",
+        "`Error`: something went wrong — the server returned a `4xx` or `5xx` status code, the connection dropped, or the reply was garbled — show a clear message and ideally a \"try again.\"",
+        "The classic rookie mistake is coding only the success path, so a slow network shows a blank screen and a failed call shows nothing at all.",
+        "Treating loading and error as first-class states, not afterthoughts, is most of what separates a polished app from a frustrating one."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "API",
+      "def": "Application Programming Interface — an address the backend exposes so other programs (like your frontend) can request or send data, rather than viewing a page."
+    },
+    {
+      "term": "JSON",
+      "def": "JavaScript Object Notation — a strict, plain-text format for writing data as labelled pairs and lists, so any program in any language can read it the same way."
+    },
+    {
+      "term": "parse / serialise",
+      "def": "To `parse` is to turn received JSON text into an in-memory object your code can use; to `serialise` is the reverse — turning an object back into JSON text to send."
+    },
+    {
+      "term": "asynchronous",
+      "def": "A way of running work where you start a slow task (like a network call), keep going, and handle the result later when it arrives — instead of freezing until it finishes."
+    },
+    {
+      "term": "promise",
+      "def": "An object that represents a result that has not arrived yet but will — it lets you attach follow-up code that runs the moment the data (or an error) shows up."
+    },
+    {
+      "term": "loading / success / error states",
+      "def": "The three conditions any data request can be in at a given moment — in flight, completed with data, or failed — each of which the interface should handle on purpose."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"It works on my machine\" usually means it works on a fast network with a quick reply — so the loading and error states are where real users on patchy connections actually live, and skipping them ships a product that feels broken to the people you most want to keep.",
+      "JSON being language-neutral is a genuine business lever: it means your mobile app, your web app, and a future partner's system can all consume the same backend, so you build the data once and reuse it many times instead of rebuilding per channel.",
+      "When you scope a feature, \"what does the empty state, the slow state, and the failed state look like?\" is not a nice-to-have engineering detail — it is a product decision about how your app behaves on its worst day, which is the day users judge it."
+    ]
+  },
+  "caseStudy": {
+    "title": "Slack's 2021 outage and the failed-call experience",
+    "body": [
+      "On 4 January 2021, the first working Monday of the year, Slack suffered a major hours-long outage as a flood of returning users hit its systems.",
+      "For many people Slack did not vanish — it loaded the familiar shell, then sat spinning or threw errors as the calls fetching messages and channels failed behind the scenes.",
+      "Because the frontend and backend are separate, the app could still render its layout while every request for actual data came back as an error or never returned at all.",
+      "Slack's clear in-app error messaging and status page meant users understood it was a Slack problem, not their own laptop or wifi — which is the difference between calm patience and a flood of support tickets."
+    ],
+    "bridge": "The outage made the three states visible: the same screen that shows data on a good day must gracefully show loading and error on a bad one, because the network — not your code — decides which state the user gets."
+  },
+  "takeaways": [
+    "The frontend gets and sends data by calling an `API` over the same HTTP handshake — but the response body is data for your code, not a page for human eyes.",
+    "`JSON` is the strict, plain-text, language-neutral format both sides agree on, so a frontend and backend written in different languages still understand each other.",
+    "Network calls are `asynchronous` because the round trip takes real, unpredictable time — you ask for data and handle it whenever it arrives, rather than freezing to wait.",
+    "Every request lives in one of three states — loading, success, error — and designing all three on purpose is what makes an app feel reliable."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your frontend calls `GET /api/users/42` and gets a response. How does this differ from loading a normal web page over HTTP?",
+      "options": [
+        {
+          "text": "It uses the same HTTP request/response handshake, but the response body comes back as data (JSON) for your code rather than a finished page for human eyes",
+          "correct": true
+        },
+        {
+          "text": "It uses a completely different protocol from HTTP that browsers invented specifically for APIs",
+          "correct": false
+        },
+        {
+          "text": "It always returns a fully built HTML page that the browser displays without any further work",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — an API call is the same HTTP handshake you already know; what changes is that the body is raw data (typically JSON) meant for your code to use, not a rendered page."
+    },
+    {
+      "q": "Why has JSON become the default format for a frontend and backend to exchange data?",
+      "options": [
+        {
+          "text": "It is a strict, plain-text format any language can read the same way, so the two sides can be written in different languages and still understand each other",
+          "correct": true
+        },
+        {
+          "text": "It can only be produced and read by JavaScript, which guarantees both sides use the same language",
+          "correct": false
+        },
+        {
+          "text": "It compresses data so heavily that the network round trip becomes effectively instant",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — JSON's value is that it is strict and language-neutral: any program in any language parses the same JSON into the same shape, so a backend in one language and a frontend in another can communicate cleanly."
+    },
+    {
+      "q": "A request to the backend can take an unpredictable amount of time. What is the right way to handle that, and what does it imply for the screen?",
+      "options": [
+        {
+          "text": "Make the call asynchronous and design three states — loading, success, and error — so the interface stays responsive and reflects what is actually happening",
+          "correct": true
+        },
+        {
+          "text": "Freeze the whole interface until the data arrives, so the user can't interact with stale information",
+          "correct": false
+        },
+        {
+          "text": "Assume the call always succeeds quickly and only write the success path, since failures are rare",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — because the round trip takes real time, the call is asynchronous (the app keeps running and handles the result later), and at any moment the request is loading, succeeded, or failed, so all three states must be designed on purpose."
+    }
+  ]
+}

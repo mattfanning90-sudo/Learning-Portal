@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Git is two things at once: a time machine that saves named snapshots of your code so you can always go back, and a system that lets a whole team change the same code at the same time — on separate `branches`, reviewed through `pull requests` — without overwriting each other or breaking what's already live.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "When you build software, you change the same files over and over, and you'll sometimes need to undo a change or see what something looked like last week.",
+    "`Git` is the tool that records your project's history: every time you save a meaningful checkpoint, called a `commit`, Git remembers the exact state of every file at that moment.",
+    "That alone makes it a time machine — you can jump back to any past commit if you break something.",
+    "But the bigger reason teams use Git is collaboration: it lets many people work on the same codebase at once, each on their own `branch` (a private parallel copy), then carefully combine the work back together.",
+    "Before anyone's changes join the shared code, a teammate reads them in a `pull request` and approves them — so nearly every software team on earth works this way, because the alternative is chaos."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of Git like the version history in a shared Google Doc, but deliberate instead of automatic: instead of saving silently every keystroke, you decide when you've finished a thought and stamp it with a note — \"fixed the login bug\" — and that stamped checkpoint is a commit you can always return to.",
+      "Branches are like drafting a risky rewrite in a copy of the doc, so the live version everyone else reads stays untouched until your rewrite is actually good — then you merge it back in.",
+      "Where the metaphor breaks: a Google Doc has one current version that everyone edits live, whereas Git is built for the opposite — many people working on diverging copies at the same time, with explicit rules for merging them back together without losing anyone's work."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "A commit is a named save point you can always return to",
+      "teaser": "Not autosave — a deliberate, labelled snapshot",
+      "body": [
+        "A `commit` is a saved snapshot of your whole project at a moment in time, with a short message describing what changed.",
+        "It's not like hitting Save in a word processor, which just overwrites the file; a commit *adds* a new point to a permanent timeline without erasing the old ones.",
+        "Each commit records exactly which lines changed in which files, so you can later see precisely what a given change did.",
+        "Because every commit is kept, you can jump the project back to any past commit — Git is, quite literally, a time machine for code.",
+        "The message matters: \"fix checkout total\" or \"add password reset\" turns the history into a readable story of how the software got to where it is.",
+        "A good rule is one commit per coherent idea, so each step in the timeline is small, understandable, and easy to undo on its own."
+      ]
+    },
+    {
+      "title": "Branches let a team work in parallel without collisions",
+      "teaser": "Everyone gets their own copy until the work is ready",
+      "body": [
+        "A `branch` is a parallel line of work — a private, full copy of the codebase where you can make commits without touching what's already live.",
+        "The shared, blessed version of the code lives on a branch usually called `main`; this is what ships to customers, so you don't experiment directly on it.",
+        "To build a feature, you create a new branch off `main` (say, `add-dark-mode`), and all your commits land there, isolated from everyone else's work.",
+        "Meanwhile a teammate has their own branch for a different feature, and the two of you never overwrite each other — each commit is parked on its own line.",
+        "This is the core trick that lets ten or a thousand engineers touch the same codebase at once: they diverge onto branches, then rejoin deliberately, rather than all editing one live file and stepping on each other.",
+        "A branch is cheap and disposable — you spin one up for an afternoon's experiment and delete it later if the idea doesn't pan out, with no harm to `main`."
+      ]
+    },
+    {
+      "title": "Merging rejoins branches — and conflicts are normal",
+      "teaser": "Combining two lines of work, and what happens when they disagree",
+      "body": [
+        "`Merging` is the act of taking the commits from one branch and folding them back into another — usually pulling your finished feature branch into `main`.",
+        "Most of the time Git does this automatically: if you changed the checkout file and your teammate changed the login file, the two sets of changes don't overlap, so Git just combines them.",
+        "Sometimes two branches change *the same lines* of the same file in different ways — that's a `merge conflict`, and Git refuses to guess which version is right.",
+        "When that happens, Git pauses and shows both versions side by side, and a human decides what the combined result should be; it's a routine part of the job, not a disaster.",
+        "Conflicts are a feature, not a bug: Git would rather stop and ask than silently throw away someone's work, which is exactly the safety net a shared codebase needs.",
+        "Once the conflict is resolved and the merge completes, both lines of work now live together in one branch, and the history shows where they came back together."
+      ]
+    },
+    {
+      "title": "Pull requests put a human review gate before code goes live",
+      "teaser": "Propose, review, discuss, then merge",
+      "body": [
+        "A `pull request` (often \"PR\") is a formal proposal to merge one branch into another — most often, your feature branch into `main`.",
+        "Opening a PR doesn't change the live code; it opens a page where teammates can see exactly which lines you changed and comment on them, line by line.",
+        "This is `code review`: at least one other engineer reads the change, asks questions, suggests fixes, and either approves it or asks for more work.",
+        "The PR is also where automated checks run — tests and other gates — and many teams block the merge until both a human approves *and* the checks pass.",
+        "Only after approval does someone click \"merge,\" and the branch's commits join `main`, becoming part of the version that ships.",
+        "The point isn't bureaucracy — it's that a second pair of eyes catches bugs, spreads knowledge across the team, and creates a written record of *why* a change was made (we'll cover the automated checks themselves, called CI/CD, in the next lesson)."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Git",
+      "def": "The tool that records your project's full history as a series of snapshots, lets multiple people work on the same code at once, and lets you return to any past state. The most widely used version control system in the world."
+    },
+    {
+      "term": "commit",
+      "def": "A deliberate, labelled snapshot of the whole project at one moment, with a short message describing what changed. Commits stack up to form a timeline you can travel back along."
+    },
+    {
+      "term": "branch",
+      "def": "A parallel line of work — a private copy of the codebase where you can make commits without affecting the shared, live version. Teams use branches so people don't overwrite each other."
+    },
+    {
+      "term": "main",
+      "def": "The shared, trusted branch that represents the official version of the code, usually the one that ships to customers. People build on branches and merge into main rather than editing it directly."
+    },
+    {
+      "term": "merge / merge conflict",
+      "def": "Merging folds one branch's commits into another. A merge conflict happens when two branches change the same lines differently — Git pauses and asks a human to decide, rather than guess."
+    },
+    {
+      "term": "pull request (PR)",
+      "def": "A proposal to merge one branch into another, presented as a reviewable page where teammates read the exact changes, comment, and approve before the code joins the shared branch."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The pull request is where engineering quality becomes a process you can actually see and shape — it's the gate where a change is reviewed before it can affect customers, so policies you set there (require an approval, require tests to pass) directly buy you fewer production incidents at the cost of a little speed.",
+      "Branch-and-PR also gives you a paper trail you'll quietly rely on: every change ties back to who made it, who approved it, and why — which is gold when something breaks at 2am, when a regulator or auditor asks, or when a new hire needs to understand how a feature came to be.",
+      "The trade-off you own is review rigour versus throughput: too loose and bad code ships; too heavy and PRs pile up waiting for review, becoming a hidden bottleneck — so \"how fast do PRs get reviewed and merged?\" is a real health metric for a team, not just an engineering detail."
+    ]
+  },
+  "caseStudy": {
+    "title": "Linus Torvalds builds Git in ~10 days for Linux",
+    "body": [
+      "In 2005, the Linux operating system kernel was being built by thousands of volunteer developers worldwide, who needed a way to combine everyone's changes without chaos.",
+      "They had relied on a commercial tool called BitKeeper, but that year a dispute ended their free access, leaving the project without a version control system.",
+      "Linus Torvalds, Linux's creator, wrote the first working version of Git himself in about ten days, designed specifically so huge numbers of people could work on separate branches and merge their work back together safely and fast.",
+      "Git went on to become the standard for nearly all software development; today the Linux kernel still uses it to integrate tens of thousands of commits from thousands of contributors across every release — and platforms like GitHub, built on Git, host hundreds of millions of projects."
+    ],
+    "bridge": "Git exists precisely because a massive, distributed team needed to change the same code at the same time without overwriting each other — which is the exact problem branches, merges, and reviews solve for every team, large or small."
+  },
+  "takeaways": [
+    "A commit is a deliberate, labelled snapshot of your whole project — a permanent save point you can always travel back to, which makes Git a time machine for code.",
+    "Branches are parallel copies of the codebase that let many people work at once without overwriting each other; the shared, live version lives on `main`.",
+    "Merging rejoins branches, and a merge conflict — when two branches change the same lines — is a normal, safe pause where a human decides, not a failure.",
+    "A pull request is the review gate: a teammate reads the exact changes and approves them before they join `main`, which catches bugs, spreads knowledge, and records why each change was made."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Two engineers are each adding a different feature to the same app this week. How does Git let them work at the same time without overwriting each other's code?",
+      "options": [
+        {
+          "text": "Each works on their own branch — a private parallel copy of the codebase — so their commits stay isolated, and each branch is later merged back into the shared `main` branch",
+          "correct": true
+        },
+        {
+          "text": "Git locks the whole project so only one engineer can make any change at a time, and the other must wait until the first is completely finished",
+          "correct": false
+        },
+        {
+          "text": "Both engineers edit the single live version directly, and Git automatically keeps only the most recent person's changes",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — branches are the core trick. Each engineer commits to their own parallel copy, isolated from the other, and the two lines of work are deliberately merged back into `main` afterward. Git is built for many people diverging and rejoining, not for one-at-a-time locking or silently discarding someone's work."
+    },
+    {
+      "q": "You finish a feature on your branch and open a pull request to merge it into `main`. What does the pull request actually do at that moment?",
+      "options": [
+        {
+          "text": "It proposes the merge and opens a reviewable view of your exact changes, so a teammate can read and approve them before anything joins `main` — it doesn't change the live code by itself",
+          "correct": true
+        },
+        {
+          "text": "It immediately merges your branch into `main` and ships your code to customers the instant you open it",
+          "correct": false
+        },
+        {
+          "text": "It permanently deletes your branch and replaces the entire `main` branch with your version",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — opening a PR is a proposal, not the merge itself. It surfaces your exact changes for code review so a teammate (and often automated checks) can approve them first; only after approval does someone merge it into `main`. That review gate is the whole point — a second pair of eyes before code goes live."
+    },
+    {
+      "q": "While merging your branch into `main`, Git reports a merge conflict. What does that actually mean, and what's the right way to think about it?",
+      "options": [
+        {
+          "text": "Two branches changed the same lines of the same file in different ways, so Git paused and asked a human to decide — it's a normal, safe part of collaborating, not a failure",
+          "correct": true
+        },
+        {
+          "text": "Git has corrupted the project's history, and the work on one of the two branches has been permanently lost",
+          "correct": false
+        },
+        {
+          "text": "Your branch is too far behind `main`, so Git has automatically deleted it to keep the codebase clean",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a merge conflict simply means two branches changed the same lines differently, and Git refuses to guess which is correct. It pauses and shows both versions so a person can decide. That's a safety feature, not damage: Git would rather ask than silently throw away someone's work, and no work is lost in the process."
+    }
+  ]
+}

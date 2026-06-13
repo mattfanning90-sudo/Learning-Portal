@@ -1,0 +1,188 @@
+{
+  "coreIdea": "Human-in-the-loop means deliberately stopping the agent and handing the decision to a person at the moments that matter — before risky or irreversible actions, when the agent is unsure, or at fixed review points — because full autonomy is usually the wrong default, not the goal.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An agent is a model that runs in a loop, taking actions to finish a task on its own rather than answering once.",
+    "Left fully on its own, it will happily do the wrong thing at full speed — send the email, issue the refund, delete the file — with no one checking.",
+    "Human-in-the-loop is the deliberate choice to pause the agent and put a person in the middle at specific moments.",
+    "The person looks at what the agent is about to do, then approves it, edits it, or rejects it before it happens.",
+    "The skill is not \"add a human everywhere\" — it is choosing the few moments where a human pause is worth the friction, and letting the agent run freely the rest of the time."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a junior employee who is fast, tireless, and eager — but new. You let them draft the whole report, book the meeting rooms, and prep the slides without looking over their shoulder.",
+      "But before money leaves the company account, or an email goes to the CEO, they bring it to you to sign off — that signature is the approval gate, the one moment you insist on seeing it first.",
+      "Where the metaphor bends: a human junior learns from each correction and needs the check less over time, while an agent does not improve on its own between runs — the gate stays exactly as necessary on run one thousand as it was on run one, unless you redesign it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why full autonomy is usually the wrong default",
+      "teaser": "Speed and confidence are not the same as being right",
+      "body": [
+        "A fully `autonomous` agent — one that acts with no human checkpoint — is appealing because it is fast and needs no one watching.",
+        "The catch is that an agent acts with the same confident tone whether it is right or badly wrong, so a mistake does not announce itself.",
+        "Some actions are `irreversible`: once a payment is sent, an email delivered, or a row deleted, there is no clean undo, and the cost of being wrong is permanent.",
+        "Full autonomy is the right choice only when the actions are cheap, reversible, and low-stakes — drafting text, searching, summarising, proposing options.",
+        "For anything risky or hard to undo, the question flips: not \"can we let it run alone?\" but \"where must a person be in the loop before it acts?\"",
+        "Choosing the right amount of autonomy per action is the whole design — and the honest default for consequential actions is \"not fully autonomous.\""
+      ]
+    },
+    {
+      "title": "Approval gates: stop before the point of no return",
+      "teaser": "The agent prepares the action; a human pulls the trigger",
+      "body": [
+        "An `approval gate` is a pause the agent hits before a specific action, where it must wait for a human to say yes before continuing.",
+        "The pattern is: the agent does all the thinking and prepares the exact action — the email text, the refund amount, the file to delete — then stops and shows it.",
+        "A person sees precisely what is about to happen and chooses to approve it, edit it, or reject it; only on approval does the agent actually do it.",
+        "Gates belong specifically at the irreversible or high-cost steps — spending money, contacting real people, changing production systems, deleting data — not on every minor step.",
+        "This is different from `guardrails` (covered in Module 4), which are automatic rules the system enforces with no human present; a gate is a deliberate handoff to a human.",
+        "The art is placing gates at the genuine points of no return, because a gate on every trivial action trains people to click \"approve\" without reading — which is worse than no gate at all."
+      ]
+    },
+    {
+      "title": "Escalation and confidence thresholds: hand off when unsure",
+      "teaser": "Let the agent recognise the edge of its competence and call for help",
+      "body": [
+        "Not every handoff is a fixed gate; sometimes the agent itself should decide to ask for help — this is `escalation`.",
+        "The trigger is a `confidence threshold`: a line you set so that when the agent's own estimated certainty falls below it, it stops and routes the task to a person instead of guessing.",
+        "Confidence here is the model's rough sense of how sure it is, which is imperfect — so the threshold is a safety margin, set deliberately low for high-stakes work.",
+        "Escalation also fires on conditions you define: an unfamiliar request, a dollar amount over a limit, a customer flagged as sensitive, or a tool call that keeps failing.",
+        "The handoff has to carry context — what the agent was doing, what it is unsure about, what it has already tried — so the human can act in seconds, not re-investigate from scratch.",
+        "Done well, this is the best of both: the agent handles the routine majority alone and only the genuinely hard or risky minority reaches a person."
+      ]
+    },
+    {
+      "title": "Designing the handoff, not just adding a human",
+      "teaser": "A bad handoff is a bottleneck; a good one is a backstop",
+      "body": [
+        "Putting a human in the loop is easy; designing the handoff well is the actual work, and it is where most systems get it wrong.",
+        "Each pause adds latency — the agent now waits on a person — so too many gates turn a fast assistant into a slow queue nobody can keep up with.",
+        "There is also `automation bias`: when an agent looks competent, people rubber-stamp its suggestions, so a gate that asks \"approve?\" without showing the consequences gives only the illusion of control.",
+        "A good handoff shows the human exactly what will happen and what is at stake, makes \"reject\" and \"edit\" as easy as \"approve,\" and never floods them with low-value confirmations.",
+        "A `review checkpoint` — a fixed pause at a natural milestone, like \"before we publish\" — is gentler than a gate on every action and often catches more while interrupting less.",
+        "The goal is calibrated control: a human at the few moments where their judgement changes the outcome, and out of the way everywhere else."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "human-in-the-loop (HITL)",
+      "def": "A design where a person is deliberately placed inside the agent's workflow to review, approve, edit, or reject specific actions before they take effect — rather than letting the agent run start to finish on its own."
+    },
+    {
+      "term": "approval gate",
+      "def": "A pause the agent hits before a particular action, where it prepares exactly what it intends to do and must wait for a human to approve before it proceeds. Placed at irreversible or high-cost steps."
+    },
+    {
+      "term": "escalation",
+      "def": "When the agent itself decides to hand a task to a person — because it is unsure, the request is unusual, or a defined limit is crossed — instead of acting on a guess."
+    },
+    {
+      "term": "confidence threshold",
+      "def": "A line you set on the agent's estimated certainty; below it, the agent stops and escalates to a human rather than acting. A safety margin, set lower the higher the stakes."
+    },
+    {
+      "term": "irreversible action",
+      "def": "An action that cannot be cleanly undone once done — sending money, delivering an email, deleting data, changing a live system. These are the prime candidates for an approval gate."
+    },
+    {
+      "term": "automation bias",
+      "def": "The human tendency to trust and rubber-stamp a confident-looking machine suggestion without truly checking it — which can make a poorly designed approval gate provide only the illusion of oversight."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Should this step need a human's sign-off?\" is a product decision you own, not a technical detail — and it trades safety against speed and staffing, because every gate is a person you now need available to clear the queue.",
+      "Place gates where being wrong is expensive or permanent, and nowhere else: too few and a bad action ships unseen; too many and your reviewers stop reading, which is the same as having no gate while paying for the friction.",
+      "The handoff itself is a feature to design and measure — how often the agent escalates, how long approvals wait, and whether reviewers actually reject anything — because a gate that is always approved unread is theatre, and a North Star here is calibrated trust, not maximum autonomy."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub Copilot's coding agent opens pull requests instead of pushing to main",
+    "body": [
+      "In 2025 GitHub shipped a Copilot coding agent that can pick up an assigned issue, write the code, and prepare the change largely on its own.",
+      "Critically, it does not push its work straight into the live codebase — it opens a `pull request`, a proposal of changes that a human must review and approve before anything merges.",
+      "GitHub also runs the agent's work inside a restricted environment and requires a human to explicitly approve any continuous-integration runs, so the agent cannot quietly trigger sensitive automation by itself.",
+      "The result is an agent that does the laborious drafting autonomously, while a developer stays the gate on the one irreversible step that matters: merging code into the product everyone ships."
+    ],
+    "bridge": "Copilot is deliberately autonomous on the reversible work and deliberately gated on the irreversible merge — the exact split human-in-the-loop design is about getting right."
+  },
+  "takeaways": [
+    "Human-in-the-loop is choosing the specific moments to pause the agent and let a person approve, edit, or reject — not adding a human everywhere.",
+    "Put approval gates before irreversible or high-cost actions; let the agent run freely on cheap, reversible work — full autonomy is the wrong default for consequential steps.",
+    "Use escalation and confidence thresholds so the agent hands off when it is unsure or a limit is crossed, sending only the hard minority to a person.",
+    "Design the handoff, don't just insert a human: show the stakes, make reject as easy as approve, and avoid so many gates that reviewers rubber-stamp them (automation bias)."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Where does an approval gate belong in an agentic system?",
+      "options": [
+        {
+          "text": "Before irreversible or high-cost actions, like sending money or deleting data — not on every minor step",
+          "correct": true
+        },
+        {
+          "text": "On every single action the agent takes, so a human checks all of its work",
+          "correct": false
+        },
+        {
+          "text": "Only after the action has already happened, as a record of what was done",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — gates exist for the points of no return, where being wrong is expensive or permanent. Gating every trivial step adds latency and trains reviewers to rubber-stamp, which is worse than a well-placed gate; and a gate must come before the action, not after."
+    },
+    {
+      "q": "An agent is highly confident in its answer but the confidence is unreliable on rare, high-stakes requests. How should a confidence threshold be set for that work?",
+      "options": [
+        {
+          "text": "Set the threshold deliberately low for high-stakes work, so the agent escalates to a person whenever its certainty dips, treating confidence as an imperfect signal",
+          "correct": true
+        },
+        {
+          "text": "Set no threshold at all, because a confident agent never needs a human",
+          "correct": false
+        },
+        {
+          "text": "Trust the agent's confidence completely, since the model knows best how sure it is",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a model's self-reported confidence is rough and can be wrong, so the threshold is a safety margin. The higher the stakes, the lower you set it, so borderline or unusual cases escalate to a human rather than being acted on as a guess."
+    },
+    {
+      "q": "A team adds an \"approve?\" pop-up before every agent action but shows no detail of what each one will do. Reviewers approve almost everything instantly. What is the core problem?",
+      "options": [
+        {
+          "text": "Automation bias plus gate overload — reviewers rubber-stamp confident suggestions they don't really read, so the gates give only the illusion of oversight",
+          "correct": true
+        },
+        {
+          "text": "The agent isn't autonomous enough and should skip the humans entirely",
+          "correct": false
+        },
+        {
+          "text": "The threshold is too high, so not enough actions are being escalated",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — too many low-value confirmations, shown without their consequences, push people to click \"approve\" reflexively (automation bias). A good handoff is rare, shows exactly what is at stake, and makes reject as easy as approve — otherwise the gate is theatre."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Building effective agents (human oversight and workflow design)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "GitHub — About Copilot coding agent (pull-request workflow and approvals)",
+      "url": "https://docs.github.com/en/copilot/using-github-copilot/coding-agent/about-copilot-coding-agent"
+    },
+    {
+      "label": "NIST — Automation bias and human oversight of automated systems",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    }
+  ]
+}

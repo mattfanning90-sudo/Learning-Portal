@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Showing the model a few worked examples of the input-and-output you want — few-shot prompting — steers it far more reliably than describing the task in words alone, as long as your examples are representative and don't quietly lock in a format or bias.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "There are two ways to tell a model what you want.",
+    "You can describe it in words — \"summarise this in a friendly tone\" — and hope the model fills in the rest. That is called `zero-shot`: zero examples, just instructions.",
+    "Or you can show it. You paste in two or three finished examples of exactly the input-and-output you want, then give it the real input. That is `few-shot`: a few examples first.",
+    "Examples work because the model is a pattern-matcher — it learned by predicting text, so a worked example is a far sharper signal than an adjective.",
+    "But examples are powerful in both directions: a good one locks in the right pattern, and a careless one locks in the wrong one just as firmly."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Imagine onboarding a sharp new hire. You could write a long memo describing how to format a sales report — or you could just hand them three finished reports and say \"make the next one look like these.\"",
+      "The three examples land instantly: the new hire sees the columns, the tone, the level of detail, and copies the shape without you spelling out every rule. Few-shot prompting is handing the model those three reports.",
+      "Where the metaphor breaks: a human hire generalises and uses judgement, but the model often copies your examples *too* literally — if all three reports happen to be about the same region, it may assume every report should be about that region too."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why a worked example beats a description",
+      "teaser": "Show the shape instead of spelling out the rules",
+      "body": [
+        "A description forces the model to guess what you meant; an example shows it directly.",
+        "Words like \"concise\" or \"professional\" are fuzzy — your \"concise\" and the model's \"concise\" may be very different lengths.",
+        "An example pins down everything at once: the length, the tone, the structure, the punctuation, even what to leave out.",
+        "This works because a model predicts the next token — the next chunk of text — by matching patterns, and a finished example is the clearest pattern you can give it.",
+        "It is especially strong for anything hard to put into words, like a specific writing voice or an odd output format.",
+        "Rule of thumb: if you find yourself writing a long paragraph of rules, a single good example will usually do the same job faster and more reliably."
+      ]
+    },
+    {
+      "title": "How many examples, and how to pick them",
+      "teaser": "A handful of representative examples, not a pile of random ones",
+      "body": [
+        "\"Few\" really is few — often two to five examples is enough, and more is not automatically better.",
+        "Past a handful, you mostly burn `context window` — the limited space of text the model can read at once — for shrinking benefit, and you pay for those extra tokens every call.",
+        "Quality beats quantity: pick examples that are *representative* of the real inputs you will actually see, not the easy or unusual ones.",
+        "Cover the variety on purpose — if real inputs are sometimes short and sometimes long, include one of each so the model sees the range.",
+        "Include a tricky or edge case if those matter; the model leans hard on whatever your examples demonstrate, so demonstrate the hard part.",
+        "If your task has clearly different categories, make sure each category appears, or the model may simply ignore the ones you skipped."
+      ]
+    },
+    {
+      "title": "The trap: examples lock in format and bias",
+      "teaser": "The model copies what you show — including what you didn't mean to show",
+      "body": [
+        "Because the model imitates your examples so faithfully, it copies their accidents too.",
+        "If all your examples answer in one sentence, it will answer in one sentence even when three were needed — the format is locked in.",
+        "This is `bias` in the everyday sense: a lopsided set of examples tilts the output. Show three positive product reviews and ask it to classify a neutral one, and it will lean toward \"positive.\"",
+        "Order matters too: in classification tasks, if your examples are all labelled \"yes\" then \"no\" in a fixed order, the model can latch onto the order instead of the content.",
+        "The fix is deliberate balance — vary the examples, mix the labels and their order, and make the set look like the real world, not a tidy demo.",
+        "After writing few-shot examples, reread them and ask: \"what unintended pattern am I teaching here?\""
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "zero-shot prompting",
+      "def": "Asking the model to do a task using only instructions, with no examples — you describe what you want in words and let the model fill in the rest."
+    },
+    {
+      "term": "few-shot prompting",
+      "def": "Giving the model a small number of worked examples (usually two to five) of the input paired with the desired output, before handing it the real input to process."
+    },
+    {
+      "term": "shot",
+      "def": "One worked example inside a prompt; \"one-shot\" means a single example, \"few-shot\" a handful, and \"zero-shot\" none at all."
+    },
+    {
+      "term": "in-context learning",
+      "def": "The model's ability to pick up a pattern from examples in the prompt and apply it on the spot, without any retraining — it 'learns' just for that one conversation."
+    },
+    {
+      "term": "context window",
+      "def": "The limited amount of text a model can read at once; every example you add takes up part of it and costs tokens, which is why more examples is not always better."
+    },
+    {
+      "term": "bias (from examples)",
+      "def": "A lopsided set of examples tilting the model's output — for instance, all-positive samples nudging it to call a neutral input positive, or a fixed label order it copies instead of reasoning."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Few-shot examples are a product asset, not a throwaway prompt — a small, well-chosen set is often the single biggest lever on output quality, so it deserves to be versioned, reviewed, and tested like code.",
+      "There is a real trade-off to own: every example you add improves steering but eats context window and adds cost and latency on every single call, which matters once you are running the prompt millions of times.",
+      "And because examples can quietly encode bias, your examples become a place where fairness and brand-voice problems can hide — so \"who reviews the examples?\" is a genuine governance question, not housekeeping."
+    ]
+  },
+  "caseStudy": {
+    "title": "GPT-3 and the paper that made \"few-shot\" famous (OpenAI, 2020)",
+    "body": [
+      "When OpenAI introduced GPT-3 in 2020, the paper's title was literally \"Language Models are Few-Shot Learners.\"",
+      "Its headline finding: you could make the model perform a new task well just by showing it a few examples inside the prompt, with no retraining of the model at all.",
+      "On task after task — translation, question-answering, unscrambling words — giving the model a handful of examples sharply outperformed describing the task in words alone (the zero-shot setup).",
+      "This is where the terms \"zero-shot,\" \"one-shot,\" and \"few-shot\" entered everyday use, and it reframed prompting from \"asking nicely\" to \"showing the model what good looks like.\""
+    ],
+    "bridge": "That paper proved the core claim of this lesson at scale — a few well-chosen examples teach a model more reliably than any description — which is exactly why showing beats telling."
+  },
+  "takeaways": [
+    "Zero-shot describes the task in words; few-shot shows the model a few worked examples of the input and the output you want.",
+    "Examples beat descriptions because the model is a pattern-matcher — a finished example pins down length, tone, and format that adjectives leave fuzzy.",
+    "A handful of representative examples (often two to five) usually wins; more mostly burns context window and money for shrinking benefit.",
+    "Examples lock in patterns in both directions, so a lopsided or fixed-order set quietly teaches bias and format the model will faithfully copy."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core difference between zero-shot and few-shot prompting?",
+      "options": [
+        {
+          "text": "Zero-shot only describes the task in words; few-shot also shows the model a few worked examples of the desired input and output",
+          "correct": true
+        },
+        {
+          "text": "Zero-shot uses a smaller model, while few-shot requires a larger, more expensive one",
+          "correct": false
+        },
+        {
+          "text": "Few-shot retrains the model on your examples, while zero-shot leaves the model unchanged",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — few-shot simply adds a few example input-output pairs to the prompt; nothing about the model itself changes, and it works for models of any size."
+    },
+    {
+      "q": "You are writing a few-shot prompt and have ten candidate examples. What is the best guidance on how many to include?",
+      "options": [
+        {
+          "text": "Use a small, representative handful that covers the real variety — more examples mostly burn context window and money for shrinking benefit",
+          "correct": true
+        },
+        {
+          "text": "Always include all ten, because more examples are always better",
+          "correct": false
+        },
+        {
+          "text": "Include exactly one, because a single example is all a model can ever use",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — often two to five well-chosen, representative examples is enough; past a handful you pay more tokens for diminishing gains, so quality and coverage beat sheer quantity."
+    },
+    {
+      "q": "Why can few-shot examples backfire if they are chosen carelessly?",
+      "options": [
+        {
+          "text": "The model copies the examples faithfully, so a lopsided or fixed-order set quietly locks in an unintended format or bias",
+          "correct": true
+        },
+        {
+          "text": "Examples permanently corrupt the model's training so every future user is affected",
+          "correct": false
+        },
+        {
+          "text": "Adding any example always makes the output worse than describing the task in words",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the model imitates whatever pattern your examples show, including accidental ones, so all-positive samples or a fixed label order can tilt or constrain the output; the fix is deliberate balance and variety."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Brown et al. (OpenAI) — Language Models are Few-Shot Learners (GPT-3 paper, 2020)",
+      "url": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "label": "Anthropic — Use examples (multishot prompting) to guide Claude's behavior",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting"
+    },
+    {
+      "label": "OpenAI — Prompt engineering best practices",
+      "url": "https://platform.openai.com/docs/guides/prompt-engineering"
+    }
+  ]
+}

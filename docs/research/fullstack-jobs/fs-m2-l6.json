@@ -1,0 +1,187 @@
+{
+  "coreIdea": "Developers write modern, modular code for humans, but browsers want a few small, fast files — so a `bundler` like Vite or webpack combines, translates, and shrinks that source into what actually ships.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "The code a developer writes and the code a browser runs are not the same thing.",
+    "Humans write source code split across many small files, using the newest, clearest syntax for readability.",
+    "Browsers, though, prefer a few small files in older, plainer JavaScript, downloaded as fast as possible.",
+    "A `build step` bridges that gap: a tool reads all your source files and produces the optimised files the browser receives.",
+    "That tool is called a `bundler` — Vite and webpack are the two names you will hear most."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Writing source code is like writing a book in a messy stack of draft chapters, with notes, comments, and the latest slang you and your editor both understand.",
+      "The bundler is the print shop: it gathers all the chapters into one tidy volume, translates the slang into language every reader knows, and trims the whitespace so the book is light to carry.",
+      "Where the metaphor bends: a printed book is final, but a bundler reruns in seconds every time you change a word, so you are constantly reprinting — which is exactly why fast tooling matters so much."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why a frontend needs a build step at all",
+      "teaser": "Good code for humans is not the same as good code for browsers",
+      "body": [
+        "`Source code` is the code a developer writes and reads — organised for clarity, not for the network.",
+        "A real app might be split across hundreds of small files, each holding one component or helper, because small files are easier to reason about.",
+        "But sending hundreds of separate files to a browser is slow: each one is a separate request, and the round trips add up.",
+        "Developers also use the newest JavaScript features and write `JSX` (an HTML-like syntax mixed into JavaScript), which older browsers do not understand on their own.",
+        "So a `build step` runs between writing and shipping: a tool transforms the human-friendly source into browser-friendly output.",
+        "The shape to remember: you optimise the source for the developer, then let a tool optimise the result for the browser."
+      ]
+    },
+    {
+      "title": "What a bundler does: combine, transpile, minify",
+      "teaser": "Three jobs that turn many modern files into a few plain ones",
+      "body": [
+        "`Bundling` is combining many source files into a few output files, so the browser makes fewer requests and loads faster.",
+        "`Transpiling` is translating newer or special syntax into the plain, widely-supported JavaScript every browser understands — it turns the latest features and `JSX` into code that runs anywhere.",
+        "Think of transpiling as translation between two versions of the same language, not as compiling down to a totally different one.",
+        "`Minifying` is shrinking the code by stripping out everything a machine does not need: spaces, line breaks, comments, and long names become short ones.",
+        "A variable a human calls `customerAccountBalance` might become `a` after minifying — unreadable to people, identical to run, and far smaller to download.",
+        "Combine, transpile, minify: that trio is the core of what every bundler does."
+      ]
+    },
+    {
+      "title": "The dev server and hot reload: the fast inner loop",
+      "teaser": "While you build, the tool reruns instantly so you see changes live",
+      "body": [
+        "You do not run the full slow build every time you tweak a colour — that would break your concentration.",
+        "Instead, while developing you run a `dev server`: a small local web server the tool starts on your own machine to serve the app as you work.",
+        "On top of it sits `hot reload` (often called `Hot Module Replacement`, or `HMR`): when you save a file, only the part that changed is swapped into the running page.",
+        "The browser updates in a fraction of a second, and you keep your place — a form you half-filled stays filled, a menu you opened stays open.",
+        "This tight write-save-see cycle is the developer's inner loop, and its speed is a big part of why a tool gets chosen.",
+        "The dev server is for building; the slower, fully-optimised `build` is what you ship to real users."
+      ]
+    },
+    {
+      "title": "Vite vs webpack: same goal, different speed",
+      "teaser": "The classic bundler and the modern fast one",
+      "body": [
+        "`webpack` is the long-established bundler that powered much of the modern web for years, and is still everywhere.",
+        "Its weakness is startup speed: on a large app it can bundle everything up front, so the dev server takes a while to start and reloads can lag.",
+        "`Vite` (French for \"fast\", and pronounced \"veet\") is the newer tool built to fix exactly that.",
+        "Vite leans on a feature modern browsers now have natively, so during development it serves files on demand instead of bundling the whole app first — which makes startup feel near-instant.",
+        "For shipping the final app, Vite still does a full optimised build, so you get the fast inner loop and the small output.",
+        "The takeaway is not \"one is right\" — it is that startup and reload speed are real, measurable differences between tools doing the same job."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "build step",
+      "def": "The stage between writing code and shipping it, where a tool transforms human-friendly source code into the optimised files a browser actually downloads and runs."
+    },
+    {
+      "term": "bundler",
+      "def": "The tool that runs the build step — it combines, transpiles, and minifies your many source files into a few small, fast files for the browser. Vite and webpack are the common ones."
+    },
+    {
+      "term": "source code",
+      "def": "The code a developer writes and reads, organised across many small files for clarity using the newest syntax — not the same as the code the browser ultimately runs."
+    },
+    {
+      "term": "transpiling",
+      "def": "Translating newer or special syntax (like the latest JavaScript features or `JSX`) into the plain, widely-supported JavaScript that every browser understands."
+    },
+    {
+      "term": "minifying",
+      "def": "Shrinking code by removing everything a machine does not need — spaces, line breaks, comments — and shortening names, so the file downloads faster without changing what it does."
+    },
+    {
+      "term": "JSX",
+      "def": "An HTML-like syntax written inside JavaScript, common in React, that browsers cannot read directly — a bundler transpiles it into plain JavaScript first."
+    },
+    {
+      "term": "dev server",
+      "def": "A small local web server the bundler starts on your own machine to serve the app while you build it, separate from the final version sent to real users."
+    },
+    {
+      "term": "hot reload",
+      "def": "Also called Hot Module Replacement (`HMR`) — when you save a file, only the changed part is swapped into the running page, so it updates in a fraction of a second without a full refresh and without losing your place."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The bundler's output is what users actually download, so it sits directly on a metric you care about: page load time, which moves conversion and bounce rates — smaller, fewer files mean a faster first impression.",
+      "The dev server and hot reload are not a user-facing feature, but they are a developer-productivity feature: a tool that reloads in 0.3 seconds instead of 5 gives every engineer back hours a week and keeps them in flow, which is a real (if illustrative) lever on how fast your team ships.",
+      "When a team proposes migrating from one bundler to another (say webpack to Vite), the honest trade-off to weigh is migration cost now versus faster builds forever — so the question to ask is \"how much engineer time does the slow build cost us today?\" rather than treating tooling as invisible plumbing."
+    ]
+  },
+  "caseStudy": {
+    "title": "Vue and the rise of Vite",
+    "body": [
+      "Vite was created in 2020 by Evan You, the developer who also created the popular Vue.js frontend framework.",
+      "He built it because webpack-based dev servers had grown painfully slow to start on large projects, sometimes taking tens of seconds before an engineer could even see a change.",
+      "Vite skips bundling the whole app during development and serves files on demand using a feature built into modern browsers, which cut dev-server startup from many seconds to a near-instant feel.",
+      "It spread fast: by the mid-2020s Vite had become the default build tool recommended by major frameworks and was downloaded tens of millions of times a week, with the React team's own tooling guidance pointing developers toward it."
+    ],
+    "bridge": "Vite's whole reason for existing is the speed of the inner loop — proof that the build step is not invisible plumbing but a place where better tooling visibly changes how it feels to build software."
+  },
+  "takeaways": [
+    "Frontends need a build step because human-friendly source code (many files, newest syntax, `JSX`) is not what a browser wants (a few small, plain files).",
+    "A `bundler` does three core jobs: combine many files into few, transpile new syntax into plain JavaScript, and minify to shrink the download.",
+    "While building, you run a `dev server` with `hot reload`, so saving a file updates the page in a fraction of a second without losing your place.",
+    "Vite and webpack do the same job; their big practical difference is startup and reload speed, which is why teams sometimes migrate between them."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why do modern frontends have a build step instead of just sending the developer's source files straight to the browser?",
+      "options": [
+        {
+          "text": "Developers write many small files in the newest syntax for clarity, but browsers want a few small, plain files — the build step transforms one into the other",
+          "correct": true
+        },
+        {
+          "text": "Browsers are legally required to run only code that has passed through an official build tool",
+          "correct": false
+        },
+        {
+          "text": "The build step is what connects the frontend to the database, so without it the app has no data",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — source code is optimised for humans (many files, latest features, `JSX`), while browsers want fewer, smaller, plainer files; the build step bridges that gap by combining, transpiling, and minifying."
+    },
+    {
+      "q": "A developer's variable named `customerAccountBalance` shows up as `a` in the shipped file, and all the comments and spaces are gone, but the app behaves identically. What happened?",
+      "options": [
+        {
+          "text": "The code was minified — names were shortened and unnecessary characters stripped to shrink the download without changing behaviour",
+          "correct": true
+        },
+        {
+          "text": "The code was transpiled from JSX into HTML, which always renames variables to single letters",
+          "correct": false
+        },
+        {
+          "text": "The browser ran out of memory and abbreviated the names to save space",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — minifying removes whatever a machine does not need (spaces, comments) and shortens names, producing a smaller file that runs exactly the same; transpiling, by contrast, is about translating newer syntax into plain JavaScript."
+    },
+    {
+      "q": "While building, a developer saves a CSS change and the page updates in under a second without a full refresh, keeping a half-filled form intact. Which tooling feature is this?",
+      "options": [
+        {
+          "text": "Hot reload (Hot Module Replacement) on the dev server, which swaps only the changed part into the running page",
+          "correct": true
+        },
+        {
+          "text": "The production build, which re-optimises and re-deploys the whole app on every save",
+          "correct": false
+        },
+        {
+          "text": "Minification, which is what makes saved changes appear quickly in the browser",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — hot reload (`HMR`) on the local `dev server` swaps in only the part that changed, so the page updates almost instantly and you keep your place; the full production build is the separate, slower step used to ship to real users."
+    }
+  ],
+  "sources": [
+    { "label": "Vite — Why Vite (official guide)", "url": "https://vitejs.dev/guide/why.html" },
+    { "label": "MDN — What is a bundler? / JavaScript modules", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" },
+    { "label": "webpack — Concepts (official documentation)", "url": "https://webpack.js.org/concepts/" }
+  ]
+}

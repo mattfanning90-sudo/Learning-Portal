@@ -1,0 +1,185 @@
+{
+  "coreIdea": "Splitting a job across several specialist agents — fanned out in parallel, coordinated by an orchestrator, or checked by a critic — genuinely helps when the work has separable parts or needs an independent reviewer, but otherwise it just multiplies cost, latency, and ways to fail.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An `agent` is an AI model given a goal, some tools, and the freedom to take steps on its own until the goal is met.",
+    "Most tasks are handled fine by one agent working through the job alone.",
+    "But some jobs split naturally into parts, or need a second opinion the doer cannot give itself — and that is where using several agents starts to pay off.",
+    "`Multi-agent` simply means more than one agent working on the same overall job, each often with a narrower role.",
+    "The skill is not building the biggest crew you can; it is knowing the few shapes that help, and resisting them everywhere else."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a newsroom. A single reporter can write a small story end to end, but a big investigation gets split up: researchers gather facts in parallel, a specialist writes each section, an editor stitches it together, and a fact-checker reads it cold to catch what the writers missed.",
+      "Multi-agent systems borrow that division of labour — some agents fan out to gather, some specialise, one coordinates, and one critiques the rest.",
+      "The metaphor bends in one place: human colleagues share context by overhearing each other and chatting at the desk, while agents only know what you explicitly pass between them — so coordination you take for granted in a newsroom must be wired up by hand, and every handoff is a chance to drop information."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Four shapes that actually help",
+      "teaser": "Fan-out, specialists, orchestrator-workers, and critic panels",
+      "body": [
+        "The first shape is `fan-out`, also called parallelisation: split a job into independent chunks, run an agent on each at the same time, then merge the results — like summarising fifty documents at once instead of one after another.",
+        "The second is `specialist roles`: give each agent a narrow job and a focused instruction set, so a `prompt` (the written instructions and context you hand a model) stays sharp instead of trying to cover everything at once.",
+        "The third is the `orchestrator-worker` pattern: a lead agent breaks the goal into subtasks, hands each to a worker agent, and assembles what they return — useful when you cannot know the subtasks in advance and must plan them on the fly.",
+        "The fourth is a `critic` or judge: one agent does the work, a separate agent reviews it against a checklist and sends back fixes, exactly like an editor reading a draft.",
+        "A `judge panel` is the same idea scaled up — several critics check the work and you take the majority view, which catches more errors than any single reviewer.",
+        "These shapes combine: an orchestrator might fan work out to specialists, then route every draft through a critic before it ships."
+      ]
+    },
+    {
+      "title": "Why a separate critic beats self-review",
+      "teaser": "An independent reviewer with fresh context catches what the doer cannot",
+      "body": [
+        "It is tempting to just ask the same agent \"are you sure?\" — but a model grading its own answer tends to wave it through, because it is reasoning from the same context that produced the mistake.",
+        "A separate critic agent starts with a clean slate: it sees the output and the standard it must meet, not the doer's train of thought, so it judges the result on its own terms.",
+        "This is the same reason newspapers use a different person to fact-check than to write — fresh eyes catch what tired ones skip.",
+        "The critic also gets a different, narrower job: not \"write the answer\" but \"find what is wrong with this answer,\" which is an easier and more reliable task to do well.",
+        "The cost is real, though — every critic pass is another model call, more money, and more waiting, so you reserve panels of critics for work where a mistake is expensive."
+      ]
+    },
+    {
+      "title": "When one agent is the right answer",
+      "teaser": "Multi-agent adds cost, latency, and new ways to fail — earn it first",
+      "body": [
+        "Every extra agent is another model call you pay for, another delay while it runs, and another handoff where context can get garbled or lost.",
+        "If a task is a single tight sequence of steps with no separable parts, splitting it across agents adds coordination overhead and buys you nothing.",
+        "Multi-agent also multiplies failure modes: agents can disagree, loop on each other, duplicate work, or quietly drop a detail one assumed the other was handling.",
+        "A good rule of thumb is to reach for more agents only when the work truly parallelises, when a focused specialist clearly beats a jack-of-all-trades, or when you need an independent reviewer the doer cannot be.",
+        "The default should be the simplest thing that works — usually one capable agent — and you add agents only when a specific bottleneck or quality gap forces your hand. The single-agent loop itself is covered in the previous lesson; here we only ask when to graduate beyond it."
+      ]
+    },
+    {
+      "title": "This portal's own content pipeline as a worked example",
+      "teaser": "How the lesson you are reading was built by a small crew of agents",
+      "body": [
+        "Atlas authors lessons with a multi-agent workflow, and it earns the extra agents on every count above.",
+        "It fans out: many lessons are drafted in parallel, one agent per lesson, because each lesson is independent — so a whole module is written at once rather than one at a time.",
+        "Each author agent is a `specialist`: it gets a tight brief, an exemplar lesson to match, and a single lesson to write, so its prompt stays focused instead of juggling the whole course.",
+        "Then a separate `critic` step checks each draft against the rules — valid `JSON` (the structured data format the lessons are stored in), exactly three knowledge-check questions, a real named case study, every technical term defined — and sends back anything that fails.",
+        "A single agent writing all lessons in one long session would blur the voice and quietly break the format; the crew keeps each piece sharp and independently checked. The illustrative point: the same job you are studying was built by the very patterns it describes."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "agent",
+      "def": "An AI model given a goal, a set of tools, and the freedom to take steps on its own — deciding what to do next — until the goal is met."
+    },
+    {
+      "term": "multi-agent system",
+      "def": "An arrangement where more than one agent works on the same overall job, usually with each agent holding a narrower role than a single all-purpose agent would."
+    },
+    {
+      "term": "fan-out (parallelisation)",
+      "def": "Splitting a job into independent chunks, running a separate agent on each at the same time, then merging the results — faster than doing the chunks one after another."
+    },
+    {
+      "term": "orchestrator-worker pattern",
+      "def": "A setup where a lead agent breaks the goal into subtasks, delegates each to a worker agent, and assembles what they return — useful when the subtasks must be planned on the fly."
+    },
+    {
+      "term": "critic (or judge)",
+      "def": "A separate agent whose only job is to review another agent's output against a standard and flag or fix what is wrong — fresh eyes that catch what the doer cannot."
+    },
+    {
+      "term": "judge panel",
+      "def": "Several critic agents reviewing the same output, with the majority view taken as the verdict — catching more errors than any one reviewer working alone."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own the product or the bill, every agent you add is a direct multiplier on cost and latency — three agents on a task is roughly three model calls and three waits, so multi-agent is a deliberate spend, not a free upgrade.",
+      "The trade-off you own is quality versus cost and speed: a critic panel buys you reliability on work where a wrong answer is expensive, but the same panel is pure waste on a task a single agent already nails.",
+      "The leadership move is to make teams justify each agent against a real bottleneck — does the work parallelise, does a specialist clearly beat a generalist, do we need an independent reviewer — rather than reaching for a crew because it sounds more capable."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic's multi-agent research system (2025)",
+    "body": [
+      "In June 2025 Anthropic published how its Claude Research feature answers hard, open-ended questions using multiple agents instead of one.",
+      "A lead `orchestrator` agent plans the research and spawns several worker agents that search different angles in parallel, each exploring its own slice of the question before reporting back.",
+      "Anthropic reported that this multi-agent setup outperformed a single agent on its internal research evaluation by a wide margin — but it also noted the system burned through far more tokens, the units of text a model processes and is billed on, roughly fifteen times more than a normal chat.",
+      "Their stated takeaway was blunt: the approach pays off only for high-value tasks that genuinely parallelise, because the token cost makes it wasteful elsewhere — and these figures are their illustrative findings, not a universal rule."
+    ],
+    "bridge": "That is the whole lesson in one real system: orchestrator-and-workers and fan-out beat a lone agent on big, separable research, yet the steep token bill is exactly why you reserve the crew for work that earns it."
+  },
+  "takeaways": [
+    "Multi-agent means several agents on one job, usually with narrower roles — it is a tool for specific shapes of work, not a default upgrade.",
+    "Four shapes earn their keep: fan-out in parallel, specialist roles, an orchestrator delegating to workers, and a critic or judge panel that reviews the rest.",
+    "A separate critic beats self-review because fresh context catches mistakes the doer, reasoning from the same context, waves through.",
+    "Every extra agent multiplies cost, latency, and failure modes — reach for more agents only when work parallelises, a specialist clearly wins, or you need an independent reviewer."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which situation is the strongest reason to move from one agent to a multi-agent setup?",
+      "options": [
+        {
+          "text": "The work splits into independent parts that can run in parallel, or it needs an independent reviewer the doer cannot be",
+          "correct": true
+        },
+        {
+          "text": "The task is a single tight sequence of dependent steps with no separable parts",
+          "correct": false
+        },
+        {
+          "text": "You want the result to feel more impressive by using a larger crew of agents",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — multi-agent pays off when the work genuinely parallelises or needs a separate critic; a single dependent sequence just adds coordination overhead for nothing."
+    },
+    {
+      "q": "Why does a separate critic agent tend to catch more errors than asking the same agent to double-check its own work?",
+      "options": [
+        {
+          "text": "The critic starts from a clean context and judges the output on its own terms, instead of reasoning from the same context that produced the mistake",
+          "correct": true
+        },
+        {
+          "text": "The critic is always a larger, smarter model than the agent that did the work",
+          "correct": false
+        },
+        {
+          "text": "Self-review is impossible because an agent cannot read its own output",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — an agent grading itself reasons from the same context that caused the error and tends to wave it through; a separate critic with fresh context and a narrower 'find what is wrong' job catches more."
+    },
+    {
+      "q": "What did Anthropic's 2025 multi-agent research system show about the trade-off?",
+      "options": [
+        {
+          "text": "Orchestrator-and-worker agents beat a single agent on hard, parallelisable research, but used far more tokens — so it is worth it only for high-value tasks that genuinely split up",
+          "correct": true
+        },
+        {
+          "text": "Multiple agents were both cheaper and faster than one agent on every kind of task",
+          "correct": false
+        },
+        {
+          "text": "A single agent always matched the multi-agent system, so the extra agents were pointless everywhere",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the multi-agent setup outperformed a lone agent on big research questions but burned roughly fifteen times the tokens, which is why Anthropic reserved it for high-value, separable work rather than everything."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — How we built our multi-agent research system (2025)",
+      "url": "https://www.anthropic.com/engineering/built-multi-agent-research-system"
+    },
+    {
+      "label": "Anthropic — Building effective agents (patterns: parallelisation, orchestrator-workers, evaluator-optimizer)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "OpenAI — A practical guide to building agents",
+      "url": "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf"
+    }
+  ]
+}

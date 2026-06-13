@@ -1,0 +1,186 @@
+{
+  "coreIdea": "Styling a real product at scale is less about choosing colours and more about choosing a system — a shared set of reusable tokens and a layout that adapts itself from phone to desktop — so a hundred screens stay consistent without a hundred people re-deciding the same things.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "On one small page, styling is just `CSS` — the language that controls colours, fonts, and spacing.",
+    "On a real product with hundreds of screens and dozens of engineers, the hard part is not making one button look good — it is making every button look the same.",
+    "So teams stop styling page-by-page and start building a system: a single shared library of colours, spacing, and type that the whole product pulls from.",
+    "And because people view that product on a tiny phone and a wide monitor, one layout has to quietly rearrange itself to fit any screen.",
+    "This lesson is about those three moves — how UIs get styled, made consistent, and made to fit every device — at the level of ideas, not the exact `CSS` syntax."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like a brand style guide for a magazine",
+    "body": [
+      "A big magazine doesn't let each writer pick their own fonts and colours — it has a style guide that says \"headlines are this font, body text is this size, the brand red is exactly this red.\"",
+      "A design system is that style guide turned into code: a single source the whole product reads from, so every page is automatically on-brand without anyone re-deciding.",
+      "Where the metaphor bends: a printed magazine is one fixed page size, but a UI must also reflow itself to fit a phone, a tablet, and a desktop — a job no paper style guide ever has to do."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Three ways to write the styling",
+      "teaser": "Plain CSS, utility classes, or CSS-in-JS — same goal, different trade-offs",
+      "body": [
+        "There are three common approaches to writing styles, and they all produce the same kind of result — they differ in where the styling lives and how you reuse it.",
+        "Plain `CSS` means writing style rules in separate `.css` files and pointing them at parts of the page; it is the original, browser-native way and needs nothing installed.",
+        "Utility classes (the popular tool here is `Tailwind CSS`) give you tiny pre-made building blocks — one for \"add medium padding,\" one for \"make text bold\" — and you snap them together right on the element instead of writing rules elsewhere.",
+        "`CSS-in-JS` means writing the styles inside your `JavaScript` component code (tools like `styled-components` or `Emotion`), so a component carries its own look bundled with its behaviour.",
+        "The trade-off is roughly: plain `CSS` is simplest but can sprawl into a tangle on big teams; utility classes are fast and consistent but make the markup look busy; `CSS-in-JS` keeps a component self-contained but adds tooling and can cost a little performance.",
+        "There is no single right answer — the choice is about how a team prefers to keep large amounts of styling organised, not about what users see."
+      ]
+    },
+    {
+      "title": "Design systems and design tokens",
+      "teaser": "Naming your colours and spacing once, so the whole product agrees",
+      "body": [
+        "A design system is the shared library of reusable styles and components a product is built from — its buttons, its colours, its spacing rules — defined once and used everywhere.",
+        "At its heart are design tokens: named values for the small decisions, like `color-primary` instead of a raw code like `#0A5BFF`, or `space-4` instead of \"16 pixels.\"",
+        "The point of a token is the name: every screen refers to `color-primary`, so nobody hard-codes a slightly-different blue, and the product stays visually consistent.",
+        "It also makes change cheap — switch the value behind `color-primary` once and every button, link, and badge across the whole product updates at the same time.",
+        "This is exactly how a brand refresh or a dark mode ships without editing a thousand files: you change the tokens, not the screens.",
+        "Tokens are also why a design tool like `Figma` and the live code can stay in sync — both sides agree to speak in the same named values."
+      ]
+    },
+    {
+      "title": "Responsive design: one layout, every screen",
+      "teaser": "The page reflows itself instead of you building three separate sites",
+      "body": [
+        "Responsive design means a single layout that adapts to the size of the screen it lands on — phone, tablet, or desktop — rather than shipping a separate site for each.",
+        "The tool underneath is the `media query`: a `CSS` rule that says \"when the screen is at least this wide, lay things out this way instead.\"",
+        "A common pattern is mobile-first: design for the small screen first, then add rules that progressively use the extra room on bigger screens.",
+        "So a row of product cards might stack into a single column on a phone, sit two-across on a tablet, and spread four-across on a desktop — same content, rearranged to fit.",
+        "The widths where the layout changes are called breakpoints — the screen sizes at which the design switches from one arrangement to the next.",
+        "Done well, you never notice it; the page just feels native on whatever you're holding, which is the whole point."
+      ]
+    },
+    {
+      "title": "Why this is a systems problem, not a paint job",
+      "teaser": "Consistency and change-cost are the real prize",
+      "body": [
+        "It is tempting to treat styling as decoration you add at the end, but at scale it is an engineering and product problem.",
+        "Without a system, every new screen quietly re-invents its own buttons and spacing, and the product slowly drifts into looking like five products stitched together.",
+        "With a system, consistency is the default and a designer's change to a token ripples out everywhere automatically — fast to ship, hard to get wrong.",
+        "Responsive rules live in that same system, so \"does this work on mobile?\" stops being a per-screen scramble and becomes a built-in guarantee.",
+        "Accessibility — making the product usable for people with disabilities — also rides along here, because the system can bake in readable contrast and sizing once; that is its own deep topic, covered later in the track.",
+        "The payoff of all three moves is the same: less re-deciding, more consistency, and changes that cost a line instead of a week."
+      ]
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "css",
+      "label": "A design token defined once, then reused",
+      "source": ":root {\n  --color-primary: #0a5bff;\n}\nbutton {\n  background: var(--color-primary);\n}"
+    },
+    {
+      "language": "css",
+      "label": "A media query: rearrange on wider screens",
+      "source": ".cards { display: block; }\n@media (min-width: 768px) {\n  .cards { display: grid; grid-template-columns: 1fr 1fr; }\n}"
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "design system",
+      "def": "A shared library of reusable styles and components — buttons, colours, spacing, type — defined once so an entire product stays consistent without each screen re-deciding the look."
+    },
+    {
+      "term": "design token",
+      "def": "A named value for a styling decision, like `color-primary` or `space-4`, used in place of a raw code so the whole product refers to the same colour or spacing — and changing it in one place updates everywhere."
+    },
+    {
+      "term": "utility classes",
+      "def": "Tiny pre-made styling building blocks (popularised by `Tailwind CSS`) snapped together directly on an element — one adds padding, one makes text bold — instead of writing rules in a separate file."
+    },
+    {
+      "term": "CSS-in-JS",
+      "def": "Writing styles inside a component's `JavaScript` code (tools like `styled-components`) so the component carries its own look bundled with its behaviour."
+    },
+    {
+      "term": "responsive design",
+      "def": "Building one layout that adapts to the screen it lands on — phone, tablet, or desktop — instead of building a separate site for each device."
+    },
+    {
+      "term": "breakpoint",
+      "def": "A screen width at which a responsive layout switches from one arrangement to another — for example, cards stacking on a phone but sitting side by side once the screen is wide enough."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "A design system is a product decision dressed as a styling one: it trades some up-front cost for consistency and far cheaper changes later, so a rebrand or dark mode becomes a token swap, not a quarter of rework.",
+      "When you ask \"can we make this consistent across the app?\" or \"why does our product feel slightly off-brand?\", the answer is almost always whether a design system and tokens exist — and whether teams actually use them instead of one-off styles.",
+      "Responsive design is the difference between a feature that works for the half of your users on phones and one that quietly doesn't — so \"is this responsive?\" belongs in the definition of done, not the polish phase."
+    ]
+  },
+  "caseStudy": {
+    "title": "Airbnb's Design Language System (DLS)",
+    "body": [
+      "By 2016 Airbnb's apps had drifted — screens built by different teams used subtly different buttons, spacing, and colours, so the product felt inconsistent across iOS, Android, and web.",
+      "The company built a single Design Language System: a shared library of named components and tokens that every platform draws from, so a card or a button means the same thing everywhere.",
+      "Because the system is defined once, a change to a shared token propagates across the whole product instead of being re-done screen by screen.",
+      "Airbnb credited the DLS with letting teams ship new screens far faster while staying visually consistent — and the approach became one of the most-cited examples of design systems at scale."
+    ],
+    "bridge": "Airbnb's DLS is the magazine style guide made real — one shared source of tokens and components — which is exactly what keeps a large product consistent and cheap to change."
+  },
+  "takeaways": [
+    "Styling can be written as plain `CSS`, utility classes (`Tailwind`), or `CSS-in-JS` — same result, different ways to keep large amounts of styling organised.",
+    "A design system is a shared library of reusable styles and components, with design tokens (named values like `color-primary`) at its core so the whole product stays consistent.",
+    "Because tokens are referenced by name, changing one value updates the product everywhere at once — which is how rebrands and dark mode ship cheaply.",
+    "Responsive design is one layout that reflows from phone to desktop using breakpoints, so a single build feels native on every screen."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A product has a design token called `color-primary`, used by every button and link. The brand colour needs to change across the whole app. What makes this cheap?",
+      "options": [
+        {
+          "text": "You change the single value behind `color-primary`, and everything that references it updates at once",
+          "correct": true
+        },
+        {
+          "text": "You search every screen and manually replace the old colour code wherever it appears",
+          "correct": false
+        },
+        {
+          "text": "You rebuild each page from scratch so the new colour is baked in",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a token is referenced by name, so updating the one value behind `color-primary` ripples out everywhere automatically. That is the whole point of tokens."
+    },
+    {
+      "q": "What problem is a design system primarily built to solve?",
+      "options": [
+        {
+          "text": "Keeping a large product visually consistent so every screen reuses the same buttons, colours, and spacing instead of re-inventing them",
+          "correct": true
+        },
+        {
+          "text": "Making a single web page load faster by shrinking its images",
+          "correct": false
+        },
+        {
+          "text": "Letting the browser display HTML without any CSS at all",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a design system is a shared library of reusable styles and components, so consistency becomes the default and screens stop re-deciding the same things."
+    },
+    {
+      "q": "A page shows product cards in one column on a phone but four across on a desktop, from the same code. Which idea makes that happen?",
+      "options": [
+        {
+          "text": "Responsive design — the layout adapts to the screen width using breakpoints",
+          "correct": true
+        },
+        {
+          "text": "A design token — a named value swapped for the colour of the cards",
+          "correct": false
+        },
+        {
+          "text": "CSS-in-JS — styles written inside the JavaScript component",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — responsive design uses breakpoints (screen widths where the layout switches) so one build reflows from a single column on a phone to four across on a desktop."
+    }
+  ]
+}

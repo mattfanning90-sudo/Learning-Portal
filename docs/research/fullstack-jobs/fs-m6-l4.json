@@ -1,0 +1,175 @@
+{
+  "coreIdea": "Teams keep separate copies of their system — `development`, `staging`, and `production` — and walk each change through them in order, so problems surface on a rehearsal stage before they reach real users; and because some bad change always slips through anyway, the real safety net isn't avoiding failure but being able to undo it fast — by `rolling back` to the last good version, or flipping a `feature flag` off without redeploying at all.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "The same software usually runs in more than one place at once, and those places are deliberately kept separate.",
+    "There's the version on a developer's own machine where they build and break things freely, a rehearsal copy where the team tests changes safely, and the live system that real customers actually use.",
+    "A change doesn't jump straight from a laptop to customers — it's `promoted` step by step through those copies, so each one is a checkpoint that can catch problems before the next.",
+    "But no amount of checking catches everything, so the question that really matters isn't \"how do we never ship a bug?\" — it's \"when we ship one, how fast can we undo it?\"",
+    "This lesson is about that undo: the practice of `rolling back` a bad release to the last version that worked, and `feature flags`, a switch that lets you turn a feature off in seconds without shipping new code at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of staging a theatre production. You rehearse in an empty hall (development), then run a full dress rehearsal in front of a small invited audience (staging), and only then open to a paying crowd on opening night (production) — each stage is a chance to catch a fluffed line before the people who matter are watching.",
+      "A rollback is the understudy ready in the wings: the moment the lead forgets their lines on opening night, you don't cancel the show, you swap in the version you know works and keep going.",
+      "A feature flag is a stage light on a dimmer switch — you can kill a scene that's going badly instantly, from the booth, without stopping the whole play or rebuilding the set.",
+      "Where the metaphor bends: a play runs once a night, but software ships constantly — a big team may promote changes to production many times a day, so these safety nets aren't a special occasion, they're the everyday machinery."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why separate environments exist, and why changes walk through them in order",
+      "teaser": "Each copy is a checkpoint between a laptop and a customer",
+      "body": [
+        "An `environment` is a complete, running copy of your system set up for a particular purpose — same code, but its own settings and its own data.",
+        "`Development` is where an engineer builds: it runs on their laptop, uses fake throwaway data, and it's fine to break it because no customer is watching.",
+        "`Staging` is a rehearsal copy built to mirror production as closely as possible — same setup, realistic (but not real-customer) data — so it's the last place a change can fail without consequences.",
+        "`Production` is the live system real users touch; a mistake here costs money, trust, or both, which is exactly why nothing reaches it untested.",
+        "To `promote` a change means to move it up to the next environment — development to staging, then staging to production — and at each step it's checked again before going further.",
+        "The whole point is to separate \"breaking things\" from \"breaking things in front of customers\": every environment you pass through is a chance to catch a problem while it's still cheap to fix. (Module 5 covered *how* the same code points at different databases and secrets in each place; here we care about the journey between them.)"
+      ]
+    },
+    {
+      "title": "A deploy is a moment of risk — which is why rollbacks exist",
+      "teaser": "Shipping new code is the most likely time to break production",
+      "body": [
+        "A `deploy` (short for deployment) is the act of putting a new version of your code onto a running environment so it takes effect — most tensely, onto production, where it immediately starts serving real users.",
+        "Statistically, the moment you deploy is when production is most likely to break: you've just changed the thing that was working, so a deploy is the single riskiest routine event in running software.",
+        "A `rollback` is the planned escape hatch: switching production back to the previous version that you know worked, undoing the deploy that caused the trouble.",
+        "It works because the old version doesn't get thrown away when you deploy a new one — it's kept, ready to be made live again in seconds, like keeping last night's working backup within arm's reach.",
+        "A rollback is deliberately blunt: it doesn't diagnose or fix the bug, it just stops the bleeding by returning to known-good, and you investigate calmly afterward with no customers affected.",
+        "Note one limit: rolling back the *code* is fast, but if the bad version already changed the shape of the database or sent emails to customers, you can't always un-ring that bell — which is why teams are extra careful with changes that touch stored data."
+      ]
+    },
+    {
+      "title": "Fast undo beats never failing",
+      "teaser": "Measure recovery time, not just failure rate",
+      "body": [
+        "It's tempting to aim for deploys that never break, but past a point that's a losing game — the cost of catching the last 1% of bugs grows enormous, and you still won't catch them all.",
+        "The more useful goal is a short time-to-recover: if a bad deploy can be undone in two minutes, a failure becomes a small blip instead of an outage.",
+        "The research backs this up. A long-running industry study called `DORA` (DevOps Research and Assessment) found the best teams aren't the ones that fail least — they're the ones that deploy often *and* recover from failures fastest.",
+        "Counter-intuitively, teams that deploy more frequently tend to be *more* stable, because each deploy is small, so when one breaks it's obvious which change did it and trivial to roll back.",
+        "Big, rare deploys are the dangerous ones: a hundred changes bundled together means that when something breaks, you've no idea which change broke it, and rolling back throws away ninety-nine good changes to undo one bad one.",
+        "So \"ship small, ship often, and make undo instant\" is safer than \"ship rarely and pray\" — the safety comes from fast recovery, not from a fragile hope of never failing."
+      ]
+    },
+    {
+      "title": "Feature flags: turning things on and off without shipping code",
+      "teaser": "Separate 'deployed' from 'switched on'",
+      "body": [
+        "A `feature flag` (also called a feature toggle) is a switch in your running code, controlled from outside it, that turns a piece of functionality on or off without deploying anything new.",
+        "The trick is that it separates two ideas people usually conflate: `deploying` code (putting it on the server) and `releasing` a feature (letting users actually see it) become independent acts.",
+        "So you can ship the code for a new checkout flow to production with the flag off — it's sitting there, live but invisible — then flip it on for everyone the moment marketing is ready, with no new deploy.",
+        "This gives you a far faster undo than a rollback: if the new feature misbehaves, you flip its flag off in seconds, instantly hiding it for everyone, while the rest of that deploy stays untouched.",
+        "Flags also enable a `canary release` — turning a feature on for just 1% of users first (named after the canary in a coal mine), watching for trouble, then widening to everyone only if it's healthy.",
+        "The catch: every flag is a fork in the road that doubles what you must test and remember, so old flags must be cleaned up — a codebase littered with forgotten toggles becomes a tangle nobody dares touch."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "environment",
+      "def": "A complete, running copy of your system set up for one purpose — development (a developer's laptop), staging (a rehearsal copy that mirrors production), and production (the live system real users touch) — running the same code but with its own settings and data."
+    },
+    {
+      "term": "promote",
+      "def": "To move a change up to the next environment in the chain — development to staging, then staging to production — with a check at each step, so problems are caught on a rehearsal stage before reaching customers."
+    },
+    {
+      "term": "deploy (deployment)",
+      "def": "The act of putting a new version of your code onto a running environment so it takes effect. A production deploy is the riskiest routine event in running software, because you've just changed the thing that was working."
+    },
+    {
+      "term": "rollback",
+      "def": "Switching production back to the previous version you know worked, undoing a bad deploy. It's a blunt instrument — it stops the damage by returning to known-good rather than diagnosing the bug, which you investigate afterward."
+    },
+    {
+      "term": "feature flag (feature toggle)",
+      "def": "A switch in your running code, controlled from outside it, that turns a feature on or off without deploying anything new — separating shipping the code from releasing the feature, and giving you a near-instant undo."
+    },
+    {
+      "term": "canary release",
+      "def": "Turning a new feature on for a small slice of users first (often around 1%), watching for trouble, and only widening to everyone if it stays healthy — named after the canary that warned miners of danger before it reached them."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The most important reliability number you own isn't \"how often do we break production?\" — it's \"how fast can we recover when we do?\", because a two-minute rollback turns an outage into a non-event while a two-hour one turns a small bug into a headline.",
+      "Feature flags hand you, the product owner, a steering wheel that used to belong only to engineers: you can decide *when* a finished feature goes live, dark-launch it to ship code ahead of a marketing date, roll it out to 1% of users first, or kill it instantly if it tanks a metric — all without waiting for a deploy.",
+      "But flags and environments aren't free: a staging environment that mirrors production costs real money to run, and every feature flag you leave switched on forever becomes hidden complexity and testing burden, so part of owning this is insisting that stale flags get cleaned up rather than quietly accumulating."
+    ]
+  },
+  "caseStudy": {
+    "title": "Knight Capital's $440M deploy with no undo (2012)",
+    "body": [
+      "Knight Capital was one of the largest stock-trading firms in the United States, handling a huge share of daily US share volume through automated trading software.",
+      "On 1 August 2012 it deployed new trading code to its production servers — but the update was applied to only seven of its eight servers, and an old, dormant piece of code was accidentally reactivated on the one that was missed.",
+      "When markets opened, that one server began firing millions of unintended orders into the market; the firm had no fast, rehearsed way to flip the bad behaviour off or roll cleanly back, and engineers spent roughly 45 frantic minutes trying to understand what was happening while the orders kept flowing.",
+      "In about 45 minutes Knight lost around $440 million — more than its entire annual profit — and the 17-year-old firm was effectively destroyed, sold off within days."
+    ],
+    "bridge": "Knight's deploy went wrong in a mundane way that every team faces — an inconsistent rollout — but what turned a bug into a fatal one was the absence of a fast, rehearsed undo, which is exactly what rollbacks and feature flags are built to provide."
+  },
+  "takeaways": [
+    "Teams keep development, staging, and production as separate copies and promote changes through them in order, so each environment is a checkpoint that catches problems before they reach real users.",
+    "A deploy is the riskiest routine moment in running software, so a rollback — switching production back to the last known-good version — is the essential escape hatch; it stops the damage rather than diagnosing the bug.",
+    "Fast recovery beats never failing: industry research (DORA) shows the best teams deploy often in small batches and recover quickly, because small deploys make failures obvious and trivial to undo.",
+    "Feature flags turn a feature on or off without a new deploy — separating 'deployed' from 'released' — giving a near-instant undo and enabling canary releases to a small slice of users, as long as stale flags get cleaned up."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A team runs separate development, staging, and production environments and promotes every change through them in order. Why go to that trouble instead of just deploying straight to production?",
+      "options": [
+        {
+          "text": "Each environment is a checkpoint that can catch a problem while it's still cheap to fix — so a bad change is far more likely to surface on a rehearsal copy than in front of real customers",
+          "correct": true
+        },
+        {
+          "text": "Running three copies makes the production system faster, because the work is spread across development and staging as well",
+          "correct": false
+        },
+        {
+          "text": "Production can only run code that has been physically copied from staging, so the chain is a technical requirement with no choice involved",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the point of separate environments is to separate 'breaking things' from 'breaking things in front of customers.' Promoting a change through development, then staging, then production means each step is a chance to catch a problem while it's still cheap to fix, rather than letting it land on real users. It's about catching problems early, not about speed or a technical requirement."
+    },
+    {
+      "q": "A team can't seem to stop the occasional bad deploy from reaching production. According to research like DORA, what's the more realistic goal to aim for?",
+      "options": [
+        {
+          "text": "Make recovery fast — deploy in small, frequent batches so a failure is obvious and can be rolled back in minutes, turning an outage into a blip",
+          "correct": true
+        },
+        {
+          "text": "Deploy much less often, bundling many changes into rare, heavily-tested releases so failures almost never happen",
+          "correct": false
+        },
+        {
+          "text": "Accept that failures are inevitable and stop measuring reliability altogether, since nothing can be done about it",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the most useful goal is a short time-to-recover, not a fragile hope of never failing. DORA found the best teams deploy often in small batches *and* recover fastest: small deploys make it obvious which change broke things and trivial to roll back. Big, rare deploys are the dangerous ones, because a hundred bundled changes hide which one failed."
+    },
+    {
+      "q": "A new checkout flow has been deployed to production behind a feature flag that is currently switched off. Marketing wants it live tomorrow, but if it misbehaves the team needs to hide it instantly. How does the feature flag help here?",
+      "options": [
+        {
+          "text": "The code is already live but invisible; they flip the flag on tomorrow with no new deploy, and if it misbehaves they flip it off in seconds — hiding it for everyone while the rest of the deploy stays untouched",
+          "correct": true
+        },
+        {
+          "text": "The flag automatically fixes any bugs in the new checkout flow before they can affect users, so no manual action is ever needed",
+          "correct": false
+        },
+        {
+          "text": "Turning the flag on or off requires a full redeploy each time, so it's really just a slower version of a normal release",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a feature flag separates deploying the code from releasing the feature. The checkout flow can sit in production switched off, get flipped on the moment marketing is ready with no new deploy, and be flipped off again in seconds if it misbehaves — a faster undo than a rollback, and it leaves the rest of the deploy untouched. A flag is a switch, not an automatic bug-fixer."
+    }
+  ]
+}

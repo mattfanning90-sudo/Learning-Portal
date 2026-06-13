@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Automated tests are small programs that check your real program still does what it should — and they are what let you change code without fear, because the moment you break something, a test tells you instantly instead of a customer finding out in production.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Every time you change software, you risk breaking something that used to work — often somewhere far away from the line you touched.",
+    "An `automated test` is a little piece of code whose only job is to run part of your real program and check it gives the right answer.",
+    "You write these tests once, then a single command runs hundreds or thousands of them in seconds, every time you make a change.",
+    "If you accidentally break something, a test goes red and points at exactly what failed — so you find out in seconds, not when an angry customer calls.",
+    "That safety net is the real payoff: tests don't just catch bugs, they give you the confidence to keep changing code without being terrified you've quietly broken something."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of automated tests like the smoke detectors wired through a building: you don't notice them on a normal day, but the instant something starts to burn, the nearest one screams and tells you which room.",
+      "Without them you'd only discover the fire once it had spread — in software terms, once a customer hit the broken feature; with them, you get a loud, specific warning the moment you make the mistake, while it's still cheap to fix.",
+      "Where the metaphor breaks: a smoke detector only warns about fire, while a good test suite also acts as living documentation — read the tests and you learn exactly what the program is *supposed* to do, which no smoke detector will ever tell you."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why automated tests exist: changing code without fear",
+      "teaser": "The point isn't catching bugs — it's the confidence to change things",
+      "body": [
+        "Software is never finished; you're always adding features, fixing bugs, and reshaping old code, and every one of those changes can break something that used to work.",
+        "A break far from where you typed is called a `regression` — the code *regressed*, slipping backward to a broken state, often in a feature you never touched.",
+        "Without tests, the only way to catch a regression is to manually click through the whole app after every change, which is slow, boring, and something humans quietly stop doing.",
+        "An `automated test` runs that check for you in milliseconds, so a full sweep of the program happens on every change instead of never.",
+        "This is what people mean by a `safety net`: when you can change one thing and instantly confirm you broke nothing else, you stop being afraid to improve the code.",
+        "That fearlessness is the real prize — it's what lets a team `refactor` (rewrite code to be cleaner without changing what it does) and ship fast, instead of treating the codebase as a minefield no one dares touch."
+      ]
+    },
+    {
+      "title": "The three layers: unit, integration, end-to-end",
+      "teaser": "Same goal — checking your code — at three different zoom levels",
+      "body": [
+        "Tests come in layers that differ by how much of the program each one exercises at once.",
+        "A `unit test` checks one small piece in isolation — a single function, like \"does `calculateTax(100)` return `10`?\" — with everything around it faked out, so it runs in a millisecond and, when it fails, points at exactly one place.",
+        "An `integration test` checks that several pieces work together correctly — for example, that your code can actually save a record to the database and read it back — so it's slower because it touches real moving parts.",
+        "An `end-to-end test` (often `E2E`) drives the whole assembled app the way a user would: it opens a real browser, types into the login form, clicks submit, and checks the dashboard appears.",
+        "End-to-end tests give the most realistic confidence because they exercise everything at once — but they're slow (seconds each), and when one fails it only tells you *something* in a long chain broke, not *which* link.",
+        "So the layers trade off the same two things in opposite directions: the wider a test reaches, the more realistic the confidence it buys — and the slower and vaguer it is when it fails."
+      ]
+    },
+    {
+      "title": "The pyramid: many fast tests at the bottom, few slow ones on top",
+      "teaser": "A shape that tells you how many of each kind to write",
+      "body": [
+        "The `testing pyramid` is a rule of thumb for the *mix* of tests: lots of unit tests, a moderate number of integration tests, and only a handful of end-to-end tests.",
+        "Draw it as a triangle — a wide base of cheap, fast unit tests, a narrower middle of integration tests, and a thin tip of slow end-to-end tests.",
+        "The logic is economic: unit tests are so fast and pinpoint-accurate that you can afford thousands of them, so push as much checking as possible down to that cheap base.",
+        "End-to-end tests are slow and brittle — a tiny layout change can make one fail for no real reason — so you keep just enough to confirm the critical paths (sign up, pay, check out) actually work end to end.",
+        "The classic anti-pattern is the `ice-cream cone`: the pyramid flipped upside down, with a few unit tests and a huge pile of slow end-to-end ones, giving you a test run that takes an hour and fails for mysterious reasons.",
+        "These numbers are illustrative, but the shape is the lesson: most of your checking should be fast and specific, with only a thin layer of slow, whole-system tests on top."
+      ]
+    },
+    {
+      "title": "What makes a test actually good",
+      "teaser": "A bad test wastes time; a good one earns its keep",
+      "body": [
+        "A good test is `fast`: a unit test that takes a millisecond can run thousands of times a day, while a slow one quietly gets skipped.",
+        "It's `reliable` — it passes when the code is right and fails only when the code is genuinely broken; a test that randomly fails for no reason is called `flaky`, and flaky tests are poison because the team learns to ignore red.",
+        "It's `clear` about failure: when it breaks, the message should tell you what was expected, what actually happened, and roughly where — so the test does the detective work, not you.",
+        "It checks *behaviour, not wiring*: a good test asserts \"the total is `$110` after tax,\" not \"the code called the tax function in this exact order\" — so you can rewrite the internals freely as long as the result stays correct.",
+        "Some teams take this further with `test-driven development` (TDD): you write the failing test *first*, describing what the code should do, then write just enough code to make it pass — turning tests into a design tool, not just a check at the end.",
+        "Finally, good tests are independent: each one sets up its own world and cleans up after itself, so they can run in any order and one failure doesn't cascade into a dozen misleading ones."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "automated test",
+      "def": "A small program that runs part of your real program and checks it produces the expected result, automatically and in a fraction of a second. Written once, then re-run on every change to catch anything you've broken."
+    },
+    {
+      "term": "regression",
+      "def": "When a change quietly breaks something that used to work — the code 'regresses' to a broken state, often in a feature you never even touched. Catching regressions early is the main job of a test suite."
+    },
+    {
+      "term": "unit test",
+      "def": "A test that checks one small piece of code (like a single function) in isolation, with everything around it faked out. Fast, and when it fails it points at exactly one place."
+    },
+    {
+      "term": "integration test",
+      "def": "A test that checks several pieces working together — for example, that your code can really save to and read from the database. Slower than a unit test because it touches real moving parts."
+    },
+    {
+      "term": "end-to-end test (E2E)",
+      "def": "A test that drives the whole assembled app the way a user would — opening a browser, clicking through a flow, and checking the result. The most realistic confidence, but slow and the vaguest about what broke."
+    },
+    {
+      "term": "testing pyramid",
+      "def": "A rule of thumb for the mix of tests: a wide base of many fast unit tests, a middle of integration tests, and only a thin top of slow end-to-end tests — so most checking is cheap and pinpoint-accurate."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Tests are the lever that decides how fast a team can safely ship: a strong suite means an engineer can change code, get a green light in seconds, and release with confidence — while a weak one means every release is a nervous manual click-through that slows everyone down.",
+      "The trade-off you own is coverage versus speed and effort: writing and running tests costs real time up front, but the bill for skipping them arrives later as production incidents, emergency hotfixes, and a codebase nobody dares to touch — so 'do we have time to write tests?' is really 'do we want the cost now or much larger later?'",
+      "Two practical health signals are worth watching: how long the test suite takes to run (a 40-minute suite is a hidden tax on every change) and how flaky it is (a suite the team has learned to ignore is worse than no suite, because red no longer means stop) — and note the tests themselves are usually run automatically on every change by the CI pipeline covered in Module 6."
+    ]
+  },
+  "caseStudy": {
+    "title": "Knight Capital loses $440M in 45 minutes (2012)",
+    "body": [
+      "Knight Capital was a major US stock-trading firm that handled a large share of the trading on the New York Stock Exchange.",
+      "On 1 August 2012 it deployed new trading software, but the update wasn't installed correctly on one of its eight servers — and that server began running old, leftover code that was never meant to go live.",
+      "With no automated safeguard to catch the mismatch, the rogue server fired off millions of unintended orders into the live market, buying high and selling low at machine speed.",
+      "In roughly 45 minutes Knight racked up about $440 million in losses — more than the company was worth — and within days it had to be rescued and was effectively finished as an independent firm."
+    ],
+    "bridge": "Knight is an extreme case, but it's the same lesson at full volume: untested changes shipped straight to production can fail catastrophically, while automated tests exist precisely to catch a broken change before it ever reaches a live customer."
+  },
+  "takeaways": [
+    "The point of automated tests isn't just catching bugs — it's the confidence to change and improve code without fear, because anything you break lights up instantly instead of in production.",
+    "Tests come in three layers by zoom level: unit (one small piece, fast and pinpoint), integration (pieces working together), and end-to-end (the whole app driven like a user, realistic but slow and vague).",
+    "The testing pyramid says write many fast unit tests, fewer integration tests, and only a thin top of slow end-to-end ones — and avoid the upside-down 'ice-cream cone' of mostly slow tests.",
+    "A good test is fast, reliable (not flaky), clear about what failed, and checks behaviour rather than internal wiring — and writing the test first (TDD) turns it into a design tool, not an afterthought."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your team writes many tiny unit tests, a moderate number of integration tests, and only a handful of slow end-to-end tests. Why is that mix — the 'testing pyramid' — the recommended shape?",
+      "options": [
+        {
+          "text": "Unit tests are fast and point at exactly what broke, so you can afford thousands of them as a cheap base; end-to-end tests are slow and vague about failures, so you keep just enough to confirm the critical user paths work",
+          "correct": true
+        },
+        {
+          "text": "End-to-end tests are the only ones that find real bugs, so the small number you write should each be made as slow and thorough as possible",
+          "correct": false
+        },
+        {
+          "text": "The pyramid simply means writing the same number of every kind of test, since all three layers are equally fast and equally precise",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the pyramid is an economic call. Unit tests are so fast and so precise about what failed that you push most of your checking down to that cheap, wide base, and keep only a thin top of slow, brittle end-to-end tests to confirm the few critical flows actually work end to end. Flipping that (mostly slow tests) is the 'ice-cream cone' anti-pattern."
+    },
+    {
+      "q": "An engineer wants to refactor — rewrite a messy part of the code to be cleaner, without changing what it does for users. How does a good automated test suite change what that's like?",
+      "options": [
+        {
+          "text": "It's a safety net: the engineer can rewrite the internals, then run the suite in seconds, and any regression — something that used to work now broken — lights up immediately instead of reaching a customer",
+          "correct": true
+        },
+        {
+          "text": "It makes refactoring impossible, because the tests are locked to the old code and will fail the moment any line is changed",
+          "correct": false
+        },
+        {
+          "text": "It has no effect on refactoring, since tests only help when you're adding brand-new features, not when reshaping existing ones",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is the whole point of tests. A good suite checks *behaviour*, not internal wiring, so you're free to rewrite the internals as long as the results stay correct. Run it after the rewrite and any regression surfaces in seconds, which is exactly the confidence that lets teams improve code instead of fearing it."
+    },
+    {
+      "q": "One test in your suite passes some runs and fails others even though nobody changed the code. What is this called, and why does it actually matter?",
+      "options": [
+        {
+          "text": "It's a 'flaky' test, and it's poison because the team stops trusting red — once failures are sometimes meaningless, people start ignoring all of them, and a real break slips through",
+          "correct": true
+        },
+        {
+          "text": "It's a normal, healthy sign that the test is working hard, and flaky tests should be left alone because they catch the most bugs",
+          "correct": false
+        },
+        {
+          "text": "It's an end-to-end test by definition, since only end-to-end tests can ever pass and fail without a code change",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a test that randomly passes and fails without a code change is 'flaky,' and it quietly destroys the value of the whole suite. A good test fails only when the code is genuinely broken; once red stops reliably meaning 'stop,' the team learns to ignore it, which is worse than having no test at all."
+    }
+  ]
+}

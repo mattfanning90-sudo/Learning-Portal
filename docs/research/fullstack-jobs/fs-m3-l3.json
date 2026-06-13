@@ -1,0 +1,173 @@
+{
+  "coreIdea": "When a request arrives, the server runs it down an assembly line: routing matches the URL and verb to the right code, middleware runs shared steps in order (logging, parsing, auth checks), and the handler does the real work and builds the response.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "In the last lesson, a request reached the server and the API said which operations exist.",
+    "This lesson is about what happens in the seconds after a request lands — the journey it takes inside the server.",
+    "That journey is a pipeline: a fixed sequence of steps the request passes through, in order, before an answer comes back.",
+    "Three stages do almost all the work — `routing` (which code should handle this?), `middleware` (shared steps every request needs), and the `handler` (the code that actually does the job and writes the reply).",
+    "Once you can see those three stages, a backend stops being a black box — you can point at exactly where a request is when something goes wrong."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a request as a parcel arriving at a sorting depot. First a sorter reads the label and decides which lane it belongs in — that is `routing`.",
+      "Before the parcel reaches its lane it passes a row of checkpoints every parcel must clear: weighed, scanned, stamped, and checked it is allowed through — that is `middleware`, running in a fixed order.",
+      "Then it reaches the one worker assigned to parcels like this, who opens it, does the task, and packs the reply — that is the `handler`. Where the metaphor bends: a real parcel is physical and one-way, but a request can be turned back at any checkpoint and sent home with an error before it ever reaches a worker."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Routing: matching the request to the right code",
+      "teaser": "Read the address and the verb, pick the handler",
+      "body": [
+        "`Routing` is the server's first decision: given this request, which piece of my code should run?",
+        "It answers that by looking at two things you already met — the `URL` (the web address, like `/orders/17`) and the HTTP verb (`GET`, `POST`, `DELETE`, and so on).",
+        "The server keeps a `route table`: a list pairing each URL-and-verb combination to a specific function, the way a switchboard maps a number to a desk.",
+        "So `GET /orders/17` and `DELETE /orders/17` route to two different functions even though the address is identical — the verb changes the lane.",
+        "If nothing in the table matches, routing produces a `404 Not Found` — the server's way of saying \"there is no code here for that request.\"",
+        "Routing only *chooses* the worker; it does not do the work itself, which is the next two stages."
+      ]
+    },
+    {
+      "title": "Middleware: the shared steps every request passes through",
+      "teaser": "Cross-cutting work, run in a fixed order, before the handler",
+      "body": [
+        "`Middleware` is code that runs *between* the request arriving and the handler running — shared steps that nearly every request needs.",
+        "These are `cross-cutting concerns`: jobs that apply across many different routes, so it would be wasteful to rewrite them inside every handler.",
+        "Common examples: `logging` (recording that the request happened), `parsing` (turning the raw incoming text into structured data the code can use), and an `auth check` (confirming who is asking and whether they are allowed).",
+        "Middleware runs as a chain, in a defined order, and each step can do one of two things: pass the request along to the next step, or stop it and send a response right now.",
+        "Order is the whole game: a logging step must run before anything that might reject the request, and an auth check must run before the handler so a stranger never reaches the real work.",
+        "We will cover *how* an auth check proves identity in the next lesson — here the point is simply where it sits in the line: before the handler, as a gate."
+      ]
+    },
+    {
+      "title": "The handler: the code that does the actual work",
+      "teaser": "One function, one job — and it writes the reply",
+      "body": [
+        "The `handler` is the function routing picked — the one piece of code written specifically for this URL-and-verb combination.",
+        "By the time the request reaches it, middleware has already logged it, parsed it into usable data, and confirmed the caller is allowed in.",
+        "So the handler can focus on the real job: read or change the `database`, apply the `business logic` (your system's rules), and decide what to send back.",
+        "It then builds the `response` — typically a `status code` (a short number like `200` for success or `404` for not found) plus a body of data, usually in `JSON`.",
+        "A handler that lists orders might run a database query and return `200` with a JSON list; one that creates an order might save a row and return `201 Created`.",
+        "Checking that the incoming data is actually valid is its own discipline, covered later — for now, treat the handler as the place the real work and the real answer live."
+      ]
+    },
+    {
+      "title": "Seeing the whole pipeline at once",
+      "teaser": "Listen, route, run middleware, handle, reply",
+      "body": [
+        "Stack the stages and the full lifecycle is short: the request arrives, routing picks the handler, the middleware chain runs in order, the handler does the work, and a response travels back.",
+        "The shape matters because each stage has a clear job, so when something breaks you can locate it: a `404` is a routing miss, a `401 Unauthorized` is usually a middleware auth gate, a `500` error is usually the handler choking on the real work.",
+        "It is also why the order is fixed and not a free-for-all — you want cheap, universal checks (is this caller even allowed?) to run before the expensive, specific work (query the database) ever starts.",
+        "This same pipeline shape repeats across almost every backend framework — `Express` in JavaScript, `Django` in Python, `Rails` in Ruby — so learning it once transfers everywhere.",
+        "The vocabulary differs slightly between them, but the assembly line is the same: route to the right code, run shared steps in order, then hand off to the worker that builds the reply."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "request lifecycle",
+      "def": "The fixed sequence of stages a request passes through inside the server — routing, then middleware, then the handler — before a response is sent back."
+    },
+    {
+      "term": "routing",
+      "def": "The server's first step: matching a request's URL and HTTP verb to the specific function that should handle it, using a route table."
+    },
+    {
+      "term": "middleware",
+      "def": "Code that runs in a fixed order between the request arriving and the handler running, doing shared cross-cutting steps like logging, parsing, and auth checks — and able to either pass the request on or stop it."
+    },
+    {
+      "term": "handler",
+      "def": "The function chosen by routing that does the actual work for one URL-and-verb combination: applies the business logic, touches the database, and builds the response."
+    },
+    {
+      "term": "cross-cutting concern",
+      "def": "A job that applies across many different routes — such as logging or authentication — so it is handled once in middleware rather than rewritten in every handler."
+    },
+    {
+      "term": "status code",
+      "def": "A short standard number a response carries to summarise the outcome, such as `200` (success), `201` (created), `401` (not authorised), `404` (not found), or `500` (server error)."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The pipeline is a map for triage: when something is broken, the stage tells you who and what to look at — a `404` points at routing or a wrong URL, a `401` at the auth middleware, a `500` at the handler logic — so \"the API is down\" becomes a specific, assignable question.",
+      "Middleware is where you put the things you want enforced everywhere by default — logging for an audit trail, auth as a gate, rate limits — so \"is this checked on every endpoint or just some?\" is a real product and security question, not a detail.",
+      "Order is a decision with cost and risk attached: putting cheap rejections (is this caller allowed?) before expensive work (query the database) protects both your bill and your data, which is exactly the kind of trade-off an owner should be able to reason about."
+    ]
+  },
+  "caseStudy": {
+    "title": "Express and the middleware chain that powers much of the web",
+    "body": [
+      "`Express` is a backend framework for JavaScript — the most widely used one — and it made the middleware pipeline its central idea.",
+      "In Express you literally write the lifecycle as a list: `app.use(logger)`, `app.use(parseJson)`, `app.use(checkAuth)`, and then a route like `app.get('/orders', listOrders)` — and a request runs through them top to bottom.",
+      "Each middleware function is handed the request and a `next` control; it does its bit and calls `next()` to pass the request along, or sends a response itself to stop the chain early.",
+      "A classic real-world bug is ordering: put `checkAuth` *after* the handler and unauthenticated requests sail straight through to the data — the code is all present, but the sequence is wrong, so the gate guards nothing."
+    ],
+    "bridge": "Express makes the lesson concrete and visible — the request lifecycle is written out as an ordered list of middleware ending in a handler, and getting that order right is the difference between a working gate and a wide-open door."
+  },
+  "takeaways": [
+    "A request runs down a pipeline inside the server: routing, then middleware, then the handler, then a response back.",
+    "Routing matches the URL and HTTP verb to the right function; a missing match produces a `404`.",
+    "Middleware runs shared cross-cutting steps (logging, parsing, auth checks) in a fixed order, and each step can pass the request on or stop it.",
+    "The handler is the function that does the actual work — business logic and database — and builds the response, including its status code."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A request for `POST /orders` arrives and the server runs logging, then parses the body, then checks the caller is allowed, then runs the function that saves the order. What is the name for this fixed, ordered sequence of stages?",
+      "options": [
+        {
+          "text": "The request lifecycle — the pipeline of routing, middleware, and the handler that every request passes through in order",
+          "correct": true
+        },
+        {
+          "text": "The route table — a single lookup that does logging, parsing, and saving all at once",
+          "correct": false
+        },
+        {
+          "text": "The status code — the number the server uses to choose which steps to run",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — that ordered journey from arrival to response is the request lifecycle: routing picks the code, middleware runs the shared steps in order, and the handler does the work and replies."
+    },
+    {
+      "q": "Two requests, `GET /orders/17` and `DELETE /orders/17`, arrive at the identical URL. How does routing send them to different code?",
+      "options": [
+        {
+          "text": "It matches on both the URL and the HTTP verb, so the same address can map to one function for `GET` and a different one for `DELETE`",
+          "correct": true
+        },
+        {
+          "text": "It ignores the verb and runs the same function for both, which then guesses what to do",
+          "correct": false
+        },
+        {
+          "text": "It picks whichever handler is listed first in the code and uses that for both",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — routing keys on the URL and the verb together, so identical addresses with different verbs route to different handlers; the verb chooses the lane."
+    },
+    {
+      "q": "In a framework like Express, the `checkAuth` middleware is mistakenly placed after the handler instead of before it. What goes wrong?",
+      "options": [
+        {
+          "text": "Requests reach the handler and touch the data before the auth gate runs, so unauthorised callers are never stopped — the order, not the code, is the bug",
+          "correct": true
+        },
+        {
+          "text": "Nothing — middleware order is cosmetic, so the auth check still protects the handler wherever it sits",
+          "correct": false
+        },
+        {
+          "text": "The server refuses to start because middleware is not allowed to appear after a handler",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — middleware runs in the order it is listed, so an auth gate placed after the handler runs too late: the real work has already happened. Putting cheap rejections before expensive work is exactly why the sequence matters."
+    }
+  ]
+}

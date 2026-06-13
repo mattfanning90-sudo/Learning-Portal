@@ -1,0 +1,188 @@
+{
+  "coreIdea": "Authentication and authorization are two different gates, in a fixed order: authentication proves WHO you are, then authorization decides WHAT you're allowed to do — and confusing the two is how systems leak data.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Almost every app has to answer two separate questions before it lets you act.",
+    "First: \"Are you really who you claim to be?\" — that's `authentication`, often shortened to `authn`.",
+    "Second: \"Given who you are, are you allowed to do this?\" — that's `authorization`, often shortened to `authz`.",
+    "They sound alike and get jammed into the word \"login,\" but they're distinct steps, and the order never changes — you authenticate first, then authorize.",
+    "Keeping them separate isn't pedantry: most real-world data breaches aren't broken passwords, they're a logged-in person reaching something they were never meant to touch."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture an airport. Authentication is the passport check: the agent confirms you are the person in the photo — that's about *identity*, nothing more.",
+      "Authorization is your boarding pass: it says you, specifically, may board *this* flight, in *this* seat — that's about *permission*, and a verified passport alone won't get you through the gate.",
+      "Where the metaphor bends: at an airport the two checks happen at different desks minutes apart, while in software they fire in the same split second on every request — which is exactly why people blur them into one idea when they're really two."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Authentication: proving who you are",
+      "teaser": "The identity gate — and the three things that prove it",
+      "body": [
+        "`Authentication` is the process of confirming that you are who you claim to be, before the system trusts anything else about you.",
+        "It works by checking one or more `factors`, which fall into three classic buckets: something you *know*, something you *have*, and something you *are*.",
+        "Something you know is a `password` or PIN; something you have is your phone receiving a one-time code; something you are is a fingerprint or face scan (`biometrics`).",
+        "Stacking two or more of these is `multi-factor authentication` (`MFA`) — a stolen password alone won't get in, because the attacker still lacks your phone.",
+        "Modern apps offer gentler routes to the same proof: `social login` (\"Sign in with Google\") borrows an account you already have, and a `magic link` emails you a one-time URL so there's no password to steal at all.",
+        "The output of all of this is just one fact: \"this request really is from user 42\" — and nothing about what user 42 may do."
+      ]
+    },
+    {
+      "title": "Authorization: deciding what you may do",
+      "teaser": "The permission gate — and why it runs on every action",
+      "body": [
+        "`Authorization` is the process of deciding whether an already-identified user is allowed to perform a specific action on a specific thing.",
+        "It only makes sense *after* authentication — you can't grant permissions to someone whose identity you haven't pinned down yet.",
+        "The most common shape is `role-based access control` (`RBAC`): each user is given a `role` like `viewer`, `editor`, or `admin`, and each role carries a fixed set of `permissions` (the individual things it's allowed to do).",
+        "So \"can I delete this document?\" is answered by checking the role attached to your verified identity, not by re-checking who you are.",
+        "Crucially, authorization isn't a one-time gate at login — it's re-checked on *every* sensitive request, because what you're allowed to do can differ from one resource to the next.",
+        "A free user and a paying user authenticate identically; what separates them is entirely an authorization decision about features and limits."
+      ]
+    },
+    {
+      "title": "Why they must stay separate concerns",
+      "teaser": "One identity, many different permission checks",
+      "body": [
+        "Bolting the two together feels efficient but quietly creates holes, because a single login can't capture the dozens of distinct \"may I?\" questions an app must answer.",
+        "Keeping them separate means you verify identity *once*, then make many independent permission checks against that identity as the user moves around.",
+        "The classic failure when they're blurred is `broken access control`: the app authenticates you correctly, then forgets to check whether *you* — versus any logged-in user — may see *this* record.",
+        "A textbook example is the `IDOR` flaw (Insecure Direct Object Reference): you change `/invoices/123` to `/invoices/124` in the address bar and the app, having only checked that you're logged in, hands you someone else's invoice.",
+        "The fix isn't stronger passwords (authentication was fine) — it's an authorization check that asks \"does *this* user own invoice 124?\" on every request.",
+        "This is also why the industry's top web-risk list, the `OWASP Top 10`, has ranked broken access control as the single most common serious flaw — it's an authorization gap, not an authentication one."
+      ]
+    },
+    {
+      "title": "A worked request: both gates in one trip",
+      "teaser": "Watch authn and authz fire in sequence",
+      "body": [
+        "Say you click \"Delete\" on a comment in an app. One request leaves your browser and hits the back-end.",
+        "Gate one, authentication: the server confirms the request carries valid proof of identity, establishing \"this is user 42.\" If that proof is missing or fake, you get a `401 Unauthorized` — the server's way of saying \"I don't know who you are.\"",
+        "Gate two, authorization: the server now asks \"is user 42 allowed to delete *this particular* comment?\" — typically true if you wrote it or hold an `admin` role.",
+        "If you're a known user but lack permission, you get a `403 Forbidden` — \"I know exactly who you are, and the answer is still no.\"",
+        "Those two HTTP status codes are the cleanest tell that these are different concerns: `401` is an authentication failure, `403` is an authorization failure, and they're never interchangeable.",
+        "Only when both gates pass does the comment actually get deleted — every meaningful action runs this two-step, every time."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "authentication (authn)",
+      "def": "Proving who you are — confirming a user really is the identity they claim, using factors like a password, a code on your phone, or a fingerprint."
+    },
+    {
+      "term": "authorization (authz)",
+      "def": "Deciding what an already-identified user is allowed to do — checking their permissions against a specific action on a specific resource."
+    },
+    {
+      "term": "factor",
+      "def": "A category of proof used in authentication: something you know (password), something you have (your phone), or something you are (a fingerprint)."
+    },
+    {
+      "term": "multi-factor authentication (MFA)",
+      "def": "Requiring two or more different factors to log in, so a stolen password alone isn't enough — the attacker would also need your phone or face."
+    },
+    {
+      "term": "role-based access control (RBAC)",
+      "def": "An authorization model where users are given roles (like `viewer`, `editor`, `admin`), and each role carries a fixed set of permissions."
+    },
+    {
+      "term": "broken access control",
+      "def": "A security flaw where the app correctly authenticates a user but fails to check whether that user is authorized to reach a specific resource."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "These two concerns usually map to two different product surfaces and two different budgets: authentication is the login experience (social login, MFA, password resets) that you can often buy from a provider, while authorization is the business logic of your product — who's on which plan, who can invite teammates, who can see whose data — which is almost always yours to build.",
+      "That split tells you where the real risk lives: a slick login screen creates a false sense of safety, but the breaches that make headlines are overwhelmingly authorization gaps — a logged-in user reaching data that was never theirs — so \"is it secure?\" is mostly an authorization question.",
+      "It also shapes the roadmap: features like roles, teams, sharing, free-versus-paid tiers, and audit logs are all authorization decisions in disguise, and underspecifying them early is how you end up retrofitting permissions across an entire codebase later."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2019 First American Financial leak",
+    "body": [
+      "First American Financial is a major US real-estate title insurance company that handled hundreds of millions of digitised mortgage and closing documents.",
+      "In May 2019, security researcher Brian Krebs reported that anyone could view those documents simply by changing a number in the web address — `...DocumentID=000075` became `000076`, and a different customer's records appeared.",
+      "Authentication wasn't even the weak point; in many cases you didn't need to log in at all, and where you did, being any valid user was enough — the app never checked whether *you* were authorized to see *that specific* document.",
+      "Roughly 885 million records — bank account numbers, Social Security numbers, mortgage paperwork — sat exposed, and in 2023 New York regulators reached a settlement over the failure."
+    ],
+    "bridge": "This is the authentication–authorization split written in fire: the login wasn't the hole — the missing per-document authorization check was, which is precisely why the two must be treated as separate gates."
+  },
+  "takeaways": [
+    "Authentication proves WHO you are; authorization decides WHAT you're allowed to do — two distinct gates, always in that order.",
+    "Authentication checks factors (something you know / have / are); social login and magic links are just gentler routes to the same proof of identity.",
+    "Authorization (commonly via roles and permissions, e.g. RBAC) runs on every sensitive request, not just once at login.",
+    "Most serious breaches are authorization failures — a logged-in user reaching data that isn't theirs — not broken passwords, which is why the two concerns must stay separate."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A new engineer says \"once a user logs in successfully, authorization is basically done.\" Why is that wrong?",
+      "options": [
+        {
+          "text": "Logging in only proves WHO the user is (authentication); authorization is a separate, ongoing decision about WHAT that user may do, re-checked on each sensitive request",
+          "correct": true
+        },
+        {
+          "text": "It's correct — a successful login grants a user permission to perform any action in the app",
+          "correct": false
+        },
+        {
+          "text": "It's wrong only because the login itself needs to be repeated before every action",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — authentication establishes identity, but it says nothing about permissions. Authorization is a distinct step that asks \"is this identified user allowed to do this specific thing?\" — and it's re-evaluated per action, not settled once at login."
+    },
+    {
+      "q": "A logged-in user changes `/invoices/123` to `/invoices/124` in the address bar and is shown another customer's invoice. Which gate failed, and what fixes it?",
+      "options": [
+        {
+          "text": "Authorization failed — the app confirmed identity but never checked whether this user may access invoice 124; the fix is a per-resource permission check on each request",
+          "correct": true
+        },
+        {
+          "text": "Authentication failed — the user's password was too weak; the fix is to require multi-factor authentication",
+          "correct": false
+        },
+        {
+          "text": "Both gates were fine; this is normal behaviour because the user was logged in",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is broken access control (an IDOR flaw). Authentication worked: the system knew who the user was. What was missing is the authorization check confirming this particular user is permitted to see this particular invoice. Stronger passwords wouldn't help."
+    },
+    {
+      "q": "A request hits the back-end and the server replies with `403 Forbidden` rather than `401 Unauthorized`. What does that distinction tell you?",
+      "options": [
+        {
+          "text": "The server knows exactly who the user is (authentication passed) but that user lacks permission for this action (authorization failed)",
+          "correct": true
+        },
+        {
+          "text": "The server couldn't identify the user at all, so authentication failed before any permission check",
+          "correct": false
+        },
+        {
+          "text": "The two codes mean the same thing and are used interchangeably",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — `401 Unauthorized` means \"I don't know who you are\" (an authentication failure), while `403 Forbidden` means \"I know who you are, and you still may not do this\" (an authorization failure). The two codes cleanly mark which gate said no."
+    }
+  ],
+  "sources": [
+    {
+      "label": "OWASP Top 10 (2021) — A01: Broken Access Control",
+      "url": "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
+    },
+    {
+      "label": "Auth0 — Authentication vs. Authorization",
+      "url": "https://auth0.com/docs/get-started/identity-fundamentals/authentication-and-authorization"
+    },
+    {
+      "label": "KrebsOnSecurity — First American Financial Corp. Leaked Hundreds of Millions of Title Insurance Records",
+      "url": "https://krebsonsecurity.com/2019/05/first-american-financial-corp-leaked-hundreds-of-millions-of-title-insurance-records/"
+    }
+  ]
+}

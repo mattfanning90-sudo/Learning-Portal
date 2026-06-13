@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Almost everything an app does to stored data is one of four moves — Create, Read, Update, Delete (CRUD) — and a query is just a precise question you ask the database, with related changes grouped into all-or-nothing transactions so the data never ends up half-changed.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "An app's data sits in a database — an organised store of information the app can save things to and fetch things from.",
+    "Strip away the jargon and there are only four things you ever do to that data: add a new record, look one up, change it, or remove it.",
+    "These four are called `CRUD`: Create, Read, Update, Delete — and the entire feature list of most apps is built from them.",
+    "To do any of these, the app sends the database a `query`: a precise, written question or instruction, like \"give me every order placed today.\"",
+    "And when one action means several changes at once — move money out of one account and into another — you bundle them into a `transaction` so they all succeed together or none of them happen at all."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the database as a vast filing cabinet, and CRUD as the only four things you can do with a folder: file a new one (Create), pull one out to read it (Read), cross out a line and rewrite it (Update), or shred it (Delete).",
+      "A query is the note you hand the clerk — \"fetch me every folder filed this week from the Sydney office\" — and the clerk brings back exactly those, nothing more.",
+      "Where the metaphor breaks: a human clerk can use judgement and fudge a vague request, but a database is literal — your query must say *precisely* what you mean, or you'll get the wrong folders back, or none."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "CRUD: the four verbs behind every feature",
+      "teaser": "Add, look up, change, remove — that's the whole alphabet",
+      "body": [
+        "`CRUD` stands for Create, Read, Update, Delete — the four basic operations you can perform on stored data.",
+        "Create adds a brand-new record: signing up writes a new `user` row; placing an order writes a new `order` row.",
+        "Read looks data up without changing it: loading your profile, listing your past orders, showing tonight's available tables.",
+        "Update changes an existing record in place: editing your shipping address, marking a task done, raising a product's price.",
+        "Delete removes a record: cancelling an account, clearing a saved card, removing an item from a cart.",
+        "Almost any button you've ever clicked in an app maps to one of these four — which is why engineers reach for CRUD as the default skeleton of a new feature."
+      ]
+    },
+    {
+      "title": "A query is a precise question you ask the data",
+      "teaser": "You don't browse the data — you interrogate it",
+      "body": [
+        "A `query` is a written instruction that asks the database to do one of the CRUD operations and return a result.",
+        "The most common language for writing queries is `SQL`, short for Structured Query Language — a near-English way of describing exactly what you want.",
+        "The key word is *precise*: a query states which records, which fields, and any conditions, leaving no room for the database to guess.",
+        "\"Give me the email of every customer in Sydney who signed up this month\" is a question with an exact, repeatable answer — that is the shape of a query.",
+        "Because the question is written down, the same query run tomorrow asks the same thing, and two engineers reading it see the same intent.",
+        "This precision is the trade: a database won't improvise for you, but ask it exactly and it answers exactly, every time, across millions of records in a blink."
+      ]
+    },
+    {
+      "title": "One tiny Read, in SQL",
+      "teaser": "What a real query actually looks like",
+      "body": [
+        "Here is a read-only query — it only *asks*, it changes nothing.",
+        "`SELECT` names the fields you want back; `FROM` names the table (a labelled grid of records) to look in; `WHERE` sets the condition that filters which rows qualify.",
+        "So `SELECT name, email FROM customers WHERE city = 'Sydney'` reads, almost literally, as \"return the name and email of every customer whose city is Sydney.\"",
+        "Run it against a million-row table and you get back only the matching rows — the database does the searching, you just describe the target.",
+        "You don't need to write SQL to be useful here; you need to recognise that this near-English question *is* a Read, and that swapping `SELECT` for an insert, change, or removal gives you the other three CRUD moves.",
+        "The numbers and names here are illustrative — but the shape, SELECT–FROM–WHERE, is exactly how real reads are written."
+      ]
+    },
+    {
+      "title": "Transactions: all-or-nothing groups of changes",
+      "teaser": "Some actions must happen completely, or not at all",
+      "body": [
+        "Sometimes one real-world action needs *several* writes at once, and a half-finished result would be a disaster.",
+        "Moving $100 between accounts is two changes: subtract from account A, add to account B — if only the first lands, the money simply vanishes.",
+        "A `transaction` is a group of changes the database treats as a single all-or-nothing unit: either every change in the group succeeds and is saved (`commit`), or any failure undoes the whole group (`rollback`), leaving the data as if nothing happened.",
+        "So if the power dies right after the subtract, the transaction rolls back and the $100 reappears in account A — there is no in-between state where it's gone from both or neither.",
+        "This guarantee is why banks, shops, and booking systems trust databases with money and seats: the data is never caught half-changed.",
+        "At a concept level that's all you need — a transaction is a promise that a set of related changes lands together or not at all."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "CRUD",
+      "def": "Create, Read, Update, Delete — the four basic operations on stored data: add a record, look one up, change it, or remove it. Most app features are built from these four."
+    },
+    {
+      "term": "query",
+      "def": "A precise written instruction asking the database to perform a CRUD operation and return a result — for example, \"list every order placed today.\""
+    },
+    {
+      "term": "SQL (Structured Query Language)",
+      "def": "The most common near-English language for writing queries, used to read and change data in many databases."
+    },
+    {
+      "term": "table",
+      "def": "A labelled grid of records inside a database — rows are individual records (one customer, one order) and columns are the fields each record has (name, email, city)."
+    },
+    {
+      "term": "transaction",
+      "def": "A group of related changes the database treats as a single all-or-nothing unit: they all succeed together (commit) or are all undone (rollback), so data is never left half-changed."
+    },
+    {
+      "term": "commit / rollback",
+      "def": "Commit saves all of a transaction's changes permanently; rollback throws them all away, returning the data to exactly how it was before the transaction started."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "CRUD is a planning shortcut you can use without writing code: sketch a new feature by listing which records it Creates, Reads, Updates, and Deletes, and you've roughly scoped the work and surfaced the screens you'll need.",
+      "Read-versus-write is a real cost and risk line you own — reads are cheap and safe to get wrong twice, but Updates and Deletes change real customer data, so they're where you insist on confirmation steps, audit trails, and \"are you sure?\" guards.",
+      "Transactions are where correctness becomes a product promise: whenever a single user action touches money, inventory, or bookings, \"this happens completely or not at all\" is a requirement to state out loud — not a technical detail to leave to chance, because a half-completed checkout is a refund, a support ticket, and a lost customer."
+    ]
+  },
+  "caseStudy": {
+    "title": "Knight Capital's $440M in 45 minutes",
+    "body": [
+      "On 1 August 2012, the US trading firm Knight Capital deployed new software that, through a faulty update, began firing off real stock orders automatically and uncontrollably.",
+      "In roughly 45 minutes it created millions of unwanted trades — Creates and Updates to live market data that, once executed, could not simply be wished away.",
+      "The firm lost about $440 million, more than its entire prior-year profit, and was effectively destroyed within days, later absorbed in a rescue acquisition.",
+      "The damage was so severe precisely because each executed trade was a committed, real-world change — there was no clean rollback once those writes hit the market."
+    ],
+    "bridge": "It's a brutal illustration of the same idea behind transactions: writes that change real state are irreversible by default, so the question \"can this be safely undone, all-or-nothing?\" is one of the most important you can ask before any change ships."
+  },
+  "takeaways": [
+    "CRUD — Create, Read, Update, Delete — are the four basic operations on stored data, and most app features are assembled from them.",
+    "A query is a precise written question you ask the database; SQL is the common near-English language for writing one, e.g. `SELECT name FROM customers WHERE city = 'Sydney'`.",
+    "Reads only ask and change nothing; Creates, Updates, and Deletes alter real data and deserve more care, confirmation, and audit.",
+    "A transaction bundles related changes into an all-or-nothing unit — everything commits together or everything rolls back — so data is never left half-changed."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A user edits their saved shipping address in an app. Which CRUD operation is that, and how does it differ from signing up for the first time?",
+      "options": [
+        {
+          "text": "Editing is an Update (it changes an existing record in place), whereas signing up is a Create (it adds a brand-new record)",
+          "correct": true
+        },
+        {
+          "text": "Both are Creates, because saving the address writes a new record either way",
+          "correct": false
+        },
+        {
+          "text": "Editing is a Read, because the app first has to load the old address before changing it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — Update changes a record that already exists (the user's existing address), while Create adds a new record (a new user on sign-up). Reading the old value first doesn't make the operation a Read; the operation is named by what it ultimately does to the data."
+    },
+    {
+      "q": "Why is calling a query a \"precise question you ask the data\" a useful way to think about it?",
+      "options": [
+        {
+          "text": "Because a query states exactly which records, fields, and conditions you want, so the database returns an exact, repeatable answer rather than guessing",
+          "correct": true
+        },
+        {
+          "text": "Because the database interprets vague requests intelligently and fills in whatever you probably meant",
+          "correct": false
+        },
+        {
+          "text": "Because a query can only ever ask for data and is technically incapable of changing it",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the value of a query is its precision: it specifies the target exactly (e.g. `WHERE city = 'Sydney'`), so the answer is exact and the same every time. Databases are literal, not intuitive — and while reads only ask, queries can also create, update, and delete data."
+    },
+    {
+      "q": "Transferring $100 between two accounts means subtracting from one and adding to the other. Why wrap both changes in a single transaction?",
+      "options": [
+        {
+          "text": "So the two changes are all-or-nothing — both commit together, or any failure rolls both back, so money can't vanish in a half-finished state",
+          "correct": true
+        },
+        {
+          "text": "So the transfer runs faster by combining two changes into one quicker operation",
+          "correct": false
+        },
+        {
+          "text": "So the subtract always happens first and the add can be safely skipped if needed",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a transaction makes the group atomic: either every change is saved (commit) or every change is undone (rollback). That's what prevents the disastrous in-between state where the $100 left account A but never reached account B. It's about correctness, not speed."
+    }
+  ]
+}

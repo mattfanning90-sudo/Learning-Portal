@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Most features you'd never want to build from scratch — payments, email, maps — already exist as other companies' services, and you wire them in two directions: you call their API to ask for something, and they call your server back with a webhook when something happens on their side.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "You almost never build everything yourself.",
+    "Taking card payments, sending email, drawing a map — other companies have spent years getting these right, and they rent them to you as a service.",
+    "You reach those services through their `API` — Application Programming Interface — a published set of requests their server agrees to answer, like a menu of things you're allowed to ask for.",
+    "So your app *calls out* to Stripe to charge a card, or to a map provider to turn an address into a pin on a map.",
+    "But some things finish later, not instantly — a payment clears, a delivery is dispatched — so the third party needs a way to *call you back*, and that reverse call is a `webhook`."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Calling an API is like phoning a restaurant to place an order: you ring them, ask for exactly what's on the menu, and they answer you right then — you started the call and you waited on the line for the reply.",
+      "A webhook is the restaurant phoning *you* back twenty minutes later to say \"your order is ready\" — you don't sit on hold; they keep your number and ring when the event actually happens.",
+      "Where the metaphor breaks: a phone call is private between two people, but a webhook arrives over the open internet, so your server must check the caller is really who they claim to be before trusting the message — a precaution the lesson on authentication covers in depth."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why you build on other companies' services",
+      "teaser": "The hard, regulated, easy-to-get-wrong parts are already solved",
+      "body": [
+        "A `third-party service` is software run by another company that you plug into your own app instead of writing that piece yourself.",
+        "Payments are the classic case: handling cards directly means meeting strict security rules, fighting fraud, and connecting to banks — months of specialist work — so almost everyone uses `Stripe` or a rival instead.",
+        "Sending email reliably is another: get it wrong and your messages land in spam, so teams use a service like `SendGrid` or `Postmark` that has spent years earning the trust of inbox providers.",
+        "Maps, text messages, address lookup, identity checks — the same pattern repeats: a specialist does it better, cheaper, and safer than you could alone.",
+        "The trade is real but usually worth it: you give up some control and pay a fee per use, and in return you ship in days what would otherwise take quarters.",
+        "The skill isn't building these things — it's knowing which to buy, how to wire them in, and what happens when they're slow or down."
+      ]
+    },
+    {
+      "title": "Calling their API: the request you send out",
+      "teaser": "You ask, over the internet, for one specific thing — and prove it's you",
+      "body": [
+        "To use a service, your server sends a `request` to the company's API — a message over the internet asking for one specific action, like \"charge this card $20.\"",
+        "Every request carries an `API key`: a long secret string the service gives you that identifies your account and proves the request is really from you, like a password your app uses instead of a person logging in.",
+        "That key is how they know who to bill and what you're allowed to do, so it must stay secret — leaked keys let strangers spend money in your name, which is why keys live in server-side configuration, never in code a user's browser can read.",
+        "The service replies with a `response`: either the result you asked for (a successful charge, a list of map results) or an error explaining what went wrong.",
+        "You don't need to memorise the exact format — the point is the shape: you send a request *with your key*, you get a response back, and your code reacts to it.",
+        "Designing your *own* API to be called this way is a separate topic; here you're the one doing the calling."
+      ]
+    },
+    {
+      "title": "Webhooks: the call that comes back to you",
+      "teaser": "For events that finish later, the third party rings your server",
+      "body": [
+        "Some things don't resolve the instant you ask: a bank takes a moment to confirm a payment, a parcel ships hours later, a subscription renews next month.",
+        "Polling — your server asking \"done yet? done yet?\" over and over — is wasteful and slow, so instead you give the third party a `webhook`.",
+        "A `webhook` is a URL on *your* server that you register with the third party; when a chosen event happens on their side, *they* send a request to that URL to tell you, with the details attached.",
+        "It flips the usual direction: normally your app calls them, but with a webhook their server calls yours — so people call it a \"reverse API\" or a \"callback.\"",
+        "Concretely: you tell Stripe \"when a payment succeeds, POST the details to `yourapp.com/webhooks/stripe`,\" and the moment a charge clears, Stripe hits that URL and your code unlocks the order.",
+        "Because anyone on the internet can send a request to that URL, you must verify each webhook is genuinely from the service — usually by checking a `signature` the service includes — before acting on it."
+      ]
+    },
+    {
+      "title": "Rate limits: the speed limit on how often you can ask",
+      "teaser": "There's a cap on requests, and good apps slow down instead of breaking",
+      "body": [
+        "A `rate limit` is a cap the service puts on how many requests you can make in a window of time — say, 100 requests per second (an illustrative figure, not a real one).",
+        "It exists to stop any one customer — or a runaway bug — from overwhelming the shared service and degrading it for everyone.",
+        "Go over the limit and the service rejects further requests for a moment, usually with a `429 Too Many Requests` response — a specific error code meaning \"you're asking too fast, slow down.\"",
+        "The well-behaved response is to wait briefly and try again, often using `exponential backoff`: wait 1 second, then 2, then 4, doubling the pause each retry so you don't pile on while the service is busy.",
+        "This is why a feature that loops over 10,000 records and fires one API call each can quietly fail — it blows past the limit unless it paces itself.",
+        "At a product level a rate limit is just a constraint to design around, the same way a road has a speed limit: legal to approach, costly to ignore."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "third-party service",
+      "def": "Software run by another company that you plug into your app instead of building that piece yourself — for example Stripe for payments or a provider for sending email or maps."
+    },
+    {
+      "term": "API (Application Programming Interface)",
+      "def": "A published set of requests a service agrees to answer — a menu of actions your code is allowed to ask for, like \"charge this card\" or \"turn this address into map coordinates.\""
+    },
+    {
+      "term": "API key",
+      "def": "A long secret string a service gives you that you send with each request to prove it's from your account; it identifies who to bill and what you're allowed to do, so it must be kept secret."
+    },
+    {
+      "term": "webhook",
+      "def": "A URL on your own server that you register with a third party; when a chosen event happens on their side, they send a request to that URL to notify you — the reverse of you calling them."
+    },
+    {
+      "term": "rate limit",
+      "def": "A cap on how many requests you can make to a service in a set time window; exceed it and requests are temporarily rejected (often a 429 error) until you slow down."
+    },
+    {
+      "term": "exponential backoff",
+      "def": "A retry strategy where you wait longer after each failure — 1 second, then 2, then 4 — so you stop hammering a busy or rate-limited service and give it room to recover."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Build or buy\" is a decision you own on almost every feature: third-party services let you ship payments or email in days, but you trade per-use fees, some control, and a dependency on someone else's uptime — when Stripe is down, your checkout is down, so their reliability becomes part of your product.",
+      "API keys and webhook verification aren't just engineering hygiene — a leaked key is real money walking out the door, and an unverified webhook is a door anyone can knock on, so \"how do we keep these secret and trusted?\" belongs in your launch checklist, not an afterthought.",
+      "Rate limits quietly shape what's feasible: a bulk action that calls an API once per record may need to run slower or in batches, so when you scope a feature like \"email all 50,000 customers,\" ask early what the provider's limit is — it can turn a one-click idea into a paced background job."
+    ]
+  },
+  "caseStudy": {
+    "title": "Lyft built its first product on the Stripe and Twilio APIs",
+    "body": [
+      "When the ride-sharing company Lyft launched in 2012, it had to take card payments from riders and pay drivers, plus send texts to coordinate pickups.",
+      "Rather than spend months building payment processing and a global texting system, Lyft called the Stripe API to handle charges and payouts, and the Twilio API to send and receive SMS messages.",
+      "That let a small team ship a working two-sided marketplace fast — riders were charged automatically at the end of a trip, and drivers were paid out, without Lyft ever touching the regulated plumbing of card networks.",
+      "Stripe also calls back the other way: webhooks notify Lyft's servers when a payment succeeds, fails, or is disputed, so the app can react without constantly polling."
+    ],
+    "bridge": "Lyft's launch is the whole lesson in one product: call other companies' APIs for the hard parts, and let their webhooks call you back when events resolve — so your small team builds only what's genuinely yours to build."
+  },
+  "takeaways": [
+    "Don't reinvent payments, email, or maps — plug in a third-party service through its API, a published menu of requests their server answers.",
+    "Calling out: you send a request with a secret API key (which proves it's you and must never leak) and react to the response you get back.",
+    "Calling back: a webhook is a URL on your server that the third party hits when an event happens on their side — the reverse direction — and you must verify it's genuinely from them.",
+    "Rate limits cap how often you can ask; the well-behaved response to a 429 is to slow down and retry with exponential backoff, not to give up or hammer harder."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your app charges a customer's card by sending a request to Stripe. Minutes later, Stripe needs to tell your server the payment cleared. Which mechanism does each direction use?",
+      "options": [
+        {
+          "text": "Your app calls Stripe's API to charge the card; Stripe uses a webhook to call your server back when the payment clears",
+          "correct": true
+        },
+        {
+          "text": "Both directions use webhooks, since any message between two servers is a webhook",
+          "correct": false
+        },
+        {
+          "text": "Your app uses a webhook to charge the card, and Stripe calls your API to confirm it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — calling out (you initiate, asking for an action now) is an API call; the reverse call (the third party initiates, notifying you when a later event happens) is a webhook. The webhook is a URL on your server that Stripe hits when the payment clears."
+    },
+    {
+      "q": "Why must an API key be kept secret and out of code that runs in the user's browser?",
+      "options": [
+        {
+          "text": "Because the key proves requests come from your account and controls what you can do and get billed for — so anyone who reads it can spend money in your name",
+          "correct": true
+        },
+        {
+          "text": "Because the key changes every few minutes, so an exposed one would stop working immediately anyway",
+          "correct": false
+        },
+        {
+          "text": "Because browsers are technically unable to send API keys, so it would simply fail",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — an API key is like a password for your app: it identifies your account, authorises actions, and ties usage to your bill. A leaked key lets a stranger make real, billable requests as you, which is why keys live in server-side config, never in browser-readable code."
+    },
+    {
+      "q": "A nightly job loops over 10,000 records and makes one API call for each. Partway through, the service starts returning 429 errors. What's going on, and what's the right response?",
+      "options": [
+        {
+          "text": "You've hit the service's rate limit by asking too fast; the right move is to slow down and retry with exponential backoff",
+          "correct": true
+        },
+        {
+          "text": "Your API key has expired, so you should generate a brand-new key for every request",
+          "correct": false
+        },
+        {
+          "text": "The service is permanently down, so the job should stop and the records should be abandoned",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a 429 (\"Too Many Requests\") means you've exceeded the rate limit, the cap on how many requests you can make in a time window. The well-behaved fix is to pace yourself: wait and retry, increasing the pause each time (exponential backoff), or batch the work so it stays under the limit."
+    }
+  ]
+}

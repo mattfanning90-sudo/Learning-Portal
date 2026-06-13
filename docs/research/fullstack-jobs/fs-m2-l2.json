@@ -1,0 +1,176 @@
+{
+  "coreIdea": "State is the data a screen is showing right now; reactivity is the framework's promise that when that data changes, the screen redraws itself — so you describe what the UI should look like and stop hand-editing the page.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Every screen is showing some data: a number in a cart badge, a list of unread messages, whether a menu is open or closed.",
+    "That live, current data is called `state` — it is the truth the UI is displaying at this exact moment.",
+    "When state changes — you add an item, a message arrives — the screen has to change to match.",
+    "`Reactivity` is the modern framework's job: it watches the state and updates the screen for you, automatically.",
+    "So instead of writing step-by-step instructions to edit the page by hand, you describe what the page should look like for any given state, and the framework keeps them in sync."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a spreadsheet. You type a number into one cell, and every chart and total that depends on it updates instantly — you never redraw the chart yourself, you just change the number.",
+      "State is that source number; reactivity is the automatic recalculation that ripples out to everything showing it.",
+      "Where the metaphor bends: a spreadsheet recalculates the entire sheet, while a UI framework is fussier — it tries to redraw only the small parts that actually changed, because redrawing everything on a busy screen would be slow."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The old way: hand-editing the page",
+      "teaser": "You, the programmer, did every update by hand",
+      "body": [
+        "A web page is built from a tree of elements — a heading, a list, a button — called the `DOM` (Document Object Model), which is just the browser's live model of everything on screen.",
+        "In the old style, when data changed you wrote explicit instructions to reach into that tree and edit it: find the cart badge, change its text from `2` to `3`.",
+        "This is called `imperative` programming — you spell out each step the machine should take, like turn-by-turn driving directions.",
+        "It works for one badge, but a real app has dozens of these updates, and they overlap.",
+        "Miss one, and the screen quietly disagrees with the data — the cart says `3` but the badge still says `2`.",
+        "These mismatches are some of the most common and maddening bugs in frontend work."
+      ]
+    },
+    {
+      "title": "The modern way: UI as a function of state",
+      "teaser": "Describe the result; let the framework do the editing",
+      "body": [
+        "Modern frameworks like `React` flip this around with a `declarative` approach — you describe the destination, not the route.",
+        "You write a rule once: \"the badge shows whatever number is in the cart.\"",
+        "Then you only ever change the state — set the cart to `3` — and never touch the badge directly.",
+        "This is the famous idea that the `UI is a function of state`: give the framework the current state, and it produces the matching screen.",
+        "Change the state and the framework reruns that rule to produce the new screen.",
+        "You stopped writing the steps and started writing the relationship — and the framework guarantees the screen never drifts out of sync with the data."
+      ]
+    },
+    {
+      "title": "What re-rendering actually means",
+      "teaser": "Redrawing the screen without throwing it all away",
+      "body": [
+        "When state changes, the framework does a `re-render`: it recalculates what the screen should look like for the new state.",
+        "A naive version would wipe the whole page and rebuild it, but that would be slow and would lose things like cursor position and scroll.",
+        "So the framework first builds a lightweight description of the new screen in memory, then compares it to the old one to find only the differences.",
+        "This compare-and-find-the-difference step is called `reconciliation`, and in `React` it works against a fast in-memory copy of the page nicknamed the `virtual DOM`.",
+        "It then applies just those small changes to the real page — touch the badge, leave everything else alone.",
+        "So \"re-render\" does not mean \"reload the page\"; it means \"figure out the smallest edit and make it.\""
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "state",
+      "def": "The live data a UI is showing right now — a count, a list, whether a panel is open — that the screen must reflect."
+    },
+    {
+      "term": "reactivity",
+      "def": "The framework's automatic behaviour of updating the screen by itself whenever the underlying state changes."
+    },
+    {
+      "term": "declarative",
+      "def": "A style where you describe what the result should be (the badge equals the cart count) and let the system figure out how to achieve it."
+    },
+    {
+      "term": "imperative",
+      "def": "The opposite style, where you spell out each step to perform yourself — find this element, change its text — like turn-by-turn directions."
+    },
+    {
+      "term": "re-render",
+      "def": "The framework recalculating what a piece of UI should look like after state changes, then updating only the parts that differ — not a full page reload."
+    },
+    {
+      "term": "DOM (Document Object Model)",
+      "def": "The browser's live, structured model of everything currently on the page, which code can read and change."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Declarative, reactive UI is mostly a reliability decision dressed up as a technical one: when the screen is guaranteed to follow the state, a whole class of \"the display says the wrong thing\" bugs simply cannot happen.",
+      "That directly affects trust — a checkout total that lags behind the cart, or a balance that shows stale, costs you conversions and support tickets.",
+      "The trade-off you own is that frameworks add weight and a learning curve, so for a tiny static page they can be overkill; the payoff shows up as the app gains live, interactive state that must stay correct."
+    ]
+  },
+  "caseStudy": {
+    "title": "Why Facebook built React",
+    "body": [
+      "Around 2011, Facebook engineers were fighting a recurring bug: the unread-message count in the chat bar kept disagreeing with the actual messages.",
+      "The cause was the old imperative style — many separate bits of code were hand-editing the same on-screen number, and they fell out of sync.",
+      "Engineer Jordan Walke built React on a single rule: describe the UI as a function of state, change the state, and let React re-render whatever needs to change.",
+      "Facebook open-sourced React in 2013, and the same idea now powers interfaces at Netflix, Airbnb, and much of the modern web — chosen precisely because the screen stays in lockstep with the data."
+    ],
+    "bridge": "React exists because hand-editing the page does not scale: the fix was to make state the single source of truth and let reactivity keep the screen honest."
+  },
+  "takeaways": [
+    "State is the data the UI is showing right now; reactivity means the screen updates by itself when that data changes.",
+    "The old imperative way meant hand-editing the page step by step, which drifts out of sync and breeds bugs.",
+    "The modern declarative way treats the UI as a function of state — you change the data, the framework redraws.",
+    "Re-rendering means recalculating and applying the smallest necessary change, not reloading the whole page."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does \"reactivity\" mean in a modern UI framework?",
+      "options": [
+        {
+          "text": "When the underlying state changes, the framework automatically updates the screen to match",
+          "correct": true
+        },
+        {
+          "text": "The user reacts to the page by clicking buttons and filling in forms",
+          "correct": false
+        },
+        {
+          "text": "The page reloads itself from the server every few seconds to stay fresh",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — reactivity is the framework's promise to redraw the screen by itself whenever state changes, so you never hand-edit the page to keep it in sync."
+    },
+    {
+      "q": "What is the core difference between the imperative (old) and declarative (modern) way of updating a UI?",
+      "options": [
+        {
+          "text": "Imperative spells out each step to edit the page by hand; declarative describes the UI as a function of state and lets the framework do the editing",
+          "correct": true
+        },
+        {
+          "text": "Imperative is written in JavaScript while declarative is written in HTML",
+          "correct": false
+        },
+        {
+          "text": "Imperative runs on the server while declarative runs only in the browser",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the shift is from writing the step-by-step edits yourself to writing the relationship (UI equals a function of state) and letting the framework keep them matched."
+    },
+    {
+      "q": "When state changes and a framework \"re-renders,\" what actually happens?",
+      "options": [
+        {
+          "text": "It recalculates what the screen should look like and applies only the small parts that differ",
+          "correct": true
+        },
+        {
+          "text": "It fully reloads the page from scratch, the way pressing the browser refresh button does",
+          "correct": false
+        },
+        {
+          "text": "It saves the new state to the database and waits for the server to send back a fresh page",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — re-rendering builds a new description of the UI, compares it to the old one, and updates just the differences, rather than reloading the whole page."
+    }
+  ],
+  "sources": [
+    {
+      "label": "React — Reacting to Input with State",
+      "url": "https://react.dev/learn/reacting-to-input-with-state"
+    },
+    {
+      "label": "React — Render and Commit",
+      "url": "https://react.dev/learn/render-and-commit"
+    },
+    {
+      "label": "React — A brief history (React's origins at Facebook)",
+      "url": "https://react.dev/community/versioning-policy"
+    }
+  ]
+}

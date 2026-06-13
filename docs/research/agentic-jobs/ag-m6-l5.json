@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Shipping an agent responsibly means owning its second-order effects — bias, honesty about being AI, what happens to user data, the real money and energy it burns, and keeping a human in charge of consequential calls — so you build only what you'd be comfortable defending in public.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An agent is software that takes a goal and acts on its own — reading data, calling tools, sending messages — so its mistakes scale fast and reach real people.",
+    "That means the question isn't only \"does it work?\" but \"would I be comfortable explaining this to the affected user, a journalist, or a regulator?\"",
+    "Five things tend to come back to bite teams: hidden bias in the agent's decisions, not telling people they're talking to a machine, careless handling of personal data, the surprising dollar and energy cost of heavy use, and removing the human from decisions that needed one.",
+    "None of these are exotic ethics-class problems — they're ordinary engineering and product choices that have already produced lawsuits, fines, and public apologies.",
+    "The through-line is simple: build the thing you'd defend out loud, not the thing you're quietly hoping no one looks at."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of an agent like a new employee you've given a company credit card, a customer inbox, and the authority to act in your name.",
+      "You'd care that they treat people fairly, that they say who they are, that they don't leave customer files on a train, that they don't run up a huge bill, and that they check with a manager before doing anything drastic — and you'd care because their actions are your reputation.",
+      "Where the metaphor bends: a human employee feels social shame and fatigue that naturally slow them down, while an agent will cheerfully repeat the same unfair or expensive mistake a million times before lunch, with no instinct that anything is wrong — so the restraint has to be designed in, not assumed."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Bias and transparency: fairness you can show, and saying you're an AI",
+      "teaser": "Two failures that erode trust the fastest",
+      "body": [
+        "`Bias` here means the agent systematically treats some groups worse than others — not from malice, but because it learned patterns from data that already carried those imbalances.",
+        "An agent that screens job applicants or flags transactions can quietly disadvantage people by gender, age, or postcode, and because it does so consistently and at scale, the harm is bigger and harder to spot than one biased human.",
+        "The defence is to test for it deliberately: measure outcomes across groups before and after launch, not just overall accuracy, and treat a gap as a bug.",
+        "`Transparency` here means a second, separate duty — telling people plainly that they're interacting with AI, not a person.",
+        "Letting users believe a machine is human isn't a harmless white lie; it removes their ability to judge the advice, and in places like the EU it is becoming a legal requirement to disclose it.",
+        "A simple rule of thumb: if a reasonable person would change how they act on learning \"this was an AI,\" you owe them that disclosure up front."
+      ]
+    },
+    {
+      "title": "Privacy and data handling: what you collect, keep, and feed the model",
+      "teaser": "The data the agent touches is a liability, not just a resource",
+      "body": [
+        "Agents are hungry for context, so it's tempting to feed them everything — full customer records, chat history, internal documents — but every piece of personal data you touch is something you now have to protect and account for.",
+        "`Personally identifiable information` (PII) is any data that can single out a real person — a name, email, address, health detail, or payment number — and it carries legal obligations under laws like the EU's `GDPR` and California's `CCPA`.",
+        "`Data minimisation` is the discipline of giving the agent only the data the task genuinely needs, for only as long as it needs it — the privacy cousin of least privilege.",
+        "A specific trap with agents: data you send to a third-party model provider may be logged or, depending on the contract, used to train future models — so \"where does this text go and who can see it?\" is a question you must answer before you send it, not after.",
+        "Practical moves include stripping or masking PII before it reaches the model, choosing providers and settings that don't retain or train on your data, and keeping a clear record of what the agent stored and why.",
+        "The test is whether you could look the user in the eye and explain exactly what happened to their information."
+      ]
+    },
+    {
+      "title": "The real cost — dollars, energy, and oversight you can't delegate away",
+      "teaser": "Heavy agents have a footprint and a chain of accountability",
+      "body": [
+        "Agents are expensive because they loop: each step re-sends a growing pile of context, so a single task can cost many times a one-off question — the cost mechanics are covered in Module 5's cost lesson, so here we only note that heavy use is a real, recurring bill, not a rounding error.",
+        "There's an environmental cost too: the data centres that run these models draw significant electricity and water for cooling, so an agent that runs constantly has a carbon and resource footprint that scales with its usage — illustratively, a single complex agent task uses far more energy than a plain web search.",
+        "Being cost- and energy-aware is part of responsibility: don't run your largest model on trivial steps, don't loop forever, and don't ship an agent doing heavy work where a cheaper, lighter approach would do — frugality here is also an environmental choice.",
+        "The fifth duty is `human oversight`: keeping a person accountable for, and able to override, the agent's consequential decisions, rather than treating the agent's output as final.",
+        "Oversight is meaningful only when the human can actually intervene in time and isn't just rubber-stamping — a name on a checkbox who approves everything in two seconds is oversight in theory but not in practice.",
+        "Reserve genuine human judgement for the decisions that are hard to reverse or that materially affect someone's life — money, employment, health, legal standing — and let the cheap, reversible stuff run on its own."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "bias (in an AI system)",
+      "def": "When an agent systematically produces worse outcomes for some groups of people, usually because it learned skewed patterns from its training data. Because it acts consistently and at scale, the harm is larger and easier to miss than a single biased human."
+    },
+    {
+      "term": "transparency / AI disclosure",
+      "def": "Plainly telling people they are interacting with an AI rather than a human, so they can judge its output accordingly. Increasingly a legal requirement, not just a courtesy."
+    },
+    {
+      "term": "personally identifiable information (PII)",
+      "def": "Any data that can identify a specific real person — name, email, address, health or payment details. Handling it carries legal duties under privacy laws like GDPR and CCPA."
+    },
+    {
+      "term": "data minimisation",
+      "def": "Giving the agent only the data the task genuinely needs, for only as long as it needs it, and no more — the privacy equivalent of least privilege."
+    },
+    {
+      "term": "human oversight",
+      "def": "Keeping an accountable person able to review and override an agent's consequential decisions, instead of treating its output as final. It only counts if the human can actually intervene in time, not just rubber-stamp."
+    },
+    {
+      "term": "environmental footprint",
+      "def": "The electricity and water that data centres consume to run AI models. A heavily-used agent has a carbon and resource cost that scales with how much it runs, making frugality an environmental choice as well as a financial one."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Responsibility is an ownership question, not a values poster: when an agent discriminates, leaks data, or runs up a surprise bill, leadership and regulators ask who decided to ship it that way — and \"the model did it\" is not a defence that has held up in court or in the press.",
+      "The sharpest framing for any agent feature is the public-defence test: could you explain this design — what it decides, what it discloses, what it does with data, what it costs, and who can override it — to an affected user or a journalist without flinching? If not, that's your backlog.",
+      "These duties also trade against speed and cost, and that trade-off is yours to set deliberately: bias testing, disclosure, data minimisation, and real human oversight each add friction, but skipping them doesn't remove the risk — it just defers it to the moment it becomes a headline you own."
+    ]
+  },
+  "caseStudy": {
+    "title": "Koko's undisclosed AI mental-health experiment (2023)",
+    "body": [
+      "Koko, a mental-health support platform, quietly ran an experiment where roughly 4,000 users seeking peer support received messages that had been drafted by an AI model (GPT-3) rather than written purely by humans.",
+      "The people receiving support were not clearly told that AI had helped write the replies they were reading during a vulnerable moment.",
+      "When Koko's co-founder described the experiment publicly in early 2023, the response was a strong backlash over consent and the ethics of testing undisclosed AI on people seeking emotional help.",
+      "Notably, the issue wasn't that the AI's words were bad — Koko reported the AI-assisted messages were often rated well — it was that users hadn't been told a machine was involved, which stripped away their ability to consent to it."
+    ],
+    "bridge": "Koko shows the transparency duty in isolation: even helpful, well-rated AI output can become a trust crisis purely because users weren't told it was AI — disclosure is the thing you can't skip."
+  },
+  "takeaways": [
+    "Responsible shipping means owning an agent's second-order effects — bias, disclosure, data handling, cost and energy, and human oversight — and building only what you'd defend in public.",
+    "Test for bias by measuring outcomes across groups, not just overall accuracy, and disclose plainly when users are talking to an AI rather than a person.",
+    "Treat the data an agent touches as a liability: minimise what you collect, mask PII before it reaches the model, and know where that text goes and whether it's retained or trained on.",
+    "Heavy agents cost real money and real energy, and human oversight only counts when a person can genuinely intervene on consequential, hard-to-reverse decisions — not rubber-stamp them."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An agent screens job applications and is highly accurate overall, but it advances men at noticeably higher rates than equally-qualified women. What's the responsible way to treat this?",
+      "options": [
+        {
+          "text": "As a bias bug — measure outcomes across groups, not just overall accuracy, and treat the gap as a defect to fix before shipping",
+          "correct": true
+        },
+        {
+          "text": "As acceptable, because the model's overall accuracy is high and it learned the pattern from real historical data",
+          "correct": false
+        },
+        {
+          "text": "As unavoidable, since any AI trained on real-world data will always discriminate and nothing can be done",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — high overall accuracy can hide a systematic gap between groups. Responsible practice is to measure outcomes per group and treat a disparity as a bug to fix, not to wave it through because the data 'said so' or because the headline accuracy looks good."
+    },
+    {
+      "q": "The Koko episode caused a backlash even though the AI-assisted support messages were often rated well by recipients. What was the core problem?",
+      "options": [
+        {
+          "text": "Users weren't told AI had helped write the messages, so they couldn't consent to it — the failure was a lack of transparency, not message quality",
+          "correct": true
+        },
+        {
+          "text": "The AI's messages were low-quality and harmful, which is what triggered the public anger",
+          "correct": false
+        },
+        {
+          "text": "The platform charged users too much money to run the AI model behind the support",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the messages were reportedly well-rated; the breach was that people weren't told a machine was involved during a vulnerable moment, which removed their ability to consent. Transparency about being AI is a duty in its own right, separate from output quality."
+    },
+    {
+      "q": "Your agent's task needs a customer's order history, but the team plans to feed it each customer's full record — including health notes and saved payment details — sent to a third-party model that may log inputs. What principle should guide the fix?",
+      "options": [
+        {
+          "text": "Data minimisation — give the agent only the data the task genuinely needs, mask or strip the rest of the PII, and confirm where the data goes and whether it's retained",
+          "correct": true
+        },
+        {
+          "text": "Send everything anyway, since more context always makes the agent perform better and privacy law doesn't apply to AI",
+          "correct": false
+        },
+        {
+          "text": "Keep the full records but simply add a line to the privacy policy, which removes any obligation to limit what's shared",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — data minimisation means the agent gets only what the task requires (order history), with unnecessary PII like health and payment details stripped or masked, and you confirm where that data goes and whether it's logged or trained on. More data is a bigger liability, not a free win, and a policy line doesn't remove the duty to limit what you expose."
+    }
+  ],
+  "sources": [
+    {
+      "label": "NIST — AI Risk Management Framework (trustworthy and responsible AI)",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "label": "Business Insider — Koko used GPT-3 on people seeking mental-health support without telling them (2023)",
+      "url": "https://www.businessinsider.com/company-using-chatgpt-mental-health-support-ethical-issues-2023-1"
+    },
+    {
+      "label": "European Commission — EU AI Act, transparency obligations for AI systems",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    }
+  ]
+}

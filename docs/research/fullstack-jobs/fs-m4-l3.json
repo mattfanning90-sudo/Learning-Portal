@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Data modelling is deciding how to slice your information into tables of rows and columns, give every row a unique id (a primary key), and link tables together with references (foreign keys) — so each fact is stored once and relationships are explicit.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "An app's data isn't one giant pile — it's a set of things you keep track of: customers, orders, products.",
+    "Each kind of thing gets its own `table`: a grid where every row is one item and every column is one detail about it.",
+    "To tell two rows apart for certain, you give each one a unique label — a `primary key`, like a customer number.",
+    "When one table needs to point at another — an order belongs to a customer — it stores that customer's key as a `foreign key`, which is just a reference.",
+    "Get this structure right and your data stays tidy and trustworthy; get it wrong and the same fact ends up copied in ten places, each free to drift out of sync."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a well-run filing cabinet. Each drawer holds one kind of record — a `Customers` drawer, an `Orders` drawer — and every folder inside is one row.",
+      "Every folder has a unique number stamped on the tab (the `primary key`), and an order folder simply writes down its customer's number rather than re-copying the customer's whole address (the `foreign key`).",
+      "Where the metaphor bends: a paper folder can hold loose extra pages, but a table column is strict — every row must have the same columns in the same shape, which is exactly what keeps the data clean and queryable."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Entities become tables; details become columns",
+      "teaser": "First decide what things you're tracking",
+      "body": [
+        "Data modelling starts by naming your `entities` — the distinct kinds of thing your app cares about, like a customer, an order, or a product.",
+        "Each entity becomes a `table`: a named grid of data, like a single spreadsheet tab.",
+        "Each row (also called a `record`) is one instance of that entity — one specific customer, one specific order.",
+        "Each `column` (also called a `field`) is one attribute every row of that entity has — a customer's name, email, and signup date.",
+        "A column also fixes the *type* of data it holds: text, a whole number, a date, true/false — so the database can reject a price typed into an email column.",
+        "The discipline is one entity per table: don't cram customers and orders into one sheet, because they're different things with different attributes."
+      ]
+    },
+    {
+      "title": "The primary key: a row's unique, never-reused id",
+      "teaser": "How the database tells two rows apart for certain",
+      "body": [
+        "If two customers are both named \"James Lee,\" the database needs a way to know which row is which — names aren't unique enough.",
+        "A `primary key` is one column whose value is guaranteed unique for every row and never blank, so it identifies that row unambiguously.",
+        "Often it's a plain auto-counting number — customer `1`, `2`, `3` — assigned by the database so two rows can never collide.",
+        "The golden rule: a primary key must be stable. You don't reuse an old id for a new row, and you don't change a row's id once it's set, because other tables may be pointing at it.",
+        "Picking something \"meaningful\" as the key — an email address, say — usually backfires: meaningful values change, and a key that changes breaks every reference to it.",
+        "So the safe default is a meaningless, machine-generated id whose only job is to be unique forever."
+      ]
+    },
+    {
+      "title": "Foreign keys and relationships: how tables connect",
+      "teaser": "One-to-many and many-to-many, made explicit",
+      "body": [
+        "A `foreign key` is a column in one table that stores the primary key of a row in another table — a reference, a pointer by id.",
+        "An `orders` table holds a `customer_id` column; each order writes down *which* customer's id it belongs to, instead of duplicating the customer's details.",
+        "This creates a `one-to-many` relationship: one customer can have many orders, but each order belongs to exactly one customer — the most common shape in real apps.",
+        "Some relationships are `many-to-many`: a student takes many courses, and a course has many students. You can't point either side at a single id.",
+        "The fix is a third table — a `join table` (or `junction table`) — whose rows each pair one student id with one course id; every enrolment is its own row.",
+        "Because foreign keys are explicit references, the database can also *enforce* them: it can refuse an order that names a customer id that doesn't exist, catching mistakes at the door."
+      ]
+    },
+    {
+      "title": "Normalization: store each fact exactly once",
+      "teaser": "The gentle rule that keeps data honest",
+      "body": [
+        "`Normalization` is the practice of organising tables so each piece of information lives in exactly one place.",
+        "Imagine writing the customer's full address onto every one of their orders. If they move house, you now have to find and fix dozens of rows — and you'll miss some.",
+        "The normalized fix: store the address once, in the `customers` table, and let every order *reference* the customer by `customer_id`.",
+        "Update the address in that one spot and every order instantly reflects it, because the orders never held a copy in the first place.",
+        "The tell-tale sign you need to normalize is duplication: the same fact copied across many rows, free to drift out of agreement.",
+        "Done gently, normalization means: split repeating information into its own table and link to it by key — that's the whole instinct, not a rulebook to memorise."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "entity / table",
+      "def": "An entity is a distinct kind of thing you track (a customer, an order); each entity becomes a table — a named grid where rows are items and columns are their details."
+    },
+    {
+      "term": "row and column",
+      "def": "A row (or record) is one item in a table — one specific customer; a column (or field) is one attribute every row shares, like name or email, with a fixed data type."
+    },
+    {
+      "term": "primary key",
+      "def": "One column whose value is unique for every row and never blank, so it identifies that row unambiguously — usually a stable, machine-generated number."
+    },
+    {
+      "term": "foreign key",
+      "def": "A column in one table that stores the primary key of a row in another table — a reference by id, like an order holding its customer's `customer_id`."
+    },
+    {
+      "term": "relationship (one-to-many, many-to-many)",
+      "def": "How tables connect: one-to-many means one row links to many (one customer, many orders); many-to-many (students and courses) needs a join table pairing ids."
+    },
+    {
+      "term": "normalization",
+      "def": "Organising tables so each fact is stored in exactly one place and referenced by key elsewhere — which removes duplicated data that could otherwise drift out of sync."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The data model is the quietest, most expensive decision in a product: it's easy to add a feature, but reshaping how core data is stored after thousands of rows exist is slow, risky surgery — so the early model shapes what's cheap or painful to build for years.",
+      "Duplicated, un-normalized data is where \"our numbers don't match\" bugs come from — a customer's address right on one screen and stale on another — and those quietly erode trust in the whole product.",
+      "When an engineer says a request is hard because \"the data model doesn't support that relationship,\" they usually mean a one-to-many was assumed where reality is many-to-many — a framing question a product owner is well placed to catch before it's baked in."
+    ]
+  },
+  "caseStudy": {
+    "title": "Airbnb's listings, guests, and bookings",
+    "body": [
+      "Airbnb's marketplace is, at its core, a set of related entities: hosts, listings, guests, and bookings — each a natural table.",
+      "A host has many listings, and a listing belongs to one host: a textbook one-to-many relationship, captured by each listing row carrying its host's id as a foreign key.",
+      "Bookings are where it gets interesting — a guest books many listings over time, and a listing is booked by many guests, a many-to-many relationship that lives naturally in the bookings table, where each row pairs one guest id with one listing id for one stay.",
+      "Because a listing's details (title, address, nightly price) are stored once on the listing and merely referenced by every booking, a host editing their price updates one row — not a copy stitched into every past reservation."
+    ],
+    "bridge": "Airbnb shows the model end to end: entities as tables, primary keys identifying each row, foreign keys wiring up one-to-many and many-to-many relationships, and each fact stored once so an edit lands everywhere at once."
+  },
+  "takeaways": [
+    "Model data by turning each entity (customer, order) into a table of rows and columns, where columns also fix the type of data they hold.",
+    "Every row needs a primary key — a unique, stable, never-reused id — so the database can tell rows apart with certainty.",
+    "Foreign keys are references that store another table's primary key, wiring up one-to-many relationships; many-to-many needs a join table pairing ids.",
+    "Normalization means storing each fact exactly once and referencing it by key, so an update lands in one place instead of being copied — and drifting — across many rows."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your app has a `customers` table and an `orders` table. Each order needs to know which customer placed it. What's the right way to model that?",
+      "options": [
+        {
+          "text": "Give each order a foreign key column (e.g. `customer_id`) that stores the customer's primary key, so the order references the customer by id",
+          "correct": true
+        },
+        {
+          "text": "Copy the customer's full name, email, and address into every order row so the order is self-contained",
+          "correct": false
+        },
+        {
+          "text": "Merge customers and orders into one big table so nothing needs to reference anything",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a foreign key stores the referenced row's primary key, creating a clean one-to-many link (one customer, many orders) without duplicating the customer's details. Copying those details would duplicate a fact that could later drift out of sync, and merging the two different entities into one table defeats the point of separating them."
+    },
+    {
+      "q": "Why is a plain auto-counting number usually a safer primary key than using the customer's email address?",
+      "options": [
+        {
+          "text": "A primary key must be stable and never change, but a meaningful value like an email can change — and changing a key breaks every foreign key pointing at it",
+          "correct": true
+        },
+        {
+          "text": "Numbers take up less disk space than text, which is the only thing that matters for keys",
+          "correct": false
+        },
+        {
+          "text": "Email addresses can never be unique, so they can't identify a row at all",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the danger isn't uniqueness (an email could be unique); it's stability. A primary key must not change, because other tables reference it by that exact value, so a key built from meaningful data that people sometimes update will break those references. A meaningless machine-generated id has no reason to ever change."
+    },
+    {
+      "q": "A school app needs to record that a student takes many courses and a course has many students. What does this many-to-many relationship require that a simple one-to-many doesn't?",
+      "options": [
+        {
+          "text": "A separate join table whose rows each pair one student id with one course id — one row per enrolment",
+          "correct": true
+        },
+        {
+          "text": "A single foreign key on the students table pointing at the one course they take",
+          "correct": false
+        },
+        {
+          "text": "Storing the full list of courses as duplicated text inside each student's row",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — in a one-to-many you can put a foreign key on the 'many' side, but a many-to-many can't fit on either side alone, so you add a join table where each row links one student to one course. A single foreign key can't hold many courses, and stuffing a duplicated list of courses into a row is exactly the un-normalized duplication this model exists to avoid."
+    }
+  ]
+}

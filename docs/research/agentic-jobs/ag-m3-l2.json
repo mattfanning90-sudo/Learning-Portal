@@ -1,0 +1,177 @@
+{
+  "coreIdea": "Claude Code, GitHub Copilot, and Cursor are not really competing products — they are three different shapes of the same idea, and which one fits depends on whether you want a terminal-based agent, autocomplete-in-your-editor, or an AI-native editor with an agent built in.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "There are three tools almost everyone names when they talk about coding with AI: Claude Code, GitHub Copilot, and Cursor.",
+    "They sound like rivals, but they are really three different *shapes*.",
+    "Claude Code runs in the `terminal` — the plain text window where you type commands to your computer. You give it a job and it goes off and does it, like a coworker you direct.",
+    "GitHub Copilot started as `autocomplete` inside your code editor — it finishes the line you are typing — and has since grown an \"agent mode\" that can take on a whole task.",
+    "Cursor is a whole code editor rebuilt around AI — the assistant is baked into the tool itself, not bolted on.",
+    "None is simply \"best.\" Each has a natural home, and a serious team often uses more than one."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of three ways to get help with a kitchen renovation. Claude Code is the contractor you brief at the door: you describe the job, hand over the keys, and they work through it largely on their own. Copilot's classic mode is the assistant standing at your elbow, finishing each cut a half-second before you reach for the saw. Cursor is the purpose-built workshop where every tool already has the smart attachment fitted.",
+      "The point of the metaphor is *where the help sits*: in front of the work, beside the work, or built into the workshop.",
+      "Where it breaks: a contractor and an elbow-assistant are different people, but here the underlying \"worker\" is often the same AI model — the real difference is the surface you meet it through, not the intelligence behind it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Claude Code: the terminal-based agent",
+      "teaser": "You brief it, it works, you review",
+      "body": [
+        "Claude Code, made by Anthropic, lives in the `terminal` — the text window where you type commands rather than click buttons.",
+        "It is an `agent`: software you give a goal to, which then plans and takes multiple steps on its own — reading files, editing them, running tests — before coming back.",
+        "Because it is not tied to one editor, it can roam across a whole project: open many files, run commands, and chain steps toward the goal you set.",
+        "That makes its natural home the larger, multi-step job — \"add this feature across these files,\" \"find and fix why this test fails\" — where you brief it and review the result, rather than watching every keystroke.",
+        "The trade-off is that an agent acting on its own needs supervision: you read its `diff` — the exact before-and-after of what it changed — before you accept anything.",
+        "It shines when the work is a *task to delegate*, not a line to finish."
+      ]
+    },
+    {
+      "title": "GitHub Copilot: autocomplete first, agent second",
+      "teaser": "The assistant at your elbow that grew a delegation mode",
+      "body": [
+        "GitHub Copilot, from GitHub (owned by Microsoft), made its name as `autocomplete` for code: as you type, it suggests the rest of the line or block, and you press Tab to accept.",
+        "That tight, in-the-flow loop is still its core strength — it keeps you in your existing editor, suggesting the obvious next step so you write faster without changing how you work.",
+        "It has since added an `agent mode` and a chat panel, so it can also take on a whole task the way Claude Code does, not just finish lines.",
+        "Its other advantage is reach: it plugs into the editors most teams already use, like `VS Code` (Microsoft's popular free editor), and sits right next to where code already lives on GitHub.",
+        "So its centre of gravity is the developer who wants help *layered onto their current setup*, with autocomplete as the everyday default and the agent for bigger jobs.",
+        "Think of it as the broadest, most incremental on-ramp: change little, gain a fast assistant."
+      ]
+    },
+    {
+      "title": "Cursor: the AI-native editor",
+      "teaser": "Not an add-on — the editor is the assistant",
+      "body": [
+        "Cursor, from a company called Anysphere, is a full code editor — in fact a fork (a customised copy) of `VS Code` — rebuilt so AI is woven through every part of it.",
+        "Because the AI is built in rather than bolted on, the assistant can see your whole project at once and act across many files from inside the editor you are already looking at.",
+        "It blends all three shapes: in-line autocomplete, a chat you talk to about your code, and an agent that can carry out multi-file changes — all in one window.",
+        "Its sweet spot is the developer who wants a single, deeply AI-integrated home where chatting, editing, and delegating all happen in the same place.",
+        "The cost of that integration is commitment: you adopt a new editor, not a plug-in, which is a bigger switch than adding Copilot to the editor you already have.",
+        "It shines when you want the AI everywhere in your workflow, not waiting in a side panel."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "terminal",
+      "def": "The plain text window where you type commands to control your computer directly, instead of clicking buttons in a graphical app; Claude Code lives here."
+    },
+    {
+      "term": "IDE / code editor",
+      "def": "The application a developer writes code in — short for Integrated Development Environment; `VS Code` is the most widely used one, and both Copilot and Cursor build on it."
+    },
+    {
+      "term": "autocomplete (code completion)",
+      "def": "The AI suggesting the rest of the line or block as you type, which you accept with a keypress; this was Copilot's original and still-core feature."
+    },
+    {
+      "term": "agent",
+      "def": "Software you give a goal to, which then plans and takes several steps on its own — reading files, editing, running commands — before reporting back, rather than helping one keystroke at a time."
+    },
+    {
+      "term": "agent mode",
+      "def": "A setting in a tool like Copilot that switches it from finishing single lines to taking on a whole task end-to-end, the way Claude Code works by default."
+    },
+    {
+      "term": "fork (of software)",
+      "def": "A customised copy of an existing program taken as a starting point; Cursor is a fork of `VS Code`, which is why it feels familiar but behaves differently."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "These tools are different *shapes*, not different scores on a leaderboard, so the right question for a team is not \"which is best?\" but \"which shape fits how our people already work?\" — the lowest-friction adoption usually wins over the highest benchmark.",
+      "The shapes carry different switching costs: Copilot layers onto the editor your team already uses, while Cursor asks them to adopt a new editor entirely, and that adoption cost is a real line item even when the tool is excellent.",
+      "Many serious teams run more than one — autocomplete for the everyday flow, a terminal agent for big delegated jobs — so think portfolio, not single pick, and remember the underlying model often matters more than the wrapper around it."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anysphere's Cursor reaches a $100M revenue run-rate (2024–2025)",
+    "body": [
+      "Cursor is built by a startup called Anysphere, founded in 2022, and its bet was unusual: instead of adding AI to an existing editor as a plug-in, it forked `VS Code` and rebuilt the whole editor around AI.",
+      "That AI-native shape resonated fast — by reporting in 2024 and 2025, Cursor was widely cited as reaching roughly a $100 million annual revenue run-rate, one of the quickest climbs ever seen for a developer tool (figures here are widely reported but illustrative).",
+      "It did this in the same market where GitHub Copilot — backed by Microsoft and bundled with the editor most developers already had — was the incumbent default.",
+      "Cursor did not win by being a \"smarter Copilot\"; it won by being a *different shape* — a whole editor where the AI is the centre, not a side panel — which appealed to developers who wanted AI woven through everything."
+    ],
+    "bridge": "Cursor's rise next to Copilot is the lesson in miniature: these tools compete on shape and fit, not on a single \"best\" score, which is exactly why a team picks the surface that matches how it works."
+  },
+  "takeaways": [
+    "Claude Code, Copilot, and Cursor are three shapes of the same idea: a terminal agent, editor autocomplete-plus-agent, and an AI-native editor.",
+    "Claude Code's home is the delegated multi-step task you brief and then review; Copilot's is fast in-flow autocomplete layered onto your current editor; Cursor's is a single editor with AI woven throughout.",
+    "There is no universal \"best\" — the right pick depends on the shape that fits how a person or team already works, and switching cost is part of the decision.",
+    "The underlying AI model often matters more than the wrapper, and many teams sensibly use more than one tool at once."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which description best captures the *shape* of each of the three tools?",
+      "options": [
+        {
+          "text": "Claude Code is a terminal-based agent, Copilot is editor autocomplete that also has an agent mode, and Cursor is an AI-native editor",
+          "correct": true
+        },
+        {
+          "text": "All three are terminal agents that differ only in which AI model they use",
+          "correct": false
+        },
+        {
+          "text": "Claude Code and Cursor are autocomplete tools, while Copilot is the only true agent",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the durable distinction is the surface you meet the AI through: a terminal agent (Claude Code), autocomplete-plus-agent inside your editor (Copilot), and a whole editor rebuilt around AI (Cursor)."
+    },
+    {
+      "q": "A developer wants AI help without leaving the editor they already use, mostly to write lines faster as they type. Which tool's core strength fits best, and why?",
+      "options": [
+        {
+          "text": "GitHub Copilot — its core strength is in-flow autocomplete layered onto an editor like VS Code, so it changes their setup the least",
+          "correct": true
+        },
+        {
+          "text": "Cursor — because it is the only tool that offers autocomplete, so there is no alternative",
+          "correct": false
+        },
+        {
+          "text": "Claude Code — because a terminal agent is the fastest way to finish individual lines as you type",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — Copilot began as and still excels at autocomplete inside the existing editor, the lowest-friction on-ramp; Cursor is not the only tool with autocomplete, and a terminal agent like Claude Code is built for delegated tasks, not finishing single lines."
+    },
+    {
+      "q": "Why is \"which AI coding tool is best?\" the wrong question for a team to ask?",
+      "options": [
+        {
+          "text": "Because they are different shapes for different ways of working, so the right choice depends on fit and switching cost, not a single ranking",
+          "correct": true
+        },
+        {
+          "text": "Because all three tools are identical, so the choice never matters",
+          "correct": false
+        },
+        {
+          "text": "Because the newest tool is always automatically the best one",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — Claude Code, Copilot, and Cursor compete on shape and fit rather than one universal score, the underlying model often matters more than the wrapper, and many teams sensibly use more than one at once."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Claude Code overview",
+      "url": "https://docs.anthropic.com/en/docs/claude-code/overview"
+    },
+    {
+      "label": "GitHub — About GitHub Copilot",
+      "url": "https://docs.github.com/en/copilot/about-github-copilot/what-is-github-copilot"
+    },
+    {
+      "label": "Cursor — Documentation",
+      "url": "https://docs.cursor.com/"
+    }
+  ]
+}

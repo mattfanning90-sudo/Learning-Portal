@@ -1,0 +1,174 @@
+{
+  "coreIdea": "On day one in a real job you join a large codebase you didn't write, so the core skill isn't writing code — it's orienting yourself fast: finding the entry points, following the data, getting it running, reading far more than you write, asking sharp questions, and making small safe changes before big ones.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "The picture most people have of a software job — sit down, write brilliant new code — is almost the opposite of the real first months.",
+    "You join a `codebase`, the whole collection of files that make up an existing product, and it was written by dozens of people over many years, mostly people who have since left.",
+    "Nobody expects you to understand it all; they expect you to find your way around it, the way a new doctor learns the hospital before doing surgery.",
+    "So the day-one skill is orienting: getting the project running on your own machine, finding where things start, following how data moves, and reading the code to build a map in your head.",
+    "And the safest way to earn trust is to read a lot, ask good questions, and make a tiny, low-risk change first — long before you touch anything big."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Joining a codebase is like moving to a huge old city you've never visited, where you've been handed an apartment and a job but no full map.",
+      "You don't try to memorise every street at once — you learn the route from home to work, find the few landmarks everyone uses, and slowly the map fills in by walking it, not by staring at it.",
+      "Where the metaphor breaks: a city mostly sits still while you learn it, but a codebase keeps changing under you as your new teammates ship code every day — so part of the skill is learning a thing that's still moving, which is why asking a human is often faster than re-reading everything."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why reading beats writing at first",
+      "teaser": "You can't safely change a system you don't understand",
+      "body": [
+        "The instinct on a new team is to prove yourself by writing code fast — but in a large codebase, writing before you understand is how you break things.",
+        "Code is read far more than it is written, and on a new project that ratio is at its most extreme: you'll read for hours before you change a single line, and that's correct.",
+        "Every change you make ripples through code you haven't seen yet, so the real risk isn't that your code is wrong — it's that it quietly breaks something three files away.",
+        "Reading first builds a `mental model`: a rough internal map of the system's main parts and how they connect, which is what lets you predict the consequences of a change.",
+        "Senior engineers judge a new hire less on lines written and more on how quickly they stop needing to ask where things live — that's the model forming.",
+        "So the goal of week one isn't output; it's understanding, because understanding is the thing that makes later output safe."
+      ]
+    },
+    {
+      "title": "How to orient: entry points, follow the data, get it running",
+      "teaser": "Three concrete moves that turn a wall of files into a map",
+      "body": [
+        "First, get it running. Until the project starts on your own machine — what teams call your `local environment` — everything else is theory, and getting it running teaches you the project's real dependencies and quirks.",
+        "Second, find the `entry point`: the file where the program actually begins, often named something like `main`, `index`, or `app`. From there the program calls everything else, so it's the front door to the whole maze.",
+        "Third, follow the data. Pick one real action a user can take — say, logging in — and trace it from where the request arrives, through the code that handles it, to where it reads or writes the `database` (the system's permanent store of data).",
+        "Following one path end-to-end teaches you more than skimming a hundred files, because it shows you how the layers actually talk to each other in this specific project.",
+        "Lean on the tools: searching the codebase for a button's text or an error message jumps you straight to the relevant code, far faster than reading folder by folder.",
+        "You're not trying to learn everything — you're trying to learn one true path, then another, until the map fills in."
+      ]
+    },
+    {
+      "title": "Conventions and context docs: the local rules of the road",
+      "teaser": "Every team has unwritten-then-written rules; find them early",
+      "body": [
+        "Every codebase has `conventions`: agreed patterns for how things are named, structured, and done here, even when other ways would also work.",
+        "Following the local convention — even one you'd personally do differently — matters more than being right in the abstract, because consistency is what keeps a big codebase readable.",
+        "Most teams write some of this down in `context docs`: files like a `README` (a plain-English guide to setting up and running the project) or a `CONTRIBUTING` guide that explains how to make changes the team will accept.",
+        "Increasingly teams keep an `agents` file or similar — written instructions meant for both new humans and AI assistants — that captures the gotchas a newcomer always trips over.",
+        "Read these before you ask, but don't trust them blindly: docs drift out of date, so when the docs and the running code disagree, the code is the truth.",
+        "When you find a doc that's wrong or missing, fixing it is the perfect first contribution — low risk, genuinely useful, and it proves you can ship."
+      ]
+    },
+    {
+      "title": "Asking good questions and making small safe changes",
+      "teaser": "Earn trust with the smallest useful contribution first",
+      "body": [
+        "Good questions show you've done the work: \"I traced login to `auth.js` and got lost where it calls the token service — is that the right file, or am I in the wrong place?\" beats \"how does login work?\".",
+        "Timebox your stuck-ness: try to find the answer yourself for a set window — say, thirty minutes — then ask, so you neither flail for a day nor interrupt a teammate every five minutes.",
+        "When you do change something, start small: a typo fix, a doc update, a tiny bug, something whose `blast radius` — how much could break if you're wrong — is close to zero.",
+        "A small first change is really a test of the whole pipeline: can you make an edit, get it reviewed, and get it shipped through the team's process? That's worth far more than the change itself.",
+        "Save the big, sweeping changes for after you've built the map and earned trust — early rewrites by someone who doesn't yet understand the system are how new hires create work for everyone.",
+        "The pattern is simple: read a lot, ask sharp questions, ship something tiny, repeat — and let your confidence grow with your understanding, not ahead of it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "codebase",
+      "def": "The entire collection of source-code files that make up a software product. On a real team it's usually large, old, and written by many people who have since moved on, so most of your early work is understanding it rather than adding to it."
+    },
+    {
+      "term": "mental model",
+      "def": "The rough internal map you build of how a system's main parts fit together and talk to each other. It's what lets you predict the consequences of a change before you make it, which is why building it is the real goal of your first weeks."
+    },
+    {
+      "term": "entry point",
+      "def": "The file where a program actually starts running — often named something like `main`, `index`, or `app`. Because the program flows outward from here, it's the natural front door for understanding how everything connects."
+    },
+    {
+      "term": "local environment",
+      "def": "A running copy of the project on your own machine. Getting the project to start locally is the first orientation step, because it forces you to learn its real dependencies and quirks before you change anything."
+    },
+    {
+      "term": "conventions",
+      "def": "The agreed patterns a team uses for naming, structuring, and writing code, even where other ways would also work. Following the local convention matters more than being right in the abstract, because consistency keeps a large codebase readable."
+    },
+    {
+      "term": "blast radius",
+      "def": "How much could break if a change turns out to be wrong. A small first change has a near-zero blast radius, which is exactly why it's the safe way to earn trust before attempting anything big."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Onboarding speed is a product cost you own, not just an HR nicety: every week a capable hire spends lost in the codebase is a week of salary buying confusion instead of features, and that ramp time multiplies across every person you hire.",
+      "The lever you control is context: clear README and context docs, a one-command way to get the project running, and a culture where small first changes are welcomed turn a six-week ramp into a two-week one — illustratively, but the shape is real.",
+      "It also reframes how you read a team's health — if new hires take months to ship anything, the problem usually isn't the people, it's missing maps and tribal knowledge that lives only in senior engineers' heads, which is a risk you can see and fix."
+    ]
+  },
+  "caseStudy": {
+    "title": "Spotify's 'Golden Path' onboarding and Backstage",
+    "body": [
+      "Spotify grew fast enough that engineers were spread across hundreds of small teams, each owning different pieces of a sprawling codebase, and new hires kept getting lost finding where anything lived or how to run it.",
+      "To fix it, Spotify built an internal tool called Backstage — a single 'developer portal' that acts like a map of the whole company's software: which team owns which service, where its docs live, and how to spin it up.",
+      "They paired it with documented 'Golden Paths' — recommended, well-trodden routes for doing common tasks the blessed way — so a newcomer could follow the supported path instead of reinventing one and guessing at conventions.",
+      "Backstage worked well enough internally that Spotify open-sourced it in 2020, and it became a widely adopted standard other large companies now use to tame the same onboarding problem."
+    ],
+    "bridge": "Spotify essentially institutionalised the day-one skill — find the entry points, the owners, the conventions, and the safe path — by building the map so each new engineer didn't have to redraw it from scratch."
+  },
+  "takeaways": [
+    "On a real team you join a large codebase you didn't write, so the day-one skill is orienting fast, not writing brilliant new code.",
+    "Read before you write: build a mental model by getting the project running, finding the entry point, and following one real action end-to-end through to the database.",
+    "Find and follow the local conventions and context docs (README, CONTRIBUTING, agents files) early — but when docs and running code disagree, trust the code.",
+    "Earn trust with sharp, well-researched questions and a tiny, low-blast-radius first change that exercises the whole ship-it pipeline before you attempt anything big."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "You start your first day on a team and inherit a huge codebase written by people who've mostly left. Why is reading and understanding the right first priority, rather than quickly writing impressive new code?",
+      "options": [
+        {
+          "text": "Because a change you don't understand can quietly break code three files away, so you need a mental model of how the parts connect before any change is safe",
+          "correct": true
+        },
+        {
+          "text": "Because reading code is what you're paid for, and most engineering jobs involve almost no writing at all even after years on a team",
+          "correct": false
+        },
+        {
+          "text": "Because the team will measure your first week purely by how many lines of code you write, and reading is the fastest way to rack up a high line count",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — in a large codebase every change ripples through code you haven't seen yet, so the real risk isn't that your code is wrong but that it silently breaks something elsewhere. Reading first builds a mental model — a map of how the parts connect — which is what makes later changes safe. Writing is still a big part of the job long-term, and nobody's counting lines; the point is that understanding has to come before output."
+    },
+    {
+      "q": "A teammate suggests you start by tracing one real user action — like logging in — from where the request arrives, through the code that handles it, to where it touches the database. Why is this 'follow the data' approach so effective for orienting yourself?",
+      "options": [
+        {
+          "text": "Following one path end-to-end shows how the layers actually talk to each other in this specific project, teaching you more than skimming many files in isolation",
+          "correct": true
+        },
+        {
+          "text": "It lets you skip getting the project running locally, since tracing one path proves the whole system already works on your machine",
+          "correct": false
+        },
+        {
+          "text": "Logging in is the only part of any codebase worth understanding, so once you've traced it you've effectively read the entire system",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — tracing a single real action end-to-end reveals how the layers connect in this particular project, which is far more instructive than skimming a hundred files with no thread linking them. It doesn't replace getting the project running locally (that's a separate, earlier step), and login is just one path among many — the technique is to learn one true path, then another, until the map fills in."
+    },
+    {
+      "q": "After a few days of reading, you're ready to contribute. What's the smartest kind of first change to make on a codebase you're still learning?",
+      "options": [
+        {
+          "text": "A tiny, low-blast-radius change — like fixing a typo, a doc, or a small bug — that exercises the whole 'edit, review, ship' pipeline before you attempt anything big",
+          "correct": true
+        },
+        {
+          "text": "A large, sweeping rewrite of a core part of the system, to immediately prove your skill and show the team they hired the right person",
+          "correct": false
+        },
+        {
+          "text": "Any change at all, as long as you skip reading the team's conventions and context docs so your own fresh approach isn't biased by how they currently do things",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a small first change has a near-zero blast radius (little can break if you're wrong) and its real value is testing the whole pipeline: can you make an edit, get it reviewed, and ship it through the team's process? Big rewrites by someone who doesn't yet understand the system create work for everyone, and ignoring the local conventions and docs is how you produce code the team has to redo — consistency, not a fresh-but-unfamiliar approach, is what keeps a large codebase workable."
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "coreIdea": "Agents are heading toward more autonomy, longer-running tasks, teams of agents, and background work that happens while you do something else — but the open questions of reliability, trust, jobs, and governance mean your edge is staying adaptable, not betting on any one prediction.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Today most agents do one bounded task while you watch.",
+    "The clear direction of travel is toward agents that run longer, decide more on their own, and work in the background while you focus on something else.",
+    "You can already see the early shape of it: agents that hand work to other agents, and agents that wake up to a queue of jobs instead of a single prompt.",
+    "None of that removes the hard problems — agents still make confident mistakes, and we don't yet have settled answers on trust, jobs, or who is accountable when one goes wrong.",
+    "So the useful skill isn't predicting the future precisely; it's staying adaptable as the tools, and the open questions, keep moving."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the early days of self-driving cars. The progression went from cruise control (the car holds a speed) to lane-keeping (it nudges the wheel) to supervised autopilot (it drives, but you keep your hands ready) — each step handing over a bit more, but never all at once.",
+      "Agents are on a similar ramp: from \"do this one step\" to \"handle this whole task\" to \"keep running these tasks in the background,\" with a human less and less in the loop as trust is earned.",
+      "Where the metaphor bends: a car has one narrow job on well-mapped roads, while an agent's \"road\" is open-ended — there is no finite map of every task it might be asked to do, which is exactly why full hands-off autonomy is harder to reach than it looks in a demo."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four directions things are actually moving",
+      "teaser": "More autonomy, longer tasks, teams, and background work",
+      "body": [
+        "First, more `autonomy` — the amount an agent decides for itself without checking in. Today's agents pause often; tomorrow's will take more steps before asking.",
+        "Second, longer-running tasks. Early agents finished in seconds; newer ones can grind on a job for many minutes or hours, keeping track of progress across many steps.",
+        "Third, `multi-agent` systems — a group of agents that split a job between them, where one plans and others do specialised pieces, like a small team rather than a lone worker.",
+        "Fourth, `ambient agents` (also called background agents) — agents that run on their own schedule or get triggered by an event, doing work while you are busy elsewhere, then surfacing a result for you to review.",
+        "These are directions, not destinations — each one is real and shipping in early forms today, but none is solved, and how far each goes is genuinely uncertain.",
+        "Notice the common thread: every direction moves the human from doing the work to reviewing the work, which makes your judgement, not your typing speed, the bottleneck."
+      ]
+    },
+    {
+      "title": "The open questions nobody has fully answered",
+      "teaser": "Reliability, trust, jobs, and governance",
+      "body": [
+        "`Reliability` is the big one: an agent that is right 95 times out of 100 still fails 1 in 20, and across a long chain of steps those small failure rates compound into a real chance of going off the rails (illustrative numbers, but the compounding effect is real).",
+        "`Trust` is the human side of reliability: even a capable agent is useless if you can't tell when to believe it, so the field is racing to make agents show their work and flag their own uncertainty.",
+        "The effect on jobs is unsettled and easy to overstate in both directions — some tasks clearly get automated, new roles (like supervising and steering agents) clearly appear, and the honest answer is that the net shape is still being argued over.",
+        "`Governance` asks who is accountable when an autonomous agent causes harm — the user who launched it, the company that built it, or no one? — and the rules are still being written, with regulators like the EU only just starting.",
+        "These aren't reasons to dismiss agents; they are the reasons the rollout will be staged and supervised rather than a sudden hands-off switch.",
+        "Anyone who tells you these questions are settled — in either the utopian or the doomer direction — is selling something."
+      ]
+    },
+    {
+      "title": "How to stay adaptable when the ground keeps moving",
+      "teaser": "Bet on durable skills, not specific tools",
+      "body": [
+        "Learn the durable concepts, not just today's product. The buttons and brand names will churn, but `context`, tools, evaluation, and guardrails — the ideas from this whole track — keep transferring.",
+        "Get fluent at evaluating output, because as agents do more of the doing, your value shifts to judging: was this right, is it safe, is it good enough to ship?",
+        "Stay close to the work rather than fully delegating it; the people who supervise agents well are the ones who still understand the task underneath.",
+        "Keep a clear-eyed sense of where agents are reliable (bounded, checkable tasks) versus where they aren't (high-stakes, ambiguous, irreversible) — and let that, not the hype, decide where you hand off.",
+        "Treat new capabilities as experiments you measure, not promises you adopt: try them on a real task, check the results, keep what holds up.",
+        "Adaptable beats expert-in-one-tool here, because the half-life of any specific agent product is short and the underlying craft is long."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "autonomy",
+      "def": "How much an agent decides and acts on its own before checking with a human — more autonomy means fewer pauses for approval and more steps taken independently."
+    },
+    {
+      "term": "multi-agent system",
+      "def": "A setup where several agents divide a task between them — often one planning and others handling specialised pieces — so they work like a small team instead of a single agent."
+    },
+    {
+      "term": "ambient agent",
+      "def": "An agent that runs in the background on a schedule or in response to an event, doing work while you are busy elsewhere and surfacing a result for you to review — also called a background agent."
+    },
+    {
+      "term": "reliability",
+      "def": "How consistently an agent produces correct, safe results; small per-step error rates compound over a long task, so reliability is the central limit on how much you can hand off."
+    },
+    {
+      "term": "human-in-the-loop",
+      "def": "Keeping a person positioned to review or approve an agent's work, especially before risky or irreversible actions; more autonomy means moving the human from doing to reviewing rather than removing them."
+    },
+    {
+      "term": "governance",
+      "def": "The rules, accountability, and oversight that decide who is responsible when an autonomous agent causes harm and what it is allowed to do — still being written by companies and regulators."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Your job as the owner is to pace adoption to reliability: match how much autonomy you grant an agent to how checkable and reversible the task is, and keep a human on the dangerous ones.",
+      "Resist both the hype (\"ship it fully autonomous now\") and the dismissal (\"agents are toys\") — the defensible position is to run small, measured experiments and expand only where the results hold up.",
+      "Plan for a staged rollout where humans move from doing the work to supervising it, and budget for the open questions — reliability gaps, accountability, and the human cost of role changes — as real line items, not afterthoughts."
+    ]
+  },
+  "caseStudy": {
+    "title": "Cognition's Devin and the demo-vs-reality gap (2024)",
+    "body": [
+      "In March 2024, the startup Cognition Labs unveiled Devin, billed as \"the first AI software engineer\" — an autonomous agent that could take a coding task and work through it end to end, planning, writing, and testing code on its own.",
+      "The launch demos were striking and the product pointed squarely at the agentic future: longer-running, more autonomous work with a human mostly reviewing the result.",
+      "But when independent testers tried Devin on real tasks, the picture was more mixed: one widely-shared review found it completed only a small fraction of the assignments it was given, often getting stuck or confidently producing work that didn't actually run.",
+      "Cognition kept improving the product and it found real use, but the episode became a textbook example of the gap between a polished autonomy demo and dependable day-to-day reliability."
+    ],
+    "bridge": "Devin captures the whole lesson in one product: the direction of travel toward autonomous, longer-running agents is real, and so is the reliability gap that keeps a human firmly in the loop while that future arrives."
+  },
+  "takeaways": [
+    "Agents are trending toward more autonomy, longer-running tasks, teams of agents, and background work — directions, not finished destinations.",
+    "The hard open questions are reliability, trust, the effect on jobs, and governance, and none of them is settled.",
+    "Compounding per-step errors mean full hands-off autonomy stays hard, so rollouts will be staged and supervised, not flipped on at once.",
+    "Your edge is adaptability: learn the durable concepts, get great at judging output, and let evidence — not hype — decide where you hand off."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which set best describes the directions agentic systems are actually moving in?",
+      "options": [
+        {
+          "text": "More autonomy, longer-running tasks, teams of agents, and background work that runs while you do something else",
+          "correct": true
+        },
+        {
+          "text": "Smaller models, shorter tasks, and a single agent that always waits for a human before every step",
+          "correct": false
+        },
+        {
+          "text": "Replacing all human review entirely and removing any need for evaluation",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the trend is toward more autonomy, longer tasks, multi-agent teams, and ambient (background) agents, with the human shifting from doing the work to reviewing it rather than disappearing."
+    },
+    {
+      "q": "Why does full hands-off autonomy stay hard even as agents improve?",
+      "options": [
+        {
+          "text": "Small per-step error rates compound across a long chain of steps, so reliability over a whole task is harder than reliability on one step",
+          "correct": true
+        },
+        {
+          "text": "Agents have run out of tasks to do, so there is nothing left to automate",
+          "correct": false
+        },
+        {
+          "text": "The open questions about trust, jobs, and governance have already been fully resolved",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — even a high per-step success rate compounds into a meaningful chance of failure over many steps, which is why rollouts stay staged and supervised and a human stays in the loop on risky work."
+    },
+    {
+      "q": "What is the most useful way to stay adaptable as agent tools keep changing?",
+      "options": [
+        {
+          "text": "Learn the durable concepts and get great at judging output, then let measured experiments — not hype — decide where to hand off",
+          "correct": true
+        },
+        {
+          "text": "Master one specific agent product as deeply as possible and avoid trying anything new",
+          "correct": false
+        },
+        {
+          "text": "Adopt every new capability the moment it ships, on trust, without checking the results",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — specific products churn quickly, so betting on durable concepts and your ability to evaluate output, and expanding only where experiments hold up, is what keeps you adaptable."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Cognition Labs — Introducing Devin, the first AI software engineer",
+      "url": "https://cognition.ai/blog/introducing-devin"
+    },
+    {
+      "label": "Anthropic — Building effective agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "LangChain — Introducing ambient agents",
+      "url": "https://blog.langchain.dev/introducing-ambient-agents/"
+    }
+  ]
+}

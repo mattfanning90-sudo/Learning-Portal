@@ -1,0 +1,176 @@
+{
+  "coreIdea": "An API is a contract — a published menu of operations one program offers to another — and REST is the most common way to shape that menu: resources live at URLs, HTTP verbs say what to do to them, and the data travels as JSON.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Two programs that need to work together can't just read each other's minds — they need an agreed way to ask for things.",
+    "That agreement is an `API`, short for Application Programming Interface: a published list of operations one program offers, and exactly how to ask for each one.",
+    "Think of it as a contract — \"ask me this way, and I promise to answer that way\" — so the front-end and back-end can be built by different people and still fit together.",
+    "`REST` is the most popular style for shaping that contract on the web: things live at web addresses, and you act on them with a small set of plain verbs.",
+    "Learn this one pattern and most of the web's APIs — the ones behind your weather app, your bank, your delivery tracker — turn out to be variations on the same handful of moves."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "An API is like a restaurant menu. The kitchen (the back-end) can be wildly complex, but you never go in — you read a menu that lists exactly what you can order and what you'll get back.",
+      "REST is a tidy convention for writing that menu: every dish has its own labelled spot (a `URL`), and you only ever do four things to it — look at it, order a new one, change your order, or cancel it.",
+      "Where the metaphor breaks: a restaurant won't let you invent the rules, but an API's owner can change the menu — add dishes, retire others, or alter how a dish is served — and your code has to keep up when they do."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "An API is a contract, not a thing",
+      "teaser": "A promise about how to ask and what you'll get",
+      "body": [
+        "An `API` is not a program or a server — it's an agreement about how to talk to one.",
+        "It spells out the operations on offer, what you must send to use each one, and what shape the answer comes back in.",
+        "The point of writing it down is independence: the team that builds the screen and the team that builds the engine can work apart, as long as both honour the contract.",
+        "This is why a phone app, a website, and a partner company can all use the *same* back-end — they're all just clients reading the same menu.",
+        "And it's why \"don't break the API\" is a serious rule: change the contract carelessly and every program relying on it suddenly stops working."
+      ]
+    },
+    {
+      "title": "REST in three rules: resources, verbs, JSON",
+      "teaser": "The whole style fits in one breath",
+      "body": [
+        "`REST`, short for Representational State Transfer, is a style for designing web APIs around three simple ideas.",
+        "First, every *thing* the API deals with — a user, an order, a photo — is a `resource`, and each resource sits at its own `URL` (web address), like `/users/42`.",
+        "Second, you don't invent new commands; you reuse the handful of HTTP verbs you already met — `GET` to read, `POST` to create, `PUT` to update, `DELETE` to remove.",
+        "Third, the data going in and coming back is usually `JSON` — a plain-text format that writes data as labelled key-and-value pairs, readable by both humans and machines.",
+        "So the request `GET /users/42` plainly reads as \"read the user resource numbered 42,\" and the answer comes back as a small block of JSON describing that user.",
+        "The elegance is that the verbs are fixed and few — the *nouns* (the resources) are where each API differs."
+      ]
+    },
+    {
+      "title": "An endpoint is one address-plus-verb on the menu",
+      "teaser": "The exact spot you point a request at",
+      "body": [
+        "An `endpoint` is a single specific operation the API offers — a `URL` paired with a verb you're allowed to use on it.",
+        "`GET /orders` is one endpoint (list all orders); `POST /orders` is a different endpoint at the *same* address (create a new order).",
+        "Same URL, different verb, different action — which is exactly why REST can keep the address list short.",
+        "Endpoints often nest to show ownership: `GET /users/42/orders` reads as \"the orders belonging to user 42.\"",
+        "When engineers say \"we need to add an endpoint,\" they mean adding one new line to this menu — one more thing the back-end will respond to.",
+        "The full menu of endpoints *is* the API: list them all and you've described everything the back-end can do for a client."
+      ]
+    },
+    {
+      "title": "GraphQL: a different shape of menu",
+      "teaser": "One door, and you describe exactly what you want",
+      "body": [
+        "REST isn't the only way to shape an API. `GraphQL` is a popular alternative with a different trade-off.",
+        "Instead of many endpoints, GraphQL gives you one address, and you send a written request describing the *exact* fields you want back.",
+        "This fixes two REST annoyances: `over-fetching` (an endpoint hands you a fat blob when you needed one field) and `under-fetching` (you have to call three endpoints to assemble one screen).",
+        "With GraphQL, the app asks for precisely the user's name and their last order in a single round trip — no more, no less.",
+        "The cost is more setup on the back-end and harder caching, so REST stays the simpler, more common default — GraphQL earns its keep when clients need many different slices of complex, connected data."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "API (Application Programming Interface)",
+      "def": "A published contract describing the operations one program offers to another — what you can ask for, how to ask, and what shape the answer comes back in."
+    },
+    {
+      "term": "REST",
+      "def": "Representational State Transfer — the most common style for web APIs, built on three ideas: resources live at URLs, HTTP verbs say what to do, and data travels as JSON."
+    },
+    {
+      "term": "resource",
+      "def": "Any single thing an API deals with — a user, an order, a photo — addressed at its own URL, such as `/orders/17`."
+    },
+    {
+      "term": "endpoint",
+      "def": "One specific operation the API offers: a URL paired with a verb, like `POST /orders` (create an order) or `GET /orders` (list orders)."
+    },
+    {
+      "term": "JSON",
+      "def": "JavaScript Object Notation — a plain-text format that writes data as labelled key-and-value pairs, readable by both humans and machines, and the usual way API data travels."
+    },
+    {
+      "term": "GraphQL",
+      "def": "An alternative to REST that exposes one endpoint and lets the client request exactly the fields it needs in a single call, instead of fetching whole fixed resources."
+    },
+    {
+      "term": "over-fetching / under-fetching",
+      "def": "Two common REST frictions: getting back more data than you needed (over-fetching), or having to call several endpoints to assemble one screen (under-fetching)."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Treating the API as a contract changes how you plan: a clean, stable API lets your web app, mobile app, and partner integrations all share one back-end, so \"build it once, reuse it everywhere\" becomes a real strategy rather than a slogan.",
+      "Because the contract is a promise others depend on, *changing* it is a product decision with a blast radius — a renamed field or removed endpoint can break paying customers' integrations overnight, which is why mature APIs ship versions and deprecation timelines.",
+      "REST-versus-GraphQL is rarely the engineer's call alone: it's a trade-off between simplicity and flexibility, and the right answer depends on how many different clients need how many different slices of your data — a question only the product owner can really frame."
+    ]
+  },
+  "caseStudy": {
+    "title": "Stripe's API turns payments into a contract",
+    "body": [
+      "Stripe is a payments company whose entire product is, essentially, an API: developers don't visit a Stripe website to take a payment — their own app sends a request to Stripe's endpoints.",
+      "It follows REST closely: a charge lives at `/v1/charges`, a customer at `/v1/customers`, and you `POST` to create one or `GET` to read it, with every request and response in JSON.",
+      "Stripe treats the contract as sacred — it versions the API by date and keeps old versions working for years, so a change it makes today won't silently break an integration a shop wired up in 2018.",
+      "That reliability is the product: businesses bet their checkout flow on the promise that the menu they coded against will keep behaving the same way."
+    ],
+    "bridge": "Stripe shows the lesson in its purest form — the API *is* the business, and honouring the contract (stable resources, predictable verbs, versioned changes) is exactly what makes it trustworthy enough to build a company on."
+  },
+  "takeaways": [
+    "An API is a contract — a published menu of operations one program offers another, with agreed inputs and outputs — so front-end and back-end can be built independently.",
+    "REST shapes that menu with three rules: resources live at URLs, HTTP verbs (`GET`/`POST`/`PUT`/`DELETE`) say what to do, and data travels as JSON.",
+    "An endpoint is one URL-plus-verb pairing; the full list of endpoints is the API, and \"add an endpoint\" means adding one operation to the menu.",
+    "GraphQL is an alternative shape — one endpoint where the client asks for exactly the fields it wants — trading more setup for less over- and under-fetching."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A teammate says \"the weather app and the website both use the same API.\" What does calling an API a \"contract\" actually mean here?",
+      "options": [
+        {
+          "text": "It's a published agreement on what operations are offered and how to ask for them, so different clients can rely on the same back-end behaving consistently",
+          "correct": true
+        },
+        {
+          "text": "It's a legal document that customers sign before they can use the back-end",
+          "correct": false
+        },
+        {
+          "text": "It's the physical server the back-end runs on, shared between the two apps",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — an API is a contract in the sense of an agreed interface: it spells out the operations, the inputs, and the response shapes, which is exactly what lets multiple clients (a website, a phone app, a partner) safely share one back-end."
+    },
+    {
+      "q": "In a REST API, `GET /orders/17` and `DELETE /orders/17` point at the same address. What's different between them?",
+      "options": [
+        {
+          "text": "The HTTP verb — `GET` reads order 17 while `DELETE` removes it; in REST the verb says what to do and the URL says which resource",
+          "correct": true
+        },
+        {
+          "text": "Nothing meaningful — the verb is decorative and both just fetch order 17",
+          "correct": false
+        },
+        {
+          "text": "They target different orders because the verb changes which record the URL refers to",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — REST splits the question in two: the `URL` names the resource (order 17) and the verb names the action, so the same address can be one endpoint for reading and another for deleting."
+    },
+    {
+      "q": "A screen needs only a user's name, but the REST endpoint returns the user's name, address, order history, and payment methods in one fat JSON blob. What is this an example of, and what does GraphQL offer instead?",
+      "options": [
+        {
+          "text": "Over-fetching — GraphQL lets the client ask for exactly the fields it wants (just the name) from a single endpoint",
+          "correct": true
+        },
+        {
+          "text": "Under-fetching — GraphQL fixes it by automatically calling more REST endpoints behind the scenes",
+          "correct": false
+        },
+        {
+          "text": "A status-code error — GraphQL fixes it by returning a smaller error code",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — getting back more data than you needed is over-fetching, a classic REST friction; GraphQL's whole pitch is that the client describes the exact fields it wants in one request, so it receives just the name and nothing more."
+    }
+  ]
+}

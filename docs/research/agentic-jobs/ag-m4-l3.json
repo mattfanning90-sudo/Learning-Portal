@@ -1,0 +1,173 @@
+{
+  "coreIdea": "The Model Context Protocol (MCP) is a shared standard for connecting AI agents to tools and data, so each integration is built once and reused across many models instead of being rebuilt for every new tool-and-model pairing.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "An agent is far more useful when it can reach the outside world — your files, your database, a calendar, a ticketing system.",
+    "Each of those connections is an `integration`: the glue code that lets the AI talk to one specific tool or data source.",
+    "The painful part is that, without a standard, every team writes that glue from scratch, and writes it again for each new model they try.",
+    "The Model Context Protocol — `MCP` for short — is a public standard for how agents and tools talk to each other.",
+    "Build the connection to a tool once, the MCP way, and any MCP-aware agent can use it — so the work is reused instead of repeated."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Before USB-C, every device had its own plug — one cable for your phone, another for your camera, a third for your laptop — and a drawer full of adapters that never matched.",
+      "USB-C replaced that mess with one shaped port: make a charger or a monitor speak USB-C once, and it works with any laptop that has the port, no special adapter per pairing. MCP is the USB-C of AI tools — one agreed shape for plugging tools and data into agents, so you stop hand-building a custom adapter for every tool-and-model combination.",
+      "The metaphor bends in one place: USB-C carries fixed signals down a wire, while MCP carries structured messages that describe what a tool can do and let the agent decide, in the moment, whether and how to use it — it is a conversation, not just current down a cable."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The problem MCP solves: the M-times-N mess",
+      "teaser": "Without a standard, every tool times every model is its own custom wiring job",
+      "body": [
+        "Say you have `M` agents or models you might use, and `N` tools or data sources you want them to reach.",
+        "With no shared standard, you can end up wiring each one to each other by hand — roughly `M times N` separate integrations, every one custom-built and separately maintained.",
+        "Swap in a new model and you risk redoing the wiring for all `N` tools; add a new tool and you may rewire it for all `M` models.",
+        "A shared protocol collapses this. Each tool implements the standard once, and each agent speaks the standard once, turning `M times N` custom jobs into about `M plus N` standard ones.",
+        "That is the whole point of a `protocol` — an agreed set of rules for how two programs talk — and it is why standards quietly save enormous effort. MCP is that protocol for the agent-meets-tool problem."
+      ]
+    },
+    {
+      "title": "Servers and clients: the two sides of the plug",
+      "teaser": "Tools expose themselves through a server; agents reach them through a client",
+      "body": [
+        "MCP has two roles. An `MCP server` is a small program that wraps one tool or data source — say your Google Drive or your GitHub — and exposes what it can do in the standard MCP shape.",
+        "An `MCP client` lives inside the agent's application and knows how to speak MCP, so it can connect to any MCP server without custom code per tool.",
+        "Think of the server as the USB-C socket on the device and the client as the USB-C port on your laptop: same shape on both sides, so they just fit.",
+        "When they connect, the server advertises its `tools` — the named actions it offers, like \"search files\" or \"create issue\" — and the agent's model can then choose to call them.",
+        "The agent does not need to know how the tool works inside; it only needs the standard list of actions and what each one expects, which the server provides. Build one server for your database and every MCP client can use it."
+      ]
+    },
+    {
+      "title": "Why a shared standard matters more than any single feature",
+      "teaser": "Standards win on reuse, portability, and a network effect",
+      "body": [
+        "The first payoff is reuse: one well-built MCP server for, say, your customer database serves Claude today and a different model tomorrow, with no rewrite.",
+        "The second is portability — you are not locked to one AI vendor, because switching models does not mean rebuilding all your tool connections.",
+        "The third is a `network effect`: every new MCP server makes every MCP-aware agent more capable, and every new agent makes existing servers more valuable, so the ecosystem compounds.",
+        "It also means tool-makers can ship one integration that reaches the whole MCP world, instead of negotiating a separate deal and a separate build with each AI company.",
+        "We are staying at the concept level here. How an agent decides to call a tool mid-task — the raw function-calling mechanics and the agent loop — is covered elsewhere; this lesson is about the shared plug, not the wiring behind it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Model Context Protocol (MCP)",
+      "def": "A public, open standard for how AI agents connect to tools and data sources, so an integration is built once and reused across many different models instead of rebuilt for each one."
+    },
+    {
+      "term": "integration",
+      "def": "The connecting code that lets an AI talk to one specific outside tool or data source — for example, the glue that lets an agent read your calendar or your database."
+    },
+    {
+      "term": "protocol",
+      "def": "An agreed set of rules for how two programs communicate; because both sides follow the same rules, they can work together without custom, one-off arrangements."
+    },
+    {
+      "term": "MCP server",
+      "def": "A small program that wraps one tool or data source and exposes what it can do in the standard MCP shape — like the matching socket that any MCP client can plug into."
+    },
+    {
+      "term": "MCP client",
+      "def": "The part inside an agent's application that knows how to speak MCP, letting it connect to any MCP server without writing custom code for each tool."
+    },
+    {
+      "term": "network effect",
+      "def": "When each new participant makes the whole system more valuable — here, every new MCP server makes every MCP-aware agent more capable, and vice versa."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own the product or the budget, MCP changes the math on integrations: the cost of connecting your agent to a tool drops from a custom build per model to a one-time, reusable one — and it cuts vendor lock-in, because switching the underlying model no longer means rebuilding every connection.",
+      "The trade-off you own is openness versus control. Letting an agent plug into many MCP servers expands what it can do, but each server is a new door into your systems, so which servers you trust, what they can touch, and how their access is governed becomes a real product and security decision.",
+      "Betting on a standard is also a roadmap call. Backing MCP means your integrations keep working as you adopt new models, but it ties you to the standard's direction and maturity — so track who is adopting it and how fast, the way you would watch any platform you depend on."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic open-sources MCP, and the ecosystem adopts it (2024–2025)",
+    "body": [
+      "In November 2024, Anthropic released the Model Context Protocol as an open standard, with a public specification and ready-made MCP servers for common tools like Google Drive, Slack, and GitHub, so any team could connect an agent to those sources the same way.",
+      "Rather than keep it proprietary, Anthropic published the protocol openly, inviting other AI companies and tool-makers to build to the same shape.",
+      "Through 2025 the standard spread well beyond its origin: OpenAI announced support for MCP in its Agents SDK in March 2025, and Google indicated its models would support it too, alongside a fast-growing catalogue of community-built servers.",
+      "All adoption figures and dates here are illustrative of the trend, not a live count — but the direction is the lesson: a tool integration built once for MCP became usable across multiple vendors' agents."
+    ],
+    "bridge": "MCP spreading from one company's spec to a multi-vendor standard is the USB-C story playing out in real time — build the plug once, and the whole ecosystem can use it."
+  },
+  "takeaways": [
+    "MCP is a shared, open standard for connecting agents to tools and data, so integrations are built once and reused across models instead of rebuilt each time.",
+    "It is the USB-C for AI tools: one agreed shape replaces a custom adapter for every tool-and-model pairing, collapsing an M-times-N mess into roughly M-plus-N.",
+    "An MCP server wraps a tool and exposes its actions in the standard shape; an MCP client inside the agent plugs into any server — same shape on both sides.",
+    "Standards win on reuse, portability, and network effects — which is also why which servers you trust and what they can touch becomes a real governance decision."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What core problem is the Model Context Protocol designed to solve?",
+      "options": [
+        {
+          "text": "Every tool-and-model pairing needing its own custom integration, so the same connection gets rebuilt over and over instead of built once and reused",
+          "correct": true
+        },
+        {
+          "text": "AI models being too slow, which MCP fixes by running them on faster hardware",
+          "correct": false
+        },
+        {
+          "text": "Agents being unable to generate text, which MCP fixes by improving the model's writing",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — without a standard you face roughly M-times-N custom integrations; MCP is the shared plug that turns that into about M-plus-N, so a tool connection is built once and reused across models."
+    },
+    {
+      "q": "In MCP, what is the relationship between a server and a client?",
+      "options": [
+        {
+          "text": "A server wraps a tool or data source and exposes its actions in the standard shape; a client inside the agent speaks MCP and can plug into any server",
+          "correct": true
+        },
+        {
+          "text": "The server is the AI model and the client is the human user typing prompts to it",
+          "correct": false
+        },
+        {
+          "text": "A server stores the model's memory and a client deletes it after each task",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — like USB-C, both sides share one shape: the server is the socket on the tool, the client is the port in the agent, so they fit without custom code per tool."
+    },
+    {
+      "q": "Why does a shared standard like MCP matter more than any single feature it includes?",
+      "options": [
+        {
+          "text": "It enables reuse, portability across vendors, and a network effect, so each new server makes every MCP-aware agent more capable and you avoid rebuilding connections per model",
+          "correct": true
+        },
+        {
+          "text": "It guarantees the AI will never make a mistake when it uses a tool",
+          "correct": false
+        },
+        {
+          "text": "It forces every company to use the exact same AI model, removing all choice",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the value is in the shared shape: build a server once and any MCP client can use it, switching models does not mean rewiring tools, and the ecosystem compounds as more servers and agents join."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Introducing the Model Context Protocol (2024)",
+      "url": "https://www.anthropic.com/news/model-context-protocol"
+    },
+    {
+      "label": "Model Context Protocol — Specification and documentation",
+      "url": "https://modelcontextprotocol.io/"
+    },
+    {
+      "label": "OpenAI — Model Context Protocol support in the Agents SDK",
+      "url": "https://openai.github.io/openai-agents-python/mcp/"
+    }
+  ]
+}

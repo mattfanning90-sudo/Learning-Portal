@@ -1,0 +1,177 @@
+{
+  "coreIdea": "A context file like `AGENTS.md` or `CLAUDE.md` is a standing briefing that lives in the repo, so a coding agent reads your project's conventions, architecture, and dos and don'ts every time — turning rules you'd otherwise repeat in every chat into knowledge that travels with the code.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A coding agent like `Claude Code`, `GitHub Copilot`, or `Cursor` reads your codebase and writes changes for you.",
+    "But it starts each session knowing nothing about how your particular project is set up — your naming rules, your folder layout, the mistakes that waste your time.",
+    "You could paste all that into every chat, but that's tedious and you'll forget half of it.",
+    "Instead you write it once into a file the agent reads automatically — by convention named `AGENTS.md` or `CLAUDE.md` and kept at the top of the repo.",
+    "A `repo` (repository) is just the folder that holds all of a project's code and history.",
+    "The agent loads that file at the start of every task, so the same standing instructions apply whether it's you, a teammate, or the agent itself working today."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A context file is the onboarding wiki you hand a sharp new contractor on day one: \"here's how this house is wired, here's what not to touch, here's who to ask.\"",
+      "Without it, every new contractor re-discovers the quirks the hard way — drilling into the one wall with the gas line behind it — and you re-explain the same things to each one.",
+      "Where the metaphor breaks: a human reads onboarding once and remembers; the agent re-reads the file every single session, because it has no memory of yesterday — so the file has to carry everything, every time, not just on the first day."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What a context file is — and how the agent finds it",
+      "teaser": "One file, read automatically, at the root of the repo",
+      "body": [
+        "A context file is a plain-text file, written in `Markdown` (a simple text format where `#` makes a heading and `-` makes a bullet), that sits at the top level of your repository.",
+        "The agent looks for it by name on its own: `Claude Code` reads `CLAUDE.md`, and a growing set of tools read the cross-vendor name `AGENTS.md` — many projects keep both, or point one at the other.",
+        "Because it's a normal file in the repo, it's versioned alongside the code: it travels with the project, shows up in code review, and updates as a deliberate change rather than living in someone's private chat history.",
+        "You don't run it or call it — the agent simply loads its contents into context at the start of a session, the same way it loads the code it's about to edit.",
+        "`Context` is everything the agent can currently \"see\": the files, your messages, and this standing briefing, all of which shape what it does next.",
+        "So the file is not magic — it's just text the agent reads first, which is exactly why what you put in it matters so much."
+      ]
+    },
+    {
+      "title": "What to put in it — and what to leave out",
+      "teaser": "Conventions, architecture, and the dos and don'ts that cost real time",
+      "body": [
+        "Lead with what the project is and how to run it: \"this is a React learning portal; `npm test` must stay green; verify against the production build, not the dev server.\"",
+        "Capture your conventions — the unwritten house rules a newcomer can't guess: naming patterns, the writing style for content, \"reuse the design tokens, never hard-code colours.\"",
+        "Sketch the architecture: where things live and how they fit, so the agent edits the right file instead of guessing or inventing a new structure beside yours.",
+        "Write down the gotchas — the traps that have already burned you. Atlas's own `AGENTS.md` warns: \"don't restart the dev server out of habit, it strands the open tab; hard-refresh instead.\" That one line saves a confused half-hour every time.",
+        "Keep it tight and high-signal: a bloated file buries the rules that matter and eats the context budget. State the rule and the reason, not an essay.",
+        "Leave out anything that changes per task — that belongs in the brief for that task, which is a separate lesson; the context file is for what's true across all tasks."
+      ]
+    },
+    {
+      "title": "Why it dramatically improves output",
+      "teaser": "It removes guessing, the main cause of wandering agents",
+      "body": [
+        "An agent without context fills the gaps with its best guess — and its best guess is a generic average of all the codebases it ever saw, not yours.",
+        "Generic guesses are exactly where agents go wrong: a new folder structure beside your real one, a second logging library, a colour hard-coded instead of pulled from your tokens.",
+        "A context file replaces those guesses with facts, so the agent's first attempt already matches your conventions instead of needing three rounds of \"no, we do it this way here.\"",
+        "It also makes the work consistent across people and sessions: you, a teammate, and the agent all start from the same rules, so the codebase doesn't drift in five directions.",
+        "And it compounds — every gotcha you write down is a mistake that never has to be re-learned, by anyone, on any future task.",
+        "The honest limit: it's a briefing, not a guarantee. The agent can still ignore or misread it, so you keep reviewing — but you review far less wrong work."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "context file",
+      "def": "A plain-text file in a repository (commonly named `AGENTS.md` or `CLAUDE.md`) that a coding agent reads automatically at the start of every session, holding the project's standing conventions, architecture notes, and dos and don'ts."
+    },
+    {
+      "term": "AGENTS.md",
+      "def": "A cross-vendor convention for the context file's name, so the same project briefing works across many different coding agents rather than being tied to one tool."
+    },
+    {
+      "term": "repository (repo)",
+      "def": "The folder that holds all of a project's code and its change history; the context file lives at the top of it so it travels with the code."
+    },
+    {
+      "term": "context",
+      "def": "Everything the agent can currently \"see\" while it works — the open files, your messages, and the context file — which together shape what it does next."
+    },
+    {
+      "term": "convention",
+      "def": "An agreed house rule a newcomer can't guess from the code alone, such as a naming pattern or \"reuse the design tokens, never hard-code colours,\" written down so everyone (and the agent) follows it."
+    },
+    {
+      "term": "Markdown",
+      "def": "A simple text format for writing readable documents, where `#` marks a heading and `-` marks a bullet; context files are written in it so both humans and agents can read them easily."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The context file is a small, high-leverage asset you own: a few hours writing it down well can save every engineer and every agent the same recurring mistakes for the life of the project — it's institutional knowledge that stops walking out the door.",
+      "There's a real trade-off to manage — the file needs upkeep, because a stale briefing that describes how the project used to work is worse than none, quietly steering the agent wrong with confidence. Treat it as a living document reviewed when conventions change.",
+      "It also reframes a leadership habit: the things you'd normally explain in a hallway conversation now have to be written down to scale to agents, which makes \"is this rule actually written anywhere?\" a useful audit of how legible your project really is."
+    ]
+  },
+  "caseStudy": {
+    "title": "The AGENTS.md open standard (2025)",
+    "body": [
+      "In 2025, OpenAI and several other AI-tooling teams converged on a shared, open convention for the agent context file: a single `AGENTS.md` at the root of a repo.",
+      "The point was interoperability — instead of one file for Claude Code, another for Cursor, and another for the next tool, a project keeps one briefing that any compatible agent reads.",
+      "The published guidance was deliberately plain: put in build and test commands, code style, conventions, and dos and don'ts — the things a new contributor would need — and keep it in Markdown so humans read it too.",
+      "Within months tens of thousands of public projects on GitHub had added an `AGENTS.md`, and tools across vendors began reading it, making \"check the repo for an agent file\" a default step. (Adoption figures here are illustrative of the trend, not a precise count.)"
+    ],
+    "bridge": "A whole industry agreeing on one filename for \"the briefing that travels with the repo\" is the clearest signal that persistent project context, not a cleverer prompt, is what makes agents reliably useful."
+  },
+  "takeaways": [
+    "A context file (`AGENTS.md` / `CLAUDE.md`) is a standing briefing in the repo that the agent reads automatically every session, so your rules travel with the code instead of being re-typed in each chat.",
+    "Put in it what's true across all tasks: what the project is and how to run it, your conventions, the architecture, and the gotchas that have already cost you time — kept tight and high-signal.",
+    "It improves output by replacing the agent's generic guesses with your facts, so the first attempt matches your conventions and stays consistent across people and sessions.",
+    "It's a living asset, not a guarantee: keep it current and keep reviewing, because a stale briefing steers the agent wrong with confidence."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is a context file like `AGENTS.md` or `CLAUDE.md`, and how does a coding agent use it?",
+      "options": [
+        {
+          "text": "A plain-text file at the top of the repo holding standing conventions, architecture, and dos and don'ts, which the agent reads automatically at the start of every session",
+          "correct": true
+        },
+        {
+          "text": "A program you compile and run to give the agent more processing power for hard tasks",
+          "correct": false
+        },
+        {
+          "text": "A private chat log that only the original author can see and the agent never reads",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — it's just text in the repo that the agent loads first each session, which is why what you write in it directly shapes the output."
+    },
+    {
+      "q": "Which item belongs in a project context file rather than in the brief for one specific task?",
+      "options": [
+        {
+          "text": "A standing convention like \"reuse the design tokens, never hard-code colours\" that holds true across every task",
+          "correct": true
+        },
+        {
+          "text": "\"For this change, rename the checkout button to 'Pay now'\" — a one-off instruction for today's job",
+          "correct": false
+        },
+        {
+          "text": "The exact line of code you want pasted into one file in this single task",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the context file is for what's true across all tasks; anything specific to one job belongs in that task's brief instead."
+    },
+    {
+      "q": "Why does a good context file dramatically improve an agent's output?",
+      "options": [
+        {
+          "text": "It replaces the agent's generic best guesses with your project's actual facts and rules, so its first attempt matches your conventions instead of needing repeated corrections",
+          "correct": true
+        },
+        {
+          "text": "It permanently upgrades the agent's underlying model so it can never make mistakes again",
+          "correct": false
+        },
+        {
+          "text": "It lets the agent skip reading your code entirely and work purely from the file",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — without context the agent guesses from a generic average; the file swaps those guesses for your facts, cutting the rounds of \"no, we do it this way here.\""
+    }
+  ],
+  "sources": [
+    {
+      "label": "AGENTS.md — open format for guiding coding agents",
+      "url": "https://agents.md/"
+    },
+    {
+      "label": "Anthropic — Claude Code best practices for agentic coding (CLAUDE.md)",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      "label": "Cursor — Rules and project context (docs)",
+      "url": "https://docs.cursor.com/context/rules"
+    }
+  ]
+}

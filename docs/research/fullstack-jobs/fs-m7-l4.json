@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Code is read far more often than it is written, so readability is a real feature — clear names, small functions, and simplicity over cleverness — while technical debt is the cost of borrowing speed today against the slower, riskier work you hand to everyone who touches the code tomorrow.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "After code is first written, people spend most of their time *reading* it — to fix a bug, add a feature, or just understand what it does before they dare change it.",
+    "So the question that matters most isn't \"does this work?\" but \"can the next person understand it quickly and change it safely?\" — and that is what we mean by readability.",
+    "Readable code uses honest names, stays in small pieces, and prefers the obvious solution over a clever one, so a reader builds the right picture in their head fast.",
+    "`Technical debt` is the other side of the same coin: when you take a shortcut to ship faster now, you borrow speed today and agree to pay it back later, usually with interest.",
+    "Sometimes borrowing is smart — like meeting a launch date — but unpaid debt quietly slows every future change, so the skill is knowing when to borrow and when to pay it down."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of code like writing a recipe other cooks will follow long after you've left the kitchen — \"sauté the onions until soft\" beats \"do the thing with the white stuff,\" because the next cook has to get it right without you in the room to explain.",
+      "Technical debt is like a kitchen you tidied in a rush before guests arrived: you shoved the mess into a cupboard to serve dinner on time, which was the right call — but every future cook now wastes minutes hunting for the right pan, and that lost time is the interest you keep paying.",
+      "Where the metaphor breaks: a messy cupboard only slows you down, whereas hidden technical debt can actively break things — an unclear shortcut can ship a bug that takes the whole product offline, not just cost you a few minutes."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Code is read far more than it is written",
+      "teaser": "The audience for your code is mostly other people, later",
+      "body": [
+        "A line of code is written once but read many times — by teammates, by future you, and by whoever inherits the project years from now.",
+        "Most of an engineer's day is actually spent reading existing code to understand it before changing it, not typing new code from scratch.",
+        "That flips the goal: you're not writing for the computer, which will run almost anything; you're writing for the next human who has to understand it.",
+        "`Readability` means how quickly and correctly a person can understand what code does and how to change it safely.",
+        "Unreadable code isn't just ugly — it's slow and risky to work with, because every change starts with a confusing puzzle, and confusion is where bugs are born.",
+        "This is why senior engineers treat readability as a feature, not a nicety: it's what lets a team keep moving fast as the codebase grows."
+      ]
+    },
+    {
+      "title": "What readable code actually looks like",
+      "teaser": "Good names, small functions, simplicity over cleverness",
+      "body": [
+        "Good names are the biggest lever: a variable called `daysUntilExpiry` tells you what it holds, while `d` or `temp` forces the reader to reconstruct the meaning from scratch.",
+        "Small functions help too — a `function` is a named, reusable block of code that does one job, and one that does a single clear thing is far easier to understand than a 300-line monster doing ten things at once.",
+        "Prefer the simple, obvious solution over the clever one: a clever trick that saves three lines but takes ten minutes to decode is a bad trade, because the next reader pays that ten minutes every single time.",
+        "There's a well-known engineering quote — \"clever code is harder to debug than to write, so if you're as clever as you can be when you write it, you're not smart enough to debug it.\"",
+        "Consistency matters as much as cleverness: code that follows the same patterns and naming everywhere lets a reader predict what comes next instead of being surprised.",
+        "None of this means dumbing things down — it means doing the harder work of making something complex *look* simple, which is the actual craft."
+      ]
+    },
+    {
+      "title": "Technical debt: borrowing speed now for a cost later",
+      "teaser": "A shortcut today is a loan you'll repay with interest",
+      "body": [
+        "`Technical debt` is the future cost you take on when you choose a quick, imperfect solution now instead of a cleaner one that would take longer.",
+        "The metaphor comes from finance: just like borrowing money, a shortcut gives you something valuable immediately — speed — in exchange for a debt you'll repay later.",
+        "The repayment is the \"interest\": messy or rushed code makes every later change slower, more error-prone, and more frustrating, and you pay that tax over and over until you fix the root cause.",
+        "Debt can be deliberate (\"we'll hard-code this for the demo and clean it up next week\") or accidental (the team simply didn't know a better way at the time).",
+        "Left unpaid, the interest compounds: shortcuts pile on shortcuts until a one-day feature takes two weeks and engineers are afraid to touch anything in case it breaks.",
+        "The fix is `refactoring` — restructuring existing code to make it cleaner and easier to work with *without* changing what it does for the user — which is how you pay the debt down."
+      ]
+    },
+    {
+      "title": "When taking on debt is the right call",
+      "teaser": "Debt is a tool, not a sin — if you track it and pay it back",
+      "body": [
+        "Taking on technical debt is sometimes the correct, even wise, decision — exactly like a business taking out a loan to seize an opportunity.",
+        "If hitting a launch date wins a major customer, shipping a rough version on time and cleaning it up afterward can be far more valuable than shipping perfect code too late.",
+        "The danger isn't debt itself — it's *invisible* debt that no one tracks and no one ever pays back, so the interest quietly drains the team's speed forever.",
+        "Healthy teams make the choice consciously: they decide to take a shortcut, write down what corner they cut, and schedule time to fix it.",
+        "A useful test: would you take this loan if you had to say it out loud — \"we're saving two days now and it'll cost us a week later\"? If the trade is honest and worth it, borrow; if you're just hiding mess, don't.",
+        "The opposite mistake is real too — endlessly polishing code that may never need to change is its own waste, so the craft is paying down the debt that's actually charging you interest, not all of it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "readability",
+      "def": "How quickly and correctly another person can understand what a piece of code does and change it safely. The main audience for code is humans, not the computer, because code is read far more often than it is written."
+    },
+    {
+      "term": "function",
+      "def": "A named, reusable block of code that performs one job. Small functions that each do a single clear thing are easier to read, test, and reuse than large ones that do many things at once."
+    },
+    {
+      "term": "technical debt",
+      "def": "The future cost you take on by choosing a quick, imperfect solution now instead of a cleaner one. Like a financial loan, it buys speed today in exchange for slower, riskier work later."
+    },
+    {
+      "term": "interest (on technical debt)",
+      "def": "The recurring tax that unpaid technical debt charges: every future change to messy code becomes slower and more error-prone, and you keep paying that cost until you fix the underlying mess."
+    },
+    {
+      "term": "refactoring",
+      "def": "Restructuring existing code to make it cleaner and easier to work with, without changing what it does for the user. This is how a team pays down technical debt."
+    },
+    {
+      "term": "deliberate vs. accidental debt",
+      "def": "Deliberate debt is a shortcut you choose on purpose and plan to fix (\"hard-code it for the demo\"). Accidental debt is mess that creeps in because the team didn't know a better way at the time."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Technical debt is one of the few engineering ideas that translates straight into your language — it's a balance sheet, so you can reason about it the way you reason about money: borrowing to hit a launch can be smart, but only if you book the loan and plan to repay it.",
+      "The trade-off you own is speed now versus speed later: pushing the team to always ship faster quietly maxes out the debt, until features that used to take days take weeks and you can't understand why velocity collapsed — that *is* the interest, showing up on your roadmap.",
+      "So make debt visible and negotiable: ask \"what corner are we cutting to hit this date, and when do we pay it back?\", and protect some recurring capacity for refactoring — because invisible, unpaid debt is the thing that turns a fast team into a slow one without anyone deciding to."
+    ]
+  },
+  "caseStudy": {
+    "title": "Knight Capital's $440M in 45 minutes (2012)",
+    "body": [
+      "Knight Capital was a major US trading firm that bought and sold stocks at high speed using automated software.",
+      "On 1 August 2012, it deployed new code to its trading servers, but one of eight servers was missed in the update — leaving a piece of old, long-dead code (a feature called \"Power Peg\") that should have been retired years earlier still sitting in the system.",
+      "When the new code reused an old flag that the dead code also responded to, that abandoned feature woke up on the one stale server and began firing millions of unintended orders into the market — and the rushed, manual deployment process had no safe way to catch or stop it quickly.",
+      "In roughly 45 minutes the runaway code racked up about $440 million in losses, which was more than the firm had, and Knight Capital was effectively destroyed within days — bailed out and then sold off."
+    ],
+    "bridge": "Years of unpaid technical debt — dead code never removed, a fragile manual deploy, reusing an old flag for a new purpose — charged its interest all at once, which is exactly the long-borrowed, suddenly-due cost technical debt describes."
+  },
+  "takeaways": [
+    "Code is read far more often than it is written, so readability — how fast the next human can understand and safely change it — is a real feature, not a nicety.",
+    "Readable code leans on honest names, small single-purpose functions, and the simple obvious solution over the clever one that's slower to decode.",
+    "Technical debt borrows speed today for a cost later; the \"interest\" is that messy code makes every future change slower and riskier until you pay it down by refactoring.",
+    "Taking on debt can be the right call to hit a deadline — as long as it's a conscious, written-down, scheduled-to-repay loan, not invisible mess no one ever fixes."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why do experienced engineers treat readability — clear names, small functions, simple solutions — as a real feature rather than just a matter of taste?",
+      "options": [
+        {
+          "text": "Because code is read far more often than it is written, so code that the next person can understand quickly and change safely keeps the team fast and reduces bugs",
+          "correct": true
+        },
+        {
+          "text": "Because readable code runs faster on the computer, since the machine understands clear names and small functions more efficiently than messy ones",
+          "correct": false
+        },
+        {
+          "text": "Because readable code is shorter, and the only goal in software is to write as few lines as possible",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the audience for code is mostly humans, later: teammates and future you spend far more time reading code to understand it than writing it. The computer will run almost anything, so clarity isn't for the machine — it's what lets people change the code quickly and safely, which keeps the team fast and keeps bugs down. It's not about fewer lines, and the machine doesn't care about your names."
+    },
+    {
+      "q": "A team hard-codes a value to ship a demo on time, planning to \"clean it up later,\" but never does. In technical-debt terms, what is the \"interest\" they end up paying?",
+      "options": [
+        {
+          "text": "Every future change near that shortcut becomes slower and more error-prone — a recurring tax the team keeps paying until they fix the underlying mess",
+          "correct": true
+        },
+        {
+          "text": "A literal fee the cloud provider charges each month for running code that contains shortcuts",
+          "correct": false
+        },
+        {
+          "text": "Nothing — once the demo shipped on time, the shortcut has no further cost as long as the feature still works",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the \"interest\" on technical debt is the ongoing drag the shortcut creates: messy code makes every later change slower, riskier, and more frustrating, and the team keeps paying that cost over and over until they refactor the root cause. It's not a billed fee, and it's very much not free — unpaid debt compounds, which is why a one-day feature can eventually take two weeks."
+    },
+    {
+      "q": "When is deliberately taking on technical debt a reasonable engineering decision rather than a mistake?",
+      "options": [
+        {
+          "text": "When the shortcut buys something genuinely worth it — like hitting a launch date — and the team makes the choice consciously, records the corner they cut, and plans to pay it back",
+          "correct": true
+        },
+        {
+          "text": "Whenever shipping faster is possible, because speed always matters more than code quality and the debt never really needs to be repaid",
+          "correct": false
+        },
+        {
+          "text": "Never — any shortcut is a failure of discipline, so good teams always build the perfect version no matter how long it takes",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — debt is a tool, like a business loan: borrowing speed to seize a real opportunity (such as a launch that wins a major customer) can be the wise call. What makes it reasonable is doing it consciously — choosing the shortcut on purpose, writing down what was cut, and scheduling the repayment — so the debt stays visible and gets paid. The danger isn't debt itself; it's invisible debt no one tracks. And always shipping the perfect version too late is its own costly mistake."
+    }
+  ]
+}

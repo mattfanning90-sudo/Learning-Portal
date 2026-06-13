@@ -1,0 +1,188 @@
+{
+  "coreIdea": "Every agent design is a trade-off between cost, quality, and speed — loops and extra agents buy better answers by spending more tokens and more time, so the engineering job is choosing where on that triangle each step should sit.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An agent is a model that runs in a loop, taking actions until a task is done rather than answering once.",
+    "Every time the model runs, you pay for the text it reads and the text it writes — that text is measured in `tokens` (small chunks of words), and tokens cost money.",
+    "Every run also takes time, so a loop that runs ten times is roughly ten times slower and ten times pricier than a single answer.",
+    "That means there is no free lunch: making an agent smarter usually means making it slower and more expensive, and making it cheaper or faster usually means accepting a slightly worse answer.",
+    "Designing an agent well is mostly about deciding, step by step, how much you are willing to spend and wait to get the quality you need."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of an agent like hiring help to write a report. You can pay one senior expert a high hourly rate to do it carefully (slow, pricey, excellent), or a junior to do a first draft fast and cheap (quick, cheap, rougher), or a whole team that checks each other's work (best quality, but the slowest and by far the most expensive).",
+      "The triangle is cost, quality, and speed — and you usually only get to pick two. Want it great and fast? It will cost a fortune. Want it cheap and fast? Quality drops.",
+      "Where the metaphor bends: a human team can keep facts in their heads between meetings, but an agent re-reads its entire working notes (its `context window`) on every single step — so the more it has done, the more you pay per step, even if the step itself is tiny."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why loops and extra agents cost more — tokens are the meter",
+      "teaser": "The bill is the text in plus the text out, on every step",
+      "body": [
+        "A `token` is a small chunk of text — very roughly, one token is about four characters, so a sentence is a dozen-or-so tokens.",
+        "You are billed for two things on every model call: the tokens you send in (the prompt, including all the agent's notes so far) and the tokens the model writes out.",
+        "An agent runs the model in a loop, and each pass re-sends the growing pile of earlier steps, so a ten-step task can cost far more than ten times a single answer — the input keeps getting longer.",
+        "A `multi-agent system` (several agents working in parallel, each with its own context window) multiplies this again, because each agent is paying its own token bill.",
+        "Anthropic, who builds the Claude models, has published that a single agentic chat uses roughly four times the tokens of a plain question, and a multi-agent setup around fifteen times — all numbers here are illustrative of the shape, not a fixed price.",
+        "The lesson: tokens are the meter, and loops and extra agents make the meter spin faster."
+      ]
+    },
+    {
+      "title": "Latency — agents are slower because they wait in line",
+      "teaser": "Each step waits for the one before it",
+      "body": [
+        "`Latency` is the delay between asking for something and getting the answer — how long the user stares at a spinner.",
+        "A single model call has some latency; an agent that loops ten times has to wait for step one to finish before step two can start, so the delays stack up.",
+        "This is `sequential` work — done one-after-another — and it is the main reason agents feel slow compared to a single chat reply.",
+        "Multi-agent systems can claw some speed back by running agents in `parallel` (at the same time), the way a team splits up a job — but only for parts that genuinely do not depend on each other.",
+        "Parallelism trades money for time: you run more models at once, finishing sooner but spending more tokens in the same window.",
+        "So latency and cost are not the same lever — sometimes you spend more to go faster, and sometimes a slower, cheaper path is perfectly fine."
+      ]
+    },
+    {
+      "title": "Right-sizing the model: bigger isn't always the answer",
+      "teaser": "Match the model to the difficulty of each step",
+      "body": [
+        "Model providers offer a range, from large models that are smartest, slowest, and priciest down to small models that are weaker but much faster and cheaper.",
+        "As an illustration of the gap, a large model might cost several times more per token than a small one, so the choice matters at scale.",
+        "The trap is using your biggest, most expensive model for every step, including the easy ones — like flying a senior surgeon in to apply a sticking plaster.",
+        "A common pattern is to route each step to the right size: a small model to classify or extract simple fields, and a large model only for the hard reasoning.",
+        "Many steps in an agent loop are genuinely easy — deciding which tool to call, summarising a result — and a smaller model handles them at a fraction of the cost and time.",
+        "Picking the model per step, rather than once for the whole agent, is one of the highest-leverage cost decisions you can make."
+      ]
+    },
+    {
+      "title": "Caching — stop paying for the same text twice",
+      "teaser": "Reuse work you have already done",
+      "body": [
+        "`Caching` means storing the result of work so you can reuse it instead of redoing it.",
+        "`Prompt caching` is the agent-specific version: the model saves the processed form of a chunk of text you send repeatedly — a long system prompt, a fixed set of instructions, the early part of a conversation — so it does not have to re-read it from scratch each call.",
+        "Because an agent re-sends its growing history on every loop, the unchanging front part of that history is the same bytes every time, which is exactly what a cache can reuse.",
+        "Reading from the cache is far cheaper than processing the text fresh — illustratively, on the order of a tenth of the price — and it is faster too, since there is less to chew through.",
+        "The catch is that caching only works on a stable prefix: change one character near the front and everything after it has to be reprocessed, so the design rule is to keep the fixed stuff at the start and the changing stuff at the end.",
+        "Done right, caching is close to a free win — same quality, lower cost, lower latency."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "token",
+      "def": "A small chunk of text the model reads and writes — very roughly four characters. You are billed per token, both for what you send in and what the model returns, so tokens are the unit of cost."
+    },
+    {
+      "term": "latency",
+      "def": "The delay between making a request and getting the answer. Agent loops add latency because each step waits for the previous one to finish before it can start."
+    },
+    {
+      "term": "the cost–quality–speed triangle",
+      "def": "The core trade-off in agent design: you can usually optimise for two of cost, quality, and speed, but improving one tends to cost you on another. Each design choice picks a point on this triangle."
+    },
+    {
+      "term": "multi-agent system",
+      "def": "A design where several agents work on a task together, often in parallel, each with its own context window. Better at complex work, but each agent pays its own token bill, so it is much more expensive than a single agent."
+    },
+    {
+      "term": "model routing",
+      "def": "Sending each step to the right-sized model — a small, cheap, fast model for easy steps and a large, capable, pricier one only for hard reasoning — instead of using one model for everything."
+    },
+    {
+      "term": "prompt caching",
+      "def": "Storing the processed form of text you send repeatedly (like a fixed system prompt or the start of a conversation) so the model can reuse it cheaply on later calls instead of re-reading it each time. Only works on an unchanging prefix."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "These trade-offs are product decisions, not just engineering ones: the cost and speed of your agent decide whether a feature is profitable at scale and whether users will wait for it, so \"which model, how many loops, single or multi-agent?\" is something the person who owns the bill needs an opinion on.",
+      "A useful framing for any agent feature is per-task economics — what does one completed task cost in tokens, and how long does the user wait — because a demo that works beautifully on ten requests can quietly become unaffordable or painfully slow across ten million.",
+      "Cheaper levers like prompt caching and routing easy steps to a smaller model often buy most of the savings with no visible quality loss, which makes them the first thing to reach for before you consider a worse answer or a slower experience."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic's multi-agent research system",
+    "body": [
+      "When Anthropic built the multi-agent research feature behind Claude — a lead agent that spawns several sub-agents to search and investigate in parallel — it published the cost reality openly.",
+      "It reported that a single agent using tools already burns about four times as many tokens as a normal chat, and a multi-agent system burns roughly fifteen times as many.",
+      "Because of that, the team concluded multi-agent designs only make economic sense for high-value tasks where the better answer justifies the much larger token bill — not for everyday queries.",
+      "They also leaned hard on the cheaper levers: caching repeated context and giving each sub-agent only what it needed, rather than letting every agent re-read everything."
+    ],
+    "bridge": "Anthropic's own numbers show the triangle in action — more agents bought better research but cost about fifteen times the tokens, so they reserved the expensive design for the tasks that were worth it and squeezed cost everywhere else with caching."
+  },
+  "takeaways": [
+    "Tokens are the meter: agents re-send their growing notes on every loop, so loops and extra agents make cost climb fast.",
+    "Latency stacks because steps run one after another; parallel multi-agent work can buy back speed, but it spends more tokens to do it.",
+    "Right-size the model per step — small and cheap for easy steps, large only for hard reasoning — instead of using your biggest model everywhere.",
+    "Caching a stable prompt prefix is close to a free win: same quality, lower cost, lower latency — reach for it (and routing) before accepting a worse or slower answer."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why does a ten-step agent loop usually cost much more than ten times a single model answer?",
+      "options": [
+        {
+          "text": "Each step re-sends the growing pile of earlier notes as input, so the prompt keeps getting longer and the per-step token bill keeps rising",
+          "correct": true
+        },
+        {
+          "text": "The model charges a fixed surcharge every time it is run in a loop rather than once",
+          "correct": false
+        },
+        {
+          "text": "Looping permanently switches the agent to a more expensive model after the first step",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — you pay for input tokens on every call, and an agent re-sends its accumulated history each loop. The input grows step by step, so total cost outpaces a simple ten-times estimate. The meter is the text, not a per-loop fee."
+    },
+    {
+      "q": "An agent step just needs to classify a message into one of three categories — a genuinely easy task. What is the most cost-effective choice?",
+      "options": [
+        {
+          "text": "Route that step to a smaller, cheaper, faster model and save the large model for the hard reasoning steps",
+          "correct": true
+        },
+        {
+          "text": "Use the largest, most capable model for it, since bigger models are always the safer default",
+          "correct": false
+        },
+        {
+          "text": "Run the step on several agents in parallel so they can vote on the category",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a simple classification doesn't need your most expensive model. Sending easy steps to a small model and reserving the large one for hard reasoning (model routing) cuts cost and latency with no real quality loss. Using the biggest model everywhere, or fanning out multiple agents, just spends more for the same answer."
+    },
+    {
+      "q": "A team adds prompt caching to their agent but sees almost no savings — the cache is rarely being read. What is the most likely cause?",
+      "options": [
+        {
+          "text": "Something near the front of the prompt changes every call (like a timestamp), so the stable prefix the cache relies on is broken and everything after it must be reprocessed",
+          "correct": true
+        },
+        {
+          "text": "Caching only lowers latency and can never reduce token cost, so savings were never possible",
+          "correct": false
+        },
+        {
+          "text": "The model is too large for caching to apply; only small models can use a cache",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — prompt caching reuses an unchanging prefix. If a value near the start changes on every request, the prefix differs each time and there is nothing stable to reuse, so the cache is never read. The fix is to keep fixed content at the front and varying content at the end. Caching lowers both cost and latency, and applies regardless of model size."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — How we built our multi-agent research system",
+      "url": "https://www.anthropic.com/engineering/built-multi-agent-research-system"
+    },
+    {
+      "label": "Anthropic — Prompt caching (Claude docs)",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+    },
+    {
+      "label": "Anthropic — Building effective agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    }
+  ]
+}

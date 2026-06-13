@@ -1,0 +1,137 @@
+{
+  "id": "fs-m3-l1",
+  "trackId": "fullstack",
+  "moduleId": "fs-m3",
+  "order": 1,
+  "title": "What a Server Actually Does",
+  "estMinutes": 9,
+  "coreIdea": "A backend server is a long-running program that waits for incoming requests and sends back responses — and it is where the real work, the data, and the secrets live, shared by many users at once.",
+  "plainEnglish": [
+    "When people say \"the server,\" they often picture a humming metal box in a cold room.",
+    "But the part that matters here is not the box — it is the program running on it.",
+    "That program does one main thing: it sits and waits for requests, then answers them.",
+    "A `request` is a message asking for something; a `response` is the reply it sends back.",
+    "While it waits, it also holds the things you would never put in a phone app — the rules of your business, the database, and the passwords — and it serves all of your users from one place."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A server is like the kitchen of a busy restaurant. The dining room (every customer's phone or laptop) sends in orders, and the kitchen prepares each one and sends a plate back out.",
+      "The kitchen is also where the recipes, the locked pantry, and the supplier accounts are kept — none of that is handed to the customers; they only ever see the finished plate.",
+      "Where the metaphor bends: one restaurant kitchen serves one room at a time, but a single server can be answering thousands of separate customers in the same second."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "A server is a program that listens and answers",
+      "teaser": "Not the hardware — the long-running process on it",
+      "body": [
+        "We use \"server\" for two things: the physical computer, and the program running on it. In this module we mean the program.",
+        "That program is a `process` — software that has been started up and is actively running, rather than just sitting on disk.",
+        "Unlike an app you open and close, a server process is designed to stay running for weeks, doing nothing until a request arrives.",
+        "When a `request` comes in over the internet, the server reads it, figures out what is being asked, does the work, and sends a `response` back.",
+        "Then it goes straight back to waiting for the next one — that loop of listen, handle, reply, repeat is the whole job."
+      ]
+    },
+    {
+      "title": "What actually lives on the server",
+      "teaser": "The valuable, trusted stuff your users never touch",
+      "body": [
+        "The server is the trusted side of your system, so it holds the things that must not be exposed to users.",
+        "It holds the `business logic` — the rules that decide what is allowed and what happens, such as \"a refund is only valid within 30 days.\"",
+        "It talks to the `database` — the organised store of your real data, like accounts, orders, and messages — which sits behind the server, not in the browser.",
+        "It keeps the `secrets` — passwords, API keys, and other credentials that unlock sensitive systems and would be dangerous if anyone could read them.",
+        "And it makes `connections to other services` — outside systems like a payment provider or an email sender — speaking to them on your users' behalf.",
+        "A user's browser or phone is the untrusted side: it can be inspected and tampered with, so none of these belong there."
+      ]
+    },
+    {
+      "title": "One server, many clients",
+      "teaser": "The same program answers everyone, separately",
+      "body": [
+        "Each user's device is a `client` — the program (a browser or app) that sends requests and shows the results.",
+        "The crucial idea is that one server answers many clients at once; it is shared, not personal.",
+        "When you and a stranger both open the same app, your phones are two different clients talking to the same server program.",
+        "The server keeps your requests separate — it has to know that your order is yours and theirs is theirs — which is exactly why it, not your phone, is the right place to enforce rules.",
+        "This shared, central design is the backbone of how multi-user software works: change the logic once on the server and every client gets the new behaviour."
+      ]
+    },
+    {
+      "title": "Web server vs application server (gently)",
+      "teaser": "One hands out files; one runs your custom logic",
+      "body": [
+        "Not all server work is the same, so the word splits into two gentle flavours.",
+        "A `web server` is built to hand back ready-made files quickly — the `HTML`, images, and scripts that make up a page — without thinking hard about each request.",
+        "An `application server` is built to run your custom `business logic` — to decide, calculate, and fetch from the database — producing a fresh answer per request.",
+        "Plain files come from the web server; \"work out my account balance right now\" goes to the application server.",
+        "In real systems the two often sit together or the line blurs, so do not over-police it; the takeaway is just that serving files and running logic are different jobs.",
+        "We will dig into how the server understands and routes each request — the API — in the next lesson."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "server", "def": "A long-running program (and the computer it runs on) whose job is to wait for requests over the internet and send back responses." },
+    { "term": "client", "def": "The program on a user's device — a browser or app — that sends requests to a server and displays what comes back." },
+    { "term": "business logic", "def": "The rules that decide what your system is allowed to do and what happens next, such as how a refund or a booking is processed." },
+    { "term": "database", "def": "The organised store of your real data — accounts, orders, messages — that sits behind the server, not on the user's device." },
+    { "term": "secret", "def": "A sensitive credential like a password or API key that unlocks a protected system and must never be exposed to a user's device." },
+    { "term": "web server vs application server", "def": "A web server mainly hands back ready-made files; an application server runs your custom logic to compute a fresh answer per request." }
+  ],
+  "pmAngle": {
+    "body": [
+      "The server is the one place you control completely, so it is where trust, rules, and cost concentrate — anything you push to the client, you no longer fully control.",
+      "That makes \"where does this run, the server or the client?\" a recurring product decision: server logic is trustworthy and changeable for everyone at once, but it costs you compute and you carry the secrets and the data.",
+      "Because one server serves all your users, it is also your shared point of failure and your shared point of leverage — a single bad deploy can hit everyone, and a single good fix can reach everyone."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2021 Facebook outage",
+    "body": [
+      "On 4 October 2021, Facebook, Instagram, and WhatsApp went dark worldwide for roughly six hours.",
+      "A faulty configuration change took the company's servers off the internet, so billions of clients — phones and browsers — kept sending requests with nowhere to land.",
+      "Because the apps on people's devices are only clients, they could do nothing useful on their own; all the real logic, data, and routing lived on the servers that had vanished.",
+      "Engineers reportedly struggled to fix it quickly because even their own internal tools depended on the same servers that were down."
+    ],
+    "bridge": "The outage made the lesson visible: the apps in your pocket are just clients, and the work, the data, and the answers all live on the servers — when those stop listening, the whole product stops."
+  },
+  "takeaways": [
+    "A server is a long-running program that waits for requests and sends back responses, over and over.",
+    "It is the trusted side: it holds the business logic, the database, the secrets, and the connections to other services.",
+    "One server answers many clients at once, which is why rules belong on the server, not on each user's device.",
+    "A web server mainly hands back ready-made files; an application server runs your custom logic to compute fresh answers."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the core job of a backend server?",
+      "options": [
+        { "text": "To wait for incoming requests and send back responses", "correct": true },
+        { "text": "To draw the finished page pixel-by-pixel onto each user's screen", "correct": false },
+        { "text": "To store a personal copy of the app on every user's device", "correct": false }
+      ],
+      "feedback": "Right — a server is a long-running program that listens for requests and replies with responses, then goes back to waiting for the next one."
+    },
+    {
+      "q": "Why are things like the database and secret passwords kept on the server rather than in the user's app?",
+      "options": [
+        { "text": "The server is the trusted side; a user's device can be inspected and tampered with, so sensitive data and rules must not live there", "correct": true },
+        { "text": "User devices are simply too slow to hold a database or a password", "correct": false },
+        { "text": "Putting them on the device would make the app load faster, which is why it is avoided", "correct": false }
+      ],
+      "feedback": "Correct — the client is untrusted and can be examined, so the database, secrets, and business logic belong on the server, the side you control."
+    },
+    {
+      "q": "At a gentle level, how does a web server differ from an application server?",
+      "options": [
+        { "text": "A web server mainly hands back ready-made files; an application server runs custom logic to compute a fresh answer per request", "correct": true },
+        { "text": "A web server is faster hardware, while an application server is slower hardware", "correct": false },
+        { "text": "A web server serves one user at a time, while an application server serves many", "correct": false }
+      ],
+      "feedback": "Exactly — serving files and running logic are different jobs: the web server hands over prepared files, the application server does the per-request thinking."
+    }
+  ],
+  "sources": [
+    { "label": "MDN — What is a web server?", "url": "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server" },
+    { "label": "MDN — Client-Server overview", "url": "https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Client-Server_overview" },
+    { "label": "Cloudflare — Understanding the October 2021 Facebook outage", "url": "https://blog.cloudflare.com/october-2021-facebook-outage/" }
+  ]
+}

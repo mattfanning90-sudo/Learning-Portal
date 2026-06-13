@@ -1,0 +1,162 @@
+{
+  "coreIdea": "A running server's memory is wiped the moment it restarts, so anything that must survive — your orders, accounts, messages — has to live in a database: durable storage that also lets you query fast, keep data correct, and let many users touch it at once safely.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "While your app is running, it juggles data in the computer's working memory, called `RAM` (Random Access Memory) — fast, but forgetful.",
+    "`RAM` is wiped clean every time the program stops or the server restarts, which happens on every deploy, crash, or power blip.",
+    "So if a customer's order only lives in `RAM`, it vanishes the instant the server bounces — which is unacceptable.",
+    "Anything important has to be written somewhere that *survives* a restart, and the tool built for exactly that job is a `database`.",
+    "A database doesn't just remember — it also finds the right record fast, refuses to store nonsense, and lets thousands of users read and write at the same time without stepping on each other."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Your app's memory (`RAM`) is like notes scribbled on a whiteboard during a meeting: instant to write, but wiped clean the moment the next meeting starts.",
+      "A database is the filing cabinet in the corner: slower to reach than the whiteboard, but it keeps every file safe overnight, lets you pull one folder in seconds, and lets the whole office share it without anyone losing a page.",
+      "Where the metaphor breaks: a real filing cabinet hands the same folder to one person at a time, while a database is built to serve thousands of people the same data at once — and to stop two of them from quietly overwriting each other's edits."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Memory forgets; persistence is the whole point",
+      "teaser": "Why a restart is a data extinction event",
+      "body": [
+        "A computer has two kinds of storage, and the difference is everything here.",
+        "`RAM` is volatile — \"volatile\" meaning it only holds data while powered, and loses all of it the instant the program stops or the machine reboots.",
+        "Disk (a hard drive or `SSD`, a solid-state drive) is non-volatile — it keeps what you wrote even with the power off, which is what we mean by `persistence`: data that outlives the process that created it.",
+        "Servers restart constantly and on purpose — every code deploy, every crash, every routine maintenance — so \"it's fine, it's in memory\" is a promise that breaks daily.",
+        "A database is software whose entire job is to take your important data and safely write it to non-volatile disk, so a restart loses nothing.",
+        "That is the first and most basic thing a database buys you: it remembers when your app forgets."
+      ]
+    },
+    {
+      "title": "Why not just save it to a file?",
+      "teaser": "A plain file is durable but nothing else",
+      "body": [
+        "A fair question: a file on disk is also persistent, so why not just write your data into a `users.txt` file and be done?",
+        "It works for a tiny toy app, and falls apart the moment things get real, for three reasons.",
+        "Querying: to find one customer in a million-line file, your app must read the *entire* file top to bottom every time — a database keeps an `index` (a sorted lookup, like a book's index) so it jumps straight to the right record in milliseconds.",
+        "Integrity: a plain file will happily store an order with no price, a duplicate email, or the word \"banana\" in the age field — a database enforces rules (`constraints`) and rejects data that breaks them, so the garbage never gets in.",
+        "Concurrency: if two requests open the same file and write at once, they corrupt it — a database coordinates simultaneous access so nobody clobbers anybody, which we cover next.",
+        "So a database is best understood as a file's durable storage *plus* fast querying, *plus* integrity rules, *plus* safe shared access — the three things a bare file can't give you."
+      ]
+    },
+    {
+      "title": "Many users at once, and one source of truth",
+      "teaser": "Coordinated access, and a single agreed copy",
+      "body": [
+        "Real apps have many people reading and writing the same data in the same instant — two shoppers eyeing the last concert ticket, say.",
+        "A database handles this with `transactions`: a transaction groups several steps into one all-or-nothing unit, so either every step happens or none do, and the database keeps the steps from interleaving badly.",
+        "That is how it guarantees only *one* of those two shoppers gets the last ticket, instead of both being told \"yes\" and one being disappointed later.",
+        "This is also why teams make the database the `single source of truth` — the one authoritative copy of the data that every part of the system trusts and defers to.",
+        "When the website, the phone app, the warehouse system, and the finance report all read from the same database, they can't disagree about how many tickets are left.",
+        "Scatter that data across stray files and caches with no single owner, and you get the classic bug where two screens confidently show two different numbers."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "persistence",
+      "def": "Data that survives the program that created it — it stays on disk even after the app stops or the server restarts, rather than vanishing with the process."
+    },
+    {
+      "term": "RAM (volatile memory)",
+      "def": "The computer's fast working memory, used while a program runs; it is wiped clean the instant the program stops or the machine reboots, so it can't be trusted to keep anything important."
+    },
+    {
+      "term": "database",
+      "def": "Software built to store important data durably on disk, find it fast, enforce rules that keep it correct, and let many users read and write it at the same time without conflicts."
+    },
+    {
+      "term": "index",
+      "def": "A pre-sorted lookup the database keeps alongside the data — like the index at the back of a book — so it can jump straight to a record instead of scanning everything."
+    },
+    {
+      "term": "transaction",
+      "def": "A group of database steps treated as one all-or-nothing unit: either all of them take effect or none do, which keeps data consistent when several things happen at once."
+    },
+    {
+      "term": "single source of truth",
+      "def": "The one authoritative copy of a piece of data that every part of the system reads from and trusts, so different screens and services can't disagree about it."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Where does this data live, and what happens if the server restarts?\" is one of the cheapest, highest-leverage questions a product owner can ask — because the answer tells you whether you're one crash away from losing customer orders.",
+      "Choosing the database as the single source of truth is a product decision with real teeth: it's what lets you promise that the app, the website, and the support team all see the same numbers, and it's what makes \"we lost your data\" a sentence you never have to send.",
+      "It also frames the trade-off you own next: durability and correctness aren't free — they cost a little speed and some engineering care, which is exactly why the following lessons on how data is modelled and sped up matter to the bottom line."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitLab's 2017 database outage",
+    "body": [
+      "GitLab is a company whose product helps software teams store and collaborate on code, all backed by a central database.",
+      "On 31 January 2017, a tired engineer cleaning up a struggling database server ran a deletion command against the wrong machine — the live production database — and erased about 300 gigabytes of real user data in seconds.",
+      "The terrifying part came next: of five separate backup and recovery methods the team believed they had, five had silently failed or were never actually working, so there was almost nothing to restore from.",
+      "They were rescued only by a *chance* six-hour-old snapshot one engineer had taken by hand for unrelated reasons, and GitLab livestreamed the entire recovery to the public as it happened."
+    ],
+    "bridge": "GitLab's near-miss is the whole lesson in one event: the database was rightly the single source of truth for everyone's work — which is exactly why its durability, and the backups that protect it, were the most important thing the company owned."
+  },
+  "takeaways": [
+    "A server's working memory (`RAM`) is volatile and wiped on every restart, deploy, or crash — so anything important can't live only there.",
+    "A database exists to make data persistent: it writes to non-volatile disk so the data outlives the process that created it.",
+    "A database beats a plain file on three counts a file can't match — fast querying (via indexes), data integrity (via rules), and safe simultaneous access (via transactions).",
+    "Making the database the single source of truth means every part of the system trusts one authoritative copy, so screens and services never disagree."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An engineer says \"the order is saved — it's in the server's memory.\" Why is a product owner right to be nervous about that?",
+      "options": [
+        {
+          "text": "The server's working memory (`RAM`) is volatile, so the order is wiped the moment the server restarts, crashes, or is redeployed — it isn't truly saved until it's persisted to disk in a database",
+          "correct": true
+        },
+        {
+          "text": "Memory is slower than a database, so the order will load too slowly for customers",
+          "correct": false
+        },
+        {
+          "text": "Memory can only hold one order at a time, so the next order would overwrite it",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — `RAM` is fast but volatile: it loses everything on a restart, and servers restart routinely on every deploy, crash, or maintenance. \"Saved\" only counts once the data is persisted to non-volatile storage, which is the database's core job."
+    },
+    {
+      "q": "Your tiny app stores users in a plain `users.txt` file, which is persistent. As it grows to a million users, what does a database give you that the file fundamentally cannot?",
+      "options": [
+        {
+          "text": "Fast querying via indexes, enforced integrity rules, and safe simultaneous access — so it finds a record instantly, rejects bad data, and lets many users write at once without corruption",
+          "correct": true
+        },
+        {
+          "text": "Nothing meaningful — a database is just a file with a nicer name, so the only difference is convenience",
+          "correct": false
+        },
+        {
+          "text": "It makes the data persistent, which the plain file could not do on its own",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the file is already persistent, so that's not the difference. What a bare file can't do is find one record without scanning the whole thing, refuse invalid or duplicate data, or coordinate two simultaneous writes — and those (fast querying, integrity, safe concurrency) are exactly what a database adds."
+    },
+    {
+      "q": "Two shoppers try to buy the last concert ticket at the same instant. Why does treating the database as the single source of truth — using a transaction — matter here?",
+      "options": [
+        {
+          "text": "The database can group the check-and-sell steps into one all-or-nothing transaction against the one authoritative copy of the data, so only one shopper gets the ticket instead of both being told yes",
+          "correct": true
+        },
+        {
+          "text": "It makes both purchases succeed by quietly creating a second ticket so neither shopper is disappointed",
+          "correct": false
+        },
+        {
+          "text": "It speeds up the page so the faster shopper's request arrives first and the problem never occurs",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — with one authoritative copy and a transaction wrapping the steps as all-or-nothing, the database prevents the two requests from both succeeding on the same last ticket. That single-source-of-truth coordination is what keeps the system honest when many users touch the same data at once."
+    }
+  ]
+}

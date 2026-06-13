@@ -1,0 +1,174 @@
+{
+  "coreIdea": "There's a spectrum of places your code can actually run — from `static hosting` on a CDN for plain sites, to a `server` or `virtual machine` you fully control, to a `container` that ships your app with its whole environment, to `serverless` functions that spin up on demand — and the choice is one big trade-off: the more control you keep, the more operational work you own.",
+  "estMinutes": 11,
+  "plainEnglish": [
+    "Once you've written code, it has to run *somewhere* a user can reach it — and \"somewhere\" is a real choice, not an afterthought.",
+    "At one end, a site that's just files (text, images, a bit of layout) can be served straight off a `CDN`, a network of computers near your users — fast, cheap, almost nothing to maintain.",
+    "At the other end, you can rent a whole computer — a `server` or `virtual machine` — and run anything you like on it, but then *you* keep it patched, secured, and alive at 3am.",
+    "In between sit two modern middles: `containers`, which package your app together with everything it needs to run so it behaves the same everywhere, and `serverless`, where you hand the provider a single function and they run it only when it's called.",
+    "The whole lesson is one dial: from \"I control everything and maintain everything\" to \"the provider handles the machine and I just supply code.\""
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of housing options. Static hosting is a printed flyer pinned on noticeboards all over town: you make it once, copies sit everywhere ready to read, and there's nothing to run — but it can't *do* anything, it just shows what's on it.",
+      "Renting a whole server is like owning a house: total freedom to do anything inside, but you own the plumbing, the roof, and every repair. A container is a fully-furnished shipping container you can drop onto any plot and it works identically — you packed it, the land underneath is someone else's problem. Serverless is a hotel room you only pay for the nights you sleep there, and you never think about the building.",
+      "Where the metaphor bends: a house sits empty costing you money, but a serverless function costs *nothing* when no one's calling it — it can shrink all the way to zero, which no real building can do."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Static hosting: when your site is just files",
+      "teaser": "No code running on a server at all — just deliver the files",
+      "body": [
+        "A `static site` is one made of files that don't change per visitor: the HTML, CSS, images, and JavaScript are the same for everyone who loads the page.",
+        "Because nothing has to be computed on the fly, you don't need a running program on a server — you just need to *deliver the files*, and that's a cheap, solved problem.",
+        "Those files are pushed onto a `CDN` (Content Delivery Network), a worldwide network of computers that each keep a copy, so a visitor in Sydney is served from a machine in Sydney, not from across the planet.",
+        "This makes static hosting extremely fast, very cheap, and almost maintenance-free — there's no server process to crash, patch, or scale.",
+        "The catch: a static site can only *show* things, not *do* server-side things — it can't check a password against a database or charge a credit card by itself.",
+        "Modern \"static\" sites get around this by calling out to separate APIs or serverless functions for the dynamic bits, which is why services like Netlify and Vercel pair static hosting with on-demand functions."
+      ]
+    },
+    {
+      "title": "Servers and virtual machines: total control, total responsibility",
+      "teaser": "Rent a whole computer and run anything — but you keep it alive",
+      "body": [
+        "A `server` is just a computer whose job is to run your software and answer requests over the network, around the clock.",
+        "In the cloud you rarely get a physical machine; you get a `virtual machine` (VM) — a software-simulated computer that behaves like a real one but is really a slice of a much bigger physical machine, shared invisibly with other customers.",
+        "On a VM you have full control: you pick the operating system, install whatever you want, and run any kind of long-lived program — a web app, a database, a background job.",
+        "The price of that control is `operational burden` — all the ongoing work of keeping it running: applying security patches, watching memory and disk, restarting it when it crashes, and scaling it up when traffic grows.",
+        "It also doesn't shrink to nothing: a VM you rent runs and bills 24/7 whether one person visits or none do, because the computer is reserved for you.",
+        "This is the most flexible option and the oldest, and it's still the right answer when you need to run something unusual, long-running, or tightly controlled — you just sign up for the maintenance that comes with it."
+      ]
+    },
+    {
+      "title": "Containers: package the app with its whole environment",
+      "teaser": "\"It works the same everywhere\" — because the environment ships with it",
+      "body": [
+        "A `container` packages your app together with *everything it needs to run* — the right language version, libraries, and settings — into one sealed unit that behaves identically wherever it lands.",
+        "This solves the oldest excuse in software: \"it works on my machine.\" If the environment travels *inside* the package, your laptop, a test server, and production all run the exact same thing.",
+        "`Docker` is the tool that made this mainstream — you write a short recipe (a `Dockerfile`) listing what goes in the box, and Docker builds a reusable `image` you can run anywhere.",
+        "A container is lighter than a full virtual machine: instead of simulating a whole computer, many containers share the host's operating system, so each one starts in seconds and uses far less memory.",
+        "Containers don't remove the server underneath — your code still runs on a machine — but they make that machine interchangeable and let you run dozens of identical copies to handle load.",
+        "When you're running many containers across many machines, an `orchestrator` like `Kubernetes` schedules them, restarts the ones that die, and spreads traffic across them — powerful, but a real operational skill of its own."
+      ]
+    },
+    {
+      "title": "Serverless: hand over a function, pay only when it runs",
+      "teaser": "You supply code; the provider supplies (and hides) the machine",
+      "body": [
+        "`Serverless` doesn't mean there's no server — it means *you* never see or manage one. You hand the provider a single function, and they run it on demand.",
+        "The function sits idle and costs nothing until something triggers it — a web request, an uploaded file, a scheduled time — and then the provider spins up a tiny environment, runs your code, and tears it down.",
+        "Because you're billed per execution (often per millisecond), an app no one is using costs essentially zero, and one that suddenly gets popular scales up automatically without you provisioning anything.",
+        "The flagship example is AWS `Lambda`; you upload a function, and Amazon handles every machine, patch, and scaling decision underneath it.",
+        "The trade-offs are real: a function that hasn't run recently can be slow on its first call (a `cold start` — the delay while the provider sets up a fresh environment), and you give up deep control over the runtime.",
+        "Serverless is the far end of the dial: almost zero operational burden and zero idle cost, in exchange for fitting your work into small, stateless, event-driven pieces."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "static hosting",
+      "def": "Serving a site that's just fixed files (HTML, CSS, images, JavaScript) the same for every visitor, with no program running on a server — usually delivered from a CDN. Fast, cheap, and nearly maintenance-free, but it can't do server-side work like checking a password on its own."
+    },
+    {
+      "term": "CDN (Content Delivery Network)",
+      "def": "A worldwide network of computers that each keep a copy of your files and serve each visitor from the one physically nearest them, making delivery fast and reducing load on any single machine."
+    },
+    {
+      "term": "virtual machine (VM)",
+      "def": "A software-simulated computer that behaves like a real one but is actually a slice of a larger physical machine shared with other customers. You get full control of it — and full responsibility for keeping it patched, running, and scaled."
+    },
+    {
+      "term": "container",
+      "def": "A sealed package holding your app plus everything it needs to run (language version, libraries, settings), so it behaves identically on any machine. Lighter than a VM because containers share the host's operating system. Docker is the standard tool for building them."
+    },
+    {
+      "term": "serverless",
+      "def": "A model where you hand the provider a single function and they run it only when it's triggered, managing every machine underneath. You pay per execution, so idle code costs nothing — at the cost of control and occasional cold-start delays. AWS Lambda is the best-known example."
+    },
+    {
+      "term": "operational burden",
+      "def": "The ongoing work of keeping software running once it's live: applying security patches, monitoring for failures, restarting crashes, and scaling for traffic. The more control a hosting option gives you, the more of this burden you carry yourself."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "This spectrum is a control-versus-burden dial, and where you land on it shapes cost, hiring, and speed — not just architecture. Static hosting and serverless mean tiny idle bills and almost no one needed to babysit infrastructure; renting VMs or running your own container cluster (Kubernetes) means real, ongoing operations work and the people to do it.",
+      "The trap is treating it as a permanent decision. A weekend prototype on serverless costs almost nothing and ships fast; the same workload running constantly at huge scale can get *more* expensive on serverless than on plain servers, so the right answer changes as the product grows — and \"should we move off serverless yet?\" is a genuine product-and-finance question, not a purely technical one.",
+      "As a leader, the question to ask isn't \"which is best\" but \"how much operational burden are we choosing to own, and is that the best place to spend our engineers' time?\" — because every hour spent patching servers is an hour not spent on the product."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon Prime Video moves a service off serverless to save 90%",
+    "body": [
+      "In 2023, an engineering team at Amazon Prime Video published a post about a tool that monitors the video and audio quality of the thousands of streams Prime Video delivers.",
+      "They had first built it the modern, fashionable way — as many small serverless functions wired together — which was quick to launch but, at their enormous, *constant* scale, turned out to be expensive and hit limits as traffic grew.",
+      "They rebuilt the same tool as a single, traditional long-running service packed into containers on plain virtual machines, and reported the infrastructure cost dropped by about 90%.",
+      "The striking part is that this came from inside Amazon — the company that sells serverless — and it wasn't a verdict that serverless is bad, but that the right place on the hosting spectrum depends on the specific workload."
+    ],
+    "bridge": "Prime Video didn't find a \"winner\" — they moved their workload along the same control-versus-burden dial this lesson describes, because the right point on it changes with scale and shape, not with fashion."
+  },
+  "takeaways": [
+    "Where your code runs is a spectrum, and it's really one dial: the more control you keep, the more operational burden — patching, monitoring, scaling — you own.",
+    "Static hosting on a CDN is the cheapest, fastest, lowest-maintenance option, but it can only show fixed files; it leans on APIs or functions for anything dynamic.",
+    "A server or virtual machine gives you total control to run anything long-lived, at the cost of maintaining it 24/7 — and it bills around the clock even when idle.",
+    "Containers (Docker) make your app run identically everywhere by packaging its environment with it; serverless (AWS Lambda) hands the whole machine to the provider and charges only when your code runs."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A team has a marketing site that's just text, images, and a bit of layout — identical for every visitor — and they want it fast and cheap to run. Which hosting option fits best, and why?",
+      "options": [
+        {
+          "text": "Static hosting on a CDN — the pages are the same fixed files for everyone, so there's nothing to compute per visitor, and the files can be served fast from a machine near each user with almost no maintenance",
+          "correct": true
+        },
+        {
+          "text": "A dedicated virtual machine running around the clock, because every website needs a server actively running a program to answer each request",
+          "correct": false
+        },
+        {
+          "text": "A cluster of containers managed by Kubernetes, because that's the most modern option and modern is always better",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — when a site is just fixed files that look the same for everyone, there's no per-visitor computation to do, so you don't need a running server at all. Static hosting pushes those files onto a CDN to be served fast and cheap from near each user, with almost nothing to maintain. A full VM or a Kubernetes cluster would be far more cost and operational burden than this simple job needs."
+    },
+    {
+      "q": "What's the core idea behind a container, and how is it different from renting a whole virtual machine?",
+      "options": [
+        {
+          "text": "A container packages the app together with everything it needs to run, so it behaves identically anywhere; it's lighter than a VM because containers share the host's operating system instead of simulating a whole computer each",
+          "correct": true
+        },
+        {
+          "text": "A container is a website with no server behind it, served purely as static files from a CDN",
+          "correct": false
+        },
+        {
+          "text": "A container means the provider runs your code only when it's triggered and charges you nothing while it sits idle",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a container seals your app together with its whole environment (language version, libraries, settings) so it runs the same on a laptop, a test server, and in production, killing the \"it works on my machine\" problem. It's lighter than a VM because many containers share the host's operating system rather than each simulating a full computer. (Code that runs only on a trigger and costs nothing when idle describes serverless, not a container.)"
+    },
+    {
+      "q": "Across static hosting, virtual machines, containers, and serverless, what single trade-off best explains the whole spectrum?",
+      "options": [
+        {
+          "text": "Control versus operational burden — the more control you keep over the environment, the more of the ongoing work (patching, monitoring, scaling) you have to do yourself",
+          "correct": true
+        },
+        {
+          "text": "Newer options are always cheaper and lower-effort, so the best choice is simply whichever was released most recently",
+          "correct": false
+        },
+        {
+          "text": "Speed versus security — faster hosting is always less secure, and more secure hosting is always slower",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the spectrum is one dial. Renting a VM gives you total control but makes you responsible for keeping it patched, monitored, and scaled. Serverless hands all of that to the provider and asks almost nothing of you operationally, but takes away deep control over the runtime. The choice isn't about which is newest — Amazon's own Prime Video team moved *away* from serverless to save cost — it's about how much operational burden you want to own for a given workload."
+    }
+  ]
+}

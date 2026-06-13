@@ -1,0 +1,188 @@
+{
+  "coreIdea": "Atlas — the portal you are reading — was built largely by an AI coding agent, and the build worked not because the agent was magic but because the project was shaped so the agent could go fast where it is strong and a human could catch it where it is weak.",
+  "estMinutes": 11,
+  "plainEnglish": [
+    "An `AI coding agent` is a model that does not just suggest code — it reads files, writes files, runs commands, and loops until a task is done.",
+    "Atlas, this learning portal, was built mostly with one: Claude Code, Anthropic's command-line coding agent.",
+    "That sounds like a flex, but the honest story is more useful — the agent did not replace the work, it changed where the work went.",
+    "Most of the human effort moved out of typing code and into three things: shaping the project so the agent could move safely, reviewing what it produced, and writing the automated checks that catch its mistakes.",
+    "This lesson walks the real end-to-end flow — architecture, the multi-agent authoring that wrote the lessons, the spec-to-plan-to-build loop, the human review gates, and the tests that act as a safety net — and is candid about what was genuinely hard."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the agent as a fast, tireless junior builder, and yourself as the site supervisor who never picks up a hammer.",
+      "You don't build the wall — you draw the plan, mark where the load-bearing beams go, and inspect each section before the next one goes up; the builder does the lifting at a pace no human could match.",
+      "Where the metaphor bends: a human junior remembers yesterday's instructions, but the agent forgets everything between sessions — its only memory is what you write down in files like `AGENTS.md`, so the project itself has to carry the knowledge the worker doesn't keep."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Content as data — the architecture that made the agent productive",
+      "teaser": "The agent edits objects, not markup",
+      "body": [
+        "Atlas is built on one decision that shaped everything: `content is data, not markup`.",
+        "Every lesson — including this one — is a plain `JSON` object (a structured list of labelled fields, like `coreIdea` and `keyTerms`), and a single renderer called `LessonPage` turns any such object into a finished page.",
+        "That means adding a lesson is adding data, not writing new screen layout — there is exactly one place where the look lives, and hundreds of interchangeable content files feeding it.",
+        "This is what made the agent productive: writing a fresh `JSON` object that follows a known shape is a task an agent does reliably, while inventing new visual markup each time is where agents drift and break things.",
+        "A machine-checkable `schema` (a strict description of which fields a valid lesson must have) sits underneath, so a malformed lesson fails a test instead of silently rendering wrong.",
+        "The lesson for any builder: the more your work is uniform data flowing through one tested path, the more of it you can safely hand to an agent."
+      ]
+    },
+    {
+      "title": "Multi-agent authoring — how the lessons actually got written",
+      "teaser": "One agent per lesson, fanned out in parallel",
+      "body": [
+        "The 150 lessons were not written one-by-one in a single long chat — that would blow past the model's `context window` (the limited amount of text it can hold at once) and degrade as it filled up.",
+        "Instead the project used a fan-out pattern: a coordinating `Workflow` launches many sub-agents at once, one per lesson, each a fresh agent with a clean context.",
+        "Each sub-agent is handed the same brief and one finished `seed lesson` to copy the voice from, then writes its own schema-validated `JSON` file and self-checks it.",
+        "Because the agents work on `disjoint files` — separate, non-overlapping files — they can run in parallel without colliding, the same way you'd split a job across a team rather than have everyone edit one document.",
+        "This is the exact lesson this very file came from: a per-lesson authoring job under `docs/research/agentic-jobs/`, written by an agent given the brief and an exemplar.",
+        "What was hard here: keeping voice consistent across dozens of independent agents — solved only by an explicit style brief plus a real exemplar, not by hoping each agent guessed the house style."
+      ]
+    },
+    {
+      "title": "Spec → plan → build, with human gates — the loop that kept it honest",
+      "teaser": "Agree the plan before any code is written",
+      "body": [
+        "The working rule on Atlas was strict: plan before building — present a written plan and wait for agreement before writing code.",
+        "So the flow is three stages: a `spec` (what we want and why), then a `plan` (the concrete steps to get there), then the build — and a human approves the plan at the gate between stages two and three.",
+        "This matters because an agent will confidently build the wrong thing fast; catching a bad idea in a plan costs minutes, catching it in shipped code costs hours.",
+        "After the build, a second human gate: the reviewer reads the actual `diff` (the precise lines added and removed) rather than trusting a summary of what the agent claims it did.",
+        "These `human review gates` are where judgement lives — taste in writing, product calls, whether the thing is actually good — none of which the agent owns.",
+        "The honest trade-off: gates add friction and slow you down, and the temptation to wave work through is real — but a skipped gate is exactly where the expensive mistakes slip in."
+      ]
+    },
+    {
+      "title": "CI as the safety net — the checks that catch what review misses",
+      "teaser": "Automated tests run on every change so nothing ships unverified",
+      "body": [
+        "A human reviewer gets tired and misses things, so Atlas leans on `CI` — `continuous integration`, automated checks that run on every change before it can ship.",
+        "On every push, a pipeline runs four gates in order: `lint` (style and obvious errors), `typecheck` (catching mismatched data shapes), `test` (does the logic and content actually pass), and `build` (does it even assemble) — all must be green.",
+        "The content test is the sharp one: it validates every lesson against the schema, asserts there is `no unexplained jargon`, and checks each lesson appears in the global order exactly once.",
+        "There is a deterministic `assembler` too — a plain script, not an agent — that re-stamps the authoritative fields (`id`, `order`) so the agent's output can't corrupt the spine of the curriculum.",
+        "For the coding track, the assembler even runs each exercise's reference solution on a real compiler to prove the expected output is correct before shipping.",
+        "The principle: the agent is allowed to be wrong, because a wall of cheap, fast, automated checks stands between its mistakes and the live site."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "AI coding agent",
+      "def": "A model that doesn't just suggest code but acts — reading and writing files, running commands, and looping until a task is done. Claude Code, used to build Atlas, is one."
+    },
+    {
+      "term": "content as data",
+      "def": "An architecture where the substance (here, lessons) lives as plain structured objects, and one renderer turns any object into a page. Adding content means adding data, not writing new layout — which is exactly the kind of uniform work an agent does reliably."
+    },
+    {
+      "term": "schema",
+      "def": "A strict, machine-checkable description of what a valid piece of data must contain. Atlas's lesson schema means a malformed lesson fails a test instead of silently rendering wrong, so the agent's output is caught before it ships."
+    },
+    {
+      "term": "fan-out (multi-agent authoring)",
+      "def": "Launching many sub-agents at once, each with a fresh context window working on its own non-overlapping file. Atlas used one agent per lesson so authoring could run in parallel without the agents colliding or running out of context."
+    },
+    {
+      "term": "human review gate",
+      "def": "A checkpoint where a person must approve before work proceeds — approving the plan before any code is written, and reading the actual diff after. It's where judgement and taste live, the things the agent doesn't own."
+    },
+    {
+      "term": "CI (continuous integration)",
+      "def": "Automated checks — lint, typecheck, test, build — that run on every change before it can ship. On Atlas, CI is the safety net that lets the agent be wrong: cheap, fast checks stand between its mistakes and the live site."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own a product that ships agent-built work, your real job shifts from directing the typing to designing the guardrails — the schema, the review gates, and the CI that decide whether an agent's mistake is a caught test failure or a customer-facing bug.",
+      "The honest cost picture is that the agent makes the build cheap but moves spend into review and verification: budget for the human time to read diffs and the engineering time to write checks, because an agent with no safety net is faster right up until it ships something broken.",
+      "The strategic question to ask of any \"we built it with AI\" claim is not how much the agent wrote, but where the human judgement and the automated gates sit — a build with no gates is a demo, not a system you can trust."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic builds Claude Code with Claude Code",
+    "body": [
+      "Claude Code is Anthropic's own command-line coding agent — the same tool that built much of Atlas — and Anthropic builds Claude Code substantially using Claude Code itself.",
+      "The team has said publicly that a large and growing share of their code is written by the agent, with engineers acting as reviewers and direction-setters rather than typing most lines by hand.",
+      "Crucially, they don't run it without a net: changes still flow through code review and an automated test suite, and they invest heavily in a project file (their `CLAUDE.md`) that tells the agent the conventions it would otherwise forget between sessions.",
+      "Their guidance to others is candid about the failure mode — an unsupervised agent will produce confident, plausible, wrong code at speed — so the value comes from the surrounding scaffolding, not the model alone."
+    ],
+    "bridge": "Anthropic's own dogfooding mirrors how Atlas was built: the agent does the volume of work, but it's the schema, the review, the tests, and the written project memory that turn raw agent output into something you can trust."
+  },
+  "takeaways": [
+    "Atlas was built largely by an AI coding agent — but it worked because of the scaffolding around the agent, not the agent alone.",
+    "Content-as-data plus a strict schema turned lesson-writing into uniform, validated work an agent could do reliably and in parallel.",
+    "The build flow was spec → plan → build with human gates: approve the plan before code, read the actual diff after.",
+    "CI (lint, typecheck, test, build) is the safety net that lets the agent be wrong — cheap automated checks stand between its mistakes and the live site."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Atlas treats every lesson as a plain data object fed through one renderer, validated by a strict schema. Why did this architecture make the AI coding agent so productive?",
+      "options": [
+        {
+          "text": "Writing a uniform, validated data object that follows a known shape is reliable agent work, and the schema catches a malformed lesson as a test failure instead of letting it render wrong",
+          "correct": true
+        },
+        {
+          "text": "It let the agent invent fresh visual markup for each lesson, which is what agents do most reliably",
+          "correct": false
+        },
+        {
+          "text": "It removed the need for any human review, since the renderer guarantees every lesson is good",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — content-as-data turns each lesson into uniform work flowing through one tested path, which is exactly where agents are dependable. Inventing new markup each time is where agents drift, and a schema only catches structural mistakes — it can't judge whether the writing is any good, so human review still matters."
+    },
+    {
+      "q": "The 150 lessons were written by fanning out one sub-agent per lesson, each with a fresh context and its own file, rather than in a single long session. What is the main reason for that design?",
+      "options": [
+        {
+          "text": "A single long session would exhaust the model's context window and degrade, while separate agents on non-overlapping files keep clean context and can run in parallel",
+          "correct": true
+        },
+        {
+          "text": "Sub-agents are smarter than the main agent, so splitting the work raises the quality of every lesson",
+          "correct": false
+        },
+        {
+          "text": "Running many agents removes the need for a style brief, because each one independently guesses the house voice correctly",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the context window is limited, so one giant session would degrade as it filled; fresh per-lesson agents on disjoint files keep clean context and parallelise safely. They are not smarter, and consistency was the hard part — it took an explicit style brief plus a real exemplar, not hopeful guessing, to keep the voice uniform."
+    },
+    {
+      "q": "In Atlas's build loop, what is the specific role of the human review gates and the CI pipeline together?",
+      "options": [
+        {
+          "text": "The human gates apply judgement (approve the plan before code, read the actual diff after), while CI runs cheap automated checks on every change so the agent is allowed to be wrong without breaking the live site",
+          "correct": true
+        },
+        {
+          "text": "CI replaces human review entirely, since automated tests can judge writing quality and product decisions",
+          "correct": false
+        },
+        {
+          "text": "The human gates exist only to rubber-stamp work the agent has already verified, adding no real safety",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — they cover different failures. Humans bring taste and product judgement at the plan and diff stages; CI catches the structural and logic errors a tired reviewer misses, on every change. Tests can't judge whether writing is good, and the gates aren't a rubber stamp — skipping them is exactly where expensive mistakes slip through."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Claude Code: Best practices for agentic coding",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      "label": "Anthropic — How Anthropic teams use Claude Code",
+      "url": "https://www.anthropic.com/news/how-anthropic-teams-use-claude-code"
+    },
+    {
+      "label": "Anthropic — Building effective agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    }
+  ]
+}

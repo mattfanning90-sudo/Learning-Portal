@@ -1,0 +1,162 @@
+{
+  "coreIdea": "Anything the browser sends can be inspected, faked, or replayed, so the server must independently re-check every input it receives — validating what's allowed before acting, and answering bad input with clear, honest error responses rather than crashing or trusting it.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "The code that runs in someone's browser is not yours to trust — it's on their machine, and they can read it, change it, or skip it entirely.",
+    "That nice form that only lets you pick a quantity between 1 and 10? A user can bypass the form and send the server a quantity of `-5`, or `999999`, or the word `banana`.",
+    "So the rule is blunt: never trust the client. Treat every incoming request as if a stranger wrote it by hand, because one might have.",
+    "The server's job is to be the gatekeeper — it independently re-checks every value, and only acts once the input passes.",
+    "And when input fails the check, the server doesn't crash or guess; it replies with a clear, useful error that says what went wrong."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Client-side checks are like the politely-worded sign at a club entrance: \"Over 18s only, neat dress.\" The sign is helpful and friendly, and most people read it and comply.",
+      "Server-side validation is the bouncer who actually checks your ID at the door — the sign can be ignored or painted over, but the bouncer re-checks everyone, every time, no exceptions.",
+      "Where the metaphor breaks: a bouncer can often trust their eyes for the easy calls, but a server has no eyes — it can't tell a real customer from a script, so it must re-verify *everything*, even requests that look perfectly normal."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the client can never be trusted",
+      "teaser": "Whatever runs in the browser, the user controls",
+      "body": [
+        "The `client` is the program on the user's device — usually the web page and its JavaScript running in their browser.",
+        "Everything that code does happens on *their* computer, which means they can open the developer tools, read it, edit it, and turn off any check you wrote.",
+        "They don't even need the browser: a request to your server is just a message, and anyone can craft that message by hand with a tool like `curl` or an intercepting proxy.",
+        "So a dropdown that only offers valid choices, a field that blocks letters, a price hidden in the page — none of it constrains a determined sender; it only shapes the *honest* path.",
+        "The hard truth: client-side checks are a convenience for good users, never a defence against bad ones.",
+        "Real protection can only live on the server, because the server is the one piece of the system the user does not control."
+      ]
+    },
+    {
+      "title": "Validation: re-check everything before you act",
+      "teaser": "Define what's allowed, reject the rest",
+      "body": [
+        "`Input validation` means checking that incoming data is the right type, shape, and range before your code does anything with it.",
+        "The safest stance is an `allowlist` (also called a whitelist): decide exactly what is permitted and reject everything else, rather than trying to list every bad value.",
+        "For an order, that means confirming the quantity is a whole number, greater than zero, and under some sane ceiling — and that the price is one *you* looked up, not one the client sent.",
+        "That last point matters most: never let the client tell you the price, the user's role, or who they are — look those up on the server from your own data.",
+        "Validation is also the front line against whole classes of attack, like `SQL injection`, where a value smuggled into a field tries to hijack your database query — re-checking and sanitising input is the first wall against it.",
+        "We cover the fuller security picture later (Module 7); here the habit is simpler — assume the input is wrong until proven right."
+      ]
+    },
+    {
+      "title": "Failing gracefully: errors are a feature, not a crash",
+      "teaser": "Catch the problem, stay standing, tell the truth",
+      "body": [
+        "When input is bad — or something else goes wrong — the server should *handle* the failure, not fall over.",
+        "Letting an error crash the request (or the whole server) is the worst outcome: the user gets nothing, and one bad message can take down the service for everyone.",
+        "`Graceful error handling` means catching the problem, keeping the server running, and returning a deliberate, well-formed response instead.",
+        "A good error response has two parts: the right `HTTP status code` — the standard number that signals the *category* of outcome, like `400` for \"you sent something invalid\" or `500` for \"we broke\" — and a clear message saying what to fix.",
+        "Crucially, error messages must be honest but discreet: tell the client \"email address is not valid,\" never \"database query failed at line 412\" — leaking internal details hands attackers a map.",
+        "Good errors are part of the product: they tell an honest user how to succeed, and tell an attacker almost nothing."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "client",
+      "def": "The program on the user's own device — usually the web page and its JavaScript in the browser — which means the user can read, change, or bypass anything it does."
+    },
+    {
+      "term": "never trust the client",
+      "def": "The core security rule that no value coming from the browser can be assumed correct or honest, because the user controls it; the server must independently re-check everything."
+    },
+    {
+      "term": "input validation",
+      "def": "Checking on the server that incoming data is the right type, shape, and range — and rejecting anything that isn't — before your code acts on it."
+    },
+    {
+      "term": "allowlist (whitelist)",
+      "def": "A validation approach that defines exactly what is permitted and rejects everything else, which is safer than trying to enumerate every possible bad value (a denylist)."
+    },
+    {
+      "term": "HTTP status code",
+      "def": "A standard three-digit number a server returns to signal the outcome of a request — for example `200` (success), `400` (bad request from the client), `403` (forbidden), or `500` (server error)."
+    },
+    {
+      "term": "graceful error handling",
+      "def": "Catching a failure so the server keeps running and returns a deliberate, useful response — the right status code plus a clear message — instead of crashing or leaking internal details."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Never trust the client\" is really a product principle: it decides where the rules of your business actually live, and the answer must be the server — the one place a user can't quietly rewrite, or your pricing, permissions, and limits are only suggestions.",
+      "Error responses are user experience, not plumbing — vague or scary errors generate support tickets and lost conversions, while clear ones (\"that promo code expired on 1 May\") help honest users self-serve, so it's worth specifying error messages with the same care as success screens.",
+      "There's a real trade-off to own: strict validation blocks bad and malicious input but can also frustrate legitimate edge cases (a foreign phone number, a very long name), so deciding *what counts as valid* is a product decision, not just an engineering one."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2010 AT&T iPad email breach",
+    "body": [
+      "In 2010, AT&T's website had a page that looked up an iPad owner's email address from an identifier (the `ICC-ID`) supplied in the web address — and it returned the matching email without ever re-checking who was asking.",
+      "Because that identifier was both guessable and sent by the client, a group simply wrote a script that fed AT&T's server a long list of candidate IDs and harvested whatever came back.",
+      "The server trusted the client-supplied value completely, so it handed out roughly 114,000 email addresses, including those of public figures and government officials.",
+      "AT&T had effectively put the bouncer's checklist on the front door's sign: the lookup worked for anyone who could ask, because nothing on the server independently verified the request was legitimate."
+    ],
+    "bridge": "The breach is \"never trust the client\" in one sentence — the server acted on a value the client controlled, without re-checking who was allowed to see what, and a guessable input became a data leak for 114,000 people."
+  },
+  "takeaways": [
+    "Anything in the browser can be inspected, edited, or bypassed, so client-side checks help honest users but defend against no one — real protection lives only on the server.",
+    "Validate every incoming value on the server: confirm its type, shape, and range, prefer an allowlist of what's permitted, and never let the client supply prices, roles, or identity.",
+    "Handle errors gracefully — catch the failure, keep the server running, and return a deliberate response rather than crashing or trusting bad input.",
+    "Return clear, honest error responses: the right HTTP status code (`400` for bad input, `500` for a server fault) plus a useful message that helps users without leaking internal details to attackers."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A checkout form in the browser only lets the user choose a quantity from 1 to 10. Why must the server still re-check the quantity it receives?",
+      "options": [
+        {
+          "text": "Because the form runs on the user's machine and can be inspected, edited, or bypassed, so a request can arrive with any quantity at all — only a server-side check actually enforces the limit",
+          "correct": true
+        },
+        {
+          "text": "Because the form's limit only applies to the first order each day, and the server handles the rest",
+          "correct": false
+        },
+        {
+          "text": "Because re-checking makes the page load faster for the user",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the dropdown shapes the honest path but constrains nothing: the client controls the browser and can send any value by hand, so the 1-to-10 rule is only real if the server independently re-checks it. Client-side limits are convenience, never enforcement."
+    },
+    {
+      "q": "When a user submits an invalid email address, what is the best way for the server to respond?",
+      "options": [
+        {
+          "text": "Catch the problem, keep running, and return a `400` status with a clear message like \"that email address isn't valid\" — without exposing internal database details",
+          "correct": true
+        },
+        {
+          "text": "Let the error crash the request so the user is forced to try again",
+          "correct": false
+        },
+        {
+          "text": "Return a `500` along with the full internal stack trace so the user can debug it themselves",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — graceful handling means the server stays up and replies deliberately: a `400` signals \"bad request from the client,\" and a plain message tells the honest user how to fix it. Leaking internal details (or crashing) helps no one but an attacker."
+    },
+    {
+      "q": "In the 2010 AT&T iPad breach, the server looked up and returned an email address based on an identifier the client supplied in the URL, without re-checking who was asking. Which principle does this violate?",
+      "options": [
+        {
+          "text": "Never trust the client — the server acted on a client-controlled value without independently verifying the request was legitimate, so a guessable input leaked 114,000 emails",
+          "correct": true
+        },
+        {
+          "text": "It violated nothing — the breach was caused purely by a slow server, not by trusting input",
+          "correct": false
+        },
+        {
+          "text": "It used the wrong programming language, which is why the data leaked",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the server treated a value the client fully controlled as trustworthy and acted on it without re-verifying the requester. That is exactly \"never trust the client\": a guessable, client-supplied identifier became a mass data leak because nothing on the server re-checked it."
+    }
+  ]
+}

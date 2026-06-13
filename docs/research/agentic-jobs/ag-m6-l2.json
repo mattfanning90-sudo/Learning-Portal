@@ -1,0 +1,176 @@
+{
+  "coreIdea": "The only quality measure that matters for an agent is whether it actually accomplished the goal — task success — so favour that over how polished, confident, or well-written the output merely looks.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "An `agent` is software that takes a goal and acts on its own — calling tools, running code, sending messages — to get it done.",
+    "When you measure an agent, the tempting thing to grade is the output: is the answer fluent, well-formatted, confident-sounding?",
+    "But a beautifully written answer that's wrong, or a tidy pull request that doesn't fix the bug, is a failure dressed up as a success.",
+    "What you actually want to measure is `task success`: did the agent achieve the real goal, judged against the outcome, not the prose.",
+    "This lesson is about choosing the right thing to measure — accuracy, pass rate, human ratings, an LLM judge — and not getting fooled by metrics that look good and mean nothing."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Grading an agent on output quality is like judging a plumber by how confident they sound and how clean their van is, instead of whether the leak stopped.",
+      "Task success is the wet floor test: you don't care how impressive the work looked — you care whether the water stopped running.",
+      "Where the metaphor bends: a leak is obvious and instant, while an agent's task can be slow and fuzzy to verify — sometimes you genuinely have to define, in advance, what \"the leak stopped\" even means before you can score it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Task success vs output quality: grade the outcome, not the prose",
+      "teaser": "A confident wrong answer is still wrong",
+      "body": [
+        "`Output quality` is how good the result looks on the surface — fluent, well-structured, confident, nicely formatted.",
+        "`Task success` is whether the agent actually accomplished the goal you gave it, measured against the real-world outcome.",
+        "These come apart constantly: language models are trained to sound right, which makes a wrong answer dangerously persuasive.",
+        "If an agent is asked to fix a bug, the only honest score is \"do the tests pass now?\" — not \"is the code well-commented?\"",
+        "If it's asked to book the cheapest flight, success is \"did it book the cheapest valid flight?\" — not \"was the summary nicely worded?\"",
+        "The discipline is to define the goal as a checkable outcome first, then refuse to give credit for anything that merely looks like success."
+      ]
+    },
+    {
+      "title": "The measures you'll actually use",
+      "teaser": "Accuracy, pass rate, human ratings, and an LLM as judge",
+      "body": [
+        "`Accuracy` is the fraction of tasks the agent got exactly right when there's one correct answer — useful for things with a clear ground truth, like classification or extraction.",
+        "`Pass rate` is the share of tasks where the agent met a defined success condition, like \"all the tests pass\" or \"the form was submitted correctly\" — the workhorse metric for agents that do multi-step work.",
+        "`Human ratings` are scores from people who judge each result, used when success is subjective — was this support reply helpful, was this summary faithful — and they're the gold standard but slow and expensive.",
+        "`LLM-as-a-judge` means using a second language model to grade the first agent's output against a rubric — fast and cheap enough to run on thousands of cases, which is why teams reach for it.",
+        "An LLM judge is a useful stand-in for human ratings, not a replacement: it can be biased toward longer or more confident answers, so you calibrate it by checking its grades against a sample of human grades.",
+        "The honest move is to pick the cheapest measure that genuinely tracks task success, and to know its blind spots — none of these is free of error."
+      ]
+    },
+    {
+      "title": "Offline vs online, and the trap of vanity metrics",
+      "teaser": "Test before you ship, watch after — and ignore numbers that flatter",
+      "body": [
+        "`Offline evaluation` is testing the agent against a fixed set of saved tasks before release, in a controlled rerun — like a flight simulator, safe and repeatable.",
+        "`Online evaluation` is measuring the agent on real users and real traffic after release — like actual flying, where you see problems the simulator never imagined.",
+        "You need both: offline catches regressions cheaply before launch, online tells you whether it works for real people, which is the only verdict that counts.",
+        "A `vanity metric` is a number that reliably goes up and tells you nothing useful — it flatters the team without tracking whether the goal was met.",
+        "Examples: \"average response length,\" \"number of tool calls,\" or a 4.9-star rating that only the happy users bothered to leave — all can rise while task success falls.",
+        "The test for a real metric is brutal and simple: if this number improved but users were worse off, would I notice? If not, it's vanity — replace it with a task-success measure."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "task success",
+      "def": "Whether the agent actually achieved the goal you gave it, judged by the real outcome — the bug is fixed, the flight is booked — not by how good the output looks."
+    },
+    {
+      "term": "output quality",
+      "def": "How polished the result appears on the surface — fluent, confident, well-formatted — which can be high even when the task itself failed."
+    },
+    {
+      "term": "pass rate",
+      "def": "The share of tasks where the agent met a defined success condition, such as \"all tests pass\" — the main metric for agents doing multi-step work."
+    },
+    {
+      "term": "LLM-as-a-judge",
+      "def": "Using a second language model to grade an agent's output against a rubric, cheap enough to run at scale — but calibrated against human grades because it has its own biases."
+    },
+    {
+      "term": "offline vs online evaluation",
+      "def": "Offline tests the agent on a fixed saved set of tasks before release; online measures it on real users and traffic after release — you need both."
+    },
+    {
+      "term": "vanity metric",
+      "def": "A number that reliably goes up and flatters the team but doesn't track whether the goal was met — like average response length or a self-selected star rating."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "What you choose to measure becomes what your team optimises — so if you reward output that looks good, you'll get an agent that's confidently wrong and a dashboard that hides it.",
+      "Insist that the headline metric is a task-success measure tied to the real goal, and treat surface-quality numbers as supporting detail, never the verdict.",
+      "When someone shows you a number going up, ask the cheap, devastating question: \"if this rose while users got worse outcomes, would we see it?\" — because the difference between a real metric and a vanity metric is whether it would ever tell you bad news."
+    ]
+  },
+  "caseStudy": {
+    "title": "Devin's demo vs its SWE-bench score (2024)",
+    "body": [
+      "In March 2024, the startup Cognition unveiled Devin, billed as \"the first AI software engineer,\" with a polished demo: it spun up a shell, read documentation, wrote code, ran tests, and opened pull requests from a single prompt.",
+      "The output looked extraordinary — fluent, autonomous, end-to-end — and the launch went viral.",
+      "But Cognition's own technical report put Devin's task-success number on `SWE-bench`, a benchmark of real GitHub issues, at 13.86% — meaning it fully resolved fewer than one in seven issues, still a record at the time but far below what the demo implied.",
+      "Independent developers then tried to reproduce the demo tasks and published detailed critiques, because the impressive output had set an expectation the actual pass rate didn't meet."
+    ],
+    "bridge": "The demo measured output quality — how capable it looked — while SWE-bench measured task success — how often it actually fixed the issue — and only the second number told you what the agent could really do."
+  },
+  "takeaways": [
+    "Measure task success — did it achieve the goal — over output quality, because a confident, well-written answer can still be wrong.",
+    "Match the measure to the task: accuracy for one-right-answer work, pass rate for multi-step agents, human ratings when success is subjective, and an LLM judge to scale ratings cheaply (after calibrating it against humans).",
+    "Run offline evaluation to catch regressions before launch and online evaluation to see whether it works for real users — you need both.",
+    "Kill vanity metrics: if a number could rise while users get worse outcomes and you'd never notice, replace it with a task-success measure."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An agent is asked to fix a bug. It returns clean, well-commented code with a confident summary — but the project's tests still fail. How should you score it?",
+      "options": [
+        {
+          "text": "As a failure — task success is whether the bug is actually fixed, and the tests still failing means the goal wasn't met, however polished the output looks",
+          "correct": true
+        },
+        {
+          "text": "As a success — the code is clean and well-commented, which is strong evidence the work was done properly",
+          "correct": false
+        },
+        {
+          "text": "As a partial success that should be averaged with the quality of the code's formatting and comments",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — output quality (clean, confident code) is not task success. The defined success condition was the tests passing; they didn't, so it failed, no matter how good it looks."
+    },
+    {
+      "q": "Why do teams use an LLM as a judge to score an agent's outputs, and what's the necessary catch?",
+      "options": [
+        {
+          "text": "It's cheap and fast enough to grade thousands of cases like human ratings would — but it has its own biases, so you must calibrate it against a sample of human grades",
+          "correct": true
+        },
+        {
+          "text": "It is perfectly objective and free of bias, so it can replace human ratings entirely with no further checking",
+          "correct": false
+        },
+        {
+          "text": "It only ever judges formatting and grammar, so it never needs to be checked against the actual task goal",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — an LLM judge scales human-style ratings cheaply, but it can favour longer or more confident answers, so you calibrate it against real human grades rather than trusting it blindly."
+    },
+    {
+      "q": "A team proudly reports that their agent's average response length has doubled. Why is this most likely a vanity metric?",
+      "options": [
+        {
+          "text": "It's a number that can reliably rise while users get worse outcomes, and nothing about it tracks whether the agent actually accomplished the goal",
+          "correct": true
+        },
+        {
+          "text": "It's a vanity metric only because it's reported as an average rather than a total count",
+          "correct": false
+        },
+        {
+          "text": "It isn't a vanity metric — longer responses are direct proof of higher task success",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — longer answers can mean more padding, not more success. A vanity metric goes up without tracking the goal; the test is whether it could rise while users are worse off and you'd never notice."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Cognition — SWE-bench technical report (Devin's 13.86% task-success score)",
+      "url": "https://cognition.ai/blog/swe-bench-technical-report"
+    },
+    {
+      "label": "Cognition — Introducing Devin, the first AI software engineer",
+      "url": "https://cognition.ai/blog/introducing-devin"
+    },
+    {
+      "label": "OpenAI — Introducing SWE-bench Verified (measuring agent task success on real issues)",
+      "url": "https://openai.com/index/introducing-swe-bench-verified/"
+    }
+  ]
+}

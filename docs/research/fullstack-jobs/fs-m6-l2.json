@@ -1,0 +1,174 @@
+{
+  "coreIdea": "CI/CD is an automated assembly line for code: every change a developer pushes is automatically built and tested (Continuous Integration), and changes that pass are automatically moved toward or all the way into production (Continuous Delivery and Deployment) — replacing slow, error-prone manual deploys with a fast, repeatable pipeline that catches problems before users do.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Once code is reviewed and merged, someone still has to *build* it, *test* it, and *ship* it to the live servers users hit.",
+    "Doing all that by hand is slow and dangerous — a tired person at 11pm running the wrong command can take the whole site down.",
+    "`CI/CD` is the practice of letting a machine do those steps automatically, the exact same way, every single time a change is made.",
+    "The `CI` half — Continuous Integration — means: whenever anyone pushes code, a server automatically rebuilds the app and runs the tests, so broken changes are caught within minutes instead of weeks.",
+    "The `CD` half — Continuous Delivery and Deployment — means: once a change passes all the checks, it's automatically packaged and pushed toward, or even straight into, `production` (the live system real users see), with no human typing fragile commands."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of CI/CD like a car factory assembly line. A raw change enters at one end; it moves through fixed stations — assemble the parts (build), run it past quality inspectors (tests), box it up (package), and roll it out the door (deploy) — and at each station, if something fails inspection, the line stops and flags exactly which station rejected it.",
+      "The power is that the line is identical for every car: nobody hand-assembles one vehicle differently at midnight and forgets a bolt, because the steps are written down once and run by the machine every time.",
+      "Where the metaphor breaks: a real assembly line builds many physically separate cars, whereas a CI/CD pipeline runs the *same* set of automated steps over and over on a stream of changes to *one* evolving product — and unlike a factory, a bad deploy can often be undone in seconds by rolling back to the previous version."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Continuous Integration: every change gets built and tested automatically",
+      "teaser": "The machine checks your work within minutes, not weeks",
+      "body": [
+        "`Continuous Integration` (CI) is the discipline of automatically building and testing the code every time someone pushes a change to the shared repository.",
+        "A `build` means turning the raw source code into the runnable form the computer actually executes — installing the pieces it depends on and assembling them together.",
+        "Right after the build, an automated server runs the project's `tests` — small programs that check the real code still does what it's supposed to (we cover the kinds of tests in detail in the next module).",
+        "The whole point is speed of feedback: if your change broke something, you find out in minutes, while the change is still fresh in your mind, not weeks later when ten other changes are tangled on top of it.",
+        "This is why it's called *continuous* integration — instead of everyone hoarding their work and combining it in one terrifying \"big bang\" at the end, small changes are merged and verified constantly, so problems stay small and isolated.",
+        "On most teams the CI run is tied to the pull request from the previous lesson: the checks must go green before a human is even asked to approve the merge."
+      ]
+    },
+    {
+      "title": "Continuous Delivery vs Deployment: the last two letters, and the one human gate",
+      "teaser": "Both ship passing code — the difference is whether a person presses go",
+      "body": [
+        "Once CI proves a change is good, `CD` takes over to get it to users — and CD stands for two related but distinct ideas that are easy to confuse.",
+        "`Continuous Delivery` means every passing change is automatically packaged and made *ready* to release at the push of a button — but an actual human decides the moment it goes live.",
+        "`Continuous Deployment` goes one step further: every passing change is automatically pushed *all the way into production* with no human in the loop at all.",
+        "The single difference is that one manual approval gate: delivery keeps a person's finger on the trigger; deployment removes it entirely and trusts the automated tests completely.",
+        "Neither is automatically \"better\" — a bank or a hospital system may *want* a human approval before each release, while a fast-moving web app may deploy dozens of times a day with no gate.",
+        "Both, crucially, ship the *same vetted package* that passed CI — so you never have the classic disaster of \"it worked on the build server but the thing we actually shipped was different.\""
+      ]
+    },
+    {
+      "title": "Why automation beats the manual deploy",
+      "teaser": "The same steps, the same way, every time — written down once",
+      "body": [
+        "A manual deploy is a person following a checklist of commands by hand: copy these files, restart that server, run this database update, cross your fingers.",
+        "The problem isn't that people are careless — it's that humans are *inconsistent*: a skipped step, a mistyped command, or a \"works on my laptop\" difference creeps in, and the failures cluster late at night when people are tired.",
+        "A pipeline encodes those steps as code that runs identically every time, so the deploy is `repeatable` (same result on every run) and `auditable` (there's a logged record of exactly what ran, when, and whether it passed).",
+        "Automation also makes shipping *frequent and small*: because each deploy is cheap and safe, teams ship tiny changes many times a day instead of one giant, scary release a quarter — and small changes are far easier to debug when something goes wrong.",
+        "And when a bad change does slip through, the pipeline makes the fix fast too: a `rollback` — automatically reverting to the last known-good version — turns a potential outage into a brief blip.",
+        "The numbers here are illustrative, but the shape is real: elite teams measured by industry research deploy on the order of many times per day with change-failure rates in the low single-digit percent, precisely because the pipeline removes human error from the loop."
+      ]
+    },
+    {
+      "title": "What a real pipeline looks like end to end",
+      "teaser": "Following one change from a developer's laptop to the live site",
+      "body": [
+        "Picture the journey of a single change. A developer pushes their branch and opens a pull request, exactly as in the previous lesson.",
+        "A `CI server` — software like GitHub Actions, GitLab CI, CircleCI, or Jenkins that watches the repository and runs the pipeline — wakes up and starts the first stage: build the app from scratch in a clean environment.",
+        "Next stage: run the automated tests; if any fail, the pipeline stops, marks the pull request red, and tells the developer exactly which check broke — nothing proceeds.",
+        "If everything's green, the pipeline often deploys the change first to a `staging` environment — a private copy of production used for final checks — so the team can verify it behaves correctly on real infrastructure before users see it.",
+        "Finally, under Continuous Delivery a human clicks \"release\" (or under Continuous Deployment the pipeline just proceeds), and the vetted package goes to `production`, the live system serving real users.",
+        "Each of these stages is just a step in a configuration file living *with* the code, so the pipeline itself is version-controlled, reviewed, and improved like any other part of the project."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "CI/CD pipeline",
+      "def": "An automated sequence of steps — build, test, package, deploy — that runs every time code changes, taking a change from a developer's commit toward or into production without manual, error-prone hand-running of commands."
+    },
+    {
+      "term": "Continuous Integration (CI)",
+      "def": "Automatically building the app and running its tests on every pushed change, so broken code is caught within minutes and small changes are merged and verified constantly instead of in one risky 'big bang' at the end."
+    },
+    {
+      "term": "Continuous Delivery",
+      "def": "Automatically packaging every change that passes CI so it is ready to release at the push of a button — but a human still decides the exact moment it goes live."
+    },
+    {
+      "term": "Continuous Deployment",
+      "def": "Going one step beyond delivery: every change that passes the automated tests is pushed all the way into production automatically, with no human approval gate in the loop."
+    },
+    {
+      "term": "production / staging",
+      "def": "Production is the live system that real users actually hit. Staging is a private, near-identical copy of it, used to run final checks on a change before it reaches real users."
+    },
+    {
+      "term": "rollback",
+      "def": "Automatically reverting the live system to the last known-good version when a deployed change causes problems — turning what could be a long outage into a brief blip."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "CI/CD is where 'how safely and how fast can we ship?' becomes a dial you can actually turn — and the two ends of that dial, Continuous Delivery (human approves each release) versus Continuous Deployment (no gate), are a genuine product and risk decision you own, not a purely technical one.",
+      "Deploy frequency and change-failure rate are among the clearest health signals a non-technical leader can read: a team that ships many small changes a day with few failures is moving fast *and* safely, while one stuck on rare, scary quarterly releases is carrying hidden risk and slow time-to-market.",
+      "The trade-off you're funding is up-front investment versus ongoing drag: building and maintaining a good pipeline costs engineering time now, but the alternative — manual deploys — quietly taxes every single release with risk, late nights, and the opportunity cost of features not built, which is exactly why pipelines are worth pushing for even when they don't ship a visible feature."
+    ]
+  },
+  "caseStudy": {
+    "title": "Knight Capital's $440M manual-deploy disaster (2012)",
+    "body": [
+      "Knight Capital was a major US stock-trading firm that pushed new trading software to its production servers by hand, one machine at a time.",
+      "On 1 August 2012, an engineer manually copied the update to seven of the firm's eight servers but missed the eighth, leaving old, incompatible code running on it — an inconsistency a clean automated deploy would never have produced.",
+      "When the market opened, that one mismatched server began firing millions of unintended stock orders; in roughly 45 minutes the runaway trades cost Knight about $440 million — more than the company was worth.",
+      "The firm nearly collapsed and was acquired within months, brought down not by a clever attack but by a single skipped step in a manual, inconsistent deployment process."
+    ],
+    "bridge": "An automated CI/CD pipeline ships the same vetted package to every server identically and can roll back in seconds — which is the entire reason teams replace fragile, hand-run deploys with a repeatable machine."
+  },
+  "takeaways": [
+    "Continuous Integration automatically builds and tests every pushed change, so broken code is caught in minutes and small changes are merged and verified constantly instead of in one risky big-bang release.",
+    "Continuous Delivery makes every passing change ready to release at the push of a button; Continuous Deployment goes further and pushes it into production automatically — the only difference is whether a human approval gate exists.",
+    "Automation beats manual deploys because the pipeline runs the identical steps every time: repeatable, auditable, frequent, small, and fast to roll back when something breaks.",
+    "A pipeline is itself code living with the project — build, test, deploy to staging, then production — so 'how fast and how safely we ship' becomes a measurable, ownable product decision."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A developer pushes a change to the shared repository. What does Continuous Integration (the 'CI' half) automatically do at that moment?",
+      "options": [
+        {
+          "text": "It rebuilds the app and runs the automated tests, flagging the change within minutes if anything broke — before a human is even asked to approve the merge",
+          "correct": true
+        },
+        {
+          "text": "It immediately pushes the change to the live production servers so real users get it as fast as possible",
+          "correct": false
+        },
+        {
+          "text": "It waits until the end of the quarter, then combines everyone's changes together in one large release and tests them all at once",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — Continuous Integration is about fast, automatic verification: every pushed change triggers a fresh build and the test suite, so a break is caught in minutes while the change is still fresh. Pushing straight to production is deployment (the 'CD' half), and saving everything for one big end-of-quarter combine is exactly the risky 'big bang' that continuous integration is designed to avoid."
+    },
+    {
+      "q": "Two teams both pass all their automated tests. Team A's pipeline makes each change ready to ship but waits for a person to click 'release'; Team B's pipeline pushes each passing change straight to production with no human step. What's the difference?",
+      "options": [
+        {
+          "text": "Team A is practising Continuous Delivery (a human approves each release) and Team B Continuous Deployment (no approval gate) — the only difference is that one manual gate",
+          "correct": true
+        },
+        {
+          "text": "Team A has CI and Team B has CD — Team B simply skips testing entirely to move faster",
+          "correct": false
+        },
+        {
+          "text": "Team B is less safe by definition, because shipping without a human gate always means shipping untested code",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — both teams' changes are fully tested by CI first; the single distinction is the human approval gate. Continuous Delivery keeps a person's finger on the trigger, while Continuous Deployment removes it and trusts the automated checks. Neither skips testing, and neither is automatically safer — a regulated system may *want* the gate, while a fast web app may happily ship without one."
+    },
+    {
+      "q": "In 2012 Knight Capital manually copied a software update to seven of eight production servers and missed the eighth, leaving mismatched code that fired millions of bad orders and cost about $440 million. Which property of an automated CI/CD pipeline most directly prevents this kind of failure?",
+      "options": [
+        {
+          "text": "The pipeline runs the identical deploy steps to every server the same way every time, so a 'skipped one machine' inconsistency can't creep in — and a bad release can be rolled back in seconds",
+          "correct": true
+        },
+        {
+          "text": "The pipeline guarantees the software has zero bugs, so nothing bad can ever reach production",
+          "correct": false
+        },
+        {
+          "text": "The pipeline makes deploys so slow and rare that there are fewer chances for anything to go wrong",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the core failure at Knight was human inconsistency: a deploy run by hand left one server out of sync. An automated pipeline encodes the steps once and applies them identically to every server, every time, removing exactly that 'I missed one' class of error, and lets you roll back fast if something does slip through. A pipeline doesn't promise bug-free code, and its value comes from making deploys frequent and safe, not rare and slow."
+    }
+  ]
+}

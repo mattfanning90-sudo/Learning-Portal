@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Accessibility (a11y) means building products that people with disabilities can actually use — through semantic HTML, sufficient contrast, alt text, and full keyboard control — and getting it right tends to make the product better, more findable, and cheaper to maintain for everyone, not just for the people who depend on it.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "Not everyone uses a product the way you picture in your head — with a mouse, a big bright screen, and full use of their hands and eyes.",
+    "Some people can't see the screen and listen to it instead through a `screen reader`, software that reads a page aloud and lets them navigate by keyboard.",
+    "Some can't use a mouse and move through everything with the `Tab` key, or with a switch, or by voice.",
+    "Some have low vision and need text to be large and high-contrast, and some have limited motor control and need big, forgiving targets.",
+    "`Accessibility` — often shortened to `a11y`, because there are 11 letters between the \"a\" and the \"y\" — is the practice of building so all of these people can use your product, and this lesson is about what that means and the few concrete habits that get you most of the way there."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like a building with a ramp, not just stairs",
+    "body": [
+      "A building reachable only by a flight of stairs quietly turns away anyone in a wheelchair, a parent with a pram, or someone wheeling a heavy delivery — the barrier wasn't deliberate, it just wasn't designed out.",
+      "Accessibility is the ramp, the lift, and the automatic door: built in from the start, they let everyone through, and the people they were \"for\" turn out to be almost everyone on some day or other.",
+      "Where the metaphor bends: a ramp is a visible, bolt-on addition you can point to, whereas digital accessibility is mostly invisible — it lives in how the page is structured underneath, so you can't tell a site is accessible just by looking at it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Who accessibility actually helps",
+      "teaser": "Far more people than you'd guess — including a future version of you",
+      "body": [
+        "The headline number is large: the World Health Organization estimates that roughly 1 in 6 people worldwide live with a significant disability, and that figure is illustrative of scale, not a precise count of your users.",
+        "But \"disability\" here is broader than a permanent condition — it includes the person with a broken arm using one hand, the commuter squinting at a phone in bright sun, and the older user whose eyesight and dexterity have gently declined.",
+        "Accessibility experts call these `permanent`, `temporary`, and `situational` limitations, and a single design fix — say, a big tappable button — helps all three at once.",
+        "So the audience isn't a small niche you can deprioritise; it's a wide band of real people, and on a long enough timeline it includes everyone, including you.",
+        "Crucially, many of these users are invisible in your analytics — a screen-reader user who hits a wall and leaves looks identical to anyone else who bounced, so you rarely get told you've excluded them.",
+        "That invisibility is exactly why accessibility has to be a deliberate practice rather than something you wait for complaints to reveal."
+      ]
+    },
+    {
+      "title": "Semantic HTML: the single biggest lever",
+      "teaser": "Use the right element for the job, and most of the work is already done",
+      "body": [
+        "`HTML` is the language that gives a web page its structure — its headings, paragraphs, buttons, and links.",
+        "`Semantic HTML` means using the element that actually matches the meaning of the thing: a real `<button>` for a button, a `<nav>` for navigation, a `<h1>` for the main heading, instead of styling a generic `<div>` (a meaningless box) to merely look like one.",
+        "This matters because a `screen reader` doesn't see your visuals — it reads the underlying elements, so a real `<button>` is announced as \"button, clickable\" and works with the keyboard automatically, while a `<div>` dressed up as a button is announced as nothing useful and may not work at all.",
+        "Headings are part of this too: a screen-reader user navigates a page by jumping between headings the way a sighted reader scans for bold titles, so honest, in-order headings turn a wall of text into a table of contents.",
+        "The payoff is that you get a huge amount of accessibility for free — keyboard support, screen-reader labels, and sensible structure — simply by choosing the correct element instead of reinventing it.",
+        "Reaching for a plain `<div>` for everything is the most common way accessibility quietly breaks, and using semantic elements is the cheapest way to avoid it."
+      ]
+    },
+    {
+      "title": "The four habits that cover most of it",
+      "teaser": "Semantic structure, contrast, alt text, and keyboard navigation",
+      "body": [
+        "Beyond semantic structure, three more concrete habits handle the bulk of everyday accessibility.",
+        "`Sufficient contrast` means the text is dark or light enough against its background to be readable — pale grey text on a white background fails people with low vision, and the common standard asks for a contrast ratio of at least 4.5 to 1 for normal text (an illustrative threshold you check with a free tool, not a number you eyeball).",
+        "`Alt text` (short for alternative text) is a short written description attached to an image, so a screen reader can say what the picture shows — \"a red error icon\" — instead of skipping it or reading a meaningless filename; purely decorative images get empty alt text so they're politely ignored.",
+        "`Keyboard navigation` means every interactive thing — links, buttons, form fields, menus — can be reached and operated using only the keyboard, because many users never touch a mouse; you test it by putting the mouse down and pressing `Tab`, `Enter`, and the arrow keys through the whole flow.",
+        "A related must-have is a visible `focus indicator` — the outline that shows which element the keyboard is currently on — because removing it (a popular \"it looks cleaner\" change) leaves keyboard users lost with no cursor to follow.",
+        "None of these four require special tools or heroics; they're habits, and a product that does them is already past most of the bar."
+      ]
+    },
+    {
+      "title": "WCAG, and why accessibility helps everyone (and SEO)",
+      "teaser": "The shared rulebook, and the wide payoff beyond compliance",
+      "body": [
+        "There's a shared rulebook so teams aren't each inventing their own definition of \"accessible\": the `WCAG`, or Web Content Accessibility Guidelines, published by the standards body that governs the web.",
+        "You don't need to memorise it — its core is four plain principles, that content must be `Perceivable`, `Operable`, `Understandable`, and `Robust` (sometimes remembered as `POUR`), and it defines grades `A`, `AA`, and `AAA`, where `AA` is the level most laws and companies aim for.",
+        "Here's the part that turns accessibility from a cost into a multiplier: the same structure that helps a screen reader also helps a search engine, because Google's crawler reads your page much like a screen reader does — so honest headings, alt text, and semantic elements directly improve `SEO` (search engine optimisation, how well you rank in search results).",
+        "And the everyday wins are universal: captions help people in a loud cafe or a silent office, high contrast helps anyone outdoors in sunlight, and keyboard support speeds up power users.",
+        "This is the well-known `curb-cut effect` — the dropped kerb cut into a pavement was mandated for wheelchairs, and now everyone with a pram, suitcase, or bike uses it without a thought.",
+        "Accessibility is rarely a feature only for a few; it's usually a quality improvement that happens to be essential for some and pleasant for the rest."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "accessibility (a11y)",
+      "def": "The practice of building products that people with disabilities can use — including those who rely on screen readers, keyboard navigation, large high-contrast text, or forgiving touch targets. Written `a11y` because there are 11 letters between the \"a\" and the \"y\"."
+    },
+    {
+      "term": "screen reader",
+      "def": "Software that reads a page or app aloud and lets a person navigate it with the keyboard instead of seeing the screen. It announces the underlying elements (\"button\", \"heading\", \"link\"), so it depends on the page being structured honestly."
+    },
+    {
+      "term": "semantic HTML",
+      "def": "Using the HTML element that matches the meaning of a thing — a real `<button>`, `<nav>`, or `<h1>` — instead of styling a generic `<div>` to merely look like one. It gives you keyboard support and screen-reader labels almost for free."
+    },
+    {
+      "term": "alt text",
+      "def": "Alternative text: a short written description attached to an image so a screen reader can say what it shows (\"a red error icon\"). Decorative images are given empty alt text so they are skipped politely."
+    },
+    {
+      "term": "contrast ratio",
+      "def": "A measure of how distinct text is from its background. Higher is easier to read; the common standard asks for at least 4.5 to 1 for normal-size text, checked with a free tool rather than judged by eye."
+    },
+    {
+      "term": "WCAG",
+      "def": "The Web Content Accessibility Guidelines: the shared rulebook for digital accessibility. Its core is four principles — content must be Perceivable, Operable, Understandable, and Robust — and it defines grades A, AA, and AAA, with AA the usual target."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Accessibility is one of the rare line items that's simultaneously the right thing, a legal exposure, and a growth lever — so it deserves a place in your definition of done, not a backlog labelled \"later,\" because retrofitting it onto a finished product is far more expensive than building it in.",
+      "The trade-off you own is mostly up-front discipline versus invisible lost users: an inaccessible flow doesn't file a bug, it just silently sheds the people who couldn't complete it, and they never show up in a chart you'd think to look at.",
+      "The leverage argument makes the case easy to fund: the same work that opens your product to disabled users also improves your search ranking and helps every user in a noisy, sunny, or one-handed moment — so you're rarely spending on a niche, you're paying down a quality gap that was costing you reach the whole time."
+    ]
+  },
+  "caseStudy": {
+    "title": "The National Federation of the Blind v. Target (2006)",
+    "body": [
+      "In 2006 the National Federation of the Blind sued the US retailer Target, because Target.com couldn't be used with a screen reader — key images lacked alt text and parts of the checkout couldn't be reached or operated with a keyboard, so blind customers literally could not buy from the site.",
+      "Target argued a website wasn't a \"place\" covered by US disability law; the court disagreed, letting the case proceed and signalling that online stores carry the same obligations as physical ones.",
+      "In 2008 Target settled, agreeing to pay $6 million in damages, to bring the site up to accessibility standards, and to have ongoing testing — a landmark that turned web accessibility from a nice-to-have into a real business and legal risk in many companies' eyes.",
+      "The fixes themselves were the ordinary habits from this lesson — alt text on images and keyboard-operable checkout — not exotic technology."
+    ],
+    "bridge": "Target's failures were exactly the basics this lesson covers — missing alt text and a checkout you couldn't reach by keyboard — which is why those few habits, done early, are what keep a product usable and out of this kind of trouble."
+  },
+  "takeaways": [
+    "Accessibility (a11y) means building so people with disabilities can use your product — screen-reader, keyboard, low-vision, and limited-motor users — and the audience is far wider than a niche, including temporary and situational limitations.",
+    "Semantic HTML is the biggest single lever: using a real `<button>`, `<nav>`, and honest headings gives you keyboard support and screen-reader structure almost for free, where a styled `<div>` gives you nothing.",
+    "Four concrete habits cover most of it — semantic structure, sufficient contrast, alt text on images, and full keyboard navigation with a visible focus outline — checked with simple tools, not heroics.",
+    "`WCAG` (target level AA) is the shared rulebook, and accessibility pays off broadly: the same structure boosts `SEO` and the curb-cut effect means fixes for some users quietly help everyone."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A developer styles a generic `<div>` to look exactly like a button, with the right colours and label. A sighted mouse user sees no difference from a real button. Why is this still an accessibility problem?",
+      "options": [
+        {
+          "text": "A screen reader and the keyboard rely on the underlying element, not its looks — a real `<button>` is announced as a button and works with the keyboard automatically, while a styled `<div>` may be announced as nothing useful and may not be reachable or operable at all",
+          "correct": true
+        },
+        {
+          "text": "There is no real problem — as long as the `<div>` looks like a button and responds to a mouse click, every user can use it equally well",
+          "correct": false
+        },
+        {
+          "text": "The problem is purely visual: a `<div>` can never be coloured or sized to look as convincing as a real `<button>`, so low-vision users will notice the difference",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — accessibility lives in the structure underneath, which is invisible to a sighted mouse user. A screen reader reads the element type, so a real `<button>` announces itself and gets keyboard support for free, whereas a `<div>` dressed up as a button conveys no meaning and often can't be focused or activated by keyboard. This is why semantic HTML — using the element that matches the meaning — is the single biggest accessibility lever, and why reaching for a plain `<div>` for everything is the most common way it quietly breaks."
+    },
+    {
+      "q": "Beyond opening a product to people with disabilities, why does good accessibility often improve search ranking (SEO) and help users with no disability at all?",
+      "options": [
+        {
+          "text": "The same honest structure that helps a screen reader — semantic elements, in-order headings, alt text — is also what a search engine's crawler reads, and the same fixes (captions, high contrast, large targets) help anyone in a loud, sunny, or one-handed moment — the curb-cut effect",
+          "correct": true
+        },
+        {
+          "text": "Search engines give a direct ranking bonus to any site that publicly declares it is WCAG AAA compliant, regardless of how the page is actually built",
+          "correct": false
+        },
+        {
+          "text": "Accessibility only helps disabled users; any SEO or general benefit is a coincidence and shouldn't be used to justify the work",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a search crawler reads a page much like a screen reader does, so the same semantic structure, headings, and alt text that aid accessibility directly improve SEO. And the fixes are broadly useful: captions help in a noisy cafe or silent office, contrast helps in sunlight, big targets help one-handed users. That's the curb-cut effect — a change mandated for some (the dropped kerb for wheelchairs) ends up helping everyone with a pram or suitcase. There's no magic ranking bonus for declaring compliance; the benefit comes from the actual structure."
+    },
+    {
+      "q": "You want a quick, tool-free check that a flow works for someone who can't use a mouse. What's the most direct test?",
+      "options": [
+        {
+          "text": "Put the mouse aside and move through the entire flow using only the keyboard — `Tab` to move between controls, `Enter` to activate, arrow keys for menus — confirming every interactive element can be reached, operated, and clearly shows a visible focus outline",
+          "correct": true
+        },
+        {
+          "text": "Shrink the browser window to phone size and confirm the layout still looks neat, since a responsive layout guarantees keyboard users are covered",
+          "correct": false
+        },
+        {
+          "text": "Run a colour-contrast checker on the text, because passing contrast is what proves the flow is operable without a mouse",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — keyboard navigation means every interactive element can be reached and operated with the keyboard alone, and the most direct test is simply to do it: drop the mouse and `Tab`, `Enter`, and arrow-key your way through, watching for a visible focus indicator so you always know where you are. Resizing the window tests responsive layout, and a contrast checker tests readability — both matter, but neither tells you whether a mouse-free user can actually complete the flow."
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "coreIdea": "A coding agent succeeds or fails on the brief you give it — a good task names the outcome you want, the context it needs, the constraints it must respect, and how you'll judge \"done,\" and it stays small enough to check.",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "A coding agent like `Claude Code`, `GitHub Copilot`, or `Cursor` is a tool that reads your codebase and writes changes for you, then you review them.",
+    "It is fast and literal — it will do roughly what you asked, not what you meant.",
+    "So the single biggest lever you control is the brief: the task or `spec` (short for specification — a written description of what you want built) you hand it.",
+    "A vague brief like \"improve the checkout page\" leaves the agent guessing, and a guessing agent wanders.",
+    "A good brief tells it four things — the outcome, the context, the constraints, and how success will be checked — and keeps the job small enough that you can actually verify the result."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Briefing an agent is like briefing a brilliant contractor who has never seen your house and will take every word literally.",
+      "Say \"fix the bathroom\" and you might come home to a ripped-out wall; say \"replace the leaking tap under the sink, keep the existing tiles, and make sure the water still runs hot,\" and you get exactly what you wanted.",
+      "Where the metaphor breaks: a human contractor will phone you when something looks wrong, but the agent usually won't — it fills the gaps with its best guess and keeps going, so the gaps are yours to close up front."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four things every good brief contains",
+      "teaser": "Outcome, context, constraints, acceptance criteria",
+      "body": [
+        "Start with the desired outcome: state the end result in plain terms, not the steps. \"Add a 'forgot password' link that emails a reset code\" beats \"write some auth code.\"",
+        "Give it the context it needs: which feature, which users, what already exists, and any background the agent can't see from the code alone.",
+        "Set the constraints: the rules it must not break, such as \"don't change the database schema,\" \"match the existing button style,\" or \"use the logging library we already have.\"",
+        "Define the acceptance criteria — a plain checklist of what \"done\" looks like, so both you and the agent can tell when the task is finished. For example: \"the reset email arrives, the link expires after one hour, and the existing login still works.\"",
+        "Acceptance criteria are the most-skipped part and the most valuable: without them, neither you nor the agent has a shared finish line.",
+        "You don't need formal templates — a few clear sentences under each heading is enough, and far better than a wall of vague wishes."
+      ]
+    },
+    {
+      "title": "Why small, well-scoped tasks beat one big vague one",
+      "teaser": "A task you can't check is a task you can't trust",
+      "body": [
+        "A big vague task — \"refactor the whole payments module\" — gives the agent enormous freedom and you almost no way to review the result.",
+        "Scope is how much ground a single task covers; a well-scoped task is narrow enough that you can read the change and judge it confidently.",
+        "Small tasks fail small: if the agent misunderstands, you've lost ten minutes on one file, not a day on a tangle of twenty.",
+        "They also keep the agent on track, because a tight goal leaves less room to wander into code you never asked it to touch.",
+        "Break a big goal into a sequence — \"first add the new field, then update the form, then write the save logic\" — and review each step before the next.",
+        "The honest test: if you couldn't write down how you'd verify the result, the task is too big or too vague to hand over yet."
+      ]
+    },
+    {
+      "title": "Point it at the right files, and plan before coding",
+      "teaser": "Aim the agent, then have it think before it types",
+      "body": [
+        "The agent can search your codebase, but naming the relevant files saves it from guessing and from editing the wrong ones. \"The logic lives in `checkout.js`; the styles are in `checkout.css`\" aims it precisely.",
+        "Good aim also means saying what's off-limits: \"don't touch the `legacy/` folder\" prevents whole categories of mistakes.",
+        "Before it writes a line, ask it to plan: \"tell me your approach and the files you'll change, and wait for my okay.\" This is plan-before-coding, and it's the cheapest moment to catch a wrong turn.",
+        "Reading a one-paragraph plan takes seconds; reviewing a sprawling wrong implementation takes an hour, so the plan step pays for itself.",
+        "A plan also surfaces the agent's hidden assumptions — if it says \"I'll add a new dependency,\" you can veto that before any code exists.",
+        "This lesson is only about the brief itself; how the agent's full work loop runs, and how project context files feed it standing instructions, are covered separately."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "coding agent",
+      "def": "An AI tool (such as Claude Code, GitHub Copilot, or Cursor) that reads your codebase, writes or edits code to carry out a task you describe, and presents the changes for you to review."
+    },
+    {
+      "term": "spec (specification)",
+      "def": "A written description of what you want built — the outcome, context, constraints, and how success is judged — given to a person or an agent so they know exactly what to produce."
+    },
+    {
+      "term": "scope",
+      "def": "How much ground a single task covers; a well-scoped task is narrow enough that you can read the resulting change and judge whether it's correct."
+    },
+    {
+      "term": "constraint",
+      "def": "A rule the agent must not break while doing the task — like \"don't change the database\" or \"match the existing styling\" — that bounds what it's allowed to do."
+    },
+    {
+      "term": "acceptance criteria",
+      "def": "A plain checklist of what \"done\" looks like, written in advance, so both you and the agent share a clear finish line for the task."
+    },
+    {
+      "term": "plan-before-coding",
+      "def": "Asking the agent to describe its intended approach and the files it will change, and to wait for your approval, before it writes any code — the cheapest point to catch a wrong direction."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The brief is now a core skill for anyone directing agents: the difference between a team that ships with agents and one that drowns in bad output is usually clarity of the task, not cleverness of the tool.",
+      "There's a real trade-off to own — a tight, well-scoped brief takes more minutes to write up front but saves far more in review and rework, while a vague \"just build it\" feels faster and quietly costs you a day untangling what came back.",
+      "And because acceptance criteria force you to state what \"done\" actually means, writing them is itself product work — it's the same discipline as a good user story, which is why \"could we hand this to an agent?\" is becoming a useful test of whether a task is well-defined at all."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub Copilot Workspace and the \"spec → plan → build\" flow (2024)",
+    "body": [
+      "When GitHub launched Copilot Workspace in 2024, it did not just let you type a request and get code.",
+      "It deliberately built a multi-step flow: the agent first restates the task as a written spec, then proposes a step-by-step plan, and only then writes the implementation — pausing for you to edit each stage.",
+      "GitHub's stated reason was that raw, one-line prompts to a coding agent were too underspecified, so the model would confidently build the wrong thing and the human would only discover it at the end.",
+      "By forcing the spec and plan to the surface first, Workspace turned the messy part — agreeing on what \"done\" means — into a quick, editable checkpoint before any code was committed."
+    ],
+    "bridge": "GitHub effectively hard-wired this lesson into a product: state the outcome, surface the plan, agree on \"done\" — because that's what separates an agent that helps from one that wastes your day."
+  },
+  "takeaways": [
+    "A good brief gives an agent four things: the desired outcome, the context it needs, the constraints it must respect, and acceptance criteria for \"done.\"",
+    "Small, well-scoped tasks beat one big vague task because you can actually review and trust the result, and a misunderstanding fails small.",
+    "Point the agent at the right files (and the off-limits ones) so it stops guessing and stops editing code you never asked it to touch.",
+    "Ask for a plan before any code is written — reading a one-paragraph plan is seconds; reviewing a sprawling wrong implementation is an hour."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Which set best describes the four things a good task or spec for a coding agent should contain?",
+      "options": [
+        {
+          "text": "The desired outcome, the context it needs, the constraints it must respect, and acceptance criteria for \"done\"",
+          "correct": true
+        },
+        {
+          "text": "The agent's model name, its temperature setting, its token budget, and its training data",
+          "correct": false
+        },
+        {
+          "text": "A long list of every file in the repository, in alphabetical order",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — outcome, context, constraints, and acceptance criteria give the agent a clear target and give you a shared finish line; the model's internal settings are not what the brief is for."
+    },
+    {
+      "q": "Why is a small, well-scoped task usually better than one big vague one like \"refactor the whole payments module\"?",
+      "options": [
+        {
+          "text": "It's narrow enough that you can actually review and trust the change, and a misunderstanding fails small rather than spreading across many files",
+          "correct": true
+        },
+        {
+          "text": "Smaller tasks force the agent to use a more powerful model, which is always more accurate",
+          "correct": false
+        },
+        {
+          "text": "Big tasks are impossible for agents to attempt, so they always refuse them outright",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — a tight scope means you can read and judge the result, and if the agent misunderstands you lose minutes on one file instead of a day untangling a sprawling change."
+    },
+    {
+      "q": "Before the agent writes any code, why is it worth asking it to share its approach and the files it will change, and to wait for your okay?",
+      "options": [
+        {
+          "text": "Reviewing a short plan takes seconds and catches a wrong direction or hidden assumption while it's still cheap to fix",
+          "correct": true
+        },
+        {
+          "text": "It forces the agent to permanently memorise your codebase so it never makes mistakes again",
+          "correct": false
+        },
+        {
+          "text": "A plan is only useful for non-technical users and adds nothing for anyone who can read code",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — plan-before-coding surfaces the approach and assumptions at the cheapest moment to correct them; reading a one-paragraph plan beats reviewing a finished implementation that went the wrong way."
+    }
+  ],
+  "sources": [
+    {
+      "label": "GitHub — Introducing Copilot Workspace: a technical preview (2024)",
+      "url": "https://github.blog/news-insights/product-news/github-copilot-workspace/"
+    },
+    {
+      "label": "Anthropic — Claude Code best practices for agentic coding",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      "label": "Cursor — Working with the Agent (docs)",
+      "url": "https://docs.cursor.com/agent/overview"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "coreIdea": "Agentic systems sit on a spectrum from deterministic workflows, where you hard-code the steps and the model only fills in the blanks, to autonomous agents, where the model decides the steps itself — and the practical rule is to choose the least autonomous approach that still solves the problem.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "There is no single \"right\" way to build something with a language model — there is a spectrum of how much you let the model decide.",
+    "At one end sits a `workflow`: you write the steps in code, in a fixed order, and the model just fills in the blanks at each step.",
+    "At the other end sits an `autonomous agent`: you hand the model a goal, and it chooses its own steps, in its own order, until it is done.",
+    "Workflows are predictable but rigid; agents are flexible but harder to trust and pin down.",
+    "The skill is not picking a side — it is matching the amount of freedom you grant to how much the task actually needs."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "A workflow is like a recipe card: the steps are written down in order, and the cook follows them — chop, simmer, season — exercising judgement only inside each step, like deciding when the onions are golden.",
+      "An autonomous agent is like telling a chef \"make me a good dinner with what's in the fridge\": no recipe, no fixed steps — they look, decide, taste, and change course on their own.",
+      "The metaphor bends in one place: a real chef has years of trustworthy judgement, while a model's judgement is uneven and can confidently go wrong — so the freedom you hand an agent is a bet on judgement you cannot fully see."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The spectrum: who decides the steps?",
+      "teaser": "The real question is how much control over the path you hand the model",
+      "body": [
+        "The clearest way to read this spectrum is to ask one question: who decides what happens next — you, in code, or the model, at runtime?",
+        "In a `workflow`, you decide. The path is fixed in advance: do step one, then step two, then step three. The model's job is narrow — turn this email into a summary, classify this ticket — and the surrounding code routes the result onward.",
+        "This is `deterministic` in shape: same kind of input takes the same path through your code every time, so you always know which steps will run, even though the model's wording inside a step still varies.",
+        "In an `autonomous agent`, the model decides. You give it a goal and a set of `tools` — actions it can take, like searching a file or sending a request — and it chooses which tool to use, in what order, and when the goal is met.",
+        "Most real systems live somewhere in between: a mostly-fixed workflow with one step where the model is allowed to loop and decide. The spectrum is a dial, not two boxes."
+      ]
+    },
+    {
+      "title": "The core trade-off: reliability versus flexibility",
+      "teaser": "Every step toward autonomy buys adaptability and pays in predictability",
+      "body": [
+        "Moving along the spectrum trades two things against each other, and you cannot maximise both.",
+        "Workflows give you `reliability`: because the path is fixed, the system is easy to test, easy to debug, cheaper to run, and it behaves the same way under audit. The cost is rigidity — it can only handle the cases you wired in, and an unforeseen situation falls through the cracks.",
+        "Autonomous agents give you `flexibility`: they can handle messy, open-ended tasks no one scripted, and adapt mid-task when reality differs from the plan. The cost is that they are harder to predict, harder to debug, often slower and pricier (each decision is another model call), and they can wander down a wrong path with full confidence.",
+        "More autonomy also widens the `blast radius` — the range of things that can go wrong — because the model is taking actions you did not explicitly approve in advance.",
+        "So the choice is rarely \"which is better.\" It is \"how much unpredictability is this task worth,\" given what it costs you when the system gets it wrong."
+      ]
+    },
+    {
+      "title": "The practical rule: least autonomy that solves the problem",
+      "teaser": "Start fixed, add freedom only where the task truly demands it",
+      "body": [
+        "The working rule used by practitioners is simple: choose the least autonomous approach that still solves the problem.",
+        "If a fixed sequence of steps does the job — and for most production tasks it does — build the workflow. It will be cheaper, faster, and far easier to trust.",
+        "Reach for an agent only when the task genuinely cannot be scripted: the steps depend on what the model finds along the way, the number of steps is unknown up front, or the space of inputs is too open to enumerate.",
+        "A useful test: can you draw the steps as a flowchart before running it? If yes, you probably want a workflow. If the flowchart would have to be drawn fresh for every input, you may need an agent.",
+        "This is a `concept-first` lesson, so we are not building either one here — and note that whether you split the work across several cooperating agents is a separate question covered in another lesson. The point is the dial: more autonomy is a cost you pay only when the task earns it."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "workflow",
+      "def": "An agentic design where you hard-code the steps in a fixed order and the model only fills in the blanks at each step — the path is decided by your code, not by the model."
+    },
+    {
+      "term": "autonomous agent",
+      "def": "An agentic design where you give the model a goal and a set of tools, and it decides for itself which steps to take, in what order, and when the goal is met."
+    },
+    {
+      "term": "deterministic",
+      "def": "Behaving in a fixed, predictable way: the same kind of input follows the same path through the system every time, so you can know in advance which steps will run."
+    },
+    {
+      "term": "tool",
+      "def": "An action a model can choose to take beyond generating text — such as searching a file, querying a database, or sending a request — that lets it affect the outside world."
+    },
+    {
+      "term": "reliability",
+      "def": "How consistently and predictably a system does the right thing, especially how easy it is to test, debug, and trust under repeated or audited use."
+    },
+    {
+      "term": "blast radius",
+      "def": "The range of things that can go wrong when a system misbehaves — wider when a model takes actions on its own that no one approved in advance."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own the product or the bill, autonomy is not a feature you turn up for impressiveness — it is a risk-and-cost dial. Every notch toward an agent buys adaptability and pays in unpredictability, more model calls, and a wider blast radius, so the question to keep asking your team is \"does this task actually need that freedom, or are we paying for it out of habit?\"",
+      "The trade-off you own is what failure costs. For a task where a wrong answer is cheap and recoverable, more autonomy can be worth the upside; for one where a wrong action moves money, touches customer data, or can't be undone, you want the predictable path and a human checkpoint — and that is a product decision, not a model setting.",
+      "Be wary of \"agent\" as a marketing word. A well-built workflow that quietly solves the problem is usually the better product than an autonomous agent that demos beautifully and fails unpredictably in week three — so judge proposals on whether the autonomy is earned, not on how advanced they sound."
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic's \"Building Effective Agents\" guidance (December 2024)",
+    "body": [
+      "In December 2024, Anthropic's engineering team published a widely-cited piece, \"Building Effective Agents,\" drawn from working with many teams building with language models.",
+      "It draws exactly this line: workflows are systems where the steps are orchestrated through predefined code paths, while agents are systems where the model dynamically directs its own steps and tool use.",
+      "Its headline advice was not \"use agents\" — it was the opposite: find the simplest solution possible, and add complexity or autonomy only when simpler approaches fall short, because agents trade higher cost and latency for better performance only on the tasks that need it.",
+      "The teams that got the most value, it reported, were not the ones reaching for the most autonomous design — they were the ones composing simple, well-tested patterns and pushing autonomy no further than the task required. The specifics here summarise that public guidance rather than quote it verbatim."
+    ],
+    "bridge": "Anthropic's rule — simplest thing first, autonomy only when earned — is this lesson's spectrum stated as practice: pick the least autonomous approach that still solves the problem."
+  },
+  "takeaways": [
+    "Agentic systems form a spectrum from workflows, where your code decides the steps, to autonomous agents, where the model decides the steps itself.",
+    "The core trade-off is reliability versus flexibility: workflows are predictable, cheap, and easy to trust but rigid; agents are adaptable but harder to predict, debug, and bound.",
+    "The practical rule is to choose the least autonomous approach that still solves the problem, and add freedom only where the task genuinely cannot be scripted.",
+    "A quick test: if you can draw the steps as a flowchart before running it, build a workflow; if the flowchart must be redrawn for every input, you may need an agent."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the defining difference between a workflow and an autonomous agent on this spectrum?",
+      "options": [
+        {
+          "text": "In a workflow your code decides the steps in a fixed order and the model fills in the blanks; in an autonomous agent the model decides its own steps and tool use to reach a goal",
+          "correct": true
+        },
+        {
+          "text": "A workflow uses a language model and an autonomous agent uses traditional software with no model at all",
+          "correct": false
+        },
+        {
+          "text": "A workflow can only run once while an autonomous agent can be run many times",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the dividing question is who decides what happens next: in a workflow the path is hard-coded by you, while in an autonomous agent the model chooses its own steps, order, and tools at runtime."
+    },
+    {
+      "q": "A team wants more flexibility, so they replace a fixed workflow with an autonomous agent. What are they trading away?",
+      "options": [
+        {
+          "text": "Reliability — the agent is harder to predict, test, and debug, often costs and waits more per task, and has a wider blast radius when it goes wrong",
+          "correct": true
+        },
+        {
+          "text": "Nothing — an autonomous agent is strictly better than a workflow on every dimension",
+          "correct": false
+        },
+        {
+          "text": "The ability to use any tools, since autonomous agents cannot call tools",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — moving toward autonomy buys flexibility and pays in predictability: the path is no longer fixed, so the system is harder to test and debug, usually costs more per task, and can take wrong actions no one approved in advance."
+    },
+    {
+      "q": "Which decision best follows the practical rule for choosing where to sit on the spectrum?",
+      "options": [
+        {
+          "text": "Pick the least autonomous approach that still solves the problem — use a workflow if the steps can be scripted, and reach for an agent only when the task genuinely cannot be",
+          "correct": true
+        },
+        {
+          "text": "Always build the most autonomous agent possible, since more autonomy is always more capable",
+          "correct": false
+        },
+        {
+          "text": "Always build a fixed workflow, even for tasks whose steps cannot be known in advance",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the rule is to grant the least autonomy that solves the problem: if you can draw the steps as a flowchart before running, build a workflow, and add the cost and unpredictability of an agent only where the task truly demands it."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Building Effective Agents (December 2024)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "label": "Anthropic — Building Effective Agents (engineering cookbook overview)",
+      "url": "https://www.anthropic.com/research/building-effective-agents"
+    }
+  ]
+}

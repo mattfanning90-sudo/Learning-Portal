@@ -1,0 +1,193 @@
+{
+  "coreIdea": "HTTP forgets you the instant each request ends, so the server hands your browser a small token to send back on every visit — and the big design choice is whether the server keeps your details in its own memory (a session) or packs them, signed, into the token itself (a JWT).",
+  "estMinutes": 10,
+  "plainEnglish": [
+    "The web's basic rule, `HTTP`, is forgetful by design: each request stands alone, and the server has no built-in memory that this request came from the same person as the last one.",
+    "That's fine for reading a public page, but useless the moment you log in — the server would ask for your password again on every single click.",
+    "The fix is to hand your browser a small piece of identification after you log in, and have the browser quietly send it back with every later request.",
+    "That piece of ID is usually a `cookie`: a tiny labelled note the server sets, the browser stores, and the browser re-attaches automatically — you never lift a finger.",
+    "The interesting question is what the note actually contains, and that's where `sessions` and `tokens` part ways."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Logging in is like checking your coat at a theatre. You hand over your coat once and get a numbered ticket; from then on you just flash the ticket and the cloakroom does the remembering.",
+      "A server-side `session` works exactly like that: the server keeps your details on a shelf out back, and your cookie is just the ticket number that points to them.",
+      "A `token` like a `JWT` flips it — instead of a ticket number, your coat-check stub has all your details printed on it and a tamper-proof seal, so the cloakroom needs no shelf at all; it just checks the seal.",
+      "Where the metaphor breaks: a paper ticket can be quietly torn up the instant you leave, but a self-contained token stays valid until it expires — there's no shelf to wipe, which is exactly why logging people *out* of token systems is the hard part."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why HTTP forgets — and why that's a feature",
+      "teaser": "Statelessness is deliberate, not a bug",
+      "body": [
+        "`HTTP` (HyperText Transfer Protocol), the language browsers and servers speak, is `stateless` — it keeps no memory between requests.",
+        "Each request arrives as a blank slate: the server reads it, answers it, and forgets it ever happened.",
+        "This was a deliberate choice — statelessness is what lets any server in a fleet handle any request, because none of them has to remember what the others did.",
+        "The cost is that \"I logged in two seconds ago\" is not something the server just *knows*; nothing carries over on its own.",
+        "So every login system is really a workaround for forgetfulness: a way to re-prove who you are on each request without retyping your password.",
+        "The trick is to attach a small proof to every request — and the browser, not the user, does the attaching."
+      ]
+    },
+    {
+      "title": "Cookies: the note the browser carries for you",
+      "teaser": "A small labelled value the browser re-sends automatically",
+      "body": [
+        "A `cookie` is a small piece of named data the server tells your browser to store, by adding a `Set-Cookie` line to its response.",
+        "From then on, the browser automatically includes that cookie on every request it sends back to the same site — no code, no clicking, fully automatic.",
+        "That automatic re-sending is the whole point: it's the thread of continuity HTTP itself refuses to provide.",
+        "A cookie is small — a few kilobytes at most — so you don't store your life story in it; you store a short value, like an ID or a token.",
+        "Cookies carry flags that control their safety, which matters enormously: `HttpOnly` hides the cookie from page JavaScript, `Secure` sends it only over encrypted `HTTPS`, and `Expires` sets the day it dies.",
+        "Get those flags wrong and the cookie becomes the attacker's prize; get them right and it's a sturdy little ID card."
+      ]
+    },
+    {
+      "title": "Two designs: a session on the shelf vs. a token in your pocket",
+      "teaser": "Where the 'who are you' data actually lives",
+      "body": [
+        "With a server-side `session`, the cookie holds only a meaningless ID — a random `session ID` — and the real data (who you are, what you can do) sits in the server's own store.",
+        "Each request, the server takes the ID, looks up the matching record, and remembers you that way; the shelf does the work.",
+        "With a stateless `token` like a `JWT` (JSON Web Token), the cookie *is* the data: your user ID and permissions are written into the token, then `signed` so any tampering is detectable.",
+        "Signing means the server stamps the token with a secret key, so it can later confirm the token is genuine and unaltered without storing anything — it just re-checks the stamp.",
+        "The trade is memory versus revocation: sessions need a store but can be killed instantly by deleting the record; tokens need no store but stay valid until they expire, because there's nothing to delete.",
+        "That single difference — is there a shelf to wipe? — drives most real-world auth decisions."
+      ]
+    },
+    {
+      "title": "The safety basics that actually bite",
+      "teaser": "Expiry, HttpOnly, and not trusting the client",
+      "body": [
+        "Rule one: nothing lasts forever. Every session and token gets an `expiry` — a built-in death date — so a stolen credential is only useful for a window, not for life.",
+        "Rule two: keep the credential out of reach. An `HttpOnly` cookie can't be read by JavaScript running on the page, which blunts a common theft trick called `XSS` (cross-site scripting), where injected code tries to grab your cookie.",
+        "Rule three: never trust data the browser could have edited. With JWTs the signature enforces this — change one character and the stamp no longer matches, so the server rejects it.",
+        "Long-lived logins usually split the difference: a short-lived `access token` for everyday requests, plus a `refresh token` that quietly mints new ones, so theft of the everyday token expires fast.",
+        "None of this is exotic cryptography — it's mostly discipline: short lifetimes, locked-down cookies, and treating anything from the browser as guilty until verified.",
+        "The reason engineers obsess over these flags is that a leaked login credential is, to a server, indistinguishable from you."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "stateless (HTTP)",
+      "def": "HTTP keeps no memory between requests — each one is handled in isolation, so the server doesn't natively know two requests came from the same person."
+    },
+    {
+      "term": "cookie",
+      "def": "A small named piece of data the server tells the browser to store and then re-send automatically on every later request to that site — the usual way a browser proves it's still you."
+    },
+    {
+      "term": "session (server-side)",
+      "def": "A login approach where the server keeps your details in its own store and the cookie holds only a random ID (a session ID) pointing to that record."
+    },
+    {
+      "term": "JWT (JSON Web Token)",
+      "def": "A self-contained, signed token that carries your identity and permissions inside it, so the server can verify you by checking the signature without looking anything up."
+    },
+    {
+      "term": "HttpOnly cookie",
+      "def": "A cookie flag that hides the cookie from JavaScript on the page, so injected malicious code (an XSS attack) can't read and steal it."
+    },
+    {
+      "term": "expiry",
+      "def": "A built-in death date on a cookie, session, or token, so that even a stolen credential stops working after a set window instead of lasting forever."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The session-versus-token choice isn't just engineering taste — it sets a product capability: with server-side sessions you can force-log-out a compromised account instantly, while with stateless JWTs that same \"kill this login now\" button is genuinely hard to build, because there's no record to delete.",
+      "Login lifetime is a product decision dressed as a setting: short expiries are safer but nag users to re-login, long ones are smoother but widen the damage if a token leaks — so \"how long do we stay logged in?\" is a trade-off you own, not a default to accept.",
+      "And the cheap safety flags (`HttpOnly`, `Secure`, sensible expiry) are the kind of thing nobody notices until a breach — which is why \"did we set the cookie flags?\" belongs on a launch checklist, not in someone's head."
+    ]
+  },
+  "caseStudy": {
+    "title": "Firesheep makes session hijacking a public scandal (2010)",
+    "body": [
+      "In 2010 a developer named Eric Butler released `Firesheep`, a free browser add-on that let anyone on the same open Wi-Fi grab the session cookies of nearby users on sites like Facebook and Twitter.",
+      "It worked because those sites encrypted the login page but then sent the session cookie back over plain, unencrypted connections — so the cookie travelled in the open for anyone to scoop up.",
+      "With a captured cookie, an attacker's browser would simply re-send it and the server, seeing a valid session ticket, treated the attacker as the logged-in user — no password needed.",
+      "The tool was deliberately easy to use, and the resulting embarrassment pushed major sites to switch fully to `HTTPS` and to mark session cookies `Secure` so they'd only ever travel encrypted."
+    ],
+    "bridge": "Firesheep is the whole lesson in one scandal: a session is just a cookie the browser re-sends, so if that cookie isn't locked down with encryption and the right flags, possessing it *is* being you."
+  },
+  "takeaways": [
+    "HTTP is stateless — it forgets you between requests — so every login system is a way to re-prove who you are without retyping your password each time.",
+    "A cookie is a small value the server sets and the browser re-sends automatically; it's the thread of continuity HTTP itself won't provide.",
+    "Server-side sessions keep your data on the server with a meaningless ID in the cookie; stateless tokens like JWTs pack the signed data into the token itself — trading a store for instant revocation.",
+    "Safety is discipline, not deep crypto: short expiries, `HttpOnly` and `Secure` cookies, and never trusting data the browser could have edited."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "HTTP is described as \"stateless.\" Why does that fact force websites to use something like cookies once you log in?",
+      "options": [
+        {
+          "text": "Because the server keeps no memory between requests, so without a credential re-sent each time it can't tell that this request is from the same person who just logged in",
+          "correct": true
+        },
+        {
+          "text": "Because cookies make the website load faster, and statelessness is mainly a speed problem",
+          "correct": false
+        },
+        {
+          "text": "Because HTTP encrypts every request by default, and cookies are needed to decrypt them",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — statelessness means each request is handled in isolation with no carried-over memory, so the only way the server recognises a returning logged-in user is a credential (typically a cookie) the browser re-attaches to every request."
+    },
+    {
+      "q": "A team wants a \"force log out this account everywhere, immediately\" button. Which design makes that straightforward, and why?",
+      "options": [
+        {
+          "text": "Server-side sessions — the login data lives in the server's store, so deleting that record instantly invalidates the user's cookie",
+          "correct": true
+        },
+        {
+          "text": "Stateless JWTs — because the signed data inside the token can be erased remotely from the user's browser",
+          "correct": false
+        },
+        {
+          "text": "Either one equally — revocation works the same way in both designs",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — with sessions the real data sits on the server, so wiping that record kills the login at once. A self-contained JWT has no server record to delete, so it stays valid until it expires, which is exactly why instant revocation is the hard part for tokens."
+    },
+    {
+      "q": "Why is marking a login cookie `HttpOnly` a meaningful safety step?",
+      "options": [
+        {
+          "text": "It hides the cookie from JavaScript on the page, so malicious injected code (an XSS attack) can't read and steal it",
+          "correct": true
+        },
+        {
+          "text": "It encrypts the contents of the cookie so the server can't be hacked",
+          "correct": false
+        },
+        {
+          "text": "It makes the cookie never expire, so users never have to log in again",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — `HttpOnly` blocks page JavaScript from reading the cookie, which defuses a common theft path (cross-site scripting) where injected code tries to grab the credential. It doesn't encrypt the cookie or change its expiry."
+    }
+  ],
+  "sources": [
+    {
+      "label": "MDN — Using HTTP cookies",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies"
+    },
+    {
+      "label": "MDN — Set-Cookie header (HttpOnly, Secure, Expires)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie"
+    },
+    {
+      "label": "OWASP — Session Management Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+    },
+    {
+      "label": "JWT — Introduction to JSON Web Tokens",
+      "url": "https://jwt.io/introduction"
+    }
+  ]
+}

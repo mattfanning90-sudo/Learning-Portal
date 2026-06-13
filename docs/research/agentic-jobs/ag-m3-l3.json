@@ -1,0 +1,175 @@
+{
+  "coreIdea": "Working with a coding agent is a loop — you plan, it acts, you review, you repeat — and the whole thing stays safe and fast only when you keep each turn small and never skip the review.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A coding agent like `Claude Code`, `GitHub Copilot`, or `Cursor` is a tool that reads your instructions and writes or changes code for you.",
+    "You don't hand it a whole project and walk away. You work in a rhythm.",
+    "First you plan: you say what you want in plain language. Then it acts: it writes the code. Then you review: you read what it did and decide if it's right. Then you go again.",
+    "That four-beat rhythm — plan, act, review, repeat — is the loop, and it's the single most important habit of working with an agent.",
+    "The best mental model is simple: treat the agent as a fast, capable, but junior teammate whose work you always check before you trust it."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture directing a brilliant but green junior developer who types at a thousand words a minute. You describe a task, they sprint off and produce a draft in seconds, and you read it over before it goes anywhere near the real product.",
+      "If you give them one clear task at a time and check each result, they're a superpower. If you hand them ten vague tasks at once and never look, you get a tangle no one understands — written ten times faster.",
+      "Where the metaphor breaks: a human junior learns and remembers across months, but the agent forgets everything outside the current conversation, so it can repeat the same mistake on the very next task unless you remind it."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The four beats of the loop",
+      "teaser": "Plan, act, review, repeat — every turn, on purpose",
+      "body": [
+        "Plan: you state the goal in plain language — \"add a logout button to the settings page\" — and, for anything non-trivial, agree on the approach before any code is written.",
+        "Act: the agent does the work — reading files, writing code, running commands — and reports back what it changed.",
+        "Review: you read the result and decide. Does it do what you asked? Is it sound? You either accept it or send it back with a correction.",
+        "Repeat: you move to the next small step, carrying forward what you just learned.",
+        "The order matters: a vague plan produces vague action, and skipped review lets a small error ride forward into the next ten steps.",
+        "Each beat is a checkpoint where a human is still in control — that is the point of the loop, not a formality."
+      ]
+    },
+    {
+      "title": "Why a tight loop beats a long leash",
+      "teaser": "Small turns are easier to steer and cheaper to fix",
+      "body": [
+        "A tight loop means small steps with a review after each one, rather than one giant request you check only at the end.",
+        "The reason is simple: errors compound. If the agent gets step one slightly wrong and you don't catch it, steps two through ten build on the mistake.",
+        "Small turns also keep the review possible — you can actually read fifty lines of change and judge them, but not five thousand.",
+        "And the agent steers better when the target is near: a focused task gives it less room to drift off in the wrong direction.",
+        "There's a real cost to going too small, too — narrating every single line is slower than just writing it yourself. The skill is finding the right grain: a task big enough to be worth delegating, small enough to review honestly."
+      ]
+    },
+    {
+      "title": "Review is non-negotiable — and why",
+      "teaser": "You stay accountable for code you didn't type",
+      "body": [
+        "The agent is confident even when it's wrong. It will produce code that looks polished and runs cleanly but quietly does the wrong thing.",
+        "It can also `hallucinate` — invent a function, library, or API that doesn't actually exist — and present it as fact, because it predicts plausible text rather than checking truth.",
+        "When you merge agent code into your product, you own it. \"The AI wrote it\" is not a defence to your users, your boss, or a security auditor.",
+        "Review is how a human keeps `accountability` — clear responsibility for the outcome — over work a machine produced.",
+        "This doesn't mean distrust everything; it means verify before you trust, the same standard you'd apply to a new hire's first pull request.",
+        "Reviewing well is its own skill, covered in the next lesson — here the rule is just that the review never gets skipped."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "coding agent",
+      "def": "An AI tool such as Claude Code, GitHub Copilot, or Cursor that reads your instructions and writes, edits, or runs code on your behalf inside your project."
+    },
+    {
+      "term": "the agent loop",
+      "def": "The core working rhythm with a coding agent: you plan or specify, it acts, you review the result, and you repeat for the next step."
+    },
+    {
+      "term": "tight loop",
+      "def": "Working in small steps with a human review after each one, instead of one big request reviewed only at the very end — easier to steer and cheaper to correct."
+    },
+    {
+      "term": "hallucination",
+      "def": "When an AI confidently states something false — for example inventing a function or library that doesn't exist — because it predicts plausible text rather than verifying facts."
+    },
+    {
+      "term": "code review",
+      "def": "A human reading proposed code changes to judge whether they are correct, safe, and fit before the changes are accepted into the real product."
+    },
+    {
+      "term": "human in the loop",
+      "def": "Keeping a person at a decision point in an automated process, so a human approves or corrects the machine's work before it takes effect."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "An agent makes writing code almost free, which quietly moves the bottleneck — and the risk — from writing to reviewing, so review capacity becomes the real constraint on how fast a team can safely ship.",
+      "The trade-off you own is leash length: longer turns feel faster and cost less attention, but they let errors compound and hide until they're expensive to unwind, so \"how much do we let the agent do before a human looks?\" is a genuine policy decision.",
+      "And because someone is always accountable for shipped code, \"the AI wrote it\" can't be where responsibility stops — define who reviews agent output, and treat that review as part of the work, not overhead."
+    ]
+  },
+  "caseStudy": {
+    "title": "Air Canada's chatbot invents a refund policy (2024)",
+    "body": [
+      "After a passenger asked Air Canada's website chatbot about bereavement fares, the bot confidently described a refund policy that did not actually exist.",
+      "The passenger relied on it, booked, and later claimed the refund the bot had promised — and Air Canada refused, arguing the chatbot was responsible for its own words.",
+      "In February 2024 a Canadian tribunal disagreed and ordered the airline to pay, ruling that Air Canada was responsible for everything on its site, chatbot included.",
+      "The bot's answer was fluent, plausible, and wrong — a textbook hallucination shipped straight to a customer with no human review in between."
+    ],
+    "bridge": "That is the agent loop with the review beat removed: confident machine output went live unchecked, and the company still owned the outcome — which is exactly why review is non-negotiable."
+  },
+  "takeaways": [
+    "Working with a coding agent is a loop: plan, act, review, repeat — every turn, on purpose.",
+    "Keep the loop tight — small steps with a review each time — because unreviewed errors compound into the next ten steps.",
+    "Review is non-negotiable: the agent is confident even when wrong and can hallucinate, and you stay accountable for code you didn't type.",
+    "Treat the agent as a fast but junior teammate — verify before you trust, the same standard you'd apply to a new hire's work."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What are the four beats of the loop when working with a coding agent?",
+      "options": [
+        {
+          "text": "You plan or specify, the agent acts, you review the result, and you repeat for the next step",
+          "correct": true
+        },
+        {
+          "text": "The agent plans, you write the code, the agent reviews it, and it deploys automatically",
+          "correct": false
+        },
+        {
+          "text": "You write the code, the agent reviews it, you approve, and the agent files the ticket",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the rhythm is plan, act, review, repeat. You set the direction and check the work; the agent does the typing in between, with a human checkpoint every turn."
+    },
+    {
+      "q": "Why is keeping the loop tight — small steps with a review after each — better than one big request reviewed only at the end?",
+      "options": [
+        {
+          "text": "Errors compound, so catching a mistake in a small step stops it from being built on by the next ten steps, and small changes are actually reviewable",
+          "correct": true
+        },
+        {
+          "text": "Tight loops let the agent skip the review beat entirely once it has proven itself",
+          "correct": false
+        },
+        {
+          "text": "Smaller requests make the agent write faster, so the total typing time goes down",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — small turns keep errors from compounding and keep the change small enough to read and judge honestly; a five-thousand-line diff at the end is nearly impossible to review well."
+    },
+    {
+      "q": "Why is reviewing the agent's output described as non-negotiable?",
+      "options": [
+        {
+          "text": "The agent can be confidently wrong and even hallucinate, and a human stays accountable for any code that ships",
+          "correct": true
+        },
+        {
+          "text": "Review is only needed for the agent's first task; after that its output can be trusted automatically",
+          "correct": false
+        },
+        {
+          "text": "Coding agents refuse to run code unless a human has signed off on every line first",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the agent produces polished, plausible code that can still be wrong or invented, and \"the AI wrote it\" is no defence; review is how a human keeps accountability for the outcome."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Claude Code overview and best practices",
+      "url": "https://docs.anthropic.com/en/docs/claude-code/overview"
+    },
+    {
+      "label": "BBC News — Air Canada ordered to pay refund after chatbot gave wrong advice (2024)",
+      "url": "https://www.bbc.com/travel/article/20240222-air-canada-chatbot-misinformation-what-travellers-should-know"
+    },
+    {
+      "label": "GitHub — About GitHub Copilot and reviewing its suggestions",
+      "url": "https://docs.github.com/en/copilot/about-github-copilot/what-is-github-copilot"
+    }
+  ]
+}

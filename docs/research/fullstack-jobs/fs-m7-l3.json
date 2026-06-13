@@ -1,0 +1,178 @@
+{
+  "coreIdea": "Performance is really two separate jobs: making the page load fast for one person on the frontend (small `bundles`, light images, lazy loading, good `Core Web Vitals`), and making the server stay fast for many people at once on the backend (low `latency`, high `throughput`, hunting `bottlenecks`) — and the golden rule for both is the same: measure before you optimise.",
+  "estMinutes": 11,
+  "plainEnglish": [
+    "\"Make it faster\" sounds like one task, but it's two very different problems depending on where the slowness lives.",
+    "The first is frontend load speed: how long one person waits, staring at a blank or half-built page, before your site is usable in their browser.",
+    "The second is backend scale: whether your server can keep answering quickly when one request becomes a thousand requests a second.",
+    "These have different causes and different fixes — a fast server won't save a page bloated with huge images, and a featherweight page won't save a server that buckles under load.",
+    "And underneath both sits one rule that separates engineers who fix the problem from those who waste a week on the wrong thing: measure first, guess never."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a restaurant. Frontend load speed is how long one diner waits from sitting down to having their plate in front of them — and a big part of that is how much food is on the plate: pile it sky-high and it takes longer to cook, plate, and carry out.",
+      "Backend scale is whether the kitchen keeps that same speed when the dining room is suddenly packed: one chef can plate a dish in two minutes, but if four hundred orders hit at once, tickets pile up and everyone waits — even though each dish still 'only takes two minutes'.",
+      "Where the metaphor breaks: a real kitchen has hard physical limits — a fixed number of hobs and hands — whereas a backend can often summon more 'chefs' (servers) on demand in seconds, which is exactly why finding the one slow station matters more than just hiring more cooks."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The golden rule: measure before you optimise",
+      "teaser": "Guessing where the slowness is wastes your most expensive resource — engineering time",
+      "body": [
+        "The single most common mistake in performance work is optimising the wrong thing, fast.",
+        "An engineer *feels* sure the database is slow, spends three days rewriting it, ships it — and the page is exactly as slow as before, because the real culprit was a 4-megabyte image.",
+        "The fix is to `profile` first: a `profiler` is a tool that watches your code or page run and reports where the time actually goes, broken down by step.",
+        "Famed computer scientist Donald Knuth coined the line every engineer quotes: \"premature optimisation is the root of all evil\" — meaning don't optimise before you've measured what's slow.",
+        "A useful frame is `Amdahl's Law`: speeding up a part that only accounts for 5% of the total time can, at best, make the whole thing 5% faster, so chase the biggest slice, not the easiest one.",
+        "Measure, find the biggest bottleneck, fix that one, then measure again — anything else is decorating."
+      ]
+    },
+    {
+      "title": "Frontend: load speed is mostly about weight",
+      "teaser": "Every kilobyte the browser must download and run is time the user spends waiting",
+      "body": [
+        "When someone visits your site, the browser downloads files — your code, images, fonts — then runs the code to draw the page; the more there is, the longer they wait.",
+        "The first lever is `bundle size`: the `bundle` is the single packaged file of all your app's JavaScript code, and a fat bundle means the browser must download and execute more before the page works.",
+        "You shrink it with `code splitting` — breaking the bundle into pieces so the browser only loads the code for the page you're actually on, not the whole app at once.",
+        "The second lever is image weight, which is often the biggest offender: a photo straight off a phone can be several megabytes, but resized and saved in a modern format like `WebP` it might be a tenth of that, looking identical.",
+        "The third lever is `lazy loading`: deferring things the user can't see yet — images far down the page, or a heavy chart in a tab they haven't opened — so they load only when needed instead of all at once up front.",
+        "None of these are exotic; together they're often the difference between a page that's usable in one second and one that makes people leave before it appears."
+      ]
+    },
+    {
+      "title": "Core Web Vitals: Google's scoreboard for 'does it feel fast?'",
+      "teaser": "Three numbers that turn the fuzzy idea of 'snappy' into something you can measure and target",
+      "body": [
+        "`Core Web Vitals` are three metrics Google defined to measure how fast and stable a page *feels* to a real user, not just how fast the server replied.",
+        "`Largest Contentful Paint` (LCP) measures how long until the biggest thing on screen — usually the main image or headline — has finished loading; Google's 'good' target is under 2.5 seconds.",
+        "`Interaction to Next Paint` (INP) measures responsiveness: when you click or tap, how long before the page visibly reacts; sluggishness here usually means too much JavaScript hogging the browser.",
+        "`Cumulative Layout Shift` (CLS) measures visual stability — that maddening jump when an ad or image loads late and shoves the button you were about to tap.",
+        "These matter beyond feel: Google uses them as a ranking signal, so a slow page can literally rank lower in search results and be found by fewer people.",
+        "Because they're standardised, you can set a target ('LCP under 2.5s on mobile'), measure against it in tools like Google's free `Lighthouse`, and hold the line as the product grows."
+      ]
+    },
+    {
+      "title": "Backend: scale is about latency, throughput, and the one slow station",
+      "teaser": "Staying fast for one user is easy; staying fast for ten thousand at once is the real test",
+      "body": [
+        "On the backend, two numbers matter and people constantly confuse them.",
+        "`Latency` is how long one request takes to answer — the wait for a single diner's plate; `throughput` is how many requests you can handle per second — how many plates the kitchen pushes out in total.",
+        "They're not the same: a system can have low latency when quiet but collapse on throughput under load, as requests queue up waiting for a busy resource.",
+        "Scale problems almost always trace to a `bottleneck` — the single slowest step that everything else has to wait behind, like one chef who plates every dessert while orders stack up.",
+        "A classic backend bottleneck is the `N+1 query`: code that, to show a list of 100 items, fires 1 query for the list and then 100 more — one per item — hammering the database, when a single smarter query would do; you only ever spot this by measuring, not reading the code.",
+        "And here you only reference, don't rebuild: `caching` (saving an expensive result so you don't recompute it every time) is a major scale tool covered in its own lesson, and rearchitecting the whole system to scale is a system-design topic for later — the job here is to find *which* station is slow."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "bundle size / code splitting",
+      "def": "The `bundle` is the single packaged file of your app's JavaScript that a browser must download and run before the page works; a bigger bundle means a longer wait. Code splitting breaks it into pieces so the browser loads only the code the current page needs."
+    },
+    {
+      "term": "lazy loading",
+      "def": "Deferring the download of things the user can't see yet — images below the fold, content in an unopened tab — so they load only when needed, instead of all up front. It cuts the initial wait."
+    },
+    {
+      "term": "Core Web Vitals",
+      "def": "Three Google-defined metrics for how fast and stable a page feels to a real user: LCP (how long until the main content loads), INP (how quickly the page reacts to a click), and CLS (how much the layout jumps around as it loads)."
+    },
+    {
+      "term": "latency",
+      "def": "How long a single request takes to get an answer — the wait one user experiences for one action. Low latency means snappy; high latency means a noticeable pause."
+    },
+    {
+      "term": "throughput",
+      "def": "How many requests a system can handle per second. A server can be fast for one user (low latency) but still buckle when thousands arrive at once (low throughput) as requests queue up behind a busy resource."
+    },
+    {
+      "term": "bottleneck",
+      "def": "The single slowest step that everything else has to wait behind — the one station that caps the whole system's speed. Fixing anything else barely helps until you fix the bottleneck."
+    },
+    {
+      "term": "profiler",
+      "def": "A tool that watches your code or page actually run and reports where the time goes, step by step — so you fix what's truly slow instead of what you guessed was slow."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Performance is revenue, not vanity: study after study ties slower pages to abandoned carts and lost sign-ups, so 'how fast does it load?' is a business metric you should be able to see on a dashboard, not a thing engineers quietly tune when they have spare time.",
+      "Frontend and backend performance are different budgets owned by different work, and conflating them burns money — paying for bigger servers won't fix a page bloated with images, and a CDN won't rescue a backend choking on N+1 queries, so insist someone *measured* before you approve the spend.",
+      "The trade-off you own is speed versus everything else it competes with — features, deadlines, simplicity — so the healthiest move is to set explicit targets (for example, 'LCP under 2.5 seconds on mobile, checkout responds in under 300ms') and treat them as a budget the team must stay inside, rather than chasing 'fast' with no finish line."
+    ]
+  },
+  "caseStudy": {
+    "title": "Amazon and the 100-millisecond rule",
+    "body": [
+      "Amazon ran experiments deliberately slowing down its own pages to see what extra delay did to behaviour, and the result became one of the most-cited numbers in the industry.",
+      "Every additional 100 milliseconds of load time cost the company roughly 1% in sales — a barely perceptible delay translating into a meaningful dent in revenue at Amazon's scale.",
+      "Google ran a parallel experiment and found that adding just half a second to search results dropped traffic by around 20%, as impatient users simply gave up.",
+      "These findings (the specific figures are illustrative of the effect, not a live guarantee) are why both companies obsess over shaving milliseconds and why Core Web Vitals exist as a shared, measurable standard."
+    ],
+    "bridge": "Amazon's number is the whole lesson in one statistic: performance isn't a nice-to-have engineers polish at the end — milliseconds the user waits map directly onto money, which is why you measure it, target it, and defend it."
+  },
+  "takeaways": [
+    "Performance is two distinct problems: frontend load speed (one person's wait, driven mostly by bundle size, image weight, and lazy loading) and backend scale (many people at once, measured by latency and throughput).",
+    "The golden rule for both is measure before you optimise — profile to find the real bottleneck, fix the biggest slice first, then measure again; guessing wastes engineering time on the wrong thing.",
+    "Core Web Vitals (LCP, INP, CLS) turn 'feels fast' into three targetable numbers, and they affect Google search ranking, so a slow page is found by fewer people.",
+    "Latency (one request's wait) and throughput (requests handled per second) are different — a server can be fast when quiet yet collapse under load — and scale problems almost always trace to one slow bottleneck like an N+1 query."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "An engineer is convinced your checkout page is slow because of the database, spends three days optimising queries, and ships it — but the page loads exactly as slowly as before. What rule did they break?",
+      "options": [
+        {
+          "text": "Measure before you optimise — they should have profiled first to find the real bottleneck, which turned out to be elsewhere (often something like an oversized image), instead of guessing and rewriting the wrong thing",
+          "correct": true
+        },
+        {
+          "text": "They should have rewritten the database a second time, because three days is never enough to make a query meaningfully faster",
+          "correct": false
+        },
+        {
+          "text": "They should have immediately bought a bigger, more expensive server, since that always fixes any slowness regardless of the cause",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the golden rule is measure before you optimise. A profiler watches the code or page actually run and reports where the time truly goes, so you fix the biggest real bottleneck rather than the one you assumed. Guessing burns expensive engineering time on the wrong thing — exactly what happened here. Throwing hardware at a problem you haven't diagnosed has the same flaw: you don't yet know what's slow."
+    },
+    {
+      "q": "Your backend answers a single request in 80 milliseconds when it's quiet, but during a flash sale — thousands of requests per second — users wait many seconds even though each request 'still only takes 80ms of work'. What's the right way to describe what's happening?",
+      "options": [
+        {
+          "text": "Latency for one request is low, but throughput is the problem: under heavy load, requests queue up behind a bottleneck — one slow shared resource everything waits on — so each user's total wait balloons",
+          "correct": true
+        },
+        {
+          "text": "The page's images are too large, so the browser is downloading too many megabytes — this is a frontend bundle-size issue, not a backend one",
+          "correct": false
+        },
+        {
+          "text": "Core Web Vitals have failed, which means Google has lowered the server's processing speed as a search-ranking penalty",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — this is the latency-versus-throughput distinction. Latency is how long one request takes; throughput is how many you can handle per second. A system can have low latency when idle yet collapse on throughput under load, because requests pile up behind a bottleneck — the single slowest shared step (often something like a database). Image weight is a frontend load problem, not this, and Core Web Vitals are a frontend measurement, not a lever Google uses to throttle your server."
+    },
+    {
+      "q": "You want to improve how fast your site *feels* to real visitors on their phones, and to set a concrete, defendable target. Which approach fits the frontend tools this lesson describes?",
+      "options": [
+        {
+          "text": "Set a Core Web Vitals target — for example LCP (time until the main content loads) under 2.5 seconds — and measure against it in a tool like Lighthouse, while cutting bundle size and image weight and lazy-loading what's not yet visible",
+          "correct": true
+        },
+        {
+          "text": "Add more backend servers and a faster database, since how a page feels in the browser is entirely determined by server hardware",
+          "correct": false
+        },
+        {
+          "text": "Ship every image at full phone-camera resolution and load the whole app's JavaScript up front, so nothing ever has to load later",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — Core Web Vitals (LCP, INP, CLS) turn 'feels fast' into standardised, targetable numbers you can measure in a free tool like Lighthouse and hold as a budget. You hit those targets with frontend levers: smaller bundles via code splitting, lighter images in modern formats, and lazy loading what the user can't see yet. Bigger servers fix backend scale, not how a page renders in one user's browser — and shipping full-resolution images and the entire app up front is the opposite of fast."
+    }
+  ]
+}
