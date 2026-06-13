@@ -1,0 +1,192 @@
+{
+  "coreIdea": "Every web page is built from three languages with three separate jobs: `HTML` is the structure, `CSS` is the look, and `JavaScript` is the behaviour — and keeping them separate is what makes a page easy to change.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Open any web page and you are looking at the combined work of three different languages.",
+    "`HTML` lays out the content and structure — the headings, paragraphs, images, and buttons.",
+    "`CSS` controls how all of that looks — the colours, fonts, spacing, and where things sit on the page.",
+    "`JavaScript` adds behaviour — what happens when you click a button, type in a box, or scroll.",
+    "Each language has one job, and the browser on your phone or laptop already speaks all three with nothing to install."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like building a house",
+    "body": [
+      "`HTML` is the frame and rooms — the walls, doorways, and floors that decide what the building actually is and where each space goes.",
+      "`CSS` is the paint and finishes — the colours, the tiles, the lighting that make the same frame feel like a loft or a cottage without moving a single wall.",
+      "`JavaScript` is the electrics and plumbing — the switches and taps that make things happen when you flip or turn them.",
+      "Where the metaphor bends: in a real house the frame is fixed once it is built, but on a web page `JavaScript` can knock down walls and add rooms while you are standing in them."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "HTML: the structure and content",
+      "teaser": "The nouns of the page — what each thing is",
+      "body": [
+        "`HTML` stands for HyperText Markup Language, and \"markup\" is the key word.",
+        "You take plain content and wrap it in labels called `tags` that say what each piece is.",
+        "A `<h1>` tag means \"this is the main heading,\" a `<p>` means \"this is a paragraph,\" and a `<button>` means \"this is a clickable button.\"",
+        "The browser reads these labels and builds the page's skeleton from them — headings, lists, images, links, forms.",
+        "`HTML` says nothing about colour or size; it only declares what exists and how it nests inside everything else.",
+        "It is the nouns of the page: heading, paragraph, image, button — the things, before any styling or behaviour."
+      ]
+    },
+    {
+      "title": "CSS: the presentation",
+      "teaser": "The same content, restyled without touching the structure",
+      "body": [
+        "`CSS` stands for Cascading Style Sheets, and its only job is how things look.",
+        "You write `rules` that target parts of the `HTML` and describe their appearance.",
+        "A rule has a target plus the styling — for example, \"make every paragraph dark grey and roomy.\"",
+        "Because the look lives separately, you can completely redesign a page by editing only the `CSS` — the `HTML` structure never moves.",
+        "This is exactly how a \"dark mode\" toggle or a brand refresh works: same content, swapped styling.",
+        "Spacing, colour, fonts, and layout — where each block sits — are all `CSS`, not `HTML`."
+      ]
+    },
+    {
+      "title": "JavaScript: the behaviour",
+      "teaser": "What happens when you click, type, or scroll",
+      "body": [
+        "`JavaScript` is the only one of the three that is a full programming language — it can make decisions and react to people.",
+        "`HTML` and `CSS` describe a page; `JavaScript` makes it do things.",
+        "It listens for `events` — a click, a keystroke, a scroll — and runs instructions in response.",
+        "Click \"Add to cart\" and `JavaScript` updates the cart count without reloading the whole page.",
+        "Type a wrong password and `JavaScript` shows the red error message the instant you finish.",
+        "It is the behaviour layer: the interactivity that turns a static document into something you can use."
+      ]
+    },
+    {
+      "title": "Why the clean division matters",
+      "teaser": "Three jobs, three files — so a change in one rarely breaks another",
+      "body": [
+        "The big idea is separation: structure, look, and behaviour are kept in three separate places.",
+        "A designer can recolour the whole site in `CSS` without ever touching the `HTML` or risking the buttons.",
+        "An engineer can fix what a button does in `JavaScript` without rearranging the content.",
+        "Mix them together and a small visual tweak can break the structure or the logic by accident.",
+        "Keeping them apart is why a large website can be restyled, re-laid-out, or made interactive by different people working in parallel.",
+        "All three ship as plain text files, and every browser turns them into the living page you see and click."
+      ]
+    }
+  ],
+  "codeExamples": [
+    {
+      "language": "html",
+      "label": "HTML — the structure (a heading and a button)",
+      "source": "<h1>Welcome</h1>\n<button>Sign up</button>"
+    },
+    {
+      "language": "css",
+      "label": "CSS — the look (make the button blue)",
+      "source": "button {\n  background: blue;\n  color: white;\n}"
+    },
+    {
+      "language": "js",
+      "label": "JavaScript — the behaviour (react to a click)",
+      "source": "button.onclick = () => alert(\"Thanks for signing up!\");"
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "HTML (HyperText Markup Language)",
+      "def": "The language that defines a page's structure and content by wrapping text and images in labels (tags) that say what each piece is — a heading, a paragraph, a button."
+    },
+    {
+      "term": "CSS (Cascading Style Sheets)",
+      "def": "The language that controls how a page looks — colours, fonts, spacing, and layout — kept separate from the content so the look can change without touching the structure."
+    },
+    {
+      "term": "JavaScript",
+      "def": "The programming language that adds behaviour to a page — it runs instructions in response to clicks, typing, and scrolling, making the page interactive."
+    },
+    {
+      "term": "tag",
+      "def": "An `HTML` label like `<p>` or `<button>` that marks a piece of content and tells the browser what kind of thing it is."
+    },
+    {
+      "term": "event",
+      "def": "Something a person does on a page — a click, a keystroke, a scroll — that `JavaScript` can listen for and react to."
+    },
+    {
+      "term": "separation of concerns",
+      "def": "The practice of keeping structure (`HTML`), look (`CSS`), and behaviour (`JavaScript`) in separate places so a change to one rarely breaks the others."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "When you ask for a change, knowing which of the three layers it lives in tells you who does the work and how risky it is.",
+      "\"Make the button green\" is a one-line `CSS` change; \"make the button do something new when clicked\" is `JavaScript` and carries real logic to test.",
+      "A clean separation means a rebrand or design refresh can ship without re-engineering behaviour — which is why design-system and visual changes are usually cheaper and safer than they feel."
+    ]
+  },
+  "caseStudy": {
+    "title": "The CSS Zen Garden",
+    "body": [
+      "In 2003, designer Dave Shea launched the CSS Zen Garden, a single web page with fixed `HTML` that anyone could restyle.",
+      "Designers from around the world submitted only a `CSS` file each — the underlying content and structure were identical for every entry.",
+      "The result was hundreds of radically different-looking pages: lush gardens, minimalist grids, retro posters — all from the same unchanged `HTML`.",
+      "It became the definitive proof that look and structure are genuinely separate layers, and is still cited as a turning point in web design."
+    ],
+    "bridge": "The Zen Garden is the house metaphor made real: one frame, endless paint jobs — which only works because `HTML` and `CSS` do different jobs."
+  },
+  "takeaways": [
+    "Every web page is built from three languages with three jobs: `HTML` is structure, `CSS` is look, `JavaScript` is behaviour.",
+    "`HTML` declares what things are (the nouns), `CSS` styles how they look, and `JavaScript` reacts to clicks, typing, and scrolling.",
+    "Because the look lives in `CSS`, you can completely restyle a page without changing its `HTML` structure.",
+    "Keeping the three separate (separation of concerns) is what lets a page be redesigned and made interactive without one change breaking another — and browsers understand all three natively."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "A designer wants to change every button on the site from grey to blue, with no change to what the buttons do. Which language handles this?",
+      "options": [
+        {
+          "text": "CSS — it controls the look (colour, font, spacing) without touching structure or behaviour",
+          "correct": true
+        },
+        {
+          "text": "HTML — because the button is defined in HTML, the colour must be too",
+          "correct": false
+        },
+        {
+          "text": "JavaScript — any change to a button needs a programming language",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — colour is presentation, which is `CSS`'s job. The `HTML` structure and the `JavaScript` behaviour stay exactly the same."
+    },
+    {
+      "q": "What is the job of HTML on a web page?",
+      "options": [
+        {
+          "text": "It defines the structure and content — what each thing is, like a heading, paragraph, or button",
+          "correct": true
+        },
+        {
+          "text": "It sets the colours, fonts, and spacing so the page looks polished",
+          "correct": false
+        },
+        {
+          "text": "It decides what happens when you click or type on the page",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — `HTML` is the structure and content layer, the nouns of the page. Looks are `CSS`; reactions to clicks and typing are `JavaScript`."
+    },
+    {
+      "q": "Why is it useful to keep HTML, CSS, and JavaScript as three separate layers?",
+      "options": [
+        {
+          "text": "A change to one layer rarely breaks the others, so the look, structure, and behaviour can be worked on independently",
+          "correct": true
+        },
+        {
+          "text": "It makes the page load faster because the browser only reads one language at a time",
+          "correct": false
+        },
+        {
+          "text": "It is required by law for every website to use exactly three files",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — separating structure, look, and behaviour means a restyle in `CSS` or a fix in `JavaScript` won't accidentally break the rest, and different people can work in parallel."
+    }
+  ]
+}

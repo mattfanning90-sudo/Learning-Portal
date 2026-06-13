@@ -59,10 +59,16 @@ mergeTrack(coding)
 import cloud from './cloud.js'
 mergeTrack(cloud)
 
+import fullstack from './fullstack.js'
+mergeTrack(fullstack)
+
+import agentic from './agentic.js'
+mergeTrack(agentic)
+
 // ─── Visual diagrams (overlay) — attached to lessons by id ───
 import { diagrams } from './diagrams.js'
 for (const [id, diagram] of Object.entries(diagrams)) if (lessons[id]) lessons[id].diagram = diagram
 
 // Single merged glossary (AI/Product terms + coding terms + cloud terms).
 import baseGlossary from './glossary.js'
-export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}), ...(cloud.cloudGlossary || {}) }
+export const glossary = { ...baseGlossary, ...(coding.codingGlossary || {}), ...(cloud.cloudGlossary || {}), ...(fullstack.fullstackGlossary || {}), ...(agentic.agenticGlossary || {}) }

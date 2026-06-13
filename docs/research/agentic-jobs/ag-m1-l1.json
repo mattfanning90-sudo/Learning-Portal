@@ -1,0 +1,159 @@
+{
+  "coreIdea": "A large language model is a next-word predictor trained on vast text — given some input it generates the most plausible continuation, one token at a time, so it is fluent and usually right but never looking anything up.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A large language model, or `LLM`, is the engine behind tools like ChatGPT and Claude.",
+    "Strip away the magic and it does one thing: it predicts what text most plausibly comes next.",
+    "You give it some text, and it continues that text one small piece at a time — each piece is called a `token`, roughly a word or part of a word.",
+    "It learned to do this by reading an enormous amount of writing and getting very, very good at guessing the next token.",
+    "That is the whole trick — and understanding it tells you exactly when to trust the output and when to check it."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture the autocomplete on your phone, but scaled up almost beyond recognition — instead of suggesting the next word in a text message, it can continue an essay, a contract, or working code, and it does it astonishingly well.",
+      "It is always answering the same quiet question: given everything so far, what word most plausibly comes next?",
+      "Where the metaphor breaks: phone autocomplete just replays your own past habits, while an LLM has absorbed patterns from a huge slice of human writing — so it can produce things it was never directly shown, which is also why it can confidently produce things that are simply wrong."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "One token at a time",
+      "teaser": "How a sentence actually gets built",
+      "body": [
+        "An LLM does not write a whole answer at once.",
+        "It writes one `token` — a word or word-fragment — then feeds everything so far back in and predicts the next one, over and over.",
+        "At each step it isn't choosing the single 'true' next token; it is ranking the plausible options by probability and picking from the top.",
+        "A setting called `temperature` controls how adventurous that pick is: low temperature stays safe and repetitive, higher temperature takes more creative risks.",
+        "This is why the same prompt can give different answers twice, and why a wrong turn early can snowball into a confidently wrong paragraph."
+      ]
+    },
+    {
+      "title": "Not a database, not a calculator",
+      "teaser": "It generates plausibility, it does not retrieve facts",
+      "body": [
+        "A database stores exact records and looks them up; an LLM stores no records — it has only the statistical patterns of language it absorbed in training.",
+        "So when it gives you a fact, it is not retrieving it; it is generating the most plausible-sounding continuation, which is usually but not always the true one.",
+        "When the plausible answer happens to be false, we call it a `hallucination` — fluent, confident, and wrong.",
+        "It is also not a calculator: it predicts what the answer to `27 x 48` tends to look like rather than computing it, so arithmetic and precise counting are weak spots.",
+        "The practical rule: an LLM is brilliant at shaping language and reasoning over text, and unreliable as a source of hard facts or exact math unless you give it the data or a tool."
+      ]
+    },
+    {
+      "title": "Fluent, plausible, and only usually right",
+      "teaser": "Why it is still astonishingly useful",
+      "body": [
+        "Because it is a next-token predictor, its confidence and its correctness are two separate things — it sounds equally sure whether it is right or wrong.",
+        "It is also not deterministic by default: ask twice and you may get two different (both reasonable) answers.",
+        "That sounds like a fatal flaw, but for a huge class of work — drafting, summarising, rewriting, translating, explaining, brainstorming, generating first-draft code — 'fluent and usually right' is genuinely transformative.",
+        "The skill is matching the task to the tool: lean on it where a strong draft you will review beats a blank page, and add verification where being wrong is expensive.",
+        "Everything else in this track — prompting, giving it real data to read, giving it tools — is built to push 'usually right' closer to 'reliably right'."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "Large Language Model (LLM)",
+      "def": "A system trained on a vast amount of text to predict the next piece of text, used to generate fluent language, answers, and code."
+    },
+    {
+      "term": "Token",
+      "def": "The small unit an LLM reads and writes — roughly a word or part of a word — built up one at a time into a full response."
+    },
+    {
+      "term": "Next-token prediction",
+      "def": "The core thing an LLM does: given the text so far, estimate which token most plausibly comes next, then repeat."
+    },
+    {
+      "term": "Hallucination",
+      "def": "When a model produces a confident, fluent statement that is simply false — a side effect of generating plausible text rather than looking facts up."
+    },
+    {
+      "term": "Temperature",
+      "def": "A dial controlling how much randomness the model uses when picking the next token — low is safe and predictable, high is more varied and creative."
+    },
+    {
+      "term": "Deterministic",
+      "def": "Giving the exact same output every time for the same input — something LLMs are NOT by default, which is why answers can vary between runs."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own a product built on an LLM, you are shipping something fluent and usually right, not a system that returns the same correct answer every time — so your real job is deciding where 'usually right' is good enough and where it is not.",
+      "That single judgement drives everything downstream: where you need human review, where you must feed the model trusted data or a real calculator, and what you promise users about accuracy.",
+      "Treating the model as if it 'looks things up' is the most expensive mistake a team can make — it leads to shipping confident hallucinations into places where being wrong has real cost."
+    ]
+  },
+  "caseStudy": {
+    "title": "Air Canada's chatbot invents a refund policy",
+    "body": [
+      "In 2022 a grieving passenger asked Air Canada's website chatbot about bereavement fares and was told he could claim a discount retroactively after booking.",
+      "That policy did not exist — the LLM-style bot had generated a plausible-sounding answer rather than retrieving the airline's actual rules.",
+      "When Air Canada refused the refund, the passenger took it to a Canadian tribunal, which in 2024 ruled the airline was bound by what its bot said and ordered it to pay.",
+      "The bot was fluent, confident, and wrong — a textbook hallucination presented to a customer as fact."
+    ],
+    "bridge": "The failure wasn't a bug in the chatbot; it was treating a next-token predictor as if it were looking up policy in a database — the exact mental-model mistake this lesson is built to prevent."
+  },
+  "takeaways": [
+    "An LLM is a next-token predictor: given text, it generates the most plausible continuation one token at a time.",
+    "It is not a database, not a calculator, and not deterministic — it produces fluent text that is usually, not always, right.",
+    "Confidence and correctness are separate: it sounds just as sure when it is wrong (a hallucination) as when it is right.",
+    "It is still transformative for drafting, summarising, translating, and explaining — match the task to the tool and verify where being wrong is costly."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "At its core, what is a large language model actually doing when it answers you?",
+      "options": [
+        {
+          "text": "Predicting the most plausible next token, one at a time, given the text so far",
+          "correct": true
+        },
+        {
+          "text": "Searching a database of stored facts and returning the matching record",
+          "correct": false
+        },
+        {
+          "text": "Running a calculation to derive the single correct answer",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — an LLM is fundamentally a next-token predictor; it generates a plausible continuation rather than retrieving or computing a fixed answer."
+    },
+    {
+      "q": "A model confidently states a refund policy that turns out not to exist. What is the best explanation?",
+      "options": [
+        {
+          "text": "It generated a fluent, plausible-sounding answer rather than looking the policy up — a hallucination",
+          "correct": true
+        },
+        {
+          "text": "Its policy database was temporarily out of date and needs refreshing",
+          "correct": false
+        },
+        {
+          "text": "The model is broken and should always be expected to fail on facts",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the model has no policy database to consult; it produced a plausible continuation that happened to be false, which is a hallucination, not a stale lookup."
+    },
+    {
+      "q": "Why might the same prompt give you two different answers on two tries?",
+      "options": [
+        {
+          "text": "LLMs are not deterministic by default — they sample from plausible next tokens, so output can vary between runs",
+          "correct": true
+        },
+        {
+          "text": "The model rewrites its stored record each time you ask",
+          "correct": false
+        },
+        {
+          "text": "Different answers always mean one of them is a hallucination",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — because the model picks from probable next tokens (tuned by temperature), it is not deterministic, so reasonable answers can differ run to run."
+    }
+  ]
+}

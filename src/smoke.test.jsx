@@ -122,4 +122,25 @@ describe('app smoke test (whole tree mounts client-side)', () => {
     expect(html).toContain('Make your program print exactly')
     expect(html).toContain('Hello, world!')
   })
+  it('renders the Full-Stack Engineering track', async () => {
+    const html = await renderAt('/track/fullstack')
+    expect(html).toContain('Full-Stack Engineering')
+    expect(html).toContain('How the Web Actually Works')
+  })
+  it('renders a Full-Stack lesson with its core parts', async () => {
+    const html = await renderAt('/lesson/fs-m1-l1')
+    expect(html).toContain('The core idea')
+    expect(html).toContain('Check your understanding')
+    expect(html).toContain('Mark complete')
+  })
+  it('renders the Agentic Engineering track', async () => {
+    const html = await renderAt('/track/agentic')
+    expect(html).toContain('Agentic Engineering')
+    expect(html).toContain('Working with LLMs')
+  })
+  it('renders an Agentic lesson with its core parts', async () => {
+    const html = await renderAt('/lesson/ag-m1-l1')
+    expect(html).toContain('The core idea')
+    expect(html).toContain('Check your understanding')
+  })
 })

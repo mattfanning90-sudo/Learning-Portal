@@ -1,0 +1,183 @@
+{
+  "coreIdea": "Computers find each other by number, not by name, so before your browser can talk to a server it has to translate a name like `example.com` into an `IP address` — and `DNS`, the internet's phonebook, is the lookup system that does it.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "People remember names; computers route by numbers.",
+    "Every server on the internet has a numeric address called an `IP address`, the way every phone has a number.",
+    "But nobody wants to type a string of digits, so we use friendly names like `example.com` instead.",
+    "`DNS` — the Domain Name System — is the service that turns the friendly name into the real number behind it.",
+    "So before your browser can ask a server for anything, a quick name-to-number lookup has to happen first."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "DNS is the internet's phonebook. You know the name of who you want to reach (`example.com`), but to actually place the call you need their number (the `IP address`), so you look the name up first.",
+      "A domain registrar is the company you pay to claim a name in that phonebook — you do not own the name forever, you rent it, and your listing says which number the name points to.",
+      "Where the metaphor bends: a paper phonebook is one fixed book, while DNS is millions of cooperating servers, and a name can point at a number that changes the moment you update your listing."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Names for humans, numbers for machines",
+      "teaser": "Two addresses for the same server, kept in sync by DNS",
+      "body": [
+        "An `IP address` is the numeric address of a computer on the internet, like `93.184.216.34`.",
+        "It is how data actually gets routed across the network — every packet needs a number to aim at, not a name.",
+        "A `domain name` like `example.com` is the human-friendly label we put in front of that number so people never have to memorise digits.",
+        "The whole job of `DNS` is to keep those two in sync: give it a name, it hands back the current number.",
+        "This split is deliberate — it means a company can change which server its name points to without anyone having to relearn the address."
+      ]
+    },
+    {
+      "title": "The lookup chain: cache, resolver, authoritative server",
+      "teaser": "Where the answer comes from, fastest source first",
+      "body": [
+        "When you visit a name, your browser tries the cheapest source first: its own `cache`, a short-term memory of names it looked up recently.",
+        "If the answer is not cached, the question goes to a `resolver` — usually run by your internet provider — whose job is to chase down the answer on your behalf.",
+        "The resolver asks the `authoritative servers`: the servers that hold the official, source-of-truth record for that exact domain.",
+        "The authoritative server replies with the real number, the resolver passes it back, and your browser caches it so the next visit skips all of this.",
+        "We are skipping a layer of detail on purpose — the point is the shape: check memory, ask a helper, the helper finds the official answer."
+      ]
+    },
+    {
+      "title": "Renting the name: registrars and a couple of record types",
+      "teaser": "What you actually buy, and the two records you will meet first",
+      "body": [
+        "A `domain registrar` (such as GoDaddy, Namecheap, or Cloudflare) is the company you pay to claim a domain name — you rent it, typically year by year, rather than owning it outright.",
+        "Once you hold the name, you fill in its `DNS records`: small instructions that say where the name should point.",
+        "An `A record` points a name straight at an `IP address` — \"`example.com` lives at `93.184.216.34`.\"",
+        "A `CNAME record` points a name at another name instead of a number — \"`www.example.com` is really just `example.com`, go look that up.\"",
+        "`CNAME` is handy because if the underlying number ever changes, you update it in one place and everything pointed at that name follows automatically."
+      ]
+    },
+    {
+      "title": "Caching and propagation: why changes are not instant",
+      "teaser": "The speed that makes DNS fast also makes changes slow",
+      "body": [
+        "Every DNS answer comes with a `TTL` (time to live): how many seconds caches are allowed to remember it before asking again.",
+        "That caching is what makes the web feel fast — most lookups are answered from memory, not by chasing the authoritative server every time.",
+        "The trade-off is that when you change a record, the old answer can linger in caches around the world until each one's `TTL` expires.",
+        "This gradual spread of a change across the internet's caches is called `propagation`, and it can take minutes to a day or so depending on the `TTL`.",
+        "So a freshly updated site might work for you but still load the old server for someone else for a while — that is propagation, not a bug."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "IP address",
+      "def": "The numeric address of a computer on the internet, like `93.184.216.34` — the actual number data is routed to, the equivalent of a phone number."
+    },
+    {
+      "term": "domain name",
+      "def": "A human-friendly name for a server, like `example.com`, that stands in for its numeric `IP address` so people never have to memorise digits."
+    },
+    {
+      "term": "DNS",
+      "def": "The Domain Name System — the internet's phonebook, the lookup service that translates a domain name into the `IP address` behind it."
+    },
+    {
+      "term": "resolver",
+      "def": "The DNS helper (usually run by your internet provider) that takes your question and chases down the answer from the authoritative servers on your behalf."
+    },
+    {
+      "term": "domain registrar",
+      "def": "The company you pay to claim a domain name — you rent the name, typically per year, and set the records that say where it points."
+    },
+    {
+      "term": "A record",
+      "def": "A DNS record that points a domain name directly at an `IP address` — \"this name lives at this number.\""
+    },
+    {
+      "term": "CNAME record",
+      "def": "A DNS record that points a name at another name instead of a number, so the second name's answer is used — handy when the underlying number may change."
+    },
+    {
+      "term": "propagation",
+      "def": "The gradual spread of a DNS change across the internet's caches; old answers linger until each cache's `TTL` (time to live) expires, so updates are not instant."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "The domain name is a rented asset, not an owned one — if the registration lapses, the name can be lost or even bought out from under you, which is why \"who renews the domain?\" is a real operational risk, not a clerical chore.",
+      "Propagation explains a class of \"it works for me, not for them\" reports during a launch or migration: the change is correct, but caches around the world are still serving the old answer until their `TTL` expires, so lowering the `TTL` before a planned cutover is a concrete way to make the switch faster.",
+      "Because DNS is the single front door that turns your name into a server, a mistake or outage here takes the whole product offline even when every server behind it is perfectly healthy — so it belongs on the short list of things you actively monitor."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 2016 Dyn DNS outage",
+    "body": [
+      "Dyn was a company that ran authoritative DNS for many large sites, effectively holding the phonebook entries that turn their names into numbers.",
+      "On 21 October 2016, a massive flood of junk traffic (a denial-of-service attack) overwhelmed Dyn's servers so they could not answer lookups.",
+      "Sites like Twitter, Reddit, Spotify, and Netflix became unreachable for many users for hours — even though those companies' own servers were running fine.",
+      "The problem was not the servers; it was that browsers could no longer translate the names into the numbers needed to reach them."
+    ],
+    "bridge": "It shows how load-bearing DNS is: if the name-to-number lookup fails, a perfectly healthy server might as well not exist, because no one can find it."
+  },
+  "takeaways": [
+    "Computers route by numbers (`IP address`); humans use names (`domain name`); `DNS` is the phonebook that translates one into the other.",
+    "A lookup checks the browser's cache first, then asks a resolver, which fetches the official answer from the domain's authoritative servers.",
+    "You rent a name from a registrar, then set records: an `A record` points a name at an `IP address`, a `CNAME` points a name at another name.",
+    "DNS answers are cached for a `TTL`, so changes take time to propagate — a freshly changed site can still load the old server for others for a while."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why does your browser need DNS before it can load `example.com`?",
+      "options": [
+        {
+          "text": "Computers find each other by number, so DNS translates the name `example.com` into the `IP address` the browser can actually reach",
+          "correct": true
+        },
+        {
+          "text": "DNS downloads and stores the page so the browser does not need to contact the server at all",
+          "correct": false
+        },
+        {
+          "text": "DNS encrypts the page so only your browser can read what the server sends back",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — DNS is the internet's phonebook: data is routed by numeric `IP address`, so the human-friendly name has to be translated into that number before the browser can connect."
+    },
+    {
+      "q": "You change which server `example.com` points to, and it works for you instantly but a colleague still loads the old site an hour later. What is going on?",
+      "options": [
+        {
+          "text": "Caches still hold the old answer until their `TTL` expires — the change is propagating, which takes time and is not a bug",
+          "correct": true
+        },
+        {
+          "text": "The change failed for your colleague and must be re-entered separately for each person",
+          "correct": false
+        },
+        {
+          "text": "DNS only updates for one user at a time, so colleagues must wait their turn in a queue",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — DNS answers are cached for a `TTL`, so an updated record spreads gradually as each cache expires; that delay is propagation, not a failure."
+    },
+    {
+      "q": "What is the difference between an `A record` and a `CNAME record`?",
+      "options": [
+        {
+          "text": "An `A record` points a name at an `IP address` (a number); a `CNAME` points a name at another name to look up instead",
+          "correct": true
+        },
+        {
+          "text": "An `A record` is for secure sites and a `CNAME` is for insecure ones",
+          "correct": false
+        },
+        {
+          "text": "An `A record` stores the page's content while a `CNAME` stores its styling",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — an `A record` maps a name straight to a numeric `IP address`, while a `CNAME` aliases one name to another name, so the second name's answer is used (handy when the underlying number may change)."
+    }
+  ],
+  "sources": [
+    { "label": "Cloudflare — What is DNS? How DNS works", "url": "https://www.cloudflare.com/learning/dns/what-is-dns/" },
+    { "label": "MDN — What is a domain name?", "url": "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_domain_name" },
+    { "label": "Cloudflare — What was the Dyn DNS attack? (2016)", "url": "https://www.cloudflare.com/learning/ddos/famous-ddos-attacks/" }
+  ]
+}

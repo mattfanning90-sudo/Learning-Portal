@@ -1,0 +1,124 @@
+{
+  "id": "fs-m1-l1",
+  "trackId": "fullstack",
+  "moduleId": "fs-m1",
+  "order": 1,
+  "title": "What Happens When You Visit a URL",
+  "estMinutes": 9,
+  "coreIdea": "Loading a web page is a round trip: your browser finds the right server, asks it for the page over the internet, and the server sends back files the browser then assembles into what you see.",
+  "plainEnglish": [
+    "You type a web address and a page appears, seemingly instantly.",
+    "Underneath, a fast conversation just happened between two computers.",
+    "Your browser found the computer that holds the page, asked it for the page, and got an answer back.",
+    "That answer was not a picture — it was a bundle of text files that your browser then built into the page on screen.",
+    "Almost everything on the web is a version of this one pattern: ask, answer, assemble."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Visiting a URL is like ordering takeaway by phone. You look up the restaurant's number (finding the server), you call and say what you want (the request), and the kitchen cooks it and sends it over (the response).",
+      "The food arrives as separate ingredients in boxes, and you plate it up at home — just as your browser receives raw files and assembles the finished page itself.",
+      "Where the metaphor bends: a phone order is one slow back-and-forth, while loading a page is often dozens of these requests firing in well under a second."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The round trip: request and response",
+      "teaser": "Every page load is a question and an answer",
+      "body": [
+        "The whole web runs on one repeating move called a `request` and a `response`.",
+        "A `request` is your browser asking a specific computer for something — usually, \"please send me this page.\"",
+        "A `response` is that computer sending something back — usually the files that make up the page.",
+        "The computer that answers is called a `server`: a machine whose job is to wait for requests and serve back what was asked for.",
+        "This one ask-and-answer pattern, repeated, is the engine under nearly everything you do online."
+      ]
+    },
+    {
+      "title": "Finding the right computer first",
+      "teaser": "A name has to become an address before anyone can talk",
+      "body": [
+        "You typed a name like `bbc.com`, but computers on the internet find each other by number, not by name.",
+        "So before anything else, your browser looks up the number that the name points to — a step handled by the `DNS` (Domain Name System), the internet's address book.",
+        "Think of it as the difference between a contact's name in your phone and the actual phone number behind it.",
+        "Once the browser has that number, it knows which server to call.",
+        "We will not unpack how that lookup works here — that is its own lesson later in this module."
+      ]
+    },
+    {
+      "title": "Files come back, then the browser builds the page",
+      "teaser": "The server sends parts; your browser does the assembly",
+      "body": [
+        "The server's `response` is not a finished image of the page — it is the raw materials.",
+        "Those materials are mostly three kinds of text file: `HTML` (the content and structure), `CSS` (the styling), and `JavaScript` (the behaviour).",
+        "Your browser reads `HTML`, sees it needs more pieces, and fires off more requests for the images, fonts, and scripts it references.",
+        "As each piece arrives, the browser lays it out and paints it on screen — this assembly step is called `rendering`.",
+        "So the heavy lifting is split: the server hands over parts, and your browser turns those parts into the page you actually see."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "URL", "def": "A web address you type or click — short for Uniform Resource Locator — that names exactly which page or file you want." },
+    { "term": "browser", "def": "The program on your device (Chrome, Safari, Firefox) that makes web requests and turns the responses into the pages you see." },
+    { "term": "server", "def": "A computer whose job is to wait for requests over the internet and send back what was asked for, such as a web page." },
+    { "term": "request", "def": "A message from your browser asking a server for something specific — most often, \"send me this page.\"" },
+    { "term": "response", "def": "The server's reply, usually the bundle of files that make up the page you asked for." },
+    { "term": "DNS", "def": "The Domain Name System — the internet's address book that turns a human name like `bbc.com` into the number a computer can dial." }
+  ],
+  "pmAngle": {
+    "body": [
+      "Every page load is a chain of round trips, and each link can be slow or can fail — the name lookup, the trip across the internet, the server's work, and the browser's assembly.",
+      "Knowing the chain tells you where to ask questions: when a page is slow, the honest first question is \"which step is the bottleneck?\" rather than a vague \"the site is slow.\"",
+      "It also frames a core build decision you will meet again — how much work the server does before sending versus how much the browser does after — which shapes speed, cost, and what your team has to maintain."
+    ]
+  },
+  "caseStudy": {
+    "title": "Tim Berners-Lee and the first web page (1991)",
+    "body": [
+      "In 1991 at CERN, the physics lab near Geneva, Tim Berners-Lee put the world's first web page online.",
+      "He had invented the three pieces that still define a page request: the URL to name a page, HTTP as the rules for asking and answering, and HTML as the file format for the content.",
+      "A browser would request that page by its URL, and Berners-Lee's server would respond with the HTML file.",
+      "That exact ask-and-answer loop — request a URL, get back HTML — is still what happens when you open any site today, just far faster and with many more pieces."
+    ],
+    "bridge": "The web has grown enormously, but every visit to a URL is still the same round trip he designed: name a page, ask for it, and assemble what comes back."
+  },
+  "takeaways": [
+    "Loading a page is a round trip: your browser sends a request and the server sends a response.",
+    "Before talking, the browser turns the URL's name into an address using DNS, the internet's address book.",
+    "The response is raw files (HTML, CSS, JavaScript), not a finished picture of the page.",
+    "Your browser assembles those files into what you see — that final step is called rendering."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "At its core, what happens when you visit a URL?",
+      "options": [
+        { "text": "Your browser sends a request to a server, and the server sends back a response with the page's files", "correct": true },
+        { "text": "Your browser already has the page stored and simply displays it from your device", "correct": false },
+        { "text": "The server reaches into your browser and draws the finished page directly onto your screen", "correct": false }
+      ],
+      "feedback": "Right — the web runs on a request-and-response round trip: the browser asks, the server answers with the files that make up the page."
+    },
+    {
+      "q": "You typed a name like `bbc.com`. Why does the browser need DNS before it can load the page?",
+      "options": [
+        { "text": "Computers find each other by number, so DNS translates the name into the address the browser can actually dial", "correct": true },
+        { "text": "DNS downloads and stores the page so the browser does not have to ask the server", "correct": false },
+        { "text": "DNS styles the page so the browser knows what fonts and colours to use", "correct": false }
+      ],
+      "feedback": "Correct — DNS is the internet's address book; it turns the human-friendly name into the number the browser uses to reach the right server."
+    },
+    {
+      "q": "What does the server actually send back in its response?",
+      "options": [
+        { "text": "Raw files like HTML, CSS, and JavaScript that the browser then assembles into the page", "correct": true },
+        { "text": "A single finished image of the page, ready to show with no further work", "correct": false },
+        { "text": "Only the text, while the browser invents the layout and styling on its own", "correct": false }
+      ],
+      "feedback": "Exactly — the server hands over the raw materials, and the browser does the assembly (rendering) to produce what you see."
+    }
+  ],
+  "sources": [
+    { "label": "MDN — What is a web server?", "url": "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server" },
+    { "label": "MDN — How the Web works", "url": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works" },
+    { "label": "CERN — The birth of the web", "url": "https://home.cern/science/computing/birth-web" }
+  ]
+}

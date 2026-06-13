@@ -1,0 +1,169 @@
+{
+  "coreIdea": "An LLM only knows what is inside its context window right now plus what it absorbed in training — so what you put in the window largely decides the quality of what comes out.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "A large language model has no memory of you between conversations.",
+    "Each time you talk to it, the model reads one block of text — your prompt, the chat so far, and anything you paste in — and answers based on just that.",
+    "That block of text is called the `context window`: the model's short-term working memory.",
+    "Whatever is in the window, the model can \"see\" right now; whatever is not in it, the model has no idea about — unless it happened to learn it during training.",
+    "So getting good answers is less about clever wording and more about putting the right information in front of the model."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a brilliant consultant working at a small desk with no filing cabinet and no memory of yesterday.",
+      "They can only reason about the papers currently spread on the desk — the moment a page slides off the edge, it is gone, and they will confidently carry on without it.",
+      "The metaphor bends in one place: a real desk has soft limits, but the context window has a hard, countable ceiling measured in `tokens`, and the model does not feel the pages slipping off — it just quietly works with whatever is left."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "What is actually in the window",
+      "teaser": "Everything the model can \"see\" this turn lives here",
+      "body": [
+        "The `context window` is all the text the model is looking at for a single response.",
+        "It holds three things stacked together: any `system prompt` (standing instructions like \"you are a helpful tutor\"), the conversation so far (your messages and the model's replies), and anything you pasted in (a document, an email, some code).",
+        "The model reads this whole block top to bottom and predicts what comes next.",
+        "Crucially, the model knows only two things: what is in the window, plus the general patterns it absorbed during `training` — its frozen, built-in knowledge from before it was released.",
+        "It has no live access to your files, your past chats, or today's news unless that text is sitting in the window right now."
+      ]
+    },
+    {
+      "title": "It is measured in tokens, and the window is finite",
+      "teaser": "A desk with a fixed surface area, counted in pieces of words",
+      "body": [
+        "The window is not measured in pages but in `tokens` — chunks of text, where one token is roughly three-quarters of an English word.",
+        "Every model has a maximum window size: an illustrative model might hold around 200,000 tokens, very roughly 150,000 words, or a few long books' worth.",
+        "That sounds huge, but a long working session — big documents, hours of back-and-forth, pasted logs — can fill it.",
+        "When the conversation grows past the limit, the oldest text gets pushed out to make room, and the model simply stops being able to see it.",
+        "From your side it looks like the model suddenly \"forgot\" something you agreed on an hour ago — it did not forget, that page just slid off the desk."
+      ]
+    },
+    {
+      "title": "Why the window dominates the result",
+      "teaser": "Relevant context in beats hoping it remembers",
+      "body": [
+        "Because the model reasons only over what is in the window, the contents of that window largely determine the quality of the answer.",
+        "Give it the actual contract clause and it can quote it; ask it to \"remember the clause from earlier\" after that text has scrolled out, and it will guess.",
+        "A model guessing from missing context produces a confident, fluent, wrong answer — a `hallucination` — and it will not warn you.",
+        "So the reliable move is to bring the relevant material into the window, not to hope the model \"still remembers\" it.",
+        "This is why two people can get wildly different results from the same model: one fed it the right context, the other did not."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "context window",
+      "def": "The single block of text a model can read for one response — your prompt, the conversation so far, and any documents pasted in. It is the model's short-term working memory."
+    },
+    {
+      "term": "token",
+      "def": "The unit the window is measured in — a chunk of text roughly three-quarters of an English word. Window sizes and AI bills are both counted in tokens."
+    },
+    {
+      "term": "system prompt",
+      "def": "Standing instructions placed at the top of the window that set the model's role and rules, like \"you are a concise legal assistant.\""
+    },
+    {
+      "term": "training knowledge",
+      "def": "The general, frozen knowledge a model absorbed before release. It is fixed and offline — separate from the live text in the window."
+    },
+    {
+      "term": "context overflow",
+      "def": "What happens when a conversation grows past the window's token limit: the oldest text is pushed out, so the model can no longer see it."
+    },
+    {
+      "term": "hallucination",
+      "def": "A confident, fluent answer the model invents when it lacks the real context — it does not flag that it is guessing."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If your AI feature gives flaky answers, the first question is rarely \"is the model dumb?\" — it is \"did the right information reach the window?\"",
+      "Tokens are also the meter: every token in the window is something you pay for, so a bigger window means better grounding but a higher bill, and that trade-off is yours to own.",
+      "Treating the window as the product surface — deciding what gets loaded, what gets dropped, and when a long chat should be reset — is what separates a reliable feature from one that mysteriously \"forgets.\""
+    ]
+  },
+  "caseStudy": {
+    "title": "Anthropic's Claude raises the window to 100,000 tokens",
+    "body": [
+      "In May 2023, Anthropic expanded its Claude model's context window to 100,000 tokens, around 75,000 words at the time — a large jump over typical windows then.",
+      "Anthropic showed it by pasting the entire text of The Great Gatsby into a single prompt and asking questions about specific passages.",
+      "The model could answer because the whole novel sat inside the window; nothing had to be \"remembered\" from training.",
+      "Drop even one chapter out of the window and questions about that chapter would have to be guessed at instead of read."
+    ],
+    "bridge": "The demo makes the rule concrete: the model can reason brilliantly about a whole book — but only the part of it that is actually inside the window."
+  },
+  "takeaways": [
+    "The context window is the model's short-term working memory: your prompt, the chat so far, and any pasted text — everything it can \"see\" right now.",
+    "The model knows only what is in the window plus its frozen training knowledge; it has no memory of past chats unless you bring it back.",
+    "Windows are finite and measured in tokens, so very long chats or huge documents overflow and the earliest parts silently drop out.",
+    "What you put in the window largely determines the answer — relevant context in beats hoping the model remembers."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What does a large language model actually \"know\" when it answers you?",
+      "options": [
+        {
+          "text": "Only the text in its context window right now, plus the frozen knowledge it absorbed during training",
+          "correct": true
+        },
+        {
+          "text": "Everything from all your previous conversations, which it stores and recalls automatically",
+          "correct": false
+        },
+        {
+          "text": "Your files and the live internet, which it reads in the background as needed",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the model reasons over what is in the window plus its training knowledge. It has no memory of past chats and no live access to your files unless that text is in the window."
+    },
+    {
+      "q": "During a very long conversation, the model suddenly seems to \"forget\" a detail you agreed on near the start. What most likely happened?",
+      "options": [
+        {
+          "text": "The conversation grew past the window's token limit, so the earliest text was pushed out and the model can no longer see it",
+          "correct": true
+        },
+        {
+          "text": "The model deliberately deleted that detail because it judged it unimportant",
+          "correct": false
+        },
+        {
+          "text": "The model's training knowledge expired and needs to be refreshed",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the window is finite, measured in tokens. When a chat overflows it, the oldest text drops out, which looks like forgetting but is really the page sliding off the desk."
+    },
+    {
+      "q": "You want a reliable answer about a specific clause in a contract. What is the better approach?",
+      "options": [
+        {
+          "text": "Paste the actual clause into the window so the model can read it directly",
+          "correct": true
+        },
+        {
+          "text": "Ask the model to recall the clause from a document you discussed in an earlier chat",
+          "correct": false
+        },
+        {
+          "text": "Trust that a clause this important is part of the model's built-in training knowledge",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — relevant context in beats hoping it remembers. With the clause in the window the model can quote it; without it, the model guesses and may hallucinate a confident, wrong answer."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Introducing 100K Context Windows",
+      "url": "https://www.anthropic.com/news/100k-context-windows"
+    },
+    {
+      "label": "Anthropic — Context windows (model documentation)",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/context-windows"
+    }
+  ]
+}

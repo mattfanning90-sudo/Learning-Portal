@@ -1,0 +1,176 @@
+{
+  "coreIdea": "HTTP is the simple request/response language every web interaction speaks: a request says what you want with a method, address, and details, and a response answers with a status code and a body — and crucially, each exchange stands completely alone.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Every time you load a page, tap a button, or submit a form, your browser and a server have a tiny conversation.",
+    "That conversation follows a fixed format called `HTTP` — the HyperText Transfer Protocol.",
+    "It is always the same two-step shape: the browser sends a `request`, the server sends back a `response`.",
+    "The request says \"here is what I want\"; the response says \"here is the result, and here is how it went.\"",
+    "Learn this one pattern and almost everything else on the web — pages, apps, APIs — turns out to be the same handshake repeated."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of HTTP as ordering at a busy takeaway counter through a slot in the glass.",
+      "You slide a written order through (the request): a verb like \"give me\" or \"add this\", the item you mean, a few notes, and sometimes a filled-in form. The kitchen slides back a tray with a receipt stamped `200 OK` or `404 not found` (the response).",
+      "Where the metaphor breaks: a real server behind the slot has total amnesia. It does not remember you ordered two minutes ago — every single order arrives as if from a brand-new stranger."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The shape of a request: verb, address, notes, optional parcel",
+      "teaser": "Four parts, and most of them are simple",
+      "body": [
+        "Every request has the same four parts, and only one is ever a mystery.",
+        "First a `method` — the verb that says what you want to do, like `GET` (fetch this) or `POST` (here, take this).",
+        "Then a `URL` — the address that says which thing you mean, such as `/products/42`.",
+        "Then `headers` — short lines of extra notes about the request, like what format you can read or who you are.",
+        "Finally an optional `body` — the actual parcel of data you are sending, used when you are creating or updating something, and left empty when you are just reading."
+      ]
+    },
+    {
+      "title": "The methods as plain verbs: read, create, update, delete",
+      "teaser": "Four words cover most of what the web does",
+      "body": [
+        "The methods are just verbs, and four of them do most of the work.",
+        "`GET` means read — fetch something and change nothing, like opening a profile page.",
+        "`POST` means create — submit new data, like signing up or posting a comment.",
+        "`PUT` means update — replace an existing thing, like editing that profile.",
+        "`DELETE` means delete — remove a thing, like deleting a saved card.",
+        "A useful rule: a `GET` should be safe to repeat with no side effects, while a `POST` usually changes something — which is why the browser warns you before resubmitting a form."
+      ]
+    },
+    {
+      "title": "Status codes: the response's one-glance verdict",
+      "teaser": "Three digits that tell you how it went",
+      "body": [
+        "Every response carries a three-digit `status code`, and the first digit is the headline.",
+        "`2xx` means success: `200 OK` is the everyday \"here is what you asked for.\"",
+        "`3xx` means redirect: `301` says \"that has permanently moved, go here instead\" — the quiet machinery behind a renamed page still working.",
+        "`4xx` means you got it wrong: `404 not found` is the famous one, `403` means \"you are not allowed.\" The mistake is on the request side.",
+        "`5xx` means the server got it wrong: `500 server error` means the request was fine but something broke on their end.",
+        "So `4xx` is your fault, `5xx` is their fault — a distinction that decides who has to fix it."
+      ]
+    },
+    {
+      "title": "Statelessness: every request is a stranger",
+      "teaser": "The server remembers nothing on its own",
+      "body": [
+        "HTTP is `stateless`: by default the server keeps no memory between requests.",
+        "Each request must carry everything needed to understand it, because the server treats it as the first time it has ever heard from you.",
+        "This sounds like a flaw but it is a deliberate strength — it lets any of a thousand identical servers answer your next request, so the system scales easily.",
+        "The catch is obvious: if the server forgets you, how does \"stay logged in\" work?",
+        "The answer is that the browser re-introduces you on every request by attaching a small token or session id in the headers — a fix layered on top of HTTP, which later lessons unpack."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "HTTP",
+      "def": "The HyperText Transfer Protocol — the fixed request-and-response format browsers and servers use for every web interaction."
+    },
+    {
+      "term": "request",
+      "def": "The message a client sends to ask for something: a method (verb) + a URL (address) + headers (notes) + an optional body (data)."
+    },
+    {
+      "term": "response",
+      "def": "The message a server sends back: a status code (how it went) + headers (notes) + a body (the actual content, such as a page or data)."
+    },
+    {
+      "term": "method",
+      "def": "The verb in a request that states the intent — `GET` to read, `POST` to create, `PUT` to update, `DELETE` to remove."
+    },
+    {
+      "term": "status code",
+      "def": "A three-digit number in the response signalling the outcome, grouped into families: `2xx` success, `3xx` redirect, `4xx` your mistake, `5xx` server's mistake."
+    },
+    {
+      "term": "headers",
+      "def": "Short lines of metadata attached to a request or response — extra notes about the message, like its format, length, or who is asking — separate from the body content itself."
+    },
+    {
+      "term": "stateless",
+      "def": "A property of HTTP: the server keeps no memory between requests by default, so each request must stand on its own and carry whatever it needs."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "When a feature \"breaks,\" the status code tells you instantly whose problem it is: a wave of `4xx` points at your client, your inputs, or your docs, while a wave of `5xx` points at your own servers — and that decides which team gets paged at 2am.",
+      "Statelessness is why \"keep me logged in\" and personalisation are never free: because the server forgets every request, your product has to spend effort re-identifying the user each time, which is the root of the sessions, tokens, and login complexity that show up on every roadmap.",
+      "Understanding the request shape also makes API and integration conversations concrete — \"we need a `POST` endpoint that returns `201`\" stops being jargon and becomes a scoping decision you can actually weigh."
+    ]
+  },
+  "caseStudy": {
+    "title": "The 404 page becomes a brand surface",
+    "body": [
+      "`404` is the HTTP status code a server returns when the address in a request points to nothing that exists.",
+      "GitHub turned its `404` page into a playful illustration — an animated parallax character — rather than a blank error.",
+      "It is more than decoration: by sending a real `404` status code, GitHub also tells search engines and other machines \"this page genuinely does not exist, do not keep linking to it.\"",
+      "A page that merely looked like an error but quietly returned `200 OK` would confuse every automated system that reads the code, not the words."
+    ],
+    "bridge": "The lesson: the status code is the part that machines actually trust — the human-readable page is just the wrapper around a number that carries the real verdict."
+  },
+  "takeaways": [
+    "Every web interaction is one HTTP exchange: a request (method + URL + headers + optional body) answered by a response (status code + headers + body).",
+    "Methods are verbs: `GET` reads, `POST` creates, `PUT` updates, `DELETE` removes.",
+    "Status codes give a one-glance verdict — `2xx` success, `3xx` redirect, `4xx` your mistake, `5xx` server's mistake.",
+    "HTTP is stateless: the server remembers nothing by default, which is exactly why sessions and tokens have to exist."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Your browser loads a product page. In HTTP terms, what is the minimum shape of what it sends and gets back?",
+      "options": [
+        {
+          "text": "It sends a request (a method like `GET` plus a URL and headers) and gets back a response (a status code, headers, and a body)",
+          "correct": true
+        },
+        {
+          "text": "It opens a permanent connection and streams the whole site at once, with no separate request",
+          "correct": false
+        },
+        {
+          "text": "It sends only the page's text and the server replies with only an image",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — every interaction is one request/response pair: the request carries a method, URL, and headers (and sometimes a body), and the response carries a status code, headers, and a body."
+    },
+    {
+      "q": "A user submits a sign-up form and your monitoring lights up with `500` responses. Where is the problem most likely to be?",
+      "options": [
+        {
+          "text": "On the server — `5xx` codes mean the request was fine but something broke on the server's side",
+          "correct": true
+        },
+        {
+          "text": "In the user's request — `5xx` means they sent something invalid",
+          "correct": false
+        },
+        {
+          "text": "Nowhere — `5xx` is a success family like `2xx`",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — `5xx` is the server-error family, meaning the fault is on the server's side; a client mistake would show up as a `4xx` such as `404` or `403` instead."
+    },
+    {
+      "q": "Why do web apps need sessions or tokens to keep a user \"logged in\"?",
+      "options": [
+        {
+          "text": "Because HTTP is stateless — the server remembers nothing between requests, so the user must be re-identified on every one",
+          "correct": true
+        },
+        {
+          "text": "Because HTTP can only send text, so passwords have to be re-typed each time",
+          "correct": false
+        },
+        {
+          "text": "Because the `GET` method is not allowed to carry any identity at all",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — statelessness means the server forgets you between requests by default, so the browser must re-introduce the user (via a token or session id in the headers) on each request, which is what sessions and tokens are for."
+    }
+  ]
+}

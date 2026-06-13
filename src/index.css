@@ -32,6 +32,10 @@
   --java-light:      oklch(0.95 0.045 50);
   --cloud:           oklch(0.55 0.10 215); /* Cloud, AWS & FinOps track */
   --cloud-light:     oklch(0.95 0.03 215);
+  --stack:           oklch(0.52 0.16 285); /* Full-Stack Engineering track */
+  --stack-light:     oklch(0.95 0.035 285);
+  --agent:           oklch(0.55 0.20 330); /* Agentic Engineering track */
+  --agent-light:     oklch(0.95 0.04 330);
 
   --shadow-sm:       0 1px 4px oklch(0.18 0.02 250 / 0.06);
   --shadow-float:    0 8px 40px oklch(0.18 0.02 250 / 0.12),

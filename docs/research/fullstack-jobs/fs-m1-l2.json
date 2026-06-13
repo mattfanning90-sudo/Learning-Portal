@@ -1,0 +1,159 @@
+{
+  "coreIdea": "Every app is split into two halves — a client that the user holds and that requests and displays things, and a server, a shared remote computer that responds and guards the real logic and data.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Open almost any app and you are really looking at two computers talking to each other.",
+    "One is the `client` — the browser tab or phone app in your hands. It asks for things and draws them on the screen.",
+    "The other is the `server` — a computer in a data centre somewhere that you never see. It answers those requests and holds the shared logic and data.",
+    "The client is yours alone; the server is shared by everyone using the app at once.",
+    "Nearly every confusing word in web development — frontend, backend, API, deploy — is just describing which of these two halves you mean."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of a restaurant. You sit at a table (the client): you read the menu, decide what you want, and place an order — but you cannot walk into the kitchen.",
+      "The kitchen (the server) holds the recipes, the ingredients, and the one head chef who keeps every dish consistent. It takes your order, does the real work out of sight, and sends a plate back.",
+      "Where the metaphor bends: a restaurant has one kitchen serving a few dozen tables, while one server quietly serves thousands of clients at the same moment — and you can clone the kitchen in seconds when the dinner rush hits."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Why the split exists at all",
+      "teaser": "One shared truth, many untrusted hands",
+      "body": [
+        "You could imagine putting everything on the user's device and skipping the server. It almost never works, for three reasons.",
+        "First, there must be one shared source of truth. Your bank balance has to be the same number whether you check it on your laptop or your phone — so it lives in one place, the server, not on each device.",
+        "Second, the client cannot be trusted. Anyone can open their browser's tools and change what is on their own screen, so the rules that actually matter — \"this account has enough money,\" \"this password is correct\" — must be checked on the server, where the user can't reach them.",
+        "Third, there are many clients but one server. Millions of phones can talk to the same backend, and the server is what keeps them all in sync and consistent.",
+        "So the split is not an accident of history — it is the only way to have a shared, trustworthy, always-consistent app."
+      ]
+    },
+    {
+      "title": "What lives where",
+      "teaser": "UI on the client; logic, secrets, and data on the server",
+      "body": [
+        "The client's job is presentation: drawing the screen, reacting to taps and clicks, and showing what came back. This is the `user interface`, or `UI`.",
+        "The server's job is everything that must be shared, protected, or trusted: the `business logic` (the rules of how the app behaves), the `database` (the permanent store of records), and the secrets like passwords and payment keys.",
+        "A simple test: if it would be dangerous for a user to be able to rewrite it, it belongs on the server. The price of an item, the rule for who can see what — server.",
+        "If it is purely about how things look and feel on this one device, it belongs on the client. A button's colour, a menu sliding open — client.",
+        "The two halves talk over the internet by sending messages back and forth, a conversation we'll unpack in the next lesson."
+      ]
+    },
+    {
+      "title": "\"Frontend\" and \"backend\" in plain English",
+      "teaser": "The two halves, renamed by the people who build them",
+      "body": [
+        "\"Frontend\" is simply the work that runs on the client — the part of the app the user sees and touches.",
+        "\"Backend\" is the work that runs on the server — the part the user never sees, doing the logic and holding the data.",
+        "A `full-stack` engineer is someone comfortable on both halves; the \"stack\" is just the pile of technologies from screen to database.",
+        "These words describe a division of labour, not two separate apps — the frontend and backend are two halves of one product, in constant conversation.",
+        "When someone says \"it's a frontend bug,\" they mean the problem is in how the client displayed something, not in the server's data or rules."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "client",
+      "def": "The browser tab or app in the user's hands. It requests things and renders them on screen — and it is the half you cannot trust, because the user controls it."
+    },
+    {
+      "term": "server",
+      "def": "A remote computer, shared by all users, that responds to the client's requests and holds the app's shared logic, secrets, and data."
+    },
+    {
+      "term": "frontend",
+      "def": "The part of an app that runs on the client — what the user sees and interacts with."
+    },
+    {
+      "term": "backend",
+      "def": "The part of an app that runs on the server — the logic, the database, and the secrets the user never sees."
+    },
+    {
+      "term": "user interface (UI)",
+      "def": "The screen the user looks at and touches: buttons, text, and images. It lives on the client."
+    },
+    {
+      "term": "business logic",
+      "def": "The rules of how an app actually behaves — like \"only the owner can delete this\" — kept on the server so users can't rewrite them."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "Knowing which half a problem lives on is half of triaging it: a misaligned button is frontend work, but \"the total is wrong\" or \"I can see someone else's data\" is a backend problem, and they go to different people and carry very different risk.",
+      "The split also shapes how fast you can move and what is safe to change — frontend tweaks are usually cheap and reversible, while backend changes to data and rules are where the real care, and the real danger, live.",
+      "When a teammate says \"just move it to the frontend to make it faster,\" the right reflex is to ask whether that thing can be trusted on a device the user fully controls."
+    ]
+  },
+  "caseStudy": {
+    "title": "Ordering food in the Uber Eats app",
+    "body": [
+      "When you open Uber Eats and browse restaurants, the client — the app on your phone — is drawing the menus, handling your taps, and animating the cart.",
+      "But the prices, which restaurants are open, and whether your payment succeeds are all decided on Uber's servers, not your phone.",
+      "If your phone could set its own prices, you could order a $40 meal for $1 — so that logic lives on the server, where you cannot touch it, and the same server answers millions of hungry phones at once.",
+      "Your phone simply sends \"this user wants this order\" and trusts the kitchen of servers to check it, charge the right amount, and send back a confirmation."
+    ],
+    "bridge": "The phone is the client that asks and displays; Uber's servers are the shared, trusted backend that decides — which is the client/server split in everyday use."
+  },
+  "takeaways": [
+    "Every app is two halves: a client that requests and displays, and a server that responds and holds the shared logic and data.",
+    "The split exists because there must be one shared source of truth, the client can't be trusted, and many clients depend on one server.",
+    "UI lives on the client (the frontend); business logic, secrets, and the database live on the server (the backend).",
+    "Triage starts with \"which half?\" — how it looks is usually frontend; what is true or allowed is backend."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "In the client/server split, what is the client's main job?",
+      "options": [
+        {
+          "text": "To request things and render them on screen — the part the user holds and sees",
+          "correct": true
+        },
+        {
+          "text": "To store the shared database that every user depends on",
+          "correct": false
+        },
+        {
+          "text": "To enforce the rules that must be trusted, like checking a password",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the client is the browser or app in the user's hands; it asks for things and displays them, while the server holds the shared, trusted parts."
+    },
+    {
+      "q": "Why is the price of an item decided on the server rather than on the user's device?",
+      "options": [
+        {
+          "text": "Because the client can't be trusted — a user controls their own device and could change a price stored there",
+          "correct": true
+        },
+        {
+          "text": "Because phones and laptops are too slow to do simple arithmetic",
+          "correct": false
+        },
+        {
+          "text": "Because the server needs the work to justify its electricity bill",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — anything that must be trusted lives on the server, beyond the user's reach, because the client is a device the user fully controls."
+    },
+    {
+      "q": "A teammate says \"that's a frontend bug.\" What are they most likely describing?",
+      "options": [
+        {
+          "text": "A problem in how the client displayed something to the user",
+          "correct": true
+        },
+        {
+          "text": "A problem with the records stored in the server's database",
+          "correct": false
+        },
+        {
+          "text": "A problem in the business rules that decide who is allowed to do what",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — \"frontend\" means the work running on the client, so a frontend bug is about how something looked or behaved on screen, not the server's data or rules."
+    }
+  ]
+}

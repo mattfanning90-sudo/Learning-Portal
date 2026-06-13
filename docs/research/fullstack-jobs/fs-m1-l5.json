@@ -1,0 +1,176 @@
+{
+  "coreIdea": "The browser is a program that turns the HTML it receives into a live in-memory tree called the DOM and paints it to the screen; JavaScript makes pages interactive by changing that tree — and whether code runs in the browser or on a server decides what it can see, trust, and reach.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "When a server sends a page back, the browser doesn't just \"show a file\" — it reads the `HTML` and builds something.",
+    "What it builds is a live tree of every heading, button, and paragraph, held in the computer's memory.",
+    "That tree is called the `DOM`, and the screen you see is a painting of it.",
+    "`JavaScript` makes a page feel alive by changing the tree: change the DOM, and the picture on screen updates.",
+    "The last big idea is simpler than it sounds — code can run in two places, the user's browser or your own server, and where it runs changes what it's allowed to do."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of the HTML as a flat-pack furniture instruction sheet, and the browser as the person who reads it and actually assembles the wardrobe in the room.",
+      "The assembled wardrobe standing in the room is the `DOM` — a real, living thing you can open, rearrange, and add shelves to; the instruction sheet was just paper.",
+      "Where the metaphor breaks: you build a wardrobe once and walk away, but the browser keeps re-assembling and re-painting as JavaScript adds, moves, and removes pieces while you watch."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "The browser is a program that builds, then paints",
+      "teaser": "HTML is the recipe; the DOM is the meal",
+      "body": [
+        "A browser like Chrome or Safari is just a program, the same way a calculator or a game is a program.",
+        "Its core job is to take the `HTML` text the server sent and `parse` it — read it top to bottom and work out what it means.",
+        "From that, it builds an in-memory tree: the page's title contains a heading, the heading sits above a paragraph, the paragraph sits beside a button, and so on.",
+        "It does the same with the `CSS` (the styling rules) to decide colours, sizes, and positions.",
+        "Then it `renders`, also called painting: it draws that tree onto the glass as the pixels you actually see.",
+        "So the HTML file is never what you look at — it's the recipe, and the DOM is the finished meal on the plate."
+      ]
+    },
+    {
+      "title": "The DOM is the live tree JavaScript can change",
+      "teaser": "Change the tree → the screen updates",
+      "body": [
+        "`DOM` stands for Document Object Model, and the key word is *live* — it's not the original file, it's a working copy the browser keeps in memory.",
+        "Every element on the page — each heading, image, and button — is a node in that tree, with parents above it and children beneath.",
+        "Crucially, `JavaScript` can reach into this tree and edit it: add a new node, delete one, change its text, or flip its colour.",
+        "The instant JavaScript changes the DOM, the browser re-paints the affected part, and the user sees the change — no new page, no reload.",
+        "That single loop is the whole secret of interactive pages: a \"like\" count ticking up, a menu sliding open, a form showing a red error — all of it is JavaScript editing the DOM.",
+        "When people say a page is \"dynamic,\" they mean its DOM is being changed after it first loaded, rather than frozen as it arrived."
+      ]
+    },
+    {
+      "title": "Where the code runs: client-side vs server-side",
+      "teaser": "Two places to run code, with very different rules",
+      "body": [
+        "Code can run in two homes. `Client-side` means it runs in the user's own browser, on their device. `Server-side` means it runs on a computer you control, back where the data lives.",
+        "Client-side code is close to the user, so it feels instant — but the user can open the browser's tools, read it, and tamper with it, so you can never trust it or hide a secret in it.",
+        "Server-side code is the opposite: the user never sees it, so it's trusted, and it sits next to your database and private keys — but every call to it makes a round trip over the network, which costs time.",
+        "A clean rule of thumb: anything that must be *trusted* or touch private data belongs on the server; anything that's just about *how the page feels and responds* can live in the browser.",
+        "So checking \"is this discount code real and unused?\" is a server job, because a clever user could fake a yes on their own machine; sliding a menu open on tap is a browser job, because it only affects what that one person sees.",
+        "This is the same client/server split from earlier in the module — but now the question is sharper: not just where the *halves* sit, but where each *piece of work* should actually run."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "browser",
+      "def": "A program (like Chrome, Safari, or Firefox) that fetches a web page's files and turns them into the interactive page you see and click."
+    },
+    {
+      "term": "parse",
+      "def": "To read text like HTML and work out its structure and meaning — figuring out which element contains which, like diagramming a sentence."
+    },
+    {
+      "term": "DOM (Document Object Model)",
+      "def": "The live, in-memory tree of every element on a page that the browser builds from the HTML; it's what's actually on screen, and what JavaScript reads and changes."
+    },
+    {
+      "term": "render (paint)",
+      "def": "The step where the browser draws the DOM and its styles onto the screen as the pixels you see; it re-paints whenever the DOM changes."
+    },
+    {
+      "term": "client-side",
+      "def": "Code that runs inside the user's own browser — close to them and fast to respond, but visible to them and not to be trusted with secrets."
+    },
+    {
+      "term": "server-side",
+      "def": "Code that runs on a computer you control, near your data — hidden from the user and therefore trusted, but reached only by a round trip over the network."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "\"Where does this run?\" is one of the most consequential calls in a feature, and it's a product decision as much as an engineering one — it sets the trade-off between speed and trust.",
+      "Push work to the browser and the experience feels instant, but you've handed the user the keys: anyone can read or fake client-side logic, so a price, a permission, or a paywall enforced only there is no protection at all.",
+      "When you hear \"we'll just check it in the browser,\" the right question is whether a determined user faking that check could cost you money or leak data — if yes, it belongs on the server, full stop."
+    ]
+  },
+  "caseStudy": {
+    "title": "Google Maps and the rise of the live DOM",
+    "body": [
+      "Before 2005, most web pages were static: every click — pan the map, zoom in — asked the server for a whole new page, and the screen went blank while it loaded.",
+      "Google Maps, launched in February 2005, felt different — you could grab the map and drag it, and it just moved, smoothly, with no full-page reload.",
+      "The trick was JavaScript running client-side: it edited the DOM on the fly to slide new map tiles into view, while quietly fetching only the new data it needed in the background.",
+      "That technique (later named `AJAX`) showed the web could feel like a real application, and it set the template for Gmail, then nearly every modern site."
+    ],
+    "bridge": "Maps felt alive because JavaScript was changing the DOM in the browser instead of asking the server for a fresh page — the exact loop, and the exact client-vs-server choice, this lesson is about."
+  },
+  "takeaways": [
+    "The browser is a program: it parses the HTML and CSS into a live in-memory tree (the DOM) and paints that tree to the screen.",
+    "The DOM is what you actually see and what JavaScript edits; change the DOM and the browser re-paints — that loop is what makes pages interactive.",
+    "Code runs in one of two homes: client-side (in the user's browser, fast but visible and untrusted) or server-side (on your machine, trusted and near the data, but a network hop away).",
+    "Trust and private data belong on the server; pure look-and-feel can live in the browser — and a check that only runs client-side protects nothing."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "When a browser receives a page's HTML, what does it actually do with it?",
+      "options": [
+        {
+          "text": "Parses it into a live in-memory tree (the DOM) and paints that tree onto the screen",
+          "correct": true
+        },
+        {
+          "text": "Displays the raw HTML text file directly, exactly as it was sent",
+          "correct": false
+        },
+        {
+          "text": "Sends the HTML back to the server to be turned into a picture there",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — the browser is a program that parses the HTML (and CSS) into the DOM, a live tree in memory, then renders that tree as the pixels you see. The HTML file is the recipe; the DOM is the finished meal."
+    },
+    {
+      "q": "How does JavaScript make a page interactive — for example, a like count that ticks up when you click?",
+      "options": [
+        {
+          "text": "It changes the DOM, and the browser re-paints the changed part, so the user sees the update with no reload",
+          "correct": true
+        },
+        {
+          "text": "It rewrites the original HTML file stored on the server",
+          "correct": false
+        },
+        {
+          "text": "It downloads a brand-new page from the server every time anything changes on screen",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — JavaScript edits the live DOM tree (changing text, adding or removing nodes), and the browser immediately re-paints the affected part. Change the DOM, and the screen updates."
+    },
+    {
+      "q": "An engineer says, \"We'll just check whether the discount code is valid in the browser.\" Why is that a problem?",
+      "options": [
+        {
+          "text": "Client-side code is visible to the user and can be tampered with, so a trust check like this belongs on the server",
+          "correct": true
+        },
+        {
+          "text": "Browsers are too slow to run a check like that, so it would make the page lag",
+          "correct": false
+        },
+        {
+          "text": "JavaScript can't compare two pieces of text, so the check would never work in a browser",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — client-side code runs on the user's machine, where they can read and fake it. Anything that must be trusted or touches private data belongs server-side; only look-and-feel safely lives in the browser."
+    }
+  ],
+  "sources": [
+    {
+      "label": "MDN — Introduction to the DOM",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction"
+    },
+    {
+      "label": "MDN — Populating the page: how browsers work (the critical rendering path)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/How_browsers_work"
+    },
+    {
+      "label": "MDN — Client-side versus server-side code",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview"
+    }
+  ]
+}

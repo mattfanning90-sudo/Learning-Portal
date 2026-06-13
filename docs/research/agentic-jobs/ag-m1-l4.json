@@ -1,0 +1,177 @@
+{
+  "coreIdea": "An LLM generates plausible-sounding text rather than looking up truth, and only knows the world up to its training cutoff — so verifying anything load-bearing is the core discipline, not an optional extra.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "An LLM does not look facts up the way a search engine does.",
+    "It predicts the next likely words, one after another, based on patterns it learned in training.",
+    "Most of the time those patterns happen to be true — but the model is optimising for what *sounds* right, not for what *is* right.",
+    "So it can state a wrong fact, invent a quote, or cite a source that does not exist — all in the same fluent, confident voice it uses for correct answers.",
+    "On top of that, it only knows what existed before its training cutoff date, so it is simply blind to anything newer unless you tell it or let it search.",
+    "That is why verification is not a nice-to-have. It is the habit that separates people who use these tools well from people who get burned."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Picture a brilliant improv actor playing a doctor. Given any cue, they will produce a smooth, confident, medical-sounding answer — because their job is to keep the scene believable, not to be a real doctor.",
+      "An LLM is that actor: it is rewarded for fluent, plausible continuations, so it never breaks character to say \"I actually don't know.\" It fills the gap with something that fits.",
+      "The metaphor breaks here: the actor knows they are improvising, while the model has no inner sense of \"I'm making this up\" versus \"I looked this up\" — to it, both feel identical."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Hallucination: confident text, no truth check",
+      "teaser": "The model writes what's plausible, not what's verified",
+      "body": [
+        "A `hallucination` is when a model states something false as if it were fact.",
+        "It is not lying and not glitching — it is doing exactly what it was built to do: produce the most likely-looking next words.",
+        "If the most plausible-sounding answer happens to be wrong, you get a wrong answer delivered with full confidence.",
+        "Common forms: invented citations and book titles, fake API methods or function names that *look* real, made-up statistics, and wrong dates.",
+        "The danger is that hallucinations are not flagged or shaded differently — a fabricated court case reads exactly like a real one.",
+        "Rule of thumb: the more specific and checkable a claim is (a number, a name, a quote, a URL), the more you should actually check it."
+      ]
+    },
+    {
+      "title": "Knowledge cutoff: a model frozen in time",
+      "teaser": "It can't know what happened after its training ended",
+      "body": [
+        "A `knowledge cutoff` is the date after which the model has seen no data.",
+        "Training is a one-off snapshot of text, not a live connection to the internet — once it ends, the model's knowledge stops growing.",
+        "So a model trained with a 2024 cutoff genuinely does not know who won an election in 2025, or that a library released a breaking change last month.",
+        "Worse, asking it about events after the cutoff often produces a confident *guess* rather than an honest \"I don't know\" — cutoff blindness and hallucination compound each other.",
+        "The fix is to bring the fresh information to the model: paste in the doc, link the changelog, or use a tool that lets it search the live web.",
+        "Always sanity-check the cutoff for anything time-sensitive — prices, versions, current events, recent people and roles."
+      ]
+    },
+    {
+      "title": "The verify discipline: four habits that scale",
+      "teaser": "Treat confident tone as zero evidence of correctness",
+      "body": [
+        "Habit one: check anything load-bearing against a real source — if a decision, a line of code, or a published claim depends on it, confirm it independently.",
+        "Habit two: ask for sources, then actually open them; a model can fabricate a citation as easily as the fact it supposedly supports.",
+        "Habit three: prefer to have the model *reason from material you provide* rather than recall from memory — paste the contract, the docs, the data, and ask it to work from that.",
+        "Habit four: decouple confidence from correctness — a fluent, assertive tone is produced the same way whether the answer is right or wrong, so it tells you nothing.",
+        "Notice this is risk-based, not paranoid: a brainstorm or a first draft barely needs checking, while a legal claim, a medical fact, or production code needs it every time.",
+        "The skill you are building is calibrated trust — knowing *which* outputs to lean on and *which* to verify before you act."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "hallucination",
+      "def": "When a model states something false as if it were fact — an invented citation, a fake function name, a wrong date — delivered in the same confident voice as a correct answer."
+    },
+    {
+      "term": "knowledge cutoff",
+      "def": "The date after which a model has seen no training data, so it is unaware of anything that happened later unless you supply it or let it search."
+    },
+    {
+      "term": "training data",
+      "def": "The large body of text a model learned patterns from; it is a fixed snapshot, not a live feed, which is why the model's knowledge freezes at the cutoff."
+    },
+    {
+      "term": "load-bearing claim",
+      "def": "A fact or output that something real depends on — a decision, a payment, a legal filing, a line of production code — and therefore must be verified before you act on it."
+    },
+    {
+      "term": "grounding",
+      "def": "Giving the model the actual source material (documents, data, a live search result) so it answers *from that* instead of from possibly-stale or invented memory."
+    },
+    {
+      "term": "calibrated trust",
+      "def": "Knowing which outputs you can lean on and which you must check first — matching how much you verify to how much is at stake."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If your product or workflow puts an LLM's output in front of users or into a downstream system, hallucination is a quality and liability risk you now own — \"the model said so\" is not a defence.",
+      "The product question is rarely \"is the model accurate?\" and almost always \"what is our verification step, and who or what performs it?\" — a human reviewer, a citation the user can click, or a tool that grounds the answer in real data.",
+      "Building that check-step in from the start is cheaper than the apology, the correction, and the lost trust that follow a confidently wrong answer shipped at scale."
+    ]
+  },
+  "caseStudy": {
+    "title": "The lawyer who cited cases that never existed (Mata v. Avianca, 2023)",
+    "body": [
+      "In 2023, a New York lawyer used ChatGPT to research a personal-injury case against the airline Avianca and submitted a brief citing several supporting court decisions.",
+      "The decisions were fabricated — ChatGPT had invented the case names, the quotes, and the citations, all in convincing legal style.",
+      "When opposing counsel and the judge could not find the cases, the lawyer asked ChatGPT to confirm they were real, and it confidently said yes — a hallucination vouching for a hallucination.",
+      "The court sanctioned the lawyers and fined them $5,000, and the episode became a widely cited cautionary tale about trusting AI output unverified."
+    ],
+    "bridge": "Every failure here was preventable by one habit — opening the cited sources to check they existed — which is exactly the verify discipline this lesson is about."
+  },
+  "takeaways": [
+    "An LLM generates plausible text, not looked-up truth, so it can state false things — hallucinations — with total confidence.",
+    "A model only knows the world up to its knowledge cutoff and is blind to anything newer unless you supply it or let it search.",
+    "Confident tone is produced the same way for right and wrong answers, so it is no evidence of correctness.",
+    "Verify anything load-bearing: check real sources, ask for and open citations, and prefer reasoning from material you provide."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "Why can an LLM state a false fact with complete confidence?",
+      "options": [
+        {
+          "text": "Because it generates the most plausible-sounding next words rather than looking up verified truth",
+          "correct": true
+        },
+        {
+          "text": "Because it is deliberately programmed to occasionally deceive the user",
+          "correct": false
+        },
+        {
+          "text": "Because it ran out of memory and substituted random text",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — a hallucination is the model doing its core job (producing plausible text), so when the plausible answer is wrong, it still arrives in a confident voice."
+    },
+    {
+      "q": "A model has a knowledge cutoff in 2024. You ask it about a library update released last month. What is the safe assumption?",
+      "options": [
+        {
+          "text": "It cannot reliably know — you should paste the changelog or let it search, then verify",
+          "correct": true
+        },
+        {
+          "text": "It automatically pulled the latest version from the internet while answering",
+          "correct": false
+        },
+        {
+          "text": "Its confident, detailed answer proves it has the up-to-date information",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — the model's knowledge freezes at its cutoff, so for anything newer you must ground it with fresh material or a search tool, then check the result."
+    },
+    {
+      "q": "Which habit best reflects the verify discipline for a load-bearing claim?",
+      "options": [
+        {
+          "text": "Ask for the sources, open them yourself, and confirm the claim against real material before acting on it",
+          "correct": true
+        },
+        {
+          "text": "Trust it if the answer is detailed and stated with confidence",
+          "correct": false
+        },
+        {
+          "text": "Re-ask the same model whether its own answer is correct and accept its yes",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — confident tone is no evidence, and a model can vouch for its own hallucination, so verification means checking against a real, independent source."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Reuters — New York lawyers sanctioned for using fake ChatGPT cases in legal brief",
+      "url": "https://www.reuters.com/legal/new-york-lawyers-sanctioned-using-fake-chatgpt-cases-legal-brief-2023-06-22/"
+    },
+    {
+      "label": "IBM — What are AI hallucinations?",
+      "url": "https://www.ibm.com/think/topics/ai-hallucinations"
+    },
+    {
+      "label": "Anthropic — Reducing hallucinations (prompt engineering guidance)",
+      "url": "https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    }
+  ]
+}

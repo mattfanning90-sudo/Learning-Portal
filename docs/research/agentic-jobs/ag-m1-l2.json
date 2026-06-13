@@ -1,0 +1,174 @@
+{
+  "coreIdea": "Claude, ChatGPT, and Gemini are the same kind of tool — capable LLM assistants — so you pick on fit for your task, not loyalty, and the durable skill is knowing how to evaluate one rather than memorising today's leader.",
+  "estMinutes": 9,
+  "plainEnglish": [
+    "Claude (from Anthropic), ChatGPT (from OpenAI), and Gemini (from Google) are the three best-known frontier chat assistants.",
+    "A `frontier` model just means one of the most capable models available right now, made by a lab pushing the edge of what's possible.",
+    "They are far more alike than different: all three can write, summarise, answer questions, write code, and hold a conversation.",
+    "Picking between them is not about which brand is \"best\" in the abstract — it is about which one fits the specific task in front of you.",
+    "And because they leapfrog each other every few months, the skill worth having is knowing how to judge one for your own work, not remembering who led last quarter."
+  ],
+  "metaphor": {
+    "title": "🧭 Think of it like…",
+    "body": [
+      "Think of them like three premium car brands — say a BMW, a Mercedes, and an Audi.",
+      "They are all genuinely good, they all get you there comfortably, and for most trips you'd be happy in any of them; the right choice depends on this journey — the cargo, the terrain, the price you'll pay.",
+      "Where the metaphor bends: cars barely change between model years, but these assistants get materially better every few months, so last year's clear winner can be this year's runner-up — you re-test, you don't just re-buy."
+    ]
+  },
+  "deepSections": [
+    {
+      "title": "Same kind of tool — choose on fit, not fandom",
+      "teaser": "They are siblings, not opposites",
+      "body": [
+        "All three are `LLMs` — large language models — wrapped in a friendly chat interface.",
+        "That means under the hood they do the same core thing: predict useful text from the words you give them.",
+        "So the honest starting point is that for everyday work, any of the three will usually do a fine job.",
+        "Fandom — \"I'm a Claude person\" or \"GPT or nothing\" — is how you end up using the wrong tool for a task out of habit.",
+        "The useful question is never \"which is best?\" but \"which is the best fit for this job, today?\""
+      ]
+    },
+    {
+      "title": "The dimensions that actually decide it",
+      "teaser": "Six levers worth checking before you commit",
+      "body": [
+        "Task type: some jobs reward careful long-form reasoning and writing, others reward quick factual lookups — match the model to the shape of the work.",
+        "Context window: how much text the model can hold in mind at once (covered fully in the next lesson) — bigger windows let you paste a whole report or codebase.",
+        "Multimodality: whether it can also read images, listen to audio, or look at a screenshot, not just handle text.",
+        "Ecosystem integration: whether it already lives inside the tools you use — your email, your documents, your code editor — so you don't have to copy-paste between apps.",
+        "Tooling: extras built around the model, like coding agents that can edit files for you (covered later in this track).",
+        "Cost: the price per use, which matters enormously once you're sending thousands of requests, far less for casual personal use."
+      ]
+    },
+    {
+      "title": "The frontier leapfrogs — so build the skill, not the loyalty",
+      "teaser": "Why benchmark numbers expire faster than milk",
+      "body": [
+        "A `benchmark` is a standard test used to score models — handy, but it captures a single moment and ages fast.",
+        "These three labs release major upgrades every few months, and the lead changes hands constantly.",
+        "So a lesson that said \"Model X wins\" would be wrong within a quarter — which is exactly why this one refuses to name a winner.",
+        "The durable move is to keep a small set of your own real tasks and try a new model on them when it ships.",
+        "Better still: run the same prompt through two assistants side by side and compare the answers — five minutes of testing beats any leaderboard for your specific work."
+      ]
+    }
+  ],
+  "keyTerms": [
+    {
+      "term": "frontier model",
+      "def": "One of the most capable AI models available at a given moment, built by a lab pushing the leading edge — Claude, ChatGPT, and Gemini are the best-known examples."
+    },
+    {
+      "term": "LLM (large language model)",
+      "def": "The kind of AI that powers all three assistants: a system trained on huge amounts of text that responds by predicting useful words."
+    },
+    {
+      "term": "context window",
+      "def": "How much text a model can hold in mind at once — its short-term working memory; a bigger window means you can give it more material to work with in one go."
+    },
+    {
+      "term": "multimodality",
+      "def": "A model's ability to handle more than just text — for example reading an image, looking at a screenshot, or processing audio."
+    },
+    {
+      "term": "ecosystem integration",
+      "def": "How well an assistant plugs into the apps you already use, like your email, documents, or code editor, so you don't have to copy work between tools."
+    },
+    {
+      "term": "benchmark",
+      "def": "A standard test used to score and compare AI models — useful as a snapshot, but it ages quickly as new models ship."
+    }
+  ],
+  "pmAngle": {
+    "body": [
+      "If you own the product or the bill, picking a default assistant is a real decision, but it should be made on fit and cost for your actual workload — not on which brand made headlines this month.",
+      "Treat it as reversible: keep a short list of your own representative tasks, re-test on them when a major upgrade lands, and be ready to switch defaults without drama.",
+      "And watch the cost dimension closely — a model that's a few cents pricier per request is irrelevant for personal use but can dominate the budget once it runs at production scale."
+    ]
+  },
+  "caseStudy": {
+    "title": "GitHub Copilot opens the door to multiple models",
+    "body": [
+      "GitHub Copilot launched in 2021 powered by a single OpenAI model, and for years that was the only engine under the hood.",
+      "By 2024–2025, GitHub had added a model picker — letting developers choose between OpenAI's GPT models, Anthropic's Claude, and Google's Gemini for the same coding tasks.",
+      "GitHub's own framing was telling: there is no one best model, so they put the choice in the user's hands rather than betting the product on a single provider.",
+      "Developers reported reaching for different models for different jobs — one for a quick edit, another for a gnarly refactor."
+    ],
+    "bridge": "Even a product built on one model concluded that the right answer is choose-on-fit, and gave users a switch — exactly the mindset to bring to your own work."
+  },
+  "takeaways": [
+    "Claude, ChatGPT, and Gemini are the same kind of tool — capable LLM assistants — so choose on fit for the task, not brand loyalty.",
+    "The levers that actually decide it: task type, context-window size, multimodality, ecosystem integration, tooling, and cost.",
+    "Benchmark rankings age in months because the three labs leapfrog constantly — so don't memorise today's leader.",
+    "The durable skill is evaluating a model on your own real tasks; run the same prompt through two and compare."
+  ],
+  "knowledgeCheck": [
+    {
+      "q": "What is the best mental model for choosing between Claude, ChatGPT, and Gemini?",
+      "options": [
+        {
+          "text": "They are broadly similar capable assistants, so pick the best fit for the specific task rather than picking a favourite brand",
+          "correct": true
+        },
+        {
+          "text": "One of them is permanently the best, so the job is to find it once and always use it",
+          "correct": false
+        },
+        {
+          "text": "They are fundamentally different kinds of technology, so the choice rarely matters",
+          "correct": false
+        }
+      ],
+      "feedback": "Right — all three are capable LLM assistants of the same kind, so the useful question is fit-for-this-task, not which brand to be loyal to."
+    },
+    {
+      "q": "Which of these is a dimension that actually matters when picking an assistant for a job?",
+      "options": [
+        {
+          "text": "Context-window size — how much text it can hold in mind at once",
+          "correct": true
+        },
+        {
+          "text": "Which company has the most recognisable logo",
+          "correct": false
+        },
+        {
+          "text": "How long the company has existed",
+          "correct": false
+        }
+      ],
+      "feedback": "Correct — context-window size is one of the real levers, alongside task type, multimodality, ecosystem integration, tooling, and cost."
+    },
+    {
+      "q": "Why does this lesson refuse to name a single \"best\" model or quote benchmark scores?",
+      "options": [
+        {
+          "text": "Because the three labs leapfrog each other constantly, so any ranking ages fast — the durable skill is evaluating a model on your own tasks",
+          "correct": true
+        },
+        {
+          "text": "Because the models are all identical, so comparing them is pointless",
+          "correct": false
+        },
+        {
+          "text": "Because benchmark scores are secret and never published",
+          "correct": false
+        }
+      ],
+      "feedback": "Exactly — the frontier shifts every few months, so memorising today's leader is a trap; testing the same prompt across two assistants on your real work is what lasts."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anthropic — Meet Claude",
+      "url": "https://www.anthropic.com/claude"
+    },
+    {
+      "label": "GitHub — Bringing developer choice to Copilot with multiple models",
+      "url": "https://github.blog/news-insights/product-news/bringing-developer-choice-to-copilot/"
+    },
+    {
+      "label": "Google — Gemini models overview",
+      "url": "https://ai.google.dev/gemini-api/docs/models"
+    }
+  ]
+}
